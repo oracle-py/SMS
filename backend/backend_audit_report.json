@@ -1,0 +1,166 @@
+{
+  "timestamp": "2026-06-17T06:14:30.448214",
+  "total_tests": 9,
+  "passed": 9,
+  "failed": 0,
+  "success_rate": 100.0,
+  "results": [
+    {
+      "endpoint": "/api/v1/student/dashboard/",
+      "role": "student",
+      "expected_status": 200,
+      "actual_status": 200,
+      "description": "Student should see their own dashboard data",
+      "pass": true,
+      "response_data": {
+        "success": true,
+        "data": {
+          "student_info": {
+            "name": "John Doe",
+            "matric_number": "STU/2024/001",
+            "level": 100
+          },
+          "cgpa": 0.0,
+          "academic_standing": "Withdrawal Risk",
+          "attendance_percentage": 0.0,
+          "carryover_count": 0,
+          "total_courses_registered": 0,
+          "recent_results": []
+        }
+      }
+    },
+    {
+      "endpoint": "/api/v1/parent/dashboard/",
+      "role": "parent",
+      "expected_status": 200,
+      "actual_status": 200,
+      "description": "Parent should see their wards dashboard data",
+      "pass": true,
+      "response_data": {
+        "success": true,
+        "data": {
+          "parent_name": "Richard Doe",
+          "total_wards": 2,
+          "wards": [
+            {
+              "student_id": 31,
+              "name": "John Doe",
+              "matric_number": "STU/2024/001",
+              "level": 100,
+              "cgpa": 0.0,
+              "academic_standing": "Withdrawal Risk",
+              "attendance_percentage": 0.0,
+              "carryover_count": 0,
+              "total_courses": 0,
+              "relationship_type": "Father"
+            },
+            {
+              "student_id": 36,
+              "name": "Sarah Jones",
+              "matric_number": "STU/2024/006",
+              "level": 100,
+              "cgpa": 0.0,
+              "academic_standing": "Withdrawal Risk",
+              "attendance_percentage": 0.0,
+              "carryover_count": 0,
+              "total_courses": 0,
+              "relationship_type": "Father"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "endpoint": "/api/v1/student/results/",
+      "role": "student",
+      "expected_status": 200,
+      "actual_status": 200,
+      "description": "Student should see their own results",
+      "pass": true,
+      "response_data": {
+        "success": true,
+        "data": []
+      }
+    },
+    {
+      "endpoint": "/api/v1/student/attendance/",
+      "role": "student",
+      "expected_status": 200,
+      "actual_status": 200,
+      "description": "Student should see their own attendance",
+      "pass": true,
+      "response_data": {
+        "success": true,
+        "data": {
+          "attendance_percentage": 0.0,
+          "total_records": 0,
+          "present_records": 0,
+          "absent_records": 0,
+          "records": []
+        }
+      }
+    },
+    {
+      "endpoint": "/api/v1/parent/wards/31/",
+      "role": "parent",
+      "expected_status": 200,
+      "actual_status": 200,
+      "description": "Parent should see ward detail data",
+      "pass": true,
+      "response_data": {
+        "success": true,
+        "data": {
+          "student_info": {
+            "student_id": 31,
+            "name": "John Doe",
+            "matric_number": "STU/2024/001",
+            "level": 100,
+            "email": "student1@school.edu"
+          },
+          "cgpa": 0.0,
+          "academic_standing": "Withdrawal Risk",
+          "attendance_percentage": 0.0,
+          "carryover_count": 0,
+          "total_courses": 0,
+          "relationship_type": "Father",
+          "results": [],
+          "carryovers": [],
+          "attendance_records": []
+        }
+      }
+    },
+    {
+      "endpoint": "/api/v1/parent/dashboard/",
+      "role": "student",
+      "expected_status": 403,
+      "actual_status": 403,
+      "description": "Student should NOT be able to access parent dashboard",
+      "pass": true
+    },
+    {
+      "endpoint": "/api/v1/student/dashboard/",
+      "role": "parent",
+      "expected_status": 403,
+      "actual_status": 403,
+      "description": "Parent should NOT be able to access student dashboard",
+      "pass": true
+    },
+    {
+      "endpoint": "/api/docs/",
+      "role": "public",
+      "expected_status": 200,
+      "actual_status": 200,
+      "description": "Swagger UI should load without authentication",
+      "pass": true
+    },
+    {
+      "endpoint": "/api/schema/",
+      "role": "public",
+      "expected_status": 200,
+      "actual_status": 200,
+      "description": "OpenAPI schema should be accessible",
+      "pass": true,
+      "endpoint_count": 31
+    }
+  ]
+}

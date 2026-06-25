@@ -1,0 +1,1337 @@
+INFO 2026-06-15 04:33:27,415 autoreload 18340 19104 Watching for file changes with StatReloader
+INFO 2026-06-15 04:34:30,357 autoreload 18340 19104 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\school_monitoring_system\settings.py changed, reloading.
+INFO 2026-06-15 04:34:33,050 autoreload 11612 19804 Watching for file changes with StatReloader
+INFO 2026-06-15 04:35:38,731 autoreload 11612 19804 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\api\views\student_dashboard.py changed, reloading.
+INFO 2026-06-15 04:35:41,272 autoreload 10744 15152 Watching for file changes with StatReloader
+INFO 2026-06-15 04:36:22,569 autoreload 10744 15152 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\api\views\student_dashboard.py changed, reloading.
+INFO 2026-06-15 04:36:25,368 autoreload 18908 21188 Watching for file changes with StatReloader
+INFO 2026-06-15 04:36:59,416 autoreload 18908 21188 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\api\views\parent_dashboard.py changed, reloading.
+INFO 2026-06-15 04:37:02,518 autoreload 12548 10328 Watching for file changes with StatReloader
+INFO 2026-06-15 04:37:41,068 autoreload 12548 10328 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\api\views\parent_dashboard.py changed, reloading.
+INFO 2026-06-15 04:37:43,500 autoreload 15748 11788 Watching for file changes with StatReloader
+INFO 2026-06-15 04:38:45,968 autoreload 15748 11788 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\api\views\parent_dashboard.py changed, reloading.
+INFO 2026-06-15 04:38:48,771 autoreload 18352 4284 Watching for file changes with StatReloader
+INFO 2026-06-15 04:40:46,720 autoreload 18352 4284 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\academics\services\academic_services.py changed, reloading.
+INFO 2026-06-15 04:40:49,272 autoreload 11028 21492 Watching for file changes with StatReloader
+INFO 2026-06-15 04:42:36,874 autoreload 11028 21492 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\academics\services\academic_services.py changed, reloading.
+INFO 2026-06-15 04:42:39,339 autoreload 12864 18752 Watching for file changes with StatReloader
+INFO 2026-06-15 04:44:17,951 autoreload 12864 18752 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\academics\services\academic_services.py changed, reloading.
+INFO 2026-06-15 04:44:20,384 autoreload 4716 13160 Watching for file changes with StatReloader
+INFO 2026-06-15 04:45:32,978 autoreload 4716 13160 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\academics\services\academic_services.py changed, reloading.
+INFO 2026-06-15 04:45:35,342 autoreload 264 19096 Watching for file changes with StatReloader
+INFO 2026-06-15 04:47:01,819 autoreload 264 19096 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\academics\services\academic_services.py changed, reloading.
+INFO 2026-06-15 04:47:05,120 autoreload 4896 6216 Watching for file changes with StatReloader
+INFO 2026-06-15 23:26:03,481 basehttp 4896 18316 "GET /api/docs/ HTTP/1.1" 200 4662
+ERROR 2026-06-15 23:26:06,369 log 4896 18316 Internal Server Error: /api/schema/
+Traceback (most recent call last):
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\drf_spectacular\views.py", line 84, in get
+    return self._get_schema_response(request)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\drf_spectacular\views.py", line 92, in _get_schema_response
+    data=generator.get_schema(request=request, public=self.serve_public),
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\drf_spectacular\generators.py", line 287, in get_schema
+    paths=self.parse(request, public),
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\drf_spectacular\generators.py", line 258, in parse
+    operation = view.schema.get_operation(
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\drf_spectacular\openapi.py", line 113, in get_operation
+    operation['responses'] = self._get_response_bodies()
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\drf_spectacular\openapi.py", line 1407, in _get_response_bodies
+    return {'200': self._get_response_for_code(response_serializers, '200', direction=direction)}
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\drf_spectacular\openapi.py", line 1463, in _get_response_for_code
+    component = self.resolve_serializer(serializer, direction)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\drf_spectacular\openapi.py", line 1658, in resolve_serializer
+    component.schema = self._map_serializer(serializer, direction, bypass_extensions)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\drf_spectacular\openapi.py", line 959, in _map_serializer
+    schema = self._map_basic_serializer(serializer, direction)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\drf_spectacular\openapi.py", line 1052, in _map_basic_serializer
+    for field in serializer.fields.values():
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\utils\functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\serializers.py", line 386, in fields
+    for key, value in self.get_fields().items():
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\serializers.py", line 1132, in get_fields
+    field_class, field_kwargs = self.build_field(
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\serializers.py", line 1278, in build_field
+    return self.build_unknown_field(field_name, model_class)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\serializers.py", line 1396, in build_unknown_field
+    raise ImproperlyConfigured(
+django.core.exceptions.ImproperlyConfigured: Field name `remarks` is not valid for model `Attendance` in `academics.serializers.AttendanceSerializer`.
+ERROR 2026-06-15 23:26:06,402 basehttp 4896 18316 "GET /api/schema/ HTTP/1.1" 500 181934
+ERROR 2026-06-15 23:26:06,770 log 4896 18316 Internal Server Error: /api/schema/
+Traceback (most recent call last):
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\drf_spectacular\views.py", line 84, in get
+    return self._get_schema_response(request)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\drf_spectacular\views.py", line 92, in _get_schema_response
+    data=generator.get_schema(request=request, public=self.serve_public),
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\drf_spectacular\generators.py", line 287, in get_schema
+    paths=self.parse(request, public),
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\drf_spectacular\generators.py", line 258, in parse
+    operation = view.schema.get_operation(
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\drf_spectacular\openapi.py", line 113, in get_operation
+    operation['responses'] = self._get_response_bodies()
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\drf_spectacular\openapi.py", line 1407, in _get_response_bodies
+    return {'200': self._get_response_for_code(response_serializers, '200', direction=direction)}
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\drf_spectacular\openapi.py", line 1463, in _get_response_for_code
+    component = self.resolve_serializer(serializer, direction)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\drf_spectacular\openapi.py", line 1658, in resolve_serializer
+    component.schema = self._map_serializer(serializer, direction, bypass_extensions)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\drf_spectacular\openapi.py", line 959, in _map_serializer
+    schema = self._map_basic_serializer(serializer, direction)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\drf_spectacular\openapi.py", line 1052, in _map_basic_serializer
+    for field in serializer.fields.values():
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\utils\functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\serializers.py", line 386, in fields
+    for key, value in self.get_fields().items():
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\serializers.py", line 1132, in get_fields
+    field_class, field_kwargs = self.build_field(
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\serializers.py", line 1278, in build_field
+    return self.build_unknown_field(field_name, model_class)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\serializers.py", line 1396, in build_unknown_field
+    raise ImproperlyConfigured(
+django.core.exceptions.ImproperlyConfigured: Field name `remarks` is not valid for model `Attendance` in `academics.serializers.AttendanceSerializer`.
+ERROR 2026-06-15 23:26:06,802 basehttp 4896 18316 "GET /api/schema/ HTTP/1.1" 500 181934
+INFO 2026-06-15 23:33:00,140 autoreload 14508 8340 Watching for file changes with StatReloader
+INFO 2026-06-15 23:38:27,279 autoreload 4896 6216 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\academics\serializers.py changed, reloading.
+INFO 2026-06-15 23:38:30,499 autoreload 9076 21896 Watching for file changes with StatReloader
+INFO 2026-06-15 23:40:57,243 autoreload 1188 19716 Watching for file changes with StatReloader
+INFO 2026-06-15 23:41:32,511 autoreload 20608 21660 Watching for file changes with StatReloader
+INFO 2026-06-15 23:41:58,774 basehttp 20608 24400 "GET /api/docs/ HTTP/1.1" 200 4662
+ERROR 2026-06-15 23:42:00,588 log 20608 24400 Internal Server Error: /api/schema/
+Traceback (most recent call last):
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\drf_spectacular\views.py", line 84, in get
+    return self._get_schema_response(request)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\drf_spectacular\views.py", line 92, in _get_schema_response
+    data=generator.get_schema(request=request, public=self.serve_public),
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\drf_spectacular\generators.py", line 287, in get_schema
+    paths=self.parse(request, public),
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\drf_spectacular\generators.py", line 258, in parse
+    operation = view.schema.get_operation(
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\drf_spectacular\openapi.py", line 113, in get_operation
+    operation['responses'] = self._get_response_bodies()
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\drf_spectacular\openapi.py", line 1407, in _get_response_bodies
+    return {'200': self._get_response_for_code(response_serializers, '200', direction=direction)}
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\drf_spectacular\openapi.py", line 1463, in _get_response_for_code
+    component = self.resolve_serializer(serializer, direction)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\drf_spectacular\openapi.py", line 1658, in resolve_serializer
+    component.schema = self._map_serializer(serializer, direction, bypass_extensions)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\drf_spectacular\openapi.py", line 959, in _map_serializer
+    schema = self._map_basic_serializer(serializer, direction)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\drf_spectacular\openapi.py", line 1052, in _map_basic_serializer
+    for field in serializer.fields.values():
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\utils\functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\serializers.py", line 386, in fields
+    for key, value in self.get_fields().items():
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\serializers.py", line 1132, in get_fields
+    field_class, field_kwargs = self.build_field(
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\serializers.py", line 1278, in build_field
+    return self.build_unknown_field(field_name, model_class)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\serializers.py", line 1396, in build_unknown_field
+    raise ImproperlyConfigured(
+django.core.exceptions.ImproperlyConfigured: Field name `updated_at` is not valid for model `Attendance` in `academics.serializers.AttendanceSerializer`.
+ERROR 2026-06-15 23:42:00,625 basehttp 20608 24400 "GET /api/schema/ HTTP/1.1" 500 181441
+ERROR 2026-06-15 23:42:00,870 log 20608 24400 Internal Server Error: /api/schema/
+Traceback (most recent call last):
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\drf_spectacular\views.py", line 84, in get
+    return self._get_schema_response(request)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\drf_spectacular\views.py", line 92, in _get_schema_response
+    data=generator.get_schema(request=request, public=self.serve_public),
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\drf_spectacular\generators.py", line 287, in get_schema
+    paths=self.parse(request, public),
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\drf_spectacular\generators.py", line 258, in parse
+    operation = view.schema.get_operation(
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\drf_spectacular\openapi.py", line 113, in get_operation
+    operation['responses'] = self._get_response_bodies()
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\drf_spectacular\openapi.py", line 1407, in _get_response_bodies
+    return {'200': self._get_response_for_code(response_serializers, '200', direction=direction)}
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\drf_spectacular\openapi.py", line 1463, in _get_response_for_code
+    component = self.resolve_serializer(serializer, direction)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\drf_spectacular\openapi.py", line 1658, in resolve_serializer
+    component.schema = self._map_serializer(serializer, direction, bypass_extensions)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\drf_spectacular\openapi.py", line 959, in _map_serializer
+    schema = self._map_basic_serializer(serializer, direction)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\drf_spectacular\openapi.py", line 1052, in _map_basic_serializer
+    for field in serializer.fields.values():
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\utils\functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\serializers.py", line 386, in fields
+    for key, value in self.get_fields().items():
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\serializers.py", line 1132, in get_fields
+    field_class, field_kwargs = self.build_field(
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\serializers.py", line 1278, in build_field
+    return self.build_unknown_field(field_name, model_class)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\serializers.py", line 1396, in build_unknown_field
+    raise ImproperlyConfigured(
+django.core.exceptions.ImproperlyConfigured: Field name `updated_at` is not valid for model `Attendance` in `academics.serializers.AttendanceSerializer`.
+ERROR 2026-06-15 23:42:00,983 basehttp 20608 24400 "GET /api/schema/ HTTP/1.1" 500 181441
+INFO 2026-06-16 09:43:17,176 autoreload 20632 25168 Watching for file changes with StatReloader
+INFO 2026-06-16 09:43:27,832 basehttp 20632 12916 "GET /api/docs/ HTTP/1.1" 200 4662
+INFO 2026-06-16 09:43:28,843 basehttp 20632 12916 "GET /api/schema/ HTTP/1.1" 200 222056
+WARNING 2026-06-16 09:47:19,878 basehttp 20632 12916 "GET /api/v1/auth/login/ HTTP/1.1" 405 7761
+INFO 2026-06-16 09:47:20,793 basehttp 20632 22892 "GET /static/rest_framework/js/jquery-3.7.1.min.js HTTP/1.1" 200 87533
+INFO 2026-06-16 09:47:20,795 basehttp 20632 12916 "GET /static/rest_framework/css/bootstrap.min.css HTTP/1.1" 200 121457
+INFO 2026-06-16 09:47:20,803 basehttp 20632 3028 "GET /static/rest_framework/css/default.css HTTP/1.1" 200 1152
+INFO 2026-06-16 09:47:20,805 basehttp 20632 9916 "GET /static/rest_framework/css/bootstrap-tweaks.css HTTP/1.1" 200 3426
+INFO 2026-06-16 09:47:20,812 basehttp 20632 21848 "GET /static/rest_framework/css/prettify.css HTTP/1.1" 200 817
+INFO 2026-06-16 09:47:20,818 basehttp 20632 24360 "GET /static/rest_framework/js/ajax-form.js HTTP/1.1" 200 3796
+INFO 2026-06-16 09:47:20,880 basehttp 20632 9916 "GET /static/rest_framework/js/default.js HTTP/1.1" 200 1268
+INFO 2026-06-16 09:47:20,881 basehttp 20632 3028 "GET /static/rest_framework/js/prettify-min.js HTTP/1.1" 200 13632
+INFO 2026-06-16 09:47:20,891 basehttp 20632 12916 "GET /static/rest_framework/js/bootstrap.min.js HTTP/1.1" 200 39680
+INFO 2026-06-16 09:47:20,904 basehttp 20632 22892 "GET /static/rest_framework/js/csrf.js HTTP/1.1" 200 1793
+INFO 2026-06-16 09:47:20,909 basehttp 20632 21848 "GET /static/rest_framework/js/load-ajax-form.js HTTP/1.1" 200 59
+INFO 2026-06-16 09:47:21,038 basehttp 20632 12916 "GET /static/rest_framework/img/grid.png HTTP/1.1" 200 1458
+WARNING 2026-06-16 09:47:21,106 basehttp 20632 12916 "GET /favicon.ico HTTP/1.1" 404 2880
+WARNING 2026-06-16 09:48:36,346 basehttp 20632 12916 "POST /api/v1/auth/login/ HTTP/1.1" 401 7722
+WARNING 2026-06-16 09:49:01,821 basehttp 20632 12916 "POST /api/v1/auth/login/ HTTP/1.1" 401 7722
+WARNING 2026-06-16 09:49:20,412 basehttp 20632 12916 "POST /api/v1/auth/login/ HTTP/1.1" 401 7722
+INFO 2026-06-16 09:50:19,437 basehttp 20632 12916 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 8723
+INFO 2026-06-16 09:50:27,760 basehttp 20632 12916 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 8723
+WARNING 2026-06-16 09:51:06,019 basehttp 20632 12916 "POST /api/v1/auth/login/ HTTP/1.1" 401 7722
+WARNING 2026-06-16 09:51:23,616 basehttp 20632 25432 "POST /api/v1/auth/login/ HTTP/1.1" 401 7722
+WARNING 2026-06-16 09:55:18,799 basehttp 20632 25432 "POST /api/v1/auth/login/ HTTP/1.1" 401 63
+INFO 2026-06-16 10:07:33,335 basehttp 20632 10528 "POST /api/v1/auth/login/ HTTP/1.1" 200 8661
+WARNING 2026-06-16 10:08:23,308 basehttp 20632 10528 "POST /api/v1/auth/login/ HTTP/1.1" 401 63
+INFO 2026-06-16 10:08:45,529 basehttp 20632 10528 "POST /api/v1/auth/login/ HTTP/1.1" 200 687
+WARNING 2026-06-16 10:13:57,732 basehttp 20632 24956 "GET /api/v1/student/dashboard/ HTTP/1.1" 401 58
+WARNING 2026-06-16 10:14:25,029 basehttp 20632 24956 "GET /api/v1/student/results/ HTTP/1.1" 401 58
+WARNING 2026-06-16 10:15:03,476 basehttp 20632 24956 "GET /api/v1/student/results/ HTTP/1.1" 401 5246
+WARNING 2026-06-16 10:15:14,099 basehttp 20632 24956 "GET /api/v1/student/results/ HTTP/1.1" 401 5246
+INFO 2026-06-16 10:30:25,674 basehttp 20632 1440 "POST /api/v1/auth/login/ HTTP/1.1" 200 8661
+INFO 2026-06-16 10:31:03,022 basehttp 20632 1440 "GET /api/docs/ HTTP/1.1" 200 4662
+INFO 2026-06-16 10:31:03,840 basehttp 20632 1440 "GET /api/schema/ HTTP/1.1" 200 222056
+WARNING 2026-06-16 10:32:21,076 basehttp 20632 1440 "GET /api/v1/student/results/ HTTP/1.1" 401 5246
+WARNING 2026-06-16 10:32:27,210 basehttp 20632 1440 "GET /api/v1/student/results/ HTTP/1.1" 401 5246
+WARNING 2026-06-16 10:32:31,541 basehttp 20632 1440 "GET /api/v1/student/results/ HTTP/1.1" 401 5246
+WARNING 2026-06-16 10:32:34,585 basehttp 20632 1440 "GET /api/v1/student/results/ HTTP/1.1" 401 5246
+WARNING 2026-06-16 10:32:35,319 basehttp 20632 1440 "GET /api/v1/student/results/ HTTP/1.1" 401 5246
+WARNING 2026-06-16 10:32:46,661 basehttp 20632 1440 "GET /api/v1/student/results/ HTTP/1.1" 401 5246
+WARNING 2026-06-16 10:33:00,533 basehttp 20632 1440 "GET /api/v1/student/results/ HTTP/1.1" 401 5246
+WARNING 2026-06-16 10:33:03,778 basehttp 20632 1440 "GET /api/v1/student/results/ HTTP/1.1" 401 5246
+WARNING 2026-06-16 10:33:24,646 basehttp 20632 1440 "GET /api/v1/student/results/ HTTP/1.1" 401 5246
+WARNING 2026-06-16 10:33:25,155 basehttp 20632 1440 "GET /api/v1/student/results/ HTTP/1.1" 401 5246
+WARNING 2026-06-16 10:33:59,889 basehttp 20632 1440 "GET /api/v1/student/results/ HTTP/1.1" 401 5246
+WARNING 2026-06-16 10:34:00,742 basehttp 20632 1440 "GET /api/v1/student/results/ HTTP/1.1" 401 5246
+INFO 2026-06-17 02:04:42,805 autoreload 13060 13364 Watching for file changes with StatReloader
+INFO 2026-06-17 02:04:58,094 basehttp 13060 1448 "GET /api/docs/ HTTP/1.1" 200 4662
+INFO 2026-06-17 02:05:00,855 basehttp 13060 1448 "GET /api/schema/ HTTP/1.1" 200 222056
+WARNING 2026-06-17 02:05:14,994 basehttp 13060 1448 "GET /api/v1/student/results/ HTTP/1.1" 401 5246
+WARNING 2026-06-17 02:05:20,924 basehttp 13060 1448 "GET /api/v1/student/results/ HTTP/1.1" 401 5246
+WARNING 2026-06-17 02:05:22,936 basehttp 13060 1448 "GET /api/v1/student/results/ HTTP/1.1" 401 5246
+INFO 2026-06-17 02:06:32,747 basehttp 13060 13284 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 8723
+WARNING 2026-06-17 02:06:57,441 basehttp 13060 13284 "GET /api/v1/student/results/ HTTP/1.1" 401 58
+INFO 2026-06-17 02:08:52,869 autoreload 24268 3204 Watching for file changes with StatReloader
+INFO 2026-06-17 02:10:03,336 autoreload 10272 2428 Watching for file changes with StatReloader
+INFO 2026-06-17 02:10:58,451 autoreload 23912 24236 Watching for file changes with StatReloader
+WARNING 2026-06-17 02:11:17,576 basehttp 23912 15720 "GET /api/v1/auth/login/ HTTP/1.1" 405 7761
+INFO 2026-06-17 02:11:53,100 autoreload 25452 14456 Watching for file changes with StatReloader
+INFO 2026-06-17 02:13:32,878 basehttp 25452 9980 "GET /api/docs/ HTTP/1.1" 200 4662
+INFO 2026-06-17 02:13:34,561 basehttp 25452 9980 "GET /api/schema/ HTTP/1.1" 200 222056
+ERROR 2026-06-17 02:19:44,120 log 25584 22408 Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\utils\deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\middleware\common.py", line 48, in process_request
+    host = request.get_host()
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\http\request.py", line 203, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+ERROR 2026-06-17 02:19:44,158 log 25584 22408 Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\utils\deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\middleware\common.py", line 48, in process_request
+    host = request.get_host()
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\http\request.py", line 203, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+ERROR 2026-06-17 02:19:44,194 log 25584 22408 Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\utils\deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\middleware\common.py", line 48, in process_request
+    host = request.get_host()
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\http\request.py", line 203, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+ERROR 2026-06-17 02:19:44,221 log 25584 22408 Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\utils\deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\middleware\common.py", line 48, in process_request
+    host = request.get_host()
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\http\request.py", line 203, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+ERROR 2026-06-17 02:19:44,255 log 25584 22408 Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\utils\deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\middleware\common.py", line 48, in process_request
+    host = request.get_host()
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\http\request.py", line 203, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+ERROR 2026-06-17 02:19:44,297 log 25584 22408 Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\utils\deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\middleware\common.py", line 48, in process_request
+    host = request.get_host()
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\http\request.py", line 203, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+ERROR 2026-06-17 02:19:44,353 log 25584 22408 Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\utils\deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\middleware\common.py", line 48, in process_request
+    host = request.get_host()
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\http\request.py", line 203, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+ERROR 2026-06-17 02:19:44,381 log 25584 22408 Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\utils\deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\middleware\common.py", line 48, in process_request
+    host = request.get_host()
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\http\request.py", line 203, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+ERROR 2026-06-17 02:19:44,409 log 25584 22408 Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\utils\deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\middleware\common.py", line 48, in process_request
+    host = request.get_host()
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\http\request.py", line 203, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+INFO 2026-06-17 02:21:26,765 basehttp 23912 23224 "POST /api/v1/auth/login/ HTTP/1.1" 200 8673
+ERROR 2026-06-17 02:21:38,274 log 18544 21364 Internal Server Error: /api/v1/student/dashboard/
+ERROR 2026-06-17 02:21:38,278 log 18544 21364 Internal Server Error: /api/v1/parent/dashboard/
+ERROR 2026-06-17 02:21:38,283 log 18544 21364 Internal Server Error: /api/v1/student/results/
+ERROR 2026-06-17 02:21:38,287 log 18544 21364 Internal Server Error: /api/v1/student/attendance/
+ERROR 2026-06-17 02:21:38,289 log 18544 21364 Internal Server Error: /api/v1/parent/dashboard/
+WARNING 2026-06-17 02:23:04,956 basehttp 23912 23224 "GET /api/v1/student/results/ HTTP/1.1" 401 107
+WARNING 2026-06-17 02:24:15,449 basehttp 23912 23224 "GET /api/v1/student/results/ HTTP/1.1" 401 5246
+WARNING 2026-06-17 02:25:19,882 basehttp 23912 23224 "GET /api/v1/student/results/ HTTP/1.1" 401 172
+WARNING 2026-06-17 02:25:57,723 basehttp 23912 23224 "GET /api/v1/student/results/ HTTP/1.1" 401 176
+WARNING 2026-06-17 02:26:32,221 basehttp 23912 23224 "GET /api/v1/students/ HTTP/1.1" 401 176
+WARNING 2026-06-17 02:27:44,805 basehttp 23912 23224 "GET /api/v1/student/results/ HTTP/1.1" 401 5246
+WARNING 2026-06-17 02:27:47,140 basehttp 23912 23224 "GET /api/v1/student/results/ HTTP/1.1" 401 5246
+WARNING 2026-06-17 02:27:49,235 basehttp 23912 23224 "GET /api/v1/student/results/ HTTP/1.1" 401 5246
+WARNING 2026-06-17 02:27:50,700 basehttp 23912 23224 "GET /api/v1/student/results/ HTTP/1.1" 401 5246
+ERROR 2026-06-17 02:27:59,969 log 17556 18184 Internal Server Error: /api/v1/student/dashboard/
+ERROR 2026-06-17 02:27:59,975 log 17556 18184 Internal Server Error: /api/v1/parent/dashboard/
+ERROR 2026-06-17 02:27:59,981 log 17556 18184 Internal Server Error: /api/v1/student/results/
+ERROR 2026-06-17 02:27:59,985 log 17556 18184 Internal Server Error: /api/v1/student/attendance/
+ERROR 2026-06-17 02:27:59,990 log 17556 18184 Internal Server Error: /api/v1/parent/dashboard/
+WARNING 2026-06-17 02:29:29,144 basehttp 23912 23224 "GET /api/v1/student/results/ HTTP/1.1" 401 172
+ERROR 2026-06-17 02:29:43,618 log 10460 11696 Internal Server Error: /api/v1/student/dashboard/
+ERROR 2026-06-17 02:29:43,632 log 10460 11696 Internal Server Error: /api/v1/parent/dashboard/
+ERROR 2026-06-17 02:29:43,653 log 10460 11696 Internal Server Error: /api/v1/student/results/
+ERROR 2026-06-17 02:29:43,829 log 10460 11696 Internal Server Error: /api/v1/student/attendance/
+ERROR 2026-06-17 02:29:43,848 log 10460 11696 Internal Server Error: /api/v1/parent/dashboard/
+ERROR 2026-06-17 02:34:18,111 log 23912 23224 Internal Server Error: /api/v1/student/results/
+ERROR 2026-06-17 02:34:18,137 basehttp 23912 23224 "GET /api/v1/student/results/ HTTP/1.1" 500 79
+ERROR 2026-06-17 02:34:32,644 log 3272 15124 Internal Server Error: /api/v1/student/dashboard/
+ERROR 2026-06-17 02:34:32,650 log 3272 15124 Internal Server Error: /api/v1/parent/dashboard/
+ERROR 2026-06-17 02:34:32,661 log 3272 15124 Internal Server Error: /api/v1/student/results/
+ERROR 2026-06-17 02:34:32,684 log 3272 15124 Internal Server Error: /api/v1/student/attendance/
+ERROR 2026-06-17 02:34:32,694 log 3272 15124 Internal Server Error: /api/v1/parent/dashboard/
+WARNING 2026-06-17 02:34:42,841 basehttp 23912 23224 "GET /api/v1/student/results/ HTTP/1.1" 401 5246
+WARNING 2026-06-17 02:34:49,286 basehttp 23912 23224 "GET /api/v1/student/results/ HTTP/1.1" 401 5246
+WARNING 2026-06-17 02:34:50,355 basehttp 23912 23224 "GET /api/v1/student/results/ HTTP/1.1" 401 5246
+WARNING 2026-06-17 02:36:55,807 basehttp 23912 7104 "POST /api/v1/auth/login/ HTTP/1.1" 401 7722
+INFO 2026-06-17 02:37:19,330 basehttp 23912 7104 "POST /api/v1/auth/login/ HTTP/1.1" 200 8661
+INFO 2026-06-17 02:37:50,615 autoreload 25452 14456 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\api\views\student_dashboard.py changed, reloading.
+INFO 2026-06-17 02:37:50,812 autoreload 23912 24236 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\api\views\student_dashboard.py changed, reloading.
+INFO 2026-06-17 02:37:54,752 autoreload 23052 25296 Watching for file changes with StatReloader
+INFO 2026-06-17 02:37:54,856 autoreload 13764 8988 Watching for file changes with StatReloader
+WARNING 2026-06-17 02:38:00,033 basehttp 13764 24640 "GET /api/v1/student/dashboard/ HTTP/1.1" 403 63
+WARNING 2026-06-17 02:38:28,727 basehttp 13764 24640 "GET /api/v1/student/results/ HTTP/1.1" 401 5246
+WARNING 2026-06-17 02:38:29,985 basehttp 13764 24640 "GET /api/v1/student/results/ HTTP/1.1" 401 5246
+WARNING 2026-06-17 02:38:30,828 basehttp 13764 24640 "GET /api/v1/student/results/ HTTP/1.1" 401 5246
+WARNING 2026-06-17 02:39:07,820 basehttp 13764 24640 "GET /api/v1/student/dashboard/ HTTP/1.1" 401 5268
+INFO 2026-06-17 02:39:15,751 autoreload 13764 8988 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\api\views\parent_dashboard.py changed, reloading.
+INFO 2026-06-17 02:39:16,030 autoreload 23052 25296 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\api\views\parent_dashboard.py changed, reloading.
+INFO 2026-06-17 02:39:17,823 autoreload 1364 4588 Watching for file changes with StatReloader
+INFO 2026-06-17 02:39:17,934 autoreload 19912 24152 Watching for file changes with StatReloader
+WARNING 2026-06-17 02:41:28,421 basehttp 1364 8020 "POST /api/v1/auth/login/ HTTP/1.1" 401 7722
+INFO 2026-06-17 02:41:47,102 basehttp 1364 8020 "POST /api/v1/auth/login/ HTTP/1.1" 200 8673
+INFO 2026-06-17 02:42:20,064 basehttp 1364 8020 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 225
+INFO 2026-06-17 02:42:30,362 basehttp 1364 8020 "GET /api/v1/student/results/ HTTP/1.1" 200 2
+INFO 2026-06-17 02:42:55,393 basehttp 1364 8020 "GET /api/v1/student/attendance/ HTTP/1.1" 200 99
+WARNING 2026-06-17 02:43:08,569 basehttp 1364 8020 "GET /api/v1/student/dashboard/ HTTP/1.1" 401 5268
+WARNING 2026-06-17 02:43:11,552 basehttp 1364 8020 "GET /api/v1/student/dashboard/ HTTP/1.1" 401 5268
+WARNING 2026-06-17 02:43:16,193 basehttp 1364 8020 "GET /api/v1/student/dashboard/ HTTP/1.1" 401 5268
+WARNING 2026-06-17 02:43:17,308 basehttp 1364 8020 "GET /api/v1/student/dashboard/ HTTP/1.1" 401 5268
+WARNING 2026-06-17 02:43:20,171 basehttp 1364 8020 "GET /api/v1/student/dashboard/?format=json HTTP/1.1" 401 58
+WARNING 2026-06-17 02:43:27,159 basehttp 1364 8020 "GET /api/v1/student/dashboard/?format=json HTTP/1.1" 401 58
+WARNING 2026-06-17 02:43:28,647 basehttp 1364 8020 "GET /api/v1/student/dashboard/ HTTP/1.1" 401 5268
+INFO 2026-06-17 02:43:39,909 basehttp 1364 8020 "GET /api/v1/student/dashboard HTTP/1.1" 301 0
+WARNING 2026-06-17 02:43:39,927 basehttp 1364 17172 "GET /api/v1/student/dashboard/ HTTP/1.1" 401 5268
+WARNING 2026-06-17 02:43:54,314 basehttp 1364 17172 "GET /api/v1/student/results/ HTTP/1.1" 401 5246
+WARNING 2026-06-17 02:43:57,366 basehttp 1364 17172 "GET /api/v1/student/results/ HTTP/1.1" 401 5246
+INFO 2026-06-17 02:45:00,127 basehttp 1364 17172 "POST /api/v1/auth/login/ HTTP/1.1" 200 8667
+ERROR 2026-06-17 02:45:42,835 log 1364 17172 Internal Server Error: /api/v1/parents/
+Traceback (most recent call last):
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 503, in dispatch
+    self.initial(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 421, in initial
+    self.check_permissions(request)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 338, in check_permissions
+    if not permission.has_permission(request, self):
+TypeError: IsAuthenticated.has_permission() missing 1 required positional argument: 'view'
+ERROR 2026-06-17 02:45:42,846 basehttp 1364 17172 "GET /api/v1/parents/ HTTP/1.1" 500 21822
+ERROR 2026-06-17 02:47:16,796 log 1364 17172 Internal Server Error: /api/v1/parents/61/
+Traceback (most recent call last):
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 503, in dispatch
+    self.initial(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 421, in initial
+    self.check_permissions(request)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 338, in check_permissions
+    if not permission.has_permission(request, self):
+TypeError: IsAuthenticated.has_permission() missing 1 required positional argument: 'view'
+ERROR 2026-06-17 02:47:16,814 basehttp 1364 17172 "GET /api/v1/parents/61/ HTTP/1.1" 500 21834
+INFO 2026-06-17 04:30:56,302 autoreload 1364 4588 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\users\views.py changed, reloading.
+INFO 2026-06-17 04:30:56,383 autoreload 19912 24152 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\users\views.py changed, reloading.
+INFO 2026-06-17 04:30:59,128 autoreload 2480 24624 Watching for file changes with StatReloader
+INFO 2026-06-17 04:30:59,129 autoreload 10608 7268 Watching for file changes with StatReloader
+INFO 2026-06-17 04:58:03,626 autoreload 10608 7268 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\users\viewsets.py changed, reloading.
+INFO 2026-06-17 04:58:03,768 autoreload 2480 24624 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\users\viewsets.py changed, reloading.
+INFO 2026-06-17 04:58:06,905 autoreload 25232 17812 Watching for file changes with StatReloader
+INFO 2026-06-17 04:58:07,020 autoreload 15144 9208 Watching for file changes with StatReloader
+INFO 2026-06-17 04:58:48,672 autoreload 25232 17812 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\academics\viewsets.py changed, reloading.
+INFO 2026-06-17 04:58:48,729 autoreload 15144 9208 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\academics\viewsets.py changed, reloading.
+INFO 2026-06-17 04:58:51,256 autoreload 14396 13332 Watching for file changes with StatReloader
+INFO 2026-06-17 04:58:51,303 autoreload 11876 6408 Watching for file changes with StatReloader
+INFO 2026-06-17 05:01:20,495 autoreload 11876 6408 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\academics\viewsets.py changed, reloading.
+INFO 2026-06-17 05:01:21,531 autoreload 14396 13332 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\academics\viewsets.py changed, reloading.
+INFO 2026-06-17 05:01:23,433 autoreload 22180 22408 Watching for file changes with StatReloader
+INFO 2026-06-17 05:01:23,562 autoreload 19912 23904 Watching for file changes with StatReloader
+INFO 2026-06-17 05:03:11,718 autoreload 22180 22408 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\users\serializers.py changed, reloading.
+INFO 2026-06-17 05:03:11,991 autoreload 19912 23904 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\users\serializers.py changed, reloading.
+INFO 2026-06-17 05:03:13,217 autoreload 16680 4468 Watching for file changes with StatReloader
+INFO 2026-06-17 05:03:13,527 autoreload 21608 25292 Watching for file changes with StatReloader
+INFO 2026-06-17 05:06:41,523 autoreload 16680 4468 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\users\permissions.py changed, reloading.
+INFO 2026-06-17 05:06:41,629 autoreload 21608 25292 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\users\permissions.py changed, reloading.
+INFO 2026-06-17 05:06:43,653 autoreload 3540 13164 Watching for file changes with StatReloader
+INFO 2026-06-17 05:06:43,665 autoreload 21724 9200 Watching for file changes with StatReloader
+INFO 2026-06-17 05:07:21,210 autoreload 21724 9200 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\users\permissions.py changed, reloading.
+INFO 2026-06-17 05:07:21,217 autoreload 3540 13164 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\users\permissions.py changed, reloading.
+INFO 2026-06-17 05:07:22,951 autoreload 4216 14604 Watching for file changes with StatReloader
+INFO 2026-06-17 05:07:23,047 autoreload 22460 22240 Watching for file changes with StatReloader
+WARNING 2026-06-17 05:27:29,547 basehttp 4216 25004 "GET /api/v1/parents/ HTTP/1.1" 401 172
+INFO 2026-06-17 05:28:03,085 basehttp 4216 25004 "POST /api/v1/auth/login/ HTTP/1.1" 200 9235
+WARNING 2026-06-17 05:28:32,695 basehttp 4216 25004 "GET /api/v1/parents/ HTTP/1.1" 403 63
+INFO 2026-06-17 05:29:21,525 basehttp 4216 25004 "GET /api/v1/parent/dashboard/ HTTP/1.1" 200 504
+INFO 2026-06-17 05:32:27,940 basehttp 4216 25884 - Broken pipe from ('127.0.0.1', 57095)
+INFO 2026-06-17 05:33:16,733 basehttp 4216 12064 "GET /api/v1/parent/wards/31/ HTTP/1.1" 200 322
+INFO 2026-06-17 05:34:03,056 basehttp 4216 12064 "GET /api/v1/parent/dashboard HTTP/1.1" 301 0
+WARNING 2026-06-17 05:34:03,105 basehttp 4216 8996 "GET /api/v1/parent/dashboard/ HTTP/1.1" 401 5257
+WARNING 2026-06-17 05:34:11,511 basehttp 4216 8996 "GET /api/v1/ HTTP/1.1" 401 5024
+WARNING 2026-06-17 05:34:15,513 basehttp 4216 8996 "GET /api/v1/ HTTP/1.1" 401 5024
+WARNING 2026-06-17 05:34:17,398 basehttp 4216 8996 "GET /api/v1/ HTTP/1.1" 401 5024
+WARNING 2026-06-17 05:34:24,527 basehttp 4216 8996 "GET /api/v1/parent/dashboard/ HTTP/1.1" 401 5257
+WARNING 2026-06-17 05:34:31,914 basehttp 4216 8996 "GET /api/v1/parent/dashboard/ HTTP/1.1" 401 5257
+WARNING 2026-06-17 05:34:33,139 basehttp 4216 8996 "GET /api/v1/parent/dashboard/ HTTP/1.1" 401 5257
+INFO 2026-06-17 05:34:33,885 basehttp 4216 8996 - Broken pipe from ('127.0.0.1', 57266)
+WARNING 2026-06-17 05:34:33,910 basehttp 4216 1192 "GET /api/v1/parent/dashboard/ HTTP/1.1" 401 5257
+INFO 2026-06-17 05:34:34,427 basehttp 4216 1192 - Broken pipe from ('127.0.0.1', 57279)
+WARNING 2026-06-17 05:34:34,467 basehttp 4216 18276 "GET /api/v1/parent/dashboard/ HTTP/1.1" 401 5257
+INFO 2026-06-17 05:34:34,774 basehttp 4216 18276 - Broken pipe from ('127.0.0.1', 57324)
+WARNING 2026-06-17 05:34:34,800 basehttp 4216 23960 "GET /api/v1/parent/dashboard/ HTTP/1.1" 401 5257
+INFO 2026-06-17 05:34:35,125 basehttp 4216 23960 - Broken pipe from ('127.0.0.1', 57326)
+WARNING 2026-06-17 05:34:35,146 basehttp 4216 26240 "GET /api/v1/parent/dashboard/ HTTP/1.1" 401 5257
+INFO 2026-06-17 05:34:35,464 basehttp 4216 26240 - Broken pipe from ('127.0.0.1', 57328)
+WARNING 2026-06-17 05:34:35,485 basehttp 4216 10460 "GET /api/v1/parent/dashboard/ HTTP/1.1" 401 5257
+WARNING 2026-06-17 05:34:39,561 basehttp 4216 10460 "GET /api/v1/ HTTP/1.1" 401 5024
+WARNING 2026-06-17 05:34:45,811 basehttp 4216 10460 "GET /api/v1/auth/login/ HTTP/1.1" 405 7761
+WARNING 2026-06-17 05:35:00,382 basehttp 4216 10460 "POST /api/v1/auth/login/ HTTP/1.1" 401 7722
+INFO 2026-06-17 05:35:12,416 basehttp 4216 10460 "POST /api/v1/auth/login/ HTTP/1.1" 200 8661
+INFO 2026-06-17 05:36:20,005 basehttp 22460 25624 "GET /api/v1/parents/?ordering=students HTTP/1.1" 200 1031
+INFO 2026-06-17 05:36:41,560 basehttp 22460 25624 "GET /api/v1/parents/ HTTP/1.1" 200 1031
+INFO 2026-06-17 05:38:01,932 basehttp 22460 25624 "GET /api/v1/parent-student-relations/?ordering=students&relationship_type=father HTTP/1.1" 200 52
+INFO 2026-06-17 05:38:13,915 basehttp 22460 25624 "GET /api/v1/parent-student-relations/?ordering=students HTTP/1.1" 200 5123
+INFO 2026-06-17 05:51:50,745 autoreload 22460 22240 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\api\views\student_dashboard.py changed, reloading.
+INFO 2026-06-17 05:51:50,767 autoreload 4216 14604 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\api\views\student_dashboard.py changed, reloading.
+INFO 2026-06-17 05:51:54,790 autoreload 8472 17800 Watching for file changes with StatReloader
+INFO 2026-06-17 05:51:54,785 autoreload 19716 26204 Watching for file changes with StatReloader
+INFO 2026-06-17 05:57:18,126 autoreload 8472 17800 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\users\views.py changed, reloading.
+INFO 2026-06-17 05:57:18,137 autoreload 19716 26204 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\users\views.py changed, reloading.
+INFO 2026-06-17 05:57:21,311 autoreload 14780 21024 Watching for file changes with StatReloader
+INFO 2026-06-17 05:57:21,317 autoreload 24324 19352 Watching for file changes with StatReloader
+INFO 2026-06-17 06:00:50,313 autoreload 24324 19352 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\users\views.py changed, reloading.
+INFO 2026-06-17 06:00:50,258 autoreload 14780 21024 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\users\views.py changed, reloading.
+INFO 2026-06-17 06:00:52,435 autoreload 25292 20440 Watching for file changes with StatReloader
+INFO 2026-06-17 06:00:52,452 autoreload 1240 26612 Watching for file changes with StatReloader
+INFO 2026-06-17 06:02:28,055 autoreload 1240 26612 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\users\views.py changed, reloading.
+INFO 2026-06-17 06:02:28,099 autoreload 25292 20440 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\users\views.py changed, reloading.
+INFO 2026-06-17 06:02:29,926 autoreload 14340 23732 Watching for file changes with StatReloader
+INFO 2026-06-17 06:02:29,947 autoreload 22996 7796 Watching for file changes with StatReloader
+ERROR 2026-06-18 00:27:04,027 log 1796 4228 Internal Server Error: /api/v1/students/
+Traceback (most recent call last):
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\utils.py", line 98, in inner
+    return func(*args, **kwargs)
+sqlite3.IntegrityError: FOREIGN KEY constraint failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\mixins.py", line 19, in create
+    self.perform_create(serializer)
+  File "C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\users\viewsets.py", line 82, in perform_create
+    serializer.save()
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\serializers.py", line 210, in save
+    self.instance = self.create(validated_data)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\serializers.py", line 1011, in create
+    instance = ModelClass._default_manager.create(**validated_data)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\query.py", line 665, in create
+    obj.save(force_insert=True, using=self.db)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\base.py", line 902, in save
+    self.save_base(
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\base.py", line 1008, in save_base
+    updated = self._save_table(
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\base.py", line 1169, in _save_table
+    results = self._do_insert(
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\base.py", line 1210, in _do_insert
+    return manager._insert(
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\query.py", line 1873, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\sql\compiler.py", line 1894, in execute_sql
+    self.connection.ops.fetch_returned_insert_columns(
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\backends\base\operations.py", line 215, in fetch_returned_insert_columns
+    return cursor.fetchone()
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\utils.py", line 97, in inner
+    with self:
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\utils.py", line 98, in inner
+    return func(*args, **kwargs)
+django.db.utils.IntegrityError: FOREIGN KEY constraint failed
+INFO 2026-06-18 01:05:44,018 autoreload 19144 4436 Watching for file changes with StatReloader
+INFO 2026-06-18 01:06:10,207 basehttp 19144 16660 "GET /api/docs/ HTTP/1.1" 200 4662
+INFO 2026-06-18 01:06:11,044 basehttp 19144 16660 "GET /api/schema/ HTTP/1.1" 200 251629
+INFO 2026-06-18 01:06:25,934 basehttp 19144 16660 "GET /api/docs/ HTTP/1.1" 200 4662
+INFO 2026-06-18 01:06:26,332 basehttp 19144 16660 "GET /api/schema/ HTTP/1.1" 200 251629
+WARNING 2026-06-18 01:06:48,465 basehttp 19144 16660 "GET /api/v1/auth/login/ HTTP/1.1" 405 7761
+INFO 2026-06-18 01:06:48,937 basehttp 19144 6512 "GET /static/rest_framework/css/default.css HTTP/1.1" 200 1152
+INFO 2026-06-18 01:06:48,947 basehttp 19144 6512 "GET /static/rest_framework/js/csrf.js HTTP/1.1" 200 1793
+INFO 2026-06-18 01:06:48,959 basehttp 19144 15352 "GET /static/rest_framework/css/bootstrap-tweaks.css HTTP/1.1" 200 3426
+INFO 2026-06-18 01:06:48,985 basehttp 19144 15352 "GET /static/rest_framework/js/prettify-min.js HTTP/1.1" 200 13632
+INFO 2026-06-18 01:06:48,990 basehttp 19144 4012 "GET /static/rest_framework/css/prettify.css HTTP/1.1" 200 817
+INFO 2026-06-18 01:06:48,991 basehttp 19144 6512 "GET /static/rest_framework/js/bootstrap.min.js HTTP/1.1" 200 39680
+INFO 2026-06-18 01:06:48,995 basehttp 19144 16660 "GET /static/rest_framework/css/bootstrap.min.css HTTP/1.1" 200 121457
+INFO 2026-06-18 01:06:48,996 basehttp 19144 2488 "GET /static/rest_framework/js/ajax-form.js HTTP/1.1" 200 3796
+INFO 2026-06-18 01:06:48,997 basehttp 19144 13604 "GET /static/rest_framework/js/jquery-3.7.1.min.js HTTP/1.1" 200 87533
+INFO 2026-06-18 01:06:49,010 basehttp 19144 4012 "GET /static/rest_framework/js/default.js HTTP/1.1" 200 1268
+INFO 2026-06-18 01:06:49,025 basehttp 19144 15352 "GET /static/rest_framework/js/load-ajax-form.js HTTP/1.1" 200 59
+INFO 2026-06-18 01:06:49,049 basehttp 19144 15352 "GET /static/rest_framework/img/grid.png HTTP/1.1" 200 1458
+WARNING 2026-06-18 01:06:49,192 basehttp 19144 15352 "GET /favicon.ico HTTP/1.1" 404 2880
+INFO 2026-06-18 01:07:04,697 basehttp 19144 15352 "POST /api/v1/auth/login/ HTTP/1.1" 200 9235
+WARNING 2026-06-18 01:08:31,000 basehttp 19144 15352 "GET /api/v1/student/results/ HTTP/1.1" 401 5246
+WARNING 2026-06-18 01:08:58,361 basehttp 19144 15352 "GET /api/v1/parent/dashboard/ HTTP/1.1" 401 5257
+WARNING 2026-06-18 01:09:08,449 basehttp 19144 15352 "GET /api/v1/parent/dashboard/ HTTP/1.1" 401 5257
+INFO 2026-06-18 01:09:57,943 basehttp 19144 15352 "GET /api/v1/parent/dashboard/ HTTP/1.1" 200 528
+WARNING 2026-06-18 01:13:31,645 basehttp 19144 15352 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2991
+INFO 2026-06-18 01:13:31,774 basehttp 19144 15352 "GET /static/rest_framework/css/bootstrap.min.css.map HTTP/1.1" 200 540434
+WARNING 2026-06-18 01:13:47,904 basehttp 19144 15352 "GET /api/v1/parent/dashboard/ HTTP/1.1" 401 5257
+WARNING 2026-06-18 01:13:48,014 basehttp 19144 15352 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2991
+WARNING 2026-06-18 01:16:38,175 basehttp 19144 15352 "GET /api/v1/parent/dashboard/ HTTP/1.1" 401 5257
+WARNING 2026-06-18 01:16:38,455 basehttp 19144 15352 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 2991
+INFO 2026-06-18 01:22:50,770 autoreload 19144 4436 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\users\serializers.py changed, reloading.
+INFO 2026-06-18 01:22:52,882 autoreload 2748 5792 Watching for file changes with StatReloader
+ERROR 2026-06-18 01:27:26,049 log 14976 5280 Internal Server Error: /api/v1/auth/login/
+Traceback (most recent call last):
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework_simplejwt\views.py", line 46, in post
+    serializer.is_valid(raise_exception=True)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\serializers.py", line 225, in is_valid
+    self._validated_data = self.run_validation(self.initial_data)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\serializers.py", line 459, in run_validation
+    value = self.validate(value)
+  File "C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\users\serializers.py", line 361, in validate
+    data = super().validate(attrs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework_simplejwt\serializers.py", line 73, in validate
+    data = super().validate(attrs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework_simplejwt\serializers.py", line 46, in validate
+    self.username_field: attrs[self.username_field],
+KeyError: 'email'
+ERROR 2026-06-18 01:27:26,190 log 14976 5280 Internal Server Error: /api/v1/auth/login/
+Traceback (most recent call last):
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework_simplejwt\views.py", line 46, in post
+    serializer.is_valid(raise_exception=True)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\serializers.py", line 225, in is_valid
+    self._validated_data = self.run_validation(self.initial_data)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\serializers.py", line 459, in run_validation
+    value = self.validate(value)
+  File "C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\users\serializers.py", line 361, in validate
+    data = super().validate(attrs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework_simplejwt\serializers.py", line 73, in validate
+    data = super().validate(attrs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework_simplejwt\serializers.py", line 46, in validate
+    self.username_field: attrs[self.username_field],
+KeyError: 'email'
+ERROR 2026-06-18 01:27:26,440 log 14976 5280 Internal Server Error: /api/v1/auth/login/
+Traceback (most recent call last):
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework_simplejwt\views.py", line 46, in post
+    serializer.is_valid(raise_exception=True)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\serializers.py", line 225, in is_valid
+    self._validated_data = self.run_validation(self.initial_data)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\serializers.py", line 459, in run_validation
+    value = self.validate(value)
+  File "C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\users\serializers.py", line 361, in validate
+    data = super().validate(attrs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework_simplejwt\serializers.py", line 73, in validate
+    data = super().validate(attrs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework_simplejwt\serializers.py", line 46, in validate
+    self.username_field: attrs[self.username_field],
+KeyError: 'email'
+INFO 2026-06-18 01:30:42,475 autoreload 2748 5792 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\users\serializers.py changed, reloading.
+INFO 2026-06-18 01:30:44,343 autoreload 2432 5480 Watching for file changes with StatReloader
+INFO 2026-06-18 01:32:55,129 autoreload 2432 5480 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\users\serializers.py changed, reloading.
+INFO 2026-06-18 01:32:59,106 autoreload 11960 15364 Watching for file changes with StatReloader
+INFO 2026-06-18 01:33:15,430 basehttp 11960 18556 "GET /admin/ HTTP/1.1" 302 0
+INFO 2026-06-18 01:33:15,535 basehttp 11960 18556 "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4170
+INFO 2026-06-18 01:33:16,032 basehttp 11960 18556 "GET /static/admin/css/base.css HTTP/1.1" 200 22120
+INFO 2026-06-18 01:33:16,108 basehttp 11960 1816 "GET /static/admin/css/login.css HTTP/1.1" 200 951
+INFO 2026-06-18 01:33:16,109 basehttp 11960 8908 "GET /static/admin/css/responsive.css HTTP/1.1" 200 16565
+INFO 2026-06-18 01:33:16,149 basehttp 11960 18940 "GET /static/admin/js/theme.js HTTP/1.1" 200 1653
+INFO 2026-06-18 01:33:16,162 basehttp 11960 15480 "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 200 2810
+INFO 2026-06-18 01:33:16,164 basehttp 11960 7676 "GET /static/admin/css/dark_mode.css HTTP/1.1" 200 2808
+INFO 2026-06-18 01:33:16,198 basehttp 11960 7676 "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 200 3063
+WARNING 2026-06-18 01:33:16,957 basehttp 11960 7676 "GET /favicon.ico HTTP/1.1" 404 2880
+INFO 2026-06-18 01:33:55,638 basehttp 11960 7676 "POST /admin/login/?next=/admin/ HTTP/1.1" 302 0
+INFO 2026-06-18 01:33:55,680 basehttp 11960 7676 "GET /admin/ HTTP/1.1" 200 16000
+INFO 2026-06-18 01:33:55,760 basehttp 11960 7676 "GET /static/admin/css/dashboard.css HTTP/1.1" 200 441
+INFO 2026-06-18 01:33:55,780 basehttp 11960 15480 "GET /static/admin/img/icon-changelink.svg HTTP/1.1" 200 380
+INFO 2026-06-18 01:33:55,781 basehttp 11960 7676 "GET /static/admin/img/icon-addlink.svg HTTP/1.1" 200 331
+INFO 2026-06-18 01:34:33,187 basehttp 11960 7676 "GET /admin/users/studentprofile/ HTTP/1.1" 200 22652
+INFO 2026-06-18 01:34:33,260 basehttp 11960 7676 "GET /static/admin/css/changelists.css HTTP/1.1" 200 6878
+INFO 2026-06-18 01:34:33,261 basehttp 11960 8908 "GET /static/admin/js/jquery.init.js HTTP/1.1" 200 347
+INFO 2026-06-18 01:34:33,267 basehttp 11960 18556 "GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 200 9777
+INFO 2026-06-18 01:34:33,270 basehttp 11960 18940 "GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 200 285314
+INFO 2026-06-18 01:34:33,274 basehttp 11960 1816 "GET /static/admin/js/core.js HTTP/1.1" 200 6208
+INFO 2026-06-18 01:34:33,297 basehttp 11960 15480 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-06-18 01:34:33,306 basehttp 11960 7676 "GET /static/admin/js/urlify.js HTTP/1.1" 200 7887
+INFO 2026-06-18 01:34:33,309 basehttp 11960 18556 "GET /static/admin/js/prepopulate.js HTTP/1.1" 200 1531
+INFO 2026-06-18 01:34:33,310 basehttp 11960 18940 "GET /static/admin/img/search.svg HTTP/1.1" 200 458
+INFO 2026-06-18 01:34:33,328 basehttp 11960 8908 "GET /static/admin/js/actions.js HTTP/1.1" 200 8076
+INFO 2026-06-18 01:34:33,425 basehttp 11960 8908 "GET /static/admin/js/filters.js HTTP/1.1" 200 978
+INFO 2026-06-18 01:34:33,799 basehttp 11960 1816 "GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 200 325171
+INFO 2026-06-18 01:34:33,926 basehttp 11960 1816 "GET /static/admin/img/tooltag-add.svg HTTP/1.1" 200 331
+INFO 2026-06-18 01:34:33,931 basehttp 11960 8908 "GET /static/admin/img/sorting-icons.svg HTTP/1.1" 200 1097
+INFO 2026-06-18 01:34:33,938 basehttp 11960 1816 "GET /static/admin/img/icon-viewlink.svg HTTP/1.1" 200 581
+INFO 2026-06-18 01:35:06,681 basehttp 11960 1816 "POST /admin/users/studentprofile/ HTTP/1.1" 200 15325
+INFO 2026-06-18 01:35:06,739 basehttp 11960 1816 "GET /static/admin/js/cancel.js HTTP/1.1" 200 884
+INFO 2026-06-18 01:35:18,118 basehttp 11960 1816 "POST /admin/users/studentprofile/ HTTP/1.1" 302 0
+INFO 2026-06-18 01:35:18,177 basehttp 11960 1816 "GET /admin/users/studentprofile/ HTTP/1.1" 200 22346
+INFO 2026-06-18 01:35:18,235 basehttp 11960 1816 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-06-18 01:35:18,261 basehttp 11960 1816 "GET /static/admin/img/icon-yes.svg HTTP/1.1" 200 436
+INFO 2026-06-18 01:36:10,711 basehttp 11960 1816 "GET /admin/ HTTP/1.1" 200 16364
+INFO 2026-06-18 01:36:10,765 basehttp 11960 1816 "GET /static/admin/img/icon-deletelink.svg HTTP/1.1" 200 392
+INFO 2026-06-18 01:36:17,843 basehttp 11960 1816 "POST /admin/logout/ HTTP/1.1" 200 3568
+INFO 2026-06-18 01:36:20,100 basehttp 11960 1816 "GET /admin/ HTTP/1.1" 302 0
+INFO 2026-06-18 01:36:20,114 basehttp 11960 1816 "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4170
+INFO 2026-06-18 01:36:35,004 basehttp 11960 1816 "POST /admin/login/?next=/admin/ HTTP/1.1" 200 4339
+INFO 2026-06-18 01:36:49,368 basehttp 11960 1816 "POST /admin/login/?next=/admin/ HTTP/1.1" 302 0
+INFO 2026-06-18 01:36:49,395 basehttp 11960 1816 "GET /admin/ HTTP/1.1" 200 16364
+WARNING 2026-06-18 01:36:54,990 basehttp 11960 1816 "GET / HTTP/1.1" 404 2829
+INFO 2026-06-18 01:37:20,429 basehttp 11960 1816 "GET /admin/ HTTP/1.1" 200 16364
+INFO 2026-06-18 01:37:30,568 basehttp 11960 1816 "GET /admin/academics/course/ HTTP/1.1" 200 27922
+INFO 2026-06-18 01:37:30,638 basehttp 11960 1816 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-06-18 01:38:00,878 basehttp 11960 1816 "GET /admin/ HTTP/1.1" 200 16364
+INFO 2026-06-18 01:38:05,958 basehttp 11960 1816 "GET /admin/ HTTP/1.1" 200 16364
+INFO 2026-06-18 01:38:16,283 basehttp 11960 1816 "POST /admin/logout/ HTTP/1.1" 200 3568
+INFO 2026-06-18 01:38:19,135 basehttp 11960 1816 "GET /admin/ HTTP/1.1" 302 0
+INFO 2026-06-18 01:38:19,153 basehttp 11960 1816 "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4170
+INFO 2026-06-18 01:45:07,673 basehttp 11960 15888 "POST /api/v1/auth/login/ HTTP/1.1" 200 9518
+INFO 2026-06-18 01:45:32,851 basehttp 11960 15888 "POST /api/v1/auth/login/ HTTP/1.1" 200 9650
+INFO 2026-06-18 01:48:00,288 basehttp 11960 11092 "POST /admin/login/?next=/admin/ HTTP/1.1" 302 0
+INFO 2026-06-18 01:48:00,342 basehttp 11960 11092 "GET /admin/ HTTP/1.1" 200 16364
+INFO 2026-06-18 01:48:05,641 basehttp 11960 11092 "GET /admin/users/studentprofile/ HTTP/1.1" 200 22201
+INFO 2026-06-18 01:48:05,720 basehttp 11960 11092 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+ERROR 2026-06-18 01:48:13,311 log 11960 11092 Internal Server Error: /admin/users/studentprofile/32/change/
+Traceback (most recent call last):
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\contrib\admin\options.py", line 841, in get_form
+    return modelform_factory(self.model, **defaults)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\forms\models.py", line 654, in modelform_factory
+    return type(form)(class_name, (form,), form_class_attrs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\forms\models.py", line 312, in __new__
+    fields = fields_for_model(
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\forms\models.py", line 207, in fields_for_model
+    raise FieldError(
+django.core.exceptions.FieldError: 'enrollment_date' cannot be specified for StudentProfile model form as it is a non-editable field
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\contrib\admin\options.py", line 720, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\contrib\admin\sites.py", line 246, in inner
+    return view(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\contrib\admin\options.py", line 1988, in change_view
+    return self.changeform_view(request, object_id, form_url, extra_context)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\contrib\admin\options.py", line 1841, in changeform_view
+    return self._changeform_view(request, object_id, form_url, extra_context)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\contrib\admin\options.py", line 1879, in _changeform_view
+    ModelForm = self.get_form(
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\contrib\admin\options.py", line 843, in get_form
+    raise FieldError(
+django.core.exceptions.FieldError: 'enrollment_date' cannot be specified for StudentProfile model form as it is a non-editable field. Check fields/fieldsets/exclude attributes of class StudentProfileAdmin.
+ERROR 2026-06-18 01:48:13,323 basehttp 11960 11092 "GET /admin/users/studentprofile/32/change/ HTTP/1.1" 500 157491
+INFO 2026-06-18 01:48:25,897 basehttp 11960 11092 "GET /admin/users/studentprofile/ HTTP/1.1" 200 22201
+INFO 2026-06-18 01:48:46,367 basehttp 11960 15888 "POST /api/v1/auth/login/ HTTP/1.1" 200 9654
+INFO 2026-06-18 02:38:48,153 autoreload 21772 4412 Watching for file changes with StatReloader
+INFO 2026-06-18 02:39:06,535 autoreload 11492 13328 Watching for file changes with StatReloader
+INFO 2026-06-18 02:39:32,397 autoreload 20280 9840 Watching for file changes with StatReloader
+INFO 2026-06-18 02:39:50,777 basehttp 20280 18452 "POST /api/v1/auth/login/ HTTP/1.1" 200 9654
+INFO 2026-06-18 02:40:03,599 autoreload 9492 21820 Watching for file changes with StatReloader
+INFO 2026-06-18 02:40:10,339 basehttp 20280 1860 "GET /admin/users/studentprofile/ HTTP/1.1" 200 22201
+INFO 2026-06-18 02:40:13,671 basehttp 20280 1860 "GET /admin/users/studentprofile/ HTTP/1.1" 200 22201
+INFO 2026-06-18 02:40:13,732 basehttp 20280 1860 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-06-18 02:40:15,118 basehttp 20280 1860 "GET /admin/users/studentprofile/ HTTP/1.1" 200 22201
+INFO 2026-06-18 02:40:15,178 basehttp 20280 1860 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+ERROR 2026-06-18 02:40:21,413 log 20280 1860 Internal Server Error: /admin/users/studentprofile/add/
+Traceback (most recent call last):
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\contrib\admin\options.py", line 841, in get_form
+    return modelform_factory(self.model, **defaults)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\forms\models.py", line 654, in modelform_factory
+    return type(form)(class_name, (form,), form_class_attrs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\forms\models.py", line 312, in __new__
+    fields = fields_for_model(
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\forms\models.py", line 207, in fields_for_model
+    raise FieldError(
+django.core.exceptions.FieldError: 'enrollment_date' cannot be specified for StudentProfile model form as it is a non-editable field
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\contrib\admin\options.py", line 720, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\contrib\admin\sites.py", line 246, in inner
+    return view(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\contrib\admin\options.py", line 1985, in add_view
+    return self.changeform_view(request, None, form_url, extra_context)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\contrib\admin\options.py", line 1841, in changeform_view
+    return self._changeform_view(request, object_id, form_url, extra_context)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\contrib\admin\options.py", line 1879, in _changeform_view
+    ModelForm = self.get_form(
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\contrib\admin\options.py", line 843, in get_form
+    raise FieldError(
+django.core.exceptions.FieldError: 'enrollment_date' cannot be specified for StudentProfile model form as it is a non-editable field. Check fields/fieldsets/exclude attributes of class StudentProfileAdmin.
+ERROR 2026-06-18 02:40:21,497 basehttp 20280 1860 "GET /admin/users/studentprofile/add/ HTTP/1.1" 500 157938
+INFO 2026-06-18 02:40:24,977 basehttp 20280 1860 "GET /admin/users/studentprofile/ HTTP/1.1" 200 22201
+INFO 2026-06-18 02:40:55,433 autoreload 22328 15988 Watching for file changes with StatReloader
+INFO 2026-06-18 02:41:08,354 basehttp 20280 1860 "POST /admin/users/studentprofile/ HTTP/1.1" 200 15322
+INFO 2026-06-18 02:41:10,710 basehttp 20280 1860 "POST /admin/users/studentprofile/ HTTP/1.1" 302 0
+INFO 2026-06-18 02:41:10,756 basehttp 20280 1860 "GET /admin/users/studentprofile/ HTTP/1.1" 200 21900
+INFO 2026-06-18 02:41:10,812 basehttp 20280 1860 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-06-18 02:41:26,538 autoreload 12992 17356 Watching for file changes with StatReloader
+INFO 2026-06-18 02:42:49,986 basehttp 20280 1860 "POST /admin/logout/ HTTP/1.1" 200 3568
+INFO 2026-06-18 02:42:59,673 basehttp 20280 19000 "POST /api/v1/auth/login/ HTTP/1.1" 200 710
+WARNING 2026-06-18 02:43:09,244 basehttp 20280 21212 "POST /api/v1/auth/login/ HTTP/1.1" 400 62
+WARNING 2026-06-18 02:43:12,098 basehttp 20280 11052 "POST /api/v1/auth/login/ HTTP/1.1" 400 62
+INFO 2026-06-18 02:43:40,974 basehttp 20280 8228 "POST /api/v1/auth/login/ HTTP/1.1" 200 978
+INFO 2026-06-18 02:43:42,663 basehttp 20280 18724 "POST /api/v1/auth/login/ HTTP/1.1" 200 918
+INFO 2026-06-18 02:43:51,065 basehttp 20280 13164 "POST /api/v1/auth/login/ HTTP/1.1" 200 978
+INFO 2026-06-18 02:43:58,295 basehttp 20280 22364 "POST /api/v1/auth/login/ HTTP/1.1" 200 918
+INFO 2026-06-18 02:44:20,169 basehttp 20280 21252 "POST /api/v1/auth/login/ HTTP/1.1" 200 710
+INFO 2026-06-18 02:44:22,237 basehttp 20280 16840 "GET /api/v1/auth/me/ HTTP/1.1" 200 263
+INFO 2026-06-18 02:44:37,486 basehttp 20280 1420 "POST /api/v1/auth/login/ HTTP/1.1" 200 710
+WARNING 2026-06-18 02:44:39,528 basehttp 20280 4736 "POST /api/v1/auth/logout/ HTTP/1.1" 401 58
+INFO 2026-06-18 02:44:58,736 basehttp 20280 18936 "POST /api/v1/auth/login/ HTTP/1.1" 200 710
+INFO 2026-06-18 02:45:00,823 basehttp 20280 9396 "POST /api/v1/auth/logout/ HTTP/1.1" 200 53
+INFO 2026-06-18 02:45:28,149 basehttp 20280 9272 "POST /api/v1/auth/login/ HTTP/1.1" 200 978
+INFO 2026-06-18 02:45:30,409 basehttp 20280 21112 "GET /api/v1/student/results/ HTTP/1.1" 200 26
+INFO 2026-06-18 02:45:39,954 basehttp 20280 21724 "POST /api/v1/auth/login/ HTTP/1.1" 200 978
+INFO 2026-06-18 02:45:42,041 basehttp 20280 3720 "GET /api/v1/student/attendance/ HTTP/1.1" 200 123
+INFO 2026-06-18 02:45:45,004 basehttp 20280 4412 "POST /api/v1/auth/login/ HTTP/1.1" 200 978
+INFO 2026-06-18 02:45:47,092 basehttp 20280 18252 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 249
+INFO 2026-06-18 02:46:03,488 basehttp 20280 15788 "GET /api/docs/ HTTP/1.1" 200 4662
+INFO 2026-06-18 02:46:03,653 basehttp 20280 8660 "POST /api/v1/auth/login/ HTTP/1.1" 200 918
+WARNING 2026-06-18 02:46:06,164 basehttp 20280 6820 "GET /api/v1/parent/wards/51/ HTTP/1.1" 403 86
+INFO 2026-06-18 02:55:15,800 basehttp 20280 19284 "GET /admin/ HTTP/1.1" 302 0
+INFO 2026-06-18 02:55:16,152 basehttp 20280 19284 "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4170
+INFO 2026-06-18 02:55:48,651 basehttp 20280 19284 "POST /admin/login/?next=/admin/ HTTP/1.1" 200 4349
+INFO 2026-06-18 02:56:36,212 basehttp 20280 19284 "POST /admin/login/?next=/admin/ HTTP/1.1" 200 4346
+INFO 2026-06-18 02:56:55,116 basehttp 20280 19284 "POST /admin/login/?next=/admin/ HTTP/1.1" 200 4346
+INFO 2026-06-18 02:57:06,482 basehttp 20280 19284 "POST /admin/login/?next=/admin/ HTTP/1.1" 302 0
+INFO 2026-06-18 02:57:06,544 basehttp 20280 19284 "GET /admin/ HTTP/1.1" 200 16694
+INFO 2026-06-18 02:57:13,435 basehttp 20280 19284 "POST /admin/logout/ HTTP/1.1" 200 3568
+INFO 2026-06-18 02:57:15,503 basehttp 20280 19284 "GET /admin/ HTTP/1.1" 302 0
+INFO 2026-06-18 02:57:15,519 basehttp 20280 19284 "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4170
+INFO 2026-06-18 02:57:56,931 basehttp 20280 19284 "POST /admin/login/?next=/admin/ HTTP/1.1" 200 4346
+INFO 2026-06-18 02:59:05,046 basehttp 20280 19796 "POST /api/v1/auth/login/ HTTP/1.1" 200 8944
+INFO 2026-06-18 02:59:24,374 basehttp 20280 19284 "POST /admin/login/?next=/admin/ HTTP/1.1" 302 0
+INFO 2026-06-18 02:59:24,401 basehttp 20280 19284 "GET /admin/ HTTP/1.1" 200 15986
+INFO 2026-06-18 02:59:35,123 basehttp 20280 19284 "GET /admin/users/studentprofile/ HTTP/1.1" 200 21741
+INFO 2026-06-18 02:59:35,213 basehttp 20280 19284 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2026-06-18 02:59:40,279 basehttp 20280 19284 "POST /admin/logout/ HTTP/1.1" 200 3568
+INFO 2026-06-18 02:59:42,188 basehttp 20280 19284 "GET /admin/ HTTP/1.1" 302 0
+INFO 2026-06-18 02:59:42,212 basehttp 20280 19284 "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4170
+INFO 2026-06-18 02:59:51,418 basehttp 20280 19284 "POST /admin/login/?next=/admin/ HTTP/1.1" 302 0
+INFO 2026-06-18 02:59:51,444 basehttp 20280 19284 "GET /admin/ HTTP/1.1" 200 16694
+INFO 2026-06-18 02:59:54,469 basehttp 20280 19284 "POST /admin/logout/ HTTP/1.1" 200 3568
+INFO 2026-06-18 02:59:57,661 basehttp 20280 19284 "GET /admin/ HTTP/1.1" 302 0
+INFO 2026-06-18 02:59:57,689 basehttp 20280 19284 "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4170
+INFO 2026-06-18 03:00:12,090 basehttp 20280 19796 "POST /api/v1/auth/login/ HTTP/1.1" 200 9650
+INFO 2026-06-18 03:00:26,127 basehttp 20280 19284 "POST /admin/login/?next=/admin/ HTTP/1.1" 200 4349
+INFO 2026-06-20 14:24:40,071 autoreload 10356 11360 Watching for file changes with StatReloader
+INFO 2026-06-20 14:26:18,414 autoreload 1848 21812 Watching for file changes with StatReloader
+INFO 2026-06-20 14:27:26,804 basehttp 1848 21428 "POST /api/v1/auth/login/ HTTP/1.1" 200 918
+INFO 2026-06-20 14:27:28,874 basehttp 1848 15404 "GET /api/v1/parent/dashboard/ HTTP/1.1" 200 528
+INFO 2026-06-20 14:28:03,707 basehttp 1848 20644 "POST /api/v1/auth/login/ HTTP/1.1" 200 918
+INFO 2026-06-20 14:28:05,760 basehttp 1848 14228 "GET /api/v1/parent/dashboard/ HTTP/1.1" 200 504
+INFO 2026-06-20 14:28:51,922 basehttp 1848 8612 "POST /api/v1/auth/login/ HTTP/1.1" 200 918
+INFO 2026-06-20 14:28:52,818 basehttp 1848 16504 "GET /api/docs/ HTTP/1.1" 200 4662
+WARNING 2026-06-20 14:28:54,398 basehttp 1848 19076 "GET /api/v1/parent/wards/51/ HTTP/1.1" 403 86
+INFO 2026-06-20 14:28:56,932 basehttp 1848 13652 "GET /api/schema/ HTTP/1.1" 200 129935
+INFO 2026-06-20 14:29:58,736 basehttp 1848 23972 "POST /api/v1/auth/login/ HTTP/1.1" 200 918
+INFO 2026-06-20 14:30:00,813 basehttp 1848 24336 "GET /api/v1/parent/wards/31/ HTTP/1.1" 200 346
+INFO 2026-06-20 14:32:29,693 basehttp 1848 17856 "POST /api/v1/auth/login/ HTTP/1.1" 200 918
+INFO 2026-06-20 14:32:31,754 basehttp 1848 8036 "GET /api/v1/parent/wards/31/ HTTP/1.1" 200 322
+INFO 2026-06-20 14:34:36,724 basehttp 1848 15212 "POST /api/v1/auth/login/ HTTP/1.1" 200 978
+WARNING 2026-06-20 14:34:38,784 basehttp 1848 3824 "GET /api/v1/parent/dashboard/ HTTP/1.1" 403 63
+INFO 2026-06-20 14:34:41,446 basehttp 1848 17856 "POST /api/v1/auth/login/ HTTP/1.1" 200 918
+WARNING 2026-06-20 14:34:43,496 basehttp 1848 23700 "GET /api/v1/student/dashboard/ HTTP/1.1" 403 63
+INFO 2026-06-20 14:35:10,720 basehttp 1848 23040 "POST /api/v1/auth/login/ HTTP/1.1" 200 710
+WARNING 2026-06-20 14:35:13,175 basehttp 1848 11056 "GET /api/v1/student/dashboard/ HTTP/1.1" 403 63
+INFO 2026-06-20 14:36:06,207 basehttp 1848 8108 "GET /api/schema/ HTTP/1.1" 200 129935
+INFO 2026-06-20 14:36:32,099 basehttp 1848 23644 "GET /api/schema/ HTTP/1.1" 200 129935
+INFO 2026-06-20 14:37:11,867 basehttp 1848 8140 "GET /api/schema/ HTTP/1.1" 200 129935
+INFO 2026-06-20 22:14:25,235 autoreload 19212 25280 Watching for file changes with StatReloader
+INFO 2026-06-20 22:15:52,807 autoreload 27708 18592 Watching for file changes with StatReloader
+INFO 2026-06-20 22:17:46,573 autoreload 28152 23984 Watching for file changes with StatReloader
+INFO 2026-06-21 02:30:35,579 basehttp 10356 26980 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:30:56,479 basehttp 10356 26980 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:30:59,243 basehttp 10356 26980 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:31:12,394 basehttp 10356 26980 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:31:13,613 basehttp 10356 26980 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:31:35,168 basehttp 10356 26980 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:31:38,767 basehttp 10356 26980 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+WARNING 2026-06-21 02:31:48,274 basehttp 10356 29432 "GET / HTTP/1.1" 404 2829
+WARNING 2026-06-21 02:31:48,662 basehttp 10356 29432 "GET /favicon.ico HTTP/1.1" 404 2880
+INFO 2026-06-21 02:32:34,752 basehttp 10356 29432 "GET /api/v1/auth/login HTTP/1.1" 301 0
+WARNING 2026-06-21 02:32:35,306 basehttp 10356 22332 "GET /api/v1/auth/login/ HTTP/1.1" 405 8044
+INFO 2026-06-21 02:32:35,696 basehttp 10356 22332 "GET /static/rest_framework/css/bootstrap.min.css HTTP/1.1" 200 121457
+INFO 2026-06-21 02:32:35,737 basehttp 10356 30756 "GET /static/rest_framework/css/bootstrap-tweaks.css HTTP/1.1" 200 3426
+INFO 2026-06-21 02:32:35,758 basehttp 10356 31836 "GET /static/rest_framework/css/prettify.css HTTP/1.1" 200 817
+INFO 2026-06-21 02:32:35,822 basehttp 10356 22332 "GET /static/rest_framework/js/bootstrap.min.js HTTP/1.1" 200 39680
+INFO 2026-06-21 02:32:35,833 basehttp 10356 30756 "GET /static/rest_framework/js/csrf.js HTTP/1.1" 200 1793
+INFO 2026-06-21 02:32:35,842 basehttp 10356 31836 "GET /static/rest_framework/js/prettify-min.js HTTP/1.1" 200 13632
+INFO 2026-06-21 02:32:35,854 basehttp 10356 22332 "GET /static/rest_framework/js/default.js HTTP/1.1" 200 1268
+INFO 2026-06-21 02:32:35,859 basehttp 10356 33496 "GET /static/rest_framework/css/default.css HTTP/1.1" 200 1152
+INFO 2026-06-21 02:32:35,884 basehttp 10356 33340 "GET /static/rest_framework/js/jquery-3.7.1.min.js HTTP/1.1" 200 87533
+INFO 2026-06-21 02:32:35,908 basehttp 10356 33252 "GET /static/rest_framework/js/ajax-form.js HTTP/1.1" 200 3796
+INFO 2026-06-21 02:32:35,943 basehttp 10356 30756 "GET /static/rest_framework/js/load-ajax-form.js HTTP/1.1" 200 59
+INFO 2026-06-21 02:32:36,283 basehttp 10356 33340 "GET /static/rest_framework/img/grid.png HTTP/1.1" 200 1458
+INFO 2026-06-21 02:33:15,320 basehttp 10356 33340 "POST /api/v1/auth/login/ HTTP/1.1" 200 8944
+INFO 2026-06-21 02:34:00,227 basehttp 10356 26980 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:34:07,846 basehttp 10356 26980 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:34:08,828 basehttp 10356 26980 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:34:09,686 basehttp 10356 26980 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:34:10,707 basehttp 10356 26980 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:34:22,428 basehttp 10356 26980 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:34:23,395 basehttp 10356 26980 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:34:24,099 basehttp 10356 26980 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:34:49,401 basehttp 10356 33340 "POST /api/v1/auth/login/ HTTP/1.1" 200 9650
+INFO 2026-06-21 02:35:12,132 basehttp 10356 26980 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:35:13,034 basehttp 10356 26980 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:35:13,935 basehttp 10356 26980 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:35:16,828 basehttp 10356 26980 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:35:25,659 basehttp 10356 26980 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:35:27,053 basehttp 10356 26980 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:35:27,902 basehttp 10356 26980 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+WARNING 2026-06-21 02:35:48,649 basehttp 10356 33340 "GET /api/v1/ HTTP/1.1" 401 5024
+WARNING 2026-06-21 02:36:00,600 basehttp 10356 33340 "GET /api/v1/ HTTP/1.1" 401 5024
+INFO 2026-06-21 02:37:06,087 basehttp 10356 33164 "GET /api/docs/ HTTP/1.1" 200 4662
+INFO 2026-06-21 02:37:08,960 basehttp 10356 33164 "GET /api/schema/ HTTP/1.1" 200 251826
+INFO 2026-06-21 02:37:42,643 basehttp 10356 26980 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:37:43,484 basehttp 10356 26980 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:37:44,149 basehttp 10356 26980 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:37:47,832 basehttp 10356 26980 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:37:48,566 basehttp 10356 26980 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:37:52,873 basehttp 10356 26980 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:37:53,612 basehttp 10356 26980 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:37:54,148 basehttp 10356 26980 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:37:54,497 basehttp 10356 26980 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:38:47,615 basehttp 10356 4816 "POST /api/v1/auth/login/ HTTP/1.1" 200 710
+INFO 2026-06-21 02:39:11,626 basehttp 10356 4864 "POST /api/v1/auth/login/ HTTP/1.1" 200 710
+INFO 2026-06-21 02:39:45,068 basehttp 10356 26856 "POST /api/v1/auth/login/ HTTP/1.1" 200 978
+INFO 2026-06-21 02:40:03,645 basehttp 10356 28632 "POST /api/v1/auth/login/ HTTP/1.1" 200 918
+INFO 2026-06-21 02:40:39,167 basehttp 10356 23060 "POST /api/v1/auth/login/ HTTP/1.1" 200 710
+INFO 2026-06-21 02:40:39,367 basehttp 10356 28356 "POST /api/v1/auth/refresh/ HTTP/1.1" 200 582
+INFO 2026-06-21 02:42:03,094 basehttp 10356 26980 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:42:04,136 basehttp 10356 26980 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:42:04,975 basehttp 10356 26980 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:42:13,963 basehttp 10356 26980 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:42:15,319 basehttp 10356 26980 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:42:17,081 basehttp 10356 26980 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:42:17,983 basehttp 10356 26980 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:42:18,780 basehttp 10356 26980 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:46:10,813 basehttp 10356 30416 "POST /api/v1/auth/login/ HTTP/1.1" 200 978
+INFO 2026-06-21 02:46:10,981 basehttp 10356 24584 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 249
+INFO 2026-06-21 02:47:05,686 basehttp 10356 15288 "POST /api/v1/auth/login/ HTTP/1.1" 200 978
+INFO 2026-06-21 02:47:05,841 basehttp 10356 28160 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 225
+WARNING 2026-06-21 02:47:05,875 basehttp 10356 1988 "GET /api/v1/parent/dashboard/ HTTP/1.1" 403 63
+INFO 2026-06-21 02:47:08,378 basehttp 10356 29956 "POST /api/v1/auth/login/ HTTP/1.1" 200 918
+INFO 2026-06-21 02:47:08,463 basehttp 10356 25668 "GET /api/v1/parent/dashboard/ HTTP/1.1" 200 528
+WARNING 2026-06-21 02:47:08,481 basehttp 10356 29772 "GET /api/v1/student/dashboard/ HTTP/1.1" 403 63
+INFO 2026-06-21 02:47:10,247 basehttp 10356 3888 "POST /api/v1/auth/login/ HTTP/1.1" 200 710
+WARNING 2026-06-21 02:47:10,346 basehttp 10356 29980 "GET /api/v1/admin/dashboard/ HTTP/1.1" 404 28216
+INFO 2026-06-21 02:50:39,433 basehttp 10356 28472 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:50:40,900 basehttp 10356 28472 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:50:46,171 basehttp 10356 28472 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:50:47,054 basehttp 10356 28472 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:50:47,711 basehttp 10356 28472 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:50:49,626 basehttp 10356 28472 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:50:50,372 basehttp 10356 28472 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:52:56,800 basehttp 10356 28472 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:52:58,245 basehttp 10356 28472 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:52:59,183 basehttp 10356 28472 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:53:05,976 basehttp 10356 28472 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:53:08,077 basehttp 10356 28472 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:53:18,183 basehttp 10356 28472 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:53:18,912 basehttp 10356 28472 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:53:57,396 autoreload 30232 16616 Watching for file changes with StatReloader
+INFO 2026-06-21 02:54:37,417 basehttp 10356 11936 "POST /api/v1/auth/login/ HTTP/1.1" 200 710
+INFO 2026-06-21 02:54:43,130 basehttp 10356 32832 "POST /api/v1/auth/login/ HTTP/1.1" 200 710
+INFO 2026-06-21 02:55:28,297 basehttp 10356 33236 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:55:46,669 basehttp 10356 33236 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:55:48,540 basehttp 10356 33236 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:55:49,240 basehttp 10356 33236 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:55:49,571 basehttp 10356 33236 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:55:49,803 basehttp 10356 33236 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:55:50,013 basehttp 10356 33236 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:55:50,190 basehttp 10356 33236 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:55:50,388 basehttp 10356 33236 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:55:50,566 basehttp 10356 33236 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:55:50,746 basehttp 10356 33236 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:55:50,897 basehttp 10356 33236 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:55:51,289 basehttp 10356 33236 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:55:51,486 basehttp 10356 33236 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:55:52,073 basehttp 10356 33236 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:55:54,240 basehttp 10356 33236 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:55:55,288 basehttp 10356 33236 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:55:56,136 basehttp 10356 33236 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:59:05,972 basehttp 10356 33236 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:59:07,574 basehttp 10356 33236 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 02:59:08,315 basehttp 10356 33236 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 03:13:41,511 basehttp 10356 884 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 03:13:49,011 basehttp 10356 884 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 03:13:50,347 basehttp 10356 884 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 03:17:09,423 basehttp 10356 29976 "GET /api/docs/ HTTP/1.1" 200 4662
+INFO 2026-06-21 03:17:10,963 basehttp 10356 29976 "GET /api/schema/ HTTP/1.1" 200 251826
+INFO 2026-06-21 03:18:18,330 autoreload 2360 25700 Watching for file changes with StatReloader
+INFO 2026-06-21 03:18:35,059 basehttp 10356 29976 "GET /api/docs/ HTTP/1.1" 200 4662
+INFO 2026-06-21 03:18:37,205 basehttp 10356 29976 "GET /api/schema/ HTTP/1.1" 200 251826
+INFO 2026-06-21 03:19:05,745 basehttp 2360 23332 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 03:19:57,218 basehttp 2360 23332 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 03:20:17,269 basehttp 2360 23332 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 03:29:23,042 autoreload 10356 11360 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\school_monitoring_system\settings.py changed, reloading.
+INFO 2026-06-21 03:29:23,194 autoreload 2360 25700 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\school_monitoring_system\settings.py changed, reloading.
+INFO 2026-06-21 03:29:23,281 autoreload 1848 21812 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\school_monitoring_system\settings.py changed, reloading.
+INFO 2026-06-21 03:29:23,469 autoreload 19212 25280 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\school_monitoring_system\settings.py changed, reloading.
+INFO 2026-06-21 03:29:23,714 autoreload 28152 23984 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\school_monitoring_system\settings.py changed, reloading.
+INFO 2026-06-21 03:29:23,769 autoreload 30232 16616 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\school_monitoring_system\settings.py changed, reloading.
+INFO 2026-06-21 03:29:25,048 autoreload 27708 18592 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\school_monitoring_system\settings.py changed, reloading.
+INFO 2026-06-21 03:29:37,731 autoreload 28516 2892 Watching for file changes with StatReloader
+INFO 2026-06-21 03:29:37,730 autoreload 23456 22676 Watching for file changes with StatReloader
+INFO 2026-06-21 03:29:37,735 autoreload 16268 8456 Watching for file changes with StatReloader
+INFO 2026-06-21 03:29:37,730 autoreload 23328 15444 Watching for file changes with StatReloader
+INFO 2026-06-21 03:29:37,731 autoreload 17892 30308 Watching for file changes with StatReloader
+INFO 2026-06-21 03:29:37,730 autoreload 13512 15884 Watching for file changes with StatReloader
+INFO 2026-06-21 03:29:37,732 autoreload 30752 32916 Watching for file changes with StatReloader
+INFO 2026-06-21 03:29:47,265 autoreload 30752 32916 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\school_monitoring_system\settings.py changed, reloading.
+INFO 2026-06-21 03:29:47,265 autoreload 17892 30308 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\school_monitoring_system\settings.py changed, reloading.
+INFO 2026-06-21 03:29:47,763 autoreload 28516 2892 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\school_monitoring_system\settings.py changed, reloading.
+INFO 2026-06-21 03:29:47,969 autoreload 23456 22676 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\school_monitoring_system\settings.py changed, reloading.
+INFO 2026-06-21 03:29:48,147 autoreload 16268 8456 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\school_monitoring_system\settings.py changed, reloading.
+INFO 2026-06-21 03:29:48,389 autoreload 23328 15444 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\school_monitoring_system\settings.py changed, reloading.
+INFO 2026-06-21 03:29:48,529 autoreload 13512 15884 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\school_monitoring_system\settings.py changed, reloading.
+INFO 2026-06-21 03:29:50,811 autoreload 15960 12728 Watching for file changes with StatReloader
+INFO 2026-06-21 03:29:50,861 autoreload 21188 22652 Watching for file changes with StatReloader
+INFO 2026-06-21 03:29:51,922 autoreload 32216 31916 Watching for file changes with StatReloader
+INFO 2026-06-21 03:29:53,365 autoreload 2560 440 Watching for file changes with StatReloader
+INFO 2026-06-21 03:29:53,816 autoreload 33660 30464 Watching for file changes with StatReloader
+INFO 2026-06-21 03:29:53,810 autoreload 22264 22972 Watching for file changes with StatReloader
+INFO 2026-06-21 03:29:53,837 autoreload 17404 19732 Watching for file changes with StatReloader
+INFO 2026-06-21 03:30:15,576 autoreload 25744 22940 Watching for file changes with StatReloader
+INFO 2026-06-21 03:30:56,281 basehttp 21188 29772 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 0
+INFO 2026-06-21 03:31:06,405 basehttp 21188 33296 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 557
+INFO 2026-06-21 03:31:20,883 basehttp 21188 25836 "POST /api/v1/auth/login/ HTTP/1.1" 200 710
+INFO 2026-06-21 03:31:43,135 basehttp 21188 25688 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 0
+INFO 2026-06-21 03:31:45,153 basehttp 21188 25688 "POST /api/v1/auth/login/ HTTP/1.1" 200 710
+INFO 2026-06-21 03:32:07,274 basehttp 21188 25688 "OPTIONS /api/v1/auth/logout/ HTTP/1.1" 200 0
+INFO 2026-06-21 03:32:07,335 basehttp 21188 25688 "POST /api/v1/auth/logout/ HTTP/1.1" 200 53
+INFO 2026-06-21 03:32:24,827 basehttp 21188 20304 "POST /api/v1/auth/login/ HTTP/1.1" 200 710
+INFO 2026-06-21 03:32:24,991 basehttp 21188 28828 "GET /api/v1/auth/me/ HTTP/1.1" 200 263
+WARNING 2026-06-21 03:32:50,369 basehttp 21188 25688 "POST /api/v1/auth/login/ HTTP/1.1" 400 62
+WARNING 2026-06-21 03:32:58,262 basehttp 21188 25688 "POST /api/v1/auth/login/ HTTP/1.1" 400 62
+INFO 2026-06-21 03:33:06,806 basehttp 21188 25688 "POST /api/v1/auth/login/ HTTP/1.1" 200 710
+INFO 2026-06-21 03:33:23,268 basehttp 21188 25688 "POST /api/v1/auth/logout/ HTTP/1.1" 200 53
+INFO 2026-06-21 03:33:40,808 basehttp 21188 25688 "POST /api/v1/auth/login/ HTTP/1.1" 200 982
+INFO 2026-06-21 03:33:51,644 basehttp 21188 25688 "POST /api/v1/auth/logout/ HTTP/1.1" 200 53
+INFO 2026-06-21 04:28:25,390 basehttp 21188 3824 "POST /api/v1/auth/login/ HTTP/1.1" 200 978
+INFO 2026-06-21 04:28:25,520 basehttp 21188 24344 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 249
+INFO 2026-06-21 04:37:46,777 autoreload 24304 31296 Watching for file changes with StatReloader
+INFO 2026-06-21 04:38:23,936 basehttp 21188 24784 "POST /api/v1/auth/login/ HTTP/1.1" 200 978
+INFO 2026-06-21 04:38:24,024 basehttp 21188 30780 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 249
+INFO 2026-06-21 04:38:32,584 basehttp 21188 31108 "POST /api/v1/auth/login/ HTTP/1.1" 200 978
+INFO 2026-06-21 04:38:32,639 basehttp 21188 24460 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 225
+INFO 2026-06-21 04:38:50,597 basehttp 21188 33000 "POST /api/v1/auth/login/ HTTP/1.1" 200 978
+INFO 2026-06-21 04:38:50,606 basehttp 21188 28208 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 225
+INFO 2026-06-21 04:41:13,725 basehttp 21188 10020 "POST /api/v1/auth/login/ HTTP/1.1" 200 710
+INFO 2026-06-21 04:41:41,239 basehttp 21188 10020 "POST /api/v1/auth/login/ HTTP/1.1" 200 982
+INFO 2026-06-21 04:41:41,431 basehttp 21188 10020 "OPTIONS /api/v1/student/dashboard/ HTTP/1.1" 200 0
+INFO 2026-06-21 04:41:41,485 basehttp 21188 3840 "OPTIONS /api/v1/student/dashboard/ HTTP/1.1" 200 0
+INFO 2026-06-21 04:41:41,549 basehttp 21188 10020 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 251
+INFO 2026-06-21 04:41:41,716 basehttp 21188 10020 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 227
+INFO 2026-06-21 04:42:40,652 basehttp 21188 10020 "POST /api/v1/auth/logout/ HTTP/1.1" 200 53
+INFO 2026-06-21 04:43:02,254 basehttp 21188 10020 "POST /api/v1/auth/login/ HTTP/1.1" 200 978
+INFO 2026-06-21 04:43:02,344 basehttp 21188 10020 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 225
+INFO 2026-06-21 04:43:02,370 basehttp 21188 10020 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 225
+INFO 2026-06-21 04:43:22,945 basehttp 21188 10020 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 225
+INFO 2026-06-21 04:43:22,975 basehttp 21188 10020 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 225
+INFO 2026-06-21 04:43:26,408 basehttp 21188 10020 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 249
+INFO 2026-06-21 04:43:26,421 basehttp 21188 10020 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 225
+INFO 2026-06-21 04:52:02,111 basehttp 21188 27236 "POST /api/v1/auth/login/ HTTP/1.1" 200 978
+INFO 2026-06-21 04:52:02,273 basehttp 21188 22988 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 249
+INFO 2026-06-21 04:52:25,502 basehttp 21188 27496 "POST /api/v1/auth/login/ HTTP/1.1" 200 978
+INFO 2026-06-21 04:52:25,515 basehttp 21188 27744 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 225
+INFO 2026-06-21 04:54:33,197 basehttp 21188 30316 "POST /api/v1/auth/login/ HTTP/1.1" 200 978
+INFO 2026-06-21 04:54:38,540 basehttp 21188 33608 "GET /api/v1/student/results/ HTTP/1.1" 200 26
+INFO 2026-06-21 04:55:26,583 basehttp 21188 24040 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 225
+INFO 2026-06-21 05:03:55,939 basehttp 21188 23348 "POST /api/v1/auth/login/ HTTP/1.1" 200 978
+INFO 2026-06-21 05:03:56,085 basehttp 21188 30908 "GET /api/v1/student/results/ HTTP/1.1" 200 26
+INFO 2026-06-21 05:05:32,159 basehttp 21188 27068 "POST /api/v1/auth/login/ HTTP/1.1" 200 918
+WARNING 2026-06-21 05:05:32,223 basehttp 21188 24216 "GET /api/v1/student/results/ HTTP/1.1" 403 63
+INFO 2026-06-21 05:05:48,758 basehttp 21188 22340 "POST /api/v1/auth/login/ HTTP/1.1" 200 710
+WARNING 2026-06-21 05:05:48,799 basehttp 21188 23432 "GET /api/v1/student/results/ HTTP/1.1" 403 63
+INFO 2026-06-21 05:07:48,232 basehttp 21188 21968 "OPTIONS /api/v1/auth/me/ HTTP/1.1" 200 0
+INFO 2026-06-21 05:07:48,239 basehttp 21188 19388 "OPTIONS /api/v1/auth/me/ HTTP/1.1" 200 0
+INFO 2026-06-21 05:07:48,422 basehttp 21188 21968 "GET /api/v1/auth/me/ HTTP/1.1" 200 503
+INFO 2026-06-21 05:07:48,863 basehttp 21188 8036 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 249
+INFO 2026-06-21 05:07:48,864 basehttp 21188 21968 "GET /api/v1/auth/me/ HTTP/1.1" 200 503
+INFO 2026-06-21 05:07:48,878 basehttp 21188 8036 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 225
+INFO 2026-06-21 05:07:53,478 basehttp 21188 8036 "OPTIONS /api/v1/student/results/ HTTP/1.1" 200 0
+INFO 2026-06-21 05:07:53,478 basehttp 21188 21968 "OPTIONS /api/v1/student/results/ HTTP/1.1" 200 0
+INFO 2026-06-21 05:07:53,514 basehttp 21188 21968 "GET /api/v1/student/results/ HTTP/1.1" 200 26
+INFO 2026-06-21 05:07:53,532 basehttp 21188 21968 "GET /api/v1/student/results/ HTTP/1.1" 200 26
+INFO 2026-06-21 05:08:02,142 basehttp 21188 21968 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 225
+INFO 2026-06-21 05:08:02,177 basehttp 21188 21968 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 225
+INFO 2026-06-21 05:08:04,993 basehttp 21188 21968 "GET /api/v1/student/results/ HTTP/1.1" 200 26
+INFO 2026-06-21 05:08:05,085 basehttp 21188 21968 "GET /api/v1/student/results/ HTTP/1.1" 200 26
+INFO 2026-06-21 05:30:37,280 autoreload 21116 1252 Watching for file changes with StatReloader
+INFO 2026-06-21 05:32:44,873 basehttp 21116 25768 "POST /api/v1/auth/login/ HTTP/1.1" 200 978
+INFO 2026-06-21 05:32:44,889 basehttp 21116 18988 "GET /api/v1/student/attendance/ HTTP/1.1" 200 123
+INFO 2026-06-21 05:36:06,468 basehttp 21116 22420 "POST /api/v1/auth/login/ HTTP/1.1" 200 978
+INFO 2026-06-21 05:36:06,489 basehttp 21116 15332 "GET /api/v1/student/attendance/ HTTP/1.1" 200 123
+INFO 2026-06-21 05:38:39,644 basehttp 21116 29952 "POST /api/v1/auth/login/ HTTP/1.1" 200 978
+INFO 2026-06-21 05:38:39,719 basehttp 21116 24312 "GET /api/v1/student/attendance/ HTTP/1.1" 200 123
+INFO 2026-06-21 05:42:02,060 basehttp 21116 32292 "POST /api/v1/auth/login/ HTTP/1.1" 200 918
+WARNING 2026-06-21 05:42:02,085 basehttp 21116 16624 "GET /api/v1/student/attendance/ HTTP/1.1" 403 63
+INFO 2026-06-21 05:44:14,034 basehttp 21116 11944 "POST /api/v1/auth/login/ HTTP/1.1" 200 710
+WARNING 2026-06-21 05:44:14,044 basehttp 21116 12860 "GET /api/v1/student/attendance/ HTTP/1.1" 403 63
+WARNING 2026-06-21 05:47:04,789 basehttp 21116 28504 "GET /api/v1/parent/dashboard/ HTTP/1.1" 401 5257
+WARNING 2026-06-21 05:47:05,107 basehttp 21116 28504 "GET /favicon.ico HTTP/1.1" 404 2880
+WARNING 2026-06-21 05:47:23,186 basehttp 21116 28504 "GET /api/v1/ HTTP/1.1" 401 5024
+INFO 2026-06-21 05:48:30,060 basehttp 21116 33084 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 0
+INFO 2026-06-21 05:48:30,861 basehttp 21116 33084 "POST /api/v1/auth/login/ HTTP/1.1" 200 982
+INFO 2026-06-21 05:48:30,961 basehttp 21116 33084 "OPTIONS /api/v1/student/dashboard/ HTTP/1.1" 200 0
+INFO 2026-06-21 05:48:30,971 basehttp 21116 33084 "OPTIONS /api/v1/student/dashboard/ HTTP/1.1" 200 0
+INFO 2026-06-21 05:48:31,032 basehttp 21116 14312 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 251
+INFO 2026-06-21 05:48:31,057 basehttp 21116 14312 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 227
+INFO 2026-06-21 05:48:41,807 basehttp 21116 14312 "OPTIONS /api/v1/student/attendance/ HTTP/1.1" 200 0
+INFO 2026-06-21 05:48:41,812 basehttp 21116 33084 "OPTIONS /api/v1/student/attendance/ HTTP/1.1" 200 0
+INFO 2026-06-21 05:48:41,840 basehttp 21116 33084 "GET /api/v1/student/attendance/ HTTP/1.1" 200 123
+INFO 2026-06-21 05:48:41,857 basehttp 21116 33084 "GET /api/v1/student/attendance/ HTTP/1.1" 200 123
+INFO 2026-06-21 06:02:21,334 basehttp 21116 23332 "OPTIONS /api/v1/auth/me/ HTTP/1.1" 200 0
+INFO 2026-06-21 06:02:21,387 basehttp 21116 24488 "OPTIONS /api/v1/auth/me/ HTTP/1.1" 200 0
+INFO 2026-06-21 06:02:21,639 basehttp 21116 16916 "GET /api/v1/student/attendance/ HTTP/1.1" 200 123
+INFO 2026-06-21 06:02:21,714 basehttp 21116 16916 "GET /api/v1/student/attendance/ HTTP/1.1" 200 123
+INFO 2026-06-21 06:02:21,769 basehttp 21116 23332 "GET /api/v1/auth/me/ HTTP/1.1" 200 507
+INFO 2026-06-21 06:02:21,826 basehttp 21116 23332 "GET /api/v1/auth/me/ HTTP/1.1" 200 507
+INFO 2026-06-21 06:02:27,135 basehttp 21116 23332 "GET /api/v1/auth/me/ HTTP/1.1" 200 507
+INFO 2026-06-21 06:02:27,149 basehttp 21116 16916 "GET /api/v1/student/attendance/ HTTP/1.1" 200 123
+INFO 2026-06-21 06:02:27,167 basehttp 21116 23332 "GET /api/v1/auth/me/ HTTP/1.1" 200 507
+INFO 2026-06-21 06:02:27,184 basehttp 21116 16916 "GET /api/v1/student/attendance/ HTTP/1.1" 200 123
+INFO 2026-06-21 06:02:29,163 basehttp 21116 16916 "GET /api/v1/auth/me/ HTTP/1.1" 200 507
+INFO 2026-06-21 06:02:29,168 basehttp 21116 23332 "GET /api/v1/student/attendance/ HTTP/1.1" 200 123
+INFO 2026-06-21 06:02:29,183 basehttp 21116 16916 "GET /api/v1/auth/me/ HTTP/1.1" 200 507
+INFO 2026-06-21 06:02:29,194 basehttp 21116 23332 "GET /api/v1/student/attendance/ HTTP/1.1" 200 123
+INFO 2026-06-21 06:03:09,833 basehttp 21116 23332 "GET /api/v1/auth/me/ HTTP/1.1" 200 507
+INFO 2026-06-21 06:03:09,846 basehttp 21116 23332 "GET /api/v1/auth/me/ HTTP/1.1" 200 507
+INFO 2026-06-21 06:03:09,926 basehttp 21116 23332 "GET /api/v1/student/attendance/ HTTP/1.1" 200 123
+INFO 2026-06-21 06:03:09,947 basehttp 21116 23332 "GET /api/v1/student/attendance/ HTTP/1.1" 200 123
+INFO 2026-06-21 06:03:27,599 basehttp 21116 23332 "GET /api/v1/auth/me/ HTTP/1.1" 200 507
+INFO 2026-06-21 06:03:27,611 basehttp 21116 16916 "GET /api/v1/student/attendance/ HTTP/1.1" 200 123
+INFO 2026-06-21 06:03:27,634 basehttp 21116 23332 "GET /api/v1/auth/me/ HTTP/1.1" 200 507
+INFO 2026-06-21 06:03:27,647 basehttp 21116 16916 "GET /api/v1/student/attendance/ HTTP/1.1" 200 123
+INFO 2026-06-21 06:03:36,610 basehttp 21116 16916 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 251
+INFO 2026-06-21 06:03:36,620 basehttp 21116 16916 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 227
+INFO 2026-06-21 06:11:15,376 basehttp 21116 33264 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 251
+INFO 2026-06-21 06:34:42,931 basehttp 21116 30536 "GET /api/v1/auth/me/ HTTP/1.1" 200 507
+INFO 2026-06-21 06:34:42,960 basehttp 21116 25508 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 251
+INFO 2026-06-21 06:34:42,980 basehttp 21116 30536 "GET /api/v1/auth/me/ HTTP/1.1" 200 507
+INFO 2026-06-21 06:34:42,994 basehttp 21116 25508 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 227
+INFO 2026-06-21 06:34:46,596 basehttp 21116 25508 "GET /api/v1/auth/me/ HTTP/1.1" 200 507
+INFO 2026-06-21 06:34:46,602 basehttp 21116 30536 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 227
+INFO 2026-06-21 06:34:46,642 basehttp 21116 25508 "GET /api/v1/auth/me/ HTTP/1.1" 200 507
+INFO 2026-06-21 06:34:46,644 basehttp 21116 30536 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 227
+INFO 2026-06-21 06:34:47,706 basehttp 21116 30536 "GET /api/v1/auth/me/ HTTP/1.1" 200 507
+INFO 2026-06-21 06:34:47,710 basehttp 21116 25508 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 227
+INFO 2026-06-21 06:34:47,742 basehttp 21116 30536 "GET /api/v1/auth/me/ HTTP/1.1" 200 507
+INFO 2026-06-21 06:34:47,750 basehttp 21116 25508 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 227
+INFO 2026-06-21 06:35:29,253 basehttp 21116 25508 "GET /api/v1/auth/me/ HTTP/1.1" 200 507
+INFO 2026-06-21 06:35:29,253 basehttp 21116 30536 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 227
+INFO 2026-06-21 06:35:29,269 basehttp 21116 30536 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 227
+INFO 2026-06-21 06:35:29,297 basehttp 21116 25508 "GET /api/v1/auth/me/ HTTP/1.1" 200 507
+INFO 2026-06-21 06:41:22,132 basehttp 21116 26760 "GET /api/v1/auth/me/ HTTP/1.1" 200 507
+INFO 2026-06-21 06:41:22,148 basehttp 21116 17020 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 251
+INFO 2026-06-21 06:41:22,175 basehttp 21116 26760 "GET /api/v1/auth/me/ HTTP/1.1" 200 507
+INFO 2026-06-21 06:41:22,176 basehttp 21116 17020 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 227
+INFO 2026-06-21 06:43:41,289 basehttp 21116 17020 "OPTIONS /api/v1/student/results/ HTTP/1.1" 200 0
+INFO 2026-06-21 06:43:41,289 basehttp 21116 26760 "OPTIONS /api/v1/student/results/ HTTP/1.1" 200 0
+INFO 2026-06-21 06:43:41,319 basehttp 21116 26760 "GET /api/v1/student/results/ HTTP/1.1" 200 26
+INFO 2026-06-21 06:43:41,331 basehttp 21116 26760 "GET /api/v1/student/results/ HTTP/1.1" 200 26
+INFO 2026-06-21 06:43:43,404 basehttp 21116 26760 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 227
+INFO 2026-06-21 06:43:43,426 basehttp 21116 26760 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 227
+INFO 2026-06-21 06:43:45,004 basehttp 21116 26760 "GET /api/v1/student/results/ HTTP/1.1" 200 26
+INFO 2026-06-21 06:43:45,013 basehttp 21116 26760 "GET /api/v1/student/results/ HTTP/1.1" 200 26
+INFO 2026-06-21 06:43:46,382 basehttp 21116 26760 "GET /api/v1/student/attendance/ HTTP/1.1" 200 123
+INFO 2026-06-21 06:43:46,390 basehttp 21116 26760 "GET /api/v1/student/attendance/ HTTP/1.1" 200 123
+INFO 2026-06-21 06:43:48,085 basehttp 21116 26760 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 227
+INFO 2026-06-21 06:43:48,094 basehttp 21116 26760 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 227
+INFO 2026-06-21 06:44:02,593 basehttp 21116 26760 "GET /api/v1/student/results/ HTTP/1.1" 200 26
+INFO 2026-06-21 06:44:02,610 basehttp 21116 26760 "GET /api/v1/student/results/ HTTP/1.1" 200 26
+INFO 2026-06-21 06:44:03,893 basehttp 21116 26760 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 227
+INFO 2026-06-21 06:44:03,967 basehttp 21116 26760 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 227
+INFO 2026-06-21 06:44:48,633 basehttp 21116 17020 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 227
+INFO 2026-06-21 06:44:48,634 basehttp 21116 26760 "GET /api/v1/auth/me/ HTTP/1.1" 200 507
+INFO 2026-06-21 06:44:48,685 basehttp 21116 17020 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 227
+INFO 2026-06-21 06:44:48,699 basehttp 21116 26760 "GET /api/v1/auth/me/ HTTP/1.1" 200 507
+INFO 2026-06-21 06:44:51,562 basehttp 21116 26760 "GET /api/v1/auth/me/ HTTP/1.1" 200 507
+INFO 2026-06-21 06:44:51,575 basehttp 21116 26760 "GET /api/v1/auth/me/ HTTP/1.1" 200 507
+INFO 2026-06-21 06:44:51,608 basehttp 21116 26760 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 227
+INFO 2026-06-21 06:44:51,630 basehttp 21116 26760 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 227
+INFO 2026-06-21 06:45:11,243 basehttp 21116 26760 "GET /api/v1/auth/me/ HTTP/1.1" 200 507
+INFO 2026-06-21 06:45:11,254 basehttp 21116 17020 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 227
+INFO 2026-06-21 06:45:11,311 basehttp 21116 26760 "GET /api/v1/auth/me/ HTTP/1.1" 200 507
+INFO 2026-06-21 06:45:11,347 basehttp 21116 17020 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 227
+INFO 2026-06-21 06:45:42,689 basehttp 21116 17020 "GET /api/v1/student/results/ HTTP/1.1" 200 26
+INFO 2026-06-21 06:45:42,706 basehttp 21116 17020 "GET /api/v1/student/results/ HTTP/1.1" 200 26
+INFO 2026-06-21 06:45:48,091 basehttp 21116 17020 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 227
+INFO 2026-06-21 06:45:48,108 basehttp 21116 17020 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 227

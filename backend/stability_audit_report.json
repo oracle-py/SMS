@@ -1,0 +1,156 @@
+{
+  "started_at": "2026-06-18T01:33:30.977999",
+  "tests": [
+    {
+      "module": "Authentication",
+      "test": "Admin - Login (email)",
+      "status": "PASS",
+      "details": "Login with email successful, tokens returned"
+    },
+    {
+      "module": "Authentication",
+      "test": "Admin - Login (username)",
+      "status": "PASS",
+      "details": "Login with username successful, tokens returned"
+    },
+    {
+      "module": "Authentication",
+      "test": "Admin - Current User",
+      "status": "PASS",
+      "details": "Current user endpoint returns correct data"
+    },
+    {
+      "module": "Authentication",
+      "test": "Admin - Refresh Token",
+      "status": "PASS",
+      "details": "Refresh token works correctly"
+    },
+    {
+      "module": "Authentication",
+      "test": "Admin - Logout",
+      "status": "PASS",
+      "details": "Token already blacklisted from previous logout"
+    },
+    {
+      "module": "Authentication",
+      "test": "Student - Login (email)",
+      "status": "PASS",
+      "details": "Login with email successful, tokens returned"
+    },
+    {
+      "module": "Authentication",
+      "test": "Student - Login (username)",
+      "status": "PASS",
+      "details": "Login with username successful, tokens returned"
+    },
+    {
+      "module": "Authentication",
+      "test": "Student - Current User",
+      "status": "PASS",
+      "details": "Current user endpoint returns correct data"
+    },
+    {
+      "module": "Authentication",
+      "test": "Student - Refresh Token",
+      "status": "PASS",
+      "details": "Refresh token works correctly"
+    },
+    {
+      "module": "Authentication",
+      "test": "Student - Logout",
+      "status": "PASS",
+      "details": "Token already blacklisted from previous logout"
+    },
+    {
+      "module": "Authentication",
+      "test": "Parent - Login (email)",
+      "status": "PASS",
+      "details": "Login with email successful, tokens returned"
+    },
+    {
+      "module": "Authentication",
+      "test": "Parent - Login (username)",
+      "status": "PASS",
+      "details": "Login with username successful, tokens returned"
+    },
+    {
+      "module": "Authentication",
+      "test": "Parent - Current User",
+      "status": "PASS",
+      "details": "Current user endpoint returns correct data"
+    },
+    {
+      "module": "Authentication",
+      "test": "Parent - Refresh Token",
+      "status": "PASS",
+      "details": "Refresh token works correctly"
+    },
+    {
+      "module": "Authentication",
+      "test": "Parent - Logout",
+      "status": "PASS",
+      "details": "Token already blacklisted from previous logout"
+    },
+    {
+      "module": "RBAC",
+      "test": "RBAC - Student accessing parent dashboard",
+      "status": "PASS",
+      "details": "Student correctly blocked from parent dashboard"
+    },
+    {
+      "module": "RBAC",
+      "test": "RBAC - Parent accessing student dashboard",
+      "status": "PASS",
+      "details": "Parent correctly blocked from student dashboard"
+    },
+    {
+      "module": "RBAC",
+      "test": "RBAC - Admin accessing student data via ViewSet",
+      "status": "PASS",
+      "details": "Admin has full access to student data via ViewSet"
+    },
+    {
+      "module": "Dashboard",
+      "test": "Dashboard - Student dashboard data integrity",
+      "status": "PASS",
+      "details": "Student dashboard has all required fields with valid data"
+    },
+    {
+      "module": "Dashboard",
+      "test": "Dashboard - Parent dashboard data integrity",
+      "status": "PASS",
+      "details": "Parent dashboard has all required fields with valid data"
+    },
+    {
+      "module": "CRUD",
+      "test": "CRUD - List students",
+      "status": "PASS",
+      "details": "Student listing endpoint works"
+    },
+    {
+      "module": "CRUD",
+      "test": "CRUD - List parents",
+      "status": "PASS",
+      "details": "Parent listing endpoint works"
+    },
+    {
+      "module": "Schema",
+      "test": "Schema - Schema endpoint accessible",
+      "status": "PASS",
+      "details": "Schema endpoint accessible with 31 endpoints"
+    },
+    {
+      "module": "Schema",
+      "test": "Schema - Swagger UI accessible",
+      "status": "PASS",
+      "details": "Swagger UI accessible"
+    }
+  ],
+  "summary": {
+    "total": 24,
+    "passed": 24,
+    "failed": 0
+  },
+  "success_rate": 100.0,
+  "completed_at": "2026-06-18T01:33:38.715638"
+}

@@ -1,0 +1,4855 @@
+openapi: 3.0.3
+info:
+  title: Student Monitoring System API
+  version: 1.0.0
+  description: A comprehensive academic monitoring system for tracking student performance,
+    attendance, and academic progress.
+paths:
+  /api/v1/attendance/:
+    get:
+      operationId: attendance_list
+      description: |-
+        ViewSet for Attendance model.
+
+        Provides CRUD operations for attendance records.
+        - Admins: Full access
+        - Students: Read-only access to their own attendance
+        - Parents: Read-only access to linked students' attendance
+      parameters:
+      - in: query
+        name: date
+        schema:
+          type: string
+          format: date
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - in: query
+        name: status
+        schema:
+          type: string
+          enum:
+          - absent
+          - present
+        description: |-
+          * `present` - Present
+          * `absent` - Absent
+      tags:
+      - attendance
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedAttendanceList'
+          description: ''
+    post:
+      operationId: attendance_create
+      description: |-
+        ViewSet for Attendance model.
+
+        Provides CRUD operations for attendance records.
+        - Admins: Full access
+        - Students: Read-only access to their own attendance
+        - Parents: Read-only access to linked students' attendance
+      tags:
+      - attendance
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AttendanceRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AttendanceRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AttendanceRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attendance'
+          description: ''
+  /api/v1/attendance/{id}/:
+    get:
+      operationId: attendance_retrieve
+      description: |-
+        ViewSet for Attendance model.
+
+        Provides CRUD operations for attendance records.
+        - Admins: Full access
+        - Students: Read-only access to their own attendance
+        - Parents: Read-only access to linked students' attendance
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Attendance.
+        required: true
+      tags:
+      - attendance
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttendanceDetail'
+          description: ''
+    put:
+      operationId: attendance_update
+      description: |-
+        ViewSet for Attendance model.
+
+        Provides CRUD operations for attendance records.
+        - Admins: Full access
+        - Students: Read-only access to their own attendance
+        - Parents: Read-only access to linked students' attendance
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Attendance.
+        required: true
+      tags:
+      - attendance
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AttendanceRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AttendanceRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AttendanceRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attendance'
+          description: ''
+    patch:
+      operationId: attendance_partial_update
+      description: |-
+        ViewSet for Attendance model.
+
+        Provides CRUD operations for attendance records.
+        - Admins: Full access
+        - Students: Read-only access to their own attendance
+        - Parents: Read-only access to linked students' attendance
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Attendance.
+        required: true
+      tags:
+      - attendance
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedAttendanceRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedAttendanceRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedAttendanceRequest'
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attendance'
+          description: ''
+    delete:
+      operationId: attendance_destroy
+      description: |-
+        ViewSet for Attendance model.
+
+        Provides CRUD operations for attendance records.
+        - Admins: Full access
+        - Students: Read-only access to their own attendance
+        - Parents: Read-only access to linked students' attendance
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Attendance.
+        required: true
+      tags:
+      - attendance
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '204':
+          description: No response body
+  /api/v1/auth/login/:
+    post:
+      operationId: auth_login_create
+      description: |-
+        Custom token obtain view with enhanced response.
+
+        Returns JWT tokens along with user and profile information.
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomTokenObtainPairRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CustomTokenObtainPairRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CustomTokenObtainPairRequest'
+        required: true
+      security:
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          description: No response body
+  /api/v1/auth/logout/:
+    post:
+      operationId: auth_logout_create
+      description: |-
+        Logout by blacklisting the refresh token.
+
+        Args:
+            request: The HTTP request
+
+        Returns:
+            Response indicating successful logout or error
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LogoutRequestRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LogoutRequestRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/LogoutRequestRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogoutResponse'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: ''
+  /api/v1/auth/me/:
+    get:
+      operationId: auth_me_retrieve
+      description: |-
+        Get current user information with profile data.
+
+        Args:
+            request: The HTTP request
+
+        Returns:
+            Response with user and profile information
+      tags:
+      - auth
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrentUserResponse'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: ''
+  /api/v1/auth/refresh/:
+    post:
+      operationId: auth_refresh_create
+      description: |-
+        Custom token refresh view.
+
+        Handles token refresh requests with proper error handling.
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRefreshRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenRefreshRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenRefreshRequest'
+        required: true
+      security:
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenRefresh'
+          description: ''
+  /api/v1/courses/:
+    get:
+      operationId: courses_list
+      description: |-
+        ViewSet for Course model.
+
+        Provides CRUD operations for courses.
+        - Admins: Full access
+        - Students/Parents: Read-only access
+      parameters:
+      - in: query
+        name: credit_unit
+        schema:
+          type: integer
+      - in: query
+        name: is_active
+        schema:
+          type: boolean
+      - in: query
+        name: level
+        schema:
+          type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - in: query
+        name: semester
+        schema:
+          type: integer
+      tags:
+      - courses
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedCourseList'
+          description: ''
+    post:
+      operationId: courses_create
+      description: |-
+        ViewSet for Course model.
+
+        Provides CRUD operations for courses.
+        - Admins: Full access
+        - Students/Parents: Read-only access
+      tags:
+      - courses
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CourseRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CourseRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CourseRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Course'
+          description: ''
+  /api/v1/courses/{id}/:
+    get:
+      operationId: courses_retrieve
+      description: |-
+        ViewSet for Course model.
+
+        Provides CRUD operations for courses.
+        - Admins: Full access
+        - Students/Parents: Read-only access
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Course.
+        required: true
+      tags:
+      - courses
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Course'
+          description: ''
+    put:
+      operationId: courses_update
+      description: |-
+        ViewSet for Course model.
+
+        Provides CRUD operations for courses.
+        - Admins: Full access
+        - Students/Parents: Read-only access
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Course.
+        required: true
+      tags:
+      - courses
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CourseRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CourseRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CourseRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Course'
+          description: ''
+    patch:
+      operationId: courses_partial_update
+      description: |-
+        ViewSet for Course model.
+
+        Provides CRUD operations for courses.
+        - Admins: Full access
+        - Students/Parents: Read-only access
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Course.
+        required: true
+      tags:
+      - courses
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedCourseRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedCourseRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCourseRequest'
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Course'
+          description: ''
+    delete:
+      operationId: courses_destroy
+      description: |-
+        ViewSet for Course model.
+
+        Provides CRUD operations for courses.
+        - Admins: Full access
+        - Students/Parents: Read-only access
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Course.
+        required: true
+      tags:
+      - courses
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '204':
+          description: No response body
+  /api/v1/enrollments/:
+    get:
+      operationId: enrollments_list
+      description: |-
+        ViewSet for StudentEnrollment model.
+
+        Provides CRUD operations for student enrollments.
+        - Admins: Full access
+        - Students: Read-only access to their own enrollments
+        - Parents: Read-only access to linked students' enrollments
+      parameters:
+      - in: query
+        name: level
+        schema:
+          type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - in: query
+        name: session
+        schema:
+          type: integer
+      tags:
+      - enrollments
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedStudentEnrollmentList'
+          description: ''
+    post:
+      operationId: enrollments_create
+      description: |-
+        ViewSet for StudentEnrollment model.
+
+        Provides CRUD operations for student enrollments.
+        - Admins: Full access
+        - Students: Read-only access to their own enrollments
+        - Parents: Read-only access to linked students' enrollments
+      tags:
+      - enrollments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StudentEnrollmentRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/StudentEnrollmentRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/StudentEnrollmentRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudentEnrollment'
+          description: ''
+  /api/v1/enrollments/{id}/:
+    get:
+      operationId: enrollments_retrieve
+      description: |-
+        ViewSet for StudentEnrollment model.
+
+        Provides CRUD operations for student enrollments.
+        - Admins: Full access
+        - Students: Read-only access to their own enrollments
+        - Parents: Read-only access to linked students' enrollments
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Student Enrollment.
+        required: true
+      tags:
+      - enrollments
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudentEnrollment'
+          description: ''
+    put:
+      operationId: enrollments_update
+      description: |-
+        ViewSet for StudentEnrollment model.
+
+        Provides CRUD operations for student enrollments.
+        - Admins: Full access
+        - Students: Read-only access to their own enrollments
+        - Parents: Read-only access to linked students' enrollments
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Student Enrollment.
+        required: true
+      tags:
+      - enrollments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StudentEnrollmentRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/StudentEnrollmentRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/StudentEnrollmentRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudentEnrollment'
+          description: ''
+    patch:
+      operationId: enrollments_partial_update
+      description: |-
+        ViewSet for StudentEnrollment model.
+
+        Provides CRUD operations for student enrollments.
+        - Admins: Full access
+        - Students: Read-only access to their own enrollments
+        - Parents: Read-only access to linked students' enrollments
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Student Enrollment.
+        required: true
+      tags:
+      - enrollments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedStudentEnrollmentRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedStudentEnrollmentRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedStudentEnrollmentRequest'
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudentEnrollment'
+          description: ''
+    delete:
+      operationId: enrollments_destroy
+      description: |-
+        ViewSet for StudentEnrollment model.
+
+        Provides CRUD operations for student enrollments.
+        - Admins: Full access
+        - Students: Read-only access to their own enrollments
+        - Parents: Read-only access to linked students' enrollments
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Student Enrollment.
+        required: true
+      tags:
+      - enrollments
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '204':
+          description: No response body
+  /api/v1/grades/:
+    get:
+      operationId: grades_list
+      description: |-
+        ViewSet for Grade model.
+
+        Provides CRUD operations for grades.
+        - Admins: Full access
+        - Students: Read-only access to their own grades
+        - Parents: Read-only access to linked students' grades
+      parameters:
+      - in: query
+        name: grade_point
+        schema:
+          type: integer
+      - in: query
+        name: letter_grade
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - grades
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedGradeList'
+          description: ''
+    post:
+      operationId: grades_create
+      description: |-
+        ViewSet for Grade model.
+
+        Provides CRUD operations for grades.
+        - Admins: Full access
+        - Students: Read-only access to their own grades
+        - Parents: Read-only access to linked students' grades
+      tags:
+      - grades
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GradeRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/GradeRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/GradeRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Grade'
+          description: ''
+  /api/v1/grades/{id}/:
+    get:
+      operationId: grades_retrieve
+      description: |-
+        ViewSet for Grade model.
+
+        Provides CRUD operations for grades.
+        - Admins: Full access
+        - Students: Read-only access to their own grades
+        - Parents: Read-only access to linked students' grades
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Grade.
+        required: true
+      tags:
+      - grades
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GradeDetail'
+          description: ''
+    put:
+      operationId: grades_update
+      description: |-
+        ViewSet for Grade model.
+
+        Provides CRUD operations for grades.
+        - Admins: Full access
+        - Students: Read-only access to their own grades
+        - Parents: Read-only access to linked students' grades
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Grade.
+        required: true
+      tags:
+      - grades
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GradeRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/GradeRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/GradeRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Grade'
+          description: ''
+    patch:
+      operationId: grades_partial_update
+      description: |-
+        ViewSet for Grade model.
+
+        Provides CRUD operations for grades.
+        - Admins: Full access
+        - Students: Read-only access to their own grades
+        - Parents: Read-only access to linked students' grades
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Grade.
+        required: true
+      tags:
+      - grades
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedGradeRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedGradeRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedGradeRequest'
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Grade'
+          description: ''
+    delete:
+      operationId: grades_destroy
+      description: |-
+        ViewSet for Grade model.
+
+        Provides CRUD operations for grades.
+        - Admins: Full access
+        - Students: Read-only access to their own grades
+        - Parents: Read-only access to linked students' grades
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Grade.
+        required: true
+      tags:
+      - grades
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '204':
+          description: No response body
+  /api/v1/levels/:
+    get:
+      operationId: levels_list
+      description: |-
+        ViewSet for Level model.
+
+        Provides CRUD operations for academic levels.
+        - Admins: Full access
+        - Students/Parents: Read-only access
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - levels
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedLevelList'
+          description: ''
+    post:
+      operationId: levels_create
+      description: |-
+        ViewSet for Level model.
+
+        Provides CRUD operations for academic levels.
+        - Admins: Full access
+        - Students/Parents: Read-only access
+      tags:
+      - levels
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LevelRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LevelRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/LevelRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Level'
+          description: ''
+  /api/v1/levels/{id}/:
+    get:
+      operationId: levels_retrieve
+      description: |-
+        ViewSet for Level model.
+
+        Provides CRUD operations for academic levels.
+        - Admins: Full access
+        - Students/Parents: Read-only access
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Level.
+        required: true
+      tags:
+      - levels
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Level'
+          description: ''
+    put:
+      operationId: levels_update
+      description: |-
+        ViewSet for Level model.
+
+        Provides CRUD operations for academic levels.
+        - Admins: Full access
+        - Students/Parents: Read-only access
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Level.
+        required: true
+      tags:
+      - levels
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LevelRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LevelRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/LevelRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Level'
+          description: ''
+    patch:
+      operationId: levels_partial_update
+      description: |-
+        ViewSet for Level model.
+
+        Provides CRUD operations for academic levels.
+        - Admins: Full access
+        - Students/Parents: Read-only access
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Level.
+        required: true
+      tags:
+      - levels
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedLevelRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedLevelRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedLevelRequest'
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Level'
+          description: ''
+    delete:
+      operationId: levels_destroy
+      description: |-
+        ViewSet for Level model.
+
+        Provides CRUD operations for academic levels.
+        - Admins: Full access
+        - Students/Parents: Read-only access
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Level.
+        required: true
+      tags:
+      - levels
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '204':
+          description: No response body
+  /api/v1/parent-student-relations/:
+    get:
+      operationId: parent_student_relations_list
+      description: |-
+        ViewSet for ParentStudentRelation model.
+
+        Provides CRUD operations for parent-student relationships with role-based permissions.
+        - Admins: Full access
+        - Parents: Full access to their own relationships
+        - Students: Read-only access to their own relationships
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - in: query
+        name: relationship_type
+        schema:
+          type: string
+          enum:
+          - father
+          - guardian
+          - mother
+        description: |-
+          * `father` - Father
+          * `mother` - Mother
+          * `guardian` - Guardian
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - parent-student-relations
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedParentStudentRelationList'
+          description: ''
+    post:
+      operationId: parent_student_relations_create
+      description: |-
+        ViewSet for ParentStudentRelation model.
+
+        Provides CRUD operations for parent-student relationships with role-based permissions.
+        - Admins: Full access
+        - Parents: Full access to their own relationships
+        - Students: Read-only access to their own relationships
+      tags:
+      - parent-student-relations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ParentStudentRelationRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ParentStudentRelationRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ParentStudentRelationRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParentStudentRelation'
+          description: ''
+  /api/v1/parent-student-relations/{id}/:
+    get:
+      operationId: parent_student_relations_retrieve
+      description: |-
+        ViewSet for ParentStudentRelation model.
+
+        Provides CRUD operations for parent-student relationships with role-based permissions.
+        - Admins: Full access
+        - Parents: Full access to their own relationships
+        - Students: Read-only access to their own relationships
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Parent-Student Relation.
+        required: true
+      tags:
+      - parent-student-relations
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParentStudentRelationDetail'
+          description: ''
+    put:
+      operationId: parent_student_relations_update
+      description: |-
+        ViewSet for ParentStudentRelation model.
+
+        Provides CRUD operations for parent-student relationships with role-based permissions.
+        - Admins: Full access
+        - Parents: Full access to their own relationships
+        - Students: Read-only access to their own relationships
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Parent-Student Relation.
+        required: true
+      tags:
+      - parent-student-relations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ParentStudentRelationDetailRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ParentStudentRelationDetailRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ParentStudentRelationDetailRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParentStudentRelationDetail'
+          description: ''
+    patch:
+      operationId: parent_student_relations_partial_update
+      description: |-
+        ViewSet for ParentStudentRelation model.
+
+        Provides CRUD operations for parent-student relationships with role-based permissions.
+        - Admins: Full access
+        - Parents: Full access to their own relationships
+        - Students: Read-only access to their own relationships
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Parent-Student Relation.
+        required: true
+      tags:
+      - parent-student-relations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedParentStudentRelationDetailRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedParentStudentRelationDetailRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedParentStudentRelationDetailRequest'
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParentStudentRelationDetail'
+          description: ''
+    delete:
+      operationId: parent_student_relations_destroy
+      description: |-
+        ViewSet for ParentStudentRelation model.
+
+        Provides CRUD operations for parent-student relationships with role-based permissions.
+        - Admins: Full access
+        - Parents: Full access to their own relationships
+        - Students: Read-only access to their own relationships
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Parent-Student Relation.
+        required: true
+      tags:
+      - parent-student-relations
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '204':
+          description: No response body
+  /api/v1/parent/dashboard/:
+    get:
+      operationId: parent_dashboard_retrieve
+      description: |-
+        Get parent dashboard summary with all linked students.
+
+        Returns:
+            Response with comprehensive parent dashboard data
+      tags:
+      - parent
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParentDashboard'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: ''
+  /api/v1/parent/wards/{student_id}/:
+    get:
+      operationId: parent_wards_retrieve
+      description: |-
+        Get detailed academic summary for a specific linked student.
+
+        Args:
+            student_id: ID of the student to retrieve details for
+
+        Returns:
+            Response with detailed student academic data
+      parameters:
+      - in: path
+        name: student_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - parent
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParentWard'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: ''
+  /api/v1/parents/:
+    get:
+      operationId: parents_list
+      description: |-
+        ViewSet for ParentProfile model.
+
+        Provides CRUD operations for parent profiles with role-based permissions.
+        - Admins: Full access
+        - Parents: Read-only access to their own profile
+        - Students: No access
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - parents
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedParentProfileList'
+          description: ''
+    post:
+      operationId: parents_create
+      description: |-
+        ViewSet for ParentProfile model.
+
+        Provides CRUD operations for parent profiles with role-based permissions.
+        - Admins: Full access
+        - Parents: Read-only access to their own profile
+        - Students: No access
+      tags:
+      - parents
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ParentProfileRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ParentProfileRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ParentProfileRequest'
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParentProfile'
+          description: ''
+  /api/v1/parents/{id}/:
+    get:
+      operationId: parents_retrieve
+      description: |-
+        ViewSet for ParentProfile model.
+
+        Provides CRUD operations for parent profiles with role-based permissions.
+        - Admins: Full access
+        - Parents: Read-only access to their own profile
+        - Students: No access
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Parent Profile.
+        required: true
+      tags:
+      - parents
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParentProfileDetail'
+          description: ''
+    put:
+      operationId: parents_update
+      description: |-
+        ViewSet for ParentProfile model.
+
+        Provides CRUD operations for parent profiles with role-based permissions.
+        - Admins: Full access
+        - Parents: Read-only access to their own profile
+        - Students: No access
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Parent Profile.
+        required: true
+      tags:
+      - parents
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ParentProfileDetailRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ParentProfileDetailRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ParentProfileDetailRequest'
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParentProfileDetail'
+          description: ''
+    patch:
+      operationId: parents_partial_update
+      description: |-
+        ViewSet for ParentProfile model.
+
+        Provides CRUD operations for parent profiles with role-based permissions.
+        - Admins: Full access
+        - Parents: Read-only access to their own profile
+        - Students: No access
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Parent Profile.
+        required: true
+      tags:
+      - parents
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedParentProfileDetailRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedParentProfileDetailRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedParentProfileDetailRequest'
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParentProfileDetail'
+          description: ''
+    delete:
+      operationId: parents_destroy
+      description: |-
+        ViewSet for ParentProfile model.
+
+        Provides CRUD operations for parent profiles with role-based permissions.
+        - Admins: Full access
+        - Parents: Read-only access to their own profile
+        - Students: No access
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Parent Profile.
+        required: true
+      tags:
+      - parents
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '204':
+          description: No response body
+  /api/v1/registrations/:
+    get:
+      operationId: registrations_list
+      description: |-
+        ViewSet for CourseRegistration model.
+
+        Provides CRUD operations for course registrations.
+        - Admins: Full access
+        - Students: Read-only access to their own registrations
+        - Parents: Read-only access to linked students' registrations
+      parameters:
+      - in: query
+        name: is_carryover
+        schema:
+          type: boolean
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - in: query
+        name: semester
+        schema:
+          type: integer
+      - in: query
+        name: session
+        schema:
+          type: integer
+      tags:
+      - registrations
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedCourseRegistrationList'
+          description: ''
+    post:
+      operationId: registrations_create
+      description: |-
+        ViewSet for CourseRegistration model.
+
+        Provides CRUD operations for course registrations.
+        - Admins: Full access
+        - Students: Read-only access to their own registrations
+        - Parents: Read-only access to linked students' registrations
+      tags:
+      - registrations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CourseRegistrationRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CourseRegistrationRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CourseRegistrationRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseRegistration'
+          description: ''
+  /api/v1/registrations/{id}/:
+    get:
+      operationId: registrations_retrieve
+      description: |-
+        ViewSet for CourseRegistration model.
+
+        Provides CRUD operations for course registrations.
+        - Admins: Full access
+        - Students: Read-only access to their own registrations
+        - Parents: Read-only access to linked students' registrations
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Course Registration.
+        required: true
+      tags:
+      - registrations
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseRegistrationDetail'
+          description: ''
+    put:
+      operationId: registrations_update
+      description: |-
+        ViewSet for CourseRegistration model.
+
+        Provides CRUD operations for course registrations.
+        - Admins: Full access
+        - Students: Read-only access to their own registrations
+        - Parents: Read-only access to linked students' registrations
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Course Registration.
+        required: true
+      tags:
+      - registrations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CourseRegistrationRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CourseRegistrationRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CourseRegistrationRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseRegistration'
+          description: ''
+    patch:
+      operationId: registrations_partial_update
+      description: |-
+        ViewSet for CourseRegistration model.
+
+        Provides CRUD operations for course registrations.
+        - Admins: Full access
+        - Students: Read-only access to their own registrations
+        - Parents: Read-only access to linked students' registrations
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Course Registration.
+        required: true
+      tags:
+      - registrations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedCourseRegistrationRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedCourseRegistrationRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCourseRegistrationRequest'
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseRegistration'
+          description: ''
+    delete:
+      operationId: registrations_destroy
+      description: |-
+        ViewSet for CourseRegistration model.
+
+        Provides CRUD operations for course registrations.
+        - Admins: Full access
+        - Students: Read-only access to their own registrations
+        - Parents: Read-only access to linked students' registrations
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Course Registration.
+        required: true
+      tags:
+      - registrations
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '204':
+          description: No response body
+  /api/v1/semesters/:
+    get:
+      operationId: semesters_list
+      description: |-
+        ViewSet for Semester model.
+
+        Provides CRUD operations for semesters.
+        - Admins: Full access
+        - Students/Parents: Read-only access
+      parameters:
+      - in: query
+        name: name
+        schema:
+          type: string
+          title: Semester
+          enum:
+          - first
+          - second
+        description: |-
+          * `first` - First Semester
+          * `second` - Second Semester
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - in: query
+        name: session
+        schema:
+          type: integer
+      tags:
+      - semesters
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedSemesterList'
+          description: ''
+    post:
+      operationId: semesters_create
+      description: |-
+        ViewSet for Semester model.
+
+        Provides CRUD operations for semesters.
+        - Admins: Full access
+        - Students/Parents: Read-only access
+      tags:
+      - semesters
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SemesterRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SemesterRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SemesterRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Semester'
+          description: ''
+  /api/v1/semesters/{id}/:
+    get:
+      operationId: semesters_retrieve
+      description: |-
+        ViewSet for Semester model.
+
+        Provides CRUD operations for semesters.
+        - Admins: Full access
+        - Students/Parents: Read-only access
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Semester.
+        required: true
+      tags:
+      - semesters
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Semester'
+          description: ''
+    put:
+      operationId: semesters_update
+      description: |-
+        ViewSet for Semester model.
+
+        Provides CRUD operations for semesters.
+        - Admins: Full access
+        - Students/Parents: Read-only access
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Semester.
+        required: true
+      tags:
+      - semesters
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SemesterRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SemesterRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SemesterRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Semester'
+          description: ''
+    patch:
+      operationId: semesters_partial_update
+      description: |-
+        ViewSet for Semester model.
+
+        Provides CRUD operations for semesters.
+        - Admins: Full access
+        - Students/Parents: Read-only access
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Semester.
+        required: true
+      tags:
+      - semesters
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedSemesterRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedSemesterRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedSemesterRequest'
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Semester'
+          description: ''
+    delete:
+      operationId: semesters_destroy
+      description: |-
+        ViewSet for Semester model.
+
+        Provides CRUD operations for semesters.
+        - Admins: Full access
+        - Students/Parents: Read-only access
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Semester.
+        required: true
+      tags:
+      - semesters
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '204':
+          description: No response body
+  /api/v1/sessions/:
+    get:
+      operationId: sessions_list
+      description: |-
+        ViewSet for AcademicSession model.
+
+        Provides CRUD operations for academic sessions.
+        - Admins: Full access
+        - Students/Parents: Read-only access
+      parameters:
+      - in: query
+        name: is_active
+        schema:
+          type: boolean
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - sessions
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedAcademicSessionList'
+          description: ''
+    post:
+      operationId: sessions_create
+      description: |-
+        ViewSet for AcademicSession model.
+
+        Provides CRUD operations for academic sessions.
+        - Admins: Full access
+        - Students/Parents: Read-only access
+      tags:
+      - sessions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AcademicSessionRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AcademicSessionRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AcademicSessionRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcademicSession'
+          description: ''
+  /api/v1/sessions/{id}/:
+    get:
+      operationId: sessions_retrieve
+      description: |-
+        ViewSet for AcademicSession model.
+
+        Provides CRUD operations for academic sessions.
+        - Admins: Full access
+        - Students/Parents: Read-only access
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Academic Session.
+        required: true
+      tags:
+      - sessions
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcademicSession'
+          description: ''
+    put:
+      operationId: sessions_update
+      description: |-
+        ViewSet for AcademicSession model.
+
+        Provides CRUD operations for academic sessions.
+        - Admins: Full access
+        - Students/Parents: Read-only access
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Academic Session.
+        required: true
+      tags:
+      - sessions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AcademicSessionRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AcademicSessionRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AcademicSessionRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcademicSession'
+          description: ''
+    patch:
+      operationId: sessions_partial_update
+      description: |-
+        ViewSet for AcademicSession model.
+
+        Provides CRUD operations for academic sessions.
+        - Admins: Full access
+        - Students/Parents: Read-only access
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Academic Session.
+        required: true
+      tags:
+      - sessions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedAcademicSessionRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedAcademicSessionRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedAcademicSessionRequest'
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcademicSession'
+          description: ''
+    delete:
+      operationId: sessions_destroy
+      description: |-
+        ViewSet for AcademicSession model.
+
+        Provides CRUD operations for academic sessions.
+        - Admins: Full access
+        - Students/Parents: Read-only access
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Academic Session.
+        required: true
+      tags:
+      - sessions
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '204':
+          description: No response body
+  /api/v1/student/attendance/:
+    get:
+      operationId: student_attendance_retrieve
+      description: |-
+        Get student attendance with optional filtering.
+
+        Query parameters:
+            - course: Filter by course ID
+            - session: Filter by session ID
+            - semester: Filter by semester ID
+
+        Returns:
+            Response with student attendance data
+      tags:
+      - student
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudentAttendance'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: ''
+  /api/v1/student/dashboard/:
+    get:
+      operationId: student_dashboard_retrieve
+      description: |-
+        Get student dashboard summary.
+
+        Returns:
+            Response with comprehensive student dashboard data
+      tags:
+      - student
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudentDashboard'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: ''
+  /api/v1/student/results/:
+    get:
+      operationId: student_results_list
+      description: |-
+        Get student results with optional filtering.
+
+        Query parameters:
+            - session: Filter by session ID
+            - semester: Filter by semester ID
+            - course: Filter by course ID
+
+        Returns:
+            Response with student results data
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - student
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedStudentResultList'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: ''
+  /api/v1/students/:
+    get:
+      operationId: students_list
+      description: |-
+        ViewSet for StudentProfile model.
+
+        Provides CRUD operations for student profiles with role-based permissions.
+        - Admins: Full access
+        - Students: Read-only access to their own profile
+        - Parents: Read-only access to linked students' profiles
+      parameters:
+      - in: query
+        name: grade_level
+        schema:
+          type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - students
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedStudentProfileList'
+          description: ''
+    post:
+      operationId: students_create
+      description: |-
+        ViewSet for StudentProfile model.
+
+        Provides CRUD operations for student profiles with role-based permissions.
+        - Admins: Full access
+        - Students: Read-only access to their own profile
+        - Parents: Read-only access to linked students' profiles
+      tags:
+      - students
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StudentProfileRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/StudentProfileRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/StudentProfileRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudentProfile'
+          description: ''
+  /api/v1/students/{id}/:
+    get:
+      operationId: students_retrieve
+      description: |-
+        ViewSet for StudentProfile model.
+
+        Provides CRUD operations for student profiles with role-based permissions.
+        - Admins: Full access
+        - Students: Read-only access to their own profile
+        - Parents: Read-only access to linked students' profiles
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Student Profile.
+        required: true
+      tags:
+      - students
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudentProfileDetail'
+          description: ''
+    put:
+      operationId: students_update
+      description: |-
+        ViewSet for StudentProfile model.
+
+        Provides CRUD operations for student profiles with role-based permissions.
+        - Admins: Full access
+        - Students: Read-only access to their own profile
+        - Parents: Read-only access to linked students' profiles
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Student Profile.
+        required: true
+      tags:
+      - students
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StudentProfileDetailRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/StudentProfileDetailRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/StudentProfileDetailRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudentProfileDetail'
+          description: ''
+    patch:
+      operationId: students_partial_update
+      description: |-
+        ViewSet for StudentProfile model.
+
+        Provides CRUD operations for student profiles with role-based permissions.
+        - Admins: Full access
+        - Students: Read-only access to their own profile
+        - Parents: Read-only access to linked students' profiles
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Student Profile.
+        required: true
+      tags:
+      - students
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedStudentProfileDetailRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedStudentProfileDetailRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedStudentProfileDetailRequest'
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudentProfileDetail'
+          description: ''
+    delete:
+      operationId: students_destroy
+      description: |-
+        ViewSet for StudentProfile model.
+
+        Provides CRUD operations for student profiles with role-based permissions.
+        - Admins: Full access
+        - Students: Read-only access to their own profile
+        - Parents: Read-only access to linked students' profiles
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Student Profile.
+        required: true
+      tags:
+      - students
+      security:
+      - jwtAuth: []
+      - scheme: bearer
+        bearerFormat: JWT
+        type: http
+      responses:
+        '204':
+          description: No response body
+components:
+  schemas:
+    AcademicSession:
+      type: object
+      description: |-
+        Serializer for AcademicSession model.
+
+        Handles academic session management with validation.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          title: Session Name
+          description: e.g., 2025/2026
+          maxLength: 20
+        start_date:
+          type: string
+          format: date
+        end_date:
+          type: string
+          format: date
+        is_active:
+          type: boolean
+          title: Active Session
+          description: Only one session can be active at a time
+        is_active_display:
+          type: string
+          readOnly: true
+      required:
+      - end_date
+      - id
+      - is_active_display
+      - name
+      - start_date
+    AcademicSessionRequest:
+      type: object
+      description: |-
+        Serializer for AcademicSession model.
+
+        Handles academic session management with validation.
+      properties:
+        name:
+          type: string
+          minLength: 1
+          title: Session Name
+          description: e.g., 2025/2026
+          maxLength: 20
+        start_date:
+          type: string
+          format: date
+        end_date:
+          type: string
+          format: date
+        is_active:
+          type: boolean
+          title: Active Session
+          description: Only one session can be active at a time
+      required:
+      - end_date
+      - name
+      - start_date
+    Attendance:
+      type: object
+      description: |-
+        Serializer for Attendance model.
+
+        Handles attendance tracking with nested relationships.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        student:
+          allOf:
+          - $ref: '#/components/schemas/StudentProfile'
+          readOnly: true
+        course:
+          allOf:
+          - $ref: '#/components/schemas/Course'
+          readOnly: true
+        date:
+          type: string
+          format: date
+        status:
+          $ref: '#/components/schemas/StatusEnum'
+        status_display:
+          type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - course
+      - created_at
+      - date
+      - id
+      - status
+      - status_display
+      - student
+    AttendanceDetail:
+      type: object
+      description: Detailed serializer for Attendance with full nested information.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        student:
+          allOf:
+          - $ref: '#/components/schemas/StudentProfileDetail'
+          readOnly: true
+        course:
+          allOf:
+          - $ref: '#/components/schemas/Course'
+          readOnly: true
+        date:
+          type: string
+          format: date
+        status:
+          $ref: '#/components/schemas/StatusEnum'
+        status_display:
+          type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - course
+      - created_at
+      - date
+      - id
+      - status
+      - status_display
+      - student
+    AttendanceRecord:
+      type: object
+      description: Serializer for individual attendance record.
+      properties:
+        course:
+          type: string
+          readOnly: true
+        course_title:
+          type: string
+          readOnly: true
+        date:
+          type: string
+          format: date
+          readOnly: true
+        status:
+          type: string
+          readOnly: true
+        remarks:
+          type: string
+          readOnly: true
+      required:
+      - course
+      - course_title
+      - date
+      - remarks
+      - status
+    AttendanceRequest:
+      type: object
+      description: |-
+        Serializer for Attendance model.
+
+        Handles attendance tracking with nested relationships.
+      properties:
+        student_id:
+          type: integer
+          writeOnly: true
+        course_id:
+          type: integer
+          writeOnly: true
+        date:
+          type: string
+          format: date
+        status:
+          $ref: '#/components/schemas/StatusEnum'
+      required:
+      - course_id
+      - date
+      - status
+      - student_id
+    Carryover:
+      type: object
+      description: Serializer for carryover course information.
+      properties:
+        course_code:
+          type: string
+          readOnly: true
+        course_title:
+          type: string
+          readOnly: true
+        score:
+          type: number
+          format: double
+          readOnly: true
+        letter_grade:
+          type: string
+          readOnly: true
+        session:
+          type: string
+          readOnly: true
+        semester:
+          type: string
+          readOnly: true
+      required:
+      - course_code
+      - course_title
+      - letter_grade
+      - score
+      - semester
+      - session
+    Course:
+      type: object
+      description: |-
+        Serializer for Course model.
+
+        Includes nested level and semester information.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        course_code:
+          type: string
+          description: e.g., CSC101, MTH201
+          maxLength: 20
+        course_title:
+          type: string
+          maxLength: 200
+        credit_unit:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+          description: Must be a positive integer
+        level:
+          allOf:
+          - $ref: '#/components/schemas/Level'
+          readOnly: true
+        semester:
+          allOf:
+          - $ref: '#/components/schemas/Semester'
+          readOnly: true
+        is_active:
+          type: boolean
+          title: Active Course
+      required:
+      - course_code
+      - course_title
+      - credit_unit
+      - id
+      - level
+      - semester
+    CourseRegistration:
+      type: object
+      description: |-
+        Serializer for CourseRegistration model.
+
+        Handles course registration with nested relationships.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        student:
+          allOf:
+          - $ref: '#/components/schemas/StudentProfile'
+          readOnly: true
+        course:
+          allOf:
+          - $ref: '#/components/schemas/Course'
+          readOnly: true
+        session:
+          allOf:
+          - $ref: '#/components/schemas/AcademicSession'
+          readOnly: true
+        semester:
+          allOf:
+          - $ref: '#/components/schemas/Semester'
+          readOnly: true
+        registration_date:
+          type: string
+          format: date
+          readOnly: true
+        is_carryover:
+          type: boolean
+          title: Carryover
+          description: Mark if this is a carryover course
+        is_carryover_display:
+          type: string
+          readOnly: true
+      required:
+      - course
+      - id
+      - is_carryover_display
+      - registration_date
+      - semester
+      - session
+      - student
+    CourseRegistrationDetail:
+      type: object
+      description: Detailed serializer for CourseRegistration with full nested information.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        student:
+          allOf:
+          - $ref: '#/components/schemas/StudentProfileDetail'
+          readOnly: true
+        course:
+          allOf:
+          - $ref: '#/components/schemas/Course'
+          readOnly: true
+        session:
+          allOf:
+          - $ref: '#/components/schemas/AcademicSession'
+          readOnly: true
+        semester:
+          allOf:
+          - $ref: '#/components/schemas/Semester'
+          readOnly: true
+        registration_date:
+          type: string
+          format: date
+          readOnly: true
+        is_carryover:
+          type: boolean
+          title: Carryover
+          description: Mark if this is a carryover course
+        is_carryover_display:
+          type: string
+          readOnly: true
+      required:
+      - course
+      - id
+      - is_carryover_display
+      - registration_date
+      - semester
+      - session
+      - student
+    CourseRegistrationRequest:
+      type: object
+      description: |-
+        Serializer for CourseRegistration model.
+
+        Handles course registration with nested relationships.
+      properties:
+        student_id:
+          type: integer
+          writeOnly: true
+        course_id:
+          type: integer
+          writeOnly: true
+        session_id:
+          type: integer
+          writeOnly: true
+        semester_id:
+          type: integer
+          writeOnly: true
+        is_carryover:
+          type: boolean
+          title: Carryover
+          description: Mark if this is a carryover course
+      required:
+      - course_id
+      - semester_id
+      - session_id
+      - student_id
+    CourseRequest:
+      type: object
+      description: |-
+        Serializer for Course model.
+
+        Includes nested level and semester information.
+      properties:
+        course_code:
+          type: string
+          minLength: 1
+          description: e.g., CSC101, MTH201
+          maxLength: 20
+        course_title:
+          type: string
+          minLength: 1
+          maxLength: 200
+        credit_unit:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+          description: Must be a positive integer
+        level_id:
+          type: integer
+          writeOnly: true
+        semester_id:
+          type: integer
+          writeOnly: true
+        is_active:
+          type: boolean
+          title: Active Course
+      required:
+      - course_code
+      - course_title
+      - credit_unit
+      - level_id
+      - semester_id
+    CurrentUserResponse:
+      type: object
+      description: Serializer for current user response.
+      properties:
+        success:
+          type: boolean
+          readOnly: true
+          default: true
+        data:
+          type: object
+          additionalProperties: {}
+          readOnly: true
+      required:
+      - data
+      - success
+    CustomTokenObtainPairRequest:
+      type: object
+      description: |-
+        Custom JWT token serializer with additional user information.
+
+        Adds user role and profile information to the token response.
+      properties:
+        email:
+          type: string
+          writeOnly: true
+          minLength: 1
+        password:
+          type: string
+          writeOnly: true
+          minLength: 1
+      required:
+      - email
+      - password
+    ErrorResponse:
+      type: object
+      description: |-
+        Standard error response wrapper.
+
+        Provides a consistent structure for all error responses.
+      properties:
+        success:
+          type: boolean
+          readOnly: true
+          default: false
+        error:
+          type: string
+          readOnly: true
+        details:
+          type: object
+          additionalProperties: {}
+          readOnly: true
+      required:
+      - details
+      - error
+      - success
+    Grade:
+      type: object
+      description: |-
+        Serializer for Grade model.
+
+        Handles grade recording with automatic calculation.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        registration:
+          allOf:
+          - $ref: '#/components/schemas/CourseRegistration'
+          readOnly: true
+        score:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+          description: Score between 0 and 100
+        letter_grade:
+          type: string
+          readOnly: true
+        grade_point:
+          type: integer
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - created_at
+      - grade_point
+      - id
+      - letter_grade
+      - registration
+      - score
+      - updated_at
+    GradeDetail:
+      type: object
+      description: Detailed serializer for Grade with full nested information.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        registration:
+          allOf:
+          - $ref: '#/components/schemas/CourseRegistrationDetail'
+          readOnly: true
+        score:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+          description: Score between 0 and 100
+        letter_grade:
+          type: string
+          readOnly: true
+        grade_point:
+          type: integer
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - created_at
+      - grade_point
+      - id
+      - letter_grade
+      - registration
+      - score
+      - updated_at
+    GradeRequest:
+      type: object
+      description: |-
+        Serializer for Grade model.
+
+        Handles grade recording with automatic calculation.
+      properties:
+        registration_id:
+          type: integer
+          writeOnly: true
+        score:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+          description: Score between 0 and 100
+      required:
+      - registration_id
+      - score
+    Level:
+      type: object
+      description: |-
+        Serializer for Level model.
+
+        Handles academic level management.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          title: Level Name
+          description: e.g., 100 Level, 200 Level
+          maxLength: 20
+      required:
+      - id
+      - name
+    LevelRequest:
+      type: object
+      description: |-
+        Serializer for Level model.
+
+        Handles academic level management.
+      properties:
+        name:
+          type: string
+          minLength: 1
+          title: Level Name
+          description: e.g., 100 Level, 200 Level
+          maxLength: 20
+      required:
+      - name
+    LogoutRequestRequest:
+      type: object
+      description: Serializer for logout request.
+      properties:
+        refresh_token:
+          type: string
+          writeOnly: true
+          minLength: 1
+      required:
+      - refresh_token
+    LogoutResponse:
+      type: object
+      description: Serializer for logout response.
+      properties:
+        success:
+          type: boolean
+          readOnly: true
+          default: true
+        message:
+          type: string
+          readOnly: true
+      required:
+      - message
+      - success
+    NameEnum:
+      enum:
+      - first
+      - second
+      type: string
+      description: |-
+        * `first` - First Semester
+        * `second` - Second Semester
+    PaginatedAcademicSessionList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/AcademicSession'
+    PaginatedAttendanceList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Attendance'
+    PaginatedCourseList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Course'
+    PaginatedCourseRegistrationList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/CourseRegistration'
+    PaginatedGradeList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Grade'
+    PaginatedLevelList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Level'
+    PaginatedParentProfileList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ParentProfile'
+    PaginatedParentStudentRelationList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ParentStudentRelation'
+    PaginatedSemesterList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Semester'
+    PaginatedStudentEnrollmentList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/StudentEnrollment'
+    PaginatedStudentProfileList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/StudentProfile'
+    PaginatedStudentResultList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/StudentResult'
+    ParentDashboard:
+      type: object
+      description: |-
+        Serializer for parent dashboard response.
+
+        Provides overview of all students linked to the authenticated parent.
+      properties:
+        parent_name:
+          type: string
+          readOnly: true
+        total_wards:
+          type: integer
+          readOnly: true
+        wards:
+          type: array
+          items:
+            $ref: '#/components/schemas/WardInfo'
+          readOnly: true
+      required:
+      - parent_name
+      - total_wards
+      - wards
+    ParentProfile:
+      type: object
+      description: |-
+        Serializer for ParentProfile model.
+
+        Includes nested user information.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        user:
+          allOf:
+          - $ref: '#/components/schemas/UserPublic'
+          readOnly: true
+        occupation:
+          type: string
+          maxLength: 100
+        phone_number:
+          type: string
+          maxLength: 20
+      required:
+      - id
+      - user
+    ParentProfileDetail:
+      type: object
+      description: Detailed serializer for ParentProfile with full user information.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        user:
+          allOf:
+          - $ref: '#/components/schemas/User'
+          readOnly: true
+        occupation:
+          type: string
+          maxLength: 100
+        phone_number:
+          type: string
+          maxLength: 20
+      required:
+      - id
+      - user
+    ParentProfileDetailRequest:
+      type: object
+      description: Detailed serializer for ParentProfile with full user information.
+      properties:
+        user_id:
+          type: integer
+          writeOnly: true
+        occupation:
+          type: string
+          maxLength: 100
+        phone_number:
+          type: string
+          maxLength: 20
+    ParentProfileRequest:
+      type: object
+      description: |-
+        Serializer for ParentProfile model.
+
+        Includes nested user information.
+      properties:
+        user_id:
+          type: integer
+          writeOnly: true
+        occupation:
+          type: string
+          maxLength: 100
+        phone_number:
+          type: string
+          maxLength: 20
+    ParentStudentRelation:
+      type: object
+      description: |-
+        Serializer for ParentStudentRelation model.
+
+        Handles parent-student relationships with proper validation.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        parent:
+          allOf:
+          - $ref: '#/components/schemas/ParentProfile'
+          readOnly: true
+        student:
+          allOf:
+          - $ref: '#/components/schemas/StudentProfile'
+          readOnly: true
+        relationship_type:
+          $ref: '#/components/schemas/RelationshipTypeEnum'
+      required:
+      - id
+      - parent
+      - relationship_type
+      - student
+    ParentStudentRelationDetail:
+      type: object
+      description: Detailed serializer for ParentStudentRelation with full nested
+        information.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        parent:
+          allOf:
+          - $ref: '#/components/schemas/ParentProfileDetail'
+          readOnly: true
+        student:
+          allOf:
+          - $ref: '#/components/schemas/StudentProfileDetail'
+          readOnly: true
+        relationship_type:
+          $ref: '#/components/schemas/RelationshipTypeEnum'
+      required:
+      - id
+      - parent
+      - relationship_type
+      - student
+    ParentStudentRelationDetailRequest:
+      type: object
+      description: Detailed serializer for ParentStudentRelation with full nested
+        information.
+      properties:
+        parent_id:
+          type: integer
+          writeOnly: true
+        student_id:
+          type: integer
+          writeOnly: true
+        relationship_type:
+          $ref: '#/components/schemas/RelationshipTypeEnum'
+      required:
+      - parent_id
+      - relationship_type
+      - student_id
+    ParentStudentRelationRequest:
+      type: object
+      description: |-
+        Serializer for ParentStudentRelation model.
+
+        Handles parent-student relationships with proper validation.
+      properties:
+        parent_id:
+          type: integer
+          writeOnly: true
+        student_id:
+          type: integer
+          writeOnly: true
+        relationship_type:
+          $ref: '#/components/schemas/RelationshipTypeEnum'
+      required:
+      - parent_id
+      - relationship_type
+      - student_id
+    ParentWard:
+      type: object
+      description: |-
+        Serializer for parent ward detail response.
+
+        Provides detailed academic information for a specific linked student.
+      properties:
+        student_info:
+          allOf:
+          - $ref: '#/components/schemas/WardDetailInfo'
+          readOnly: true
+        cgpa:
+          type: number
+          format: double
+          readOnly: true
+        academic_standing:
+          type: string
+          readOnly: true
+        attendance_percentage:
+          type: number
+          format: double
+          readOnly: true
+        carryover_count:
+          type: integer
+          readOnly: true
+        total_courses:
+          type: integer
+          readOnly: true
+        relationship_type:
+          type: string
+          readOnly: true
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/StudentResult'
+          readOnly: true
+        carryovers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Carryover'
+          readOnly: true
+        attendance_records:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttendanceRecord'
+          readOnly: true
+      required:
+      - academic_standing
+      - attendance_percentage
+      - attendance_records
+      - carryover_count
+      - carryovers
+      - cgpa
+      - relationship_type
+      - results
+      - student_info
+      - total_courses
+    PatchedAcademicSessionRequest:
+      type: object
+      description: |-
+        Serializer for AcademicSession model.
+
+        Handles academic session management with validation.
+      properties:
+        name:
+          type: string
+          minLength: 1
+          title: Session Name
+          description: e.g., 2025/2026
+          maxLength: 20
+        start_date:
+          type: string
+          format: date
+        end_date:
+          type: string
+          format: date
+        is_active:
+          type: boolean
+          title: Active Session
+          description: Only one session can be active at a time
+    PatchedAttendanceRequest:
+      type: object
+      description: |-
+        Serializer for Attendance model.
+
+        Handles attendance tracking with nested relationships.
+      properties:
+        student_id:
+          type: integer
+          writeOnly: true
+        course_id:
+          type: integer
+          writeOnly: true
+        date:
+          type: string
+          format: date
+        status:
+          $ref: '#/components/schemas/StatusEnum'
+    PatchedCourseRegistrationRequest:
+      type: object
+      description: |-
+        Serializer for CourseRegistration model.
+
+        Handles course registration with nested relationships.
+      properties:
+        student_id:
+          type: integer
+          writeOnly: true
+        course_id:
+          type: integer
+          writeOnly: true
+        session_id:
+          type: integer
+          writeOnly: true
+        semester_id:
+          type: integer
+          writeOnly: true
+        is_carryover:
+          type: boolean
+          title: Carryover
+          description: Mark if this is a carryover course
+    PatchedCourseRequest:
+      type: object
+      description: |-
+        Serializer for Course model.
+
+        Includes nested level and semester information.
+      properties:
+        course_code:
+          type: string
+          minLength: 1
+          description: e.g., CSC101, MTH201
+          maxLength: 20
+        course_title:
+          type: string
+          minLength: 1
+          maxLength: 200
+        credit_unit:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+          description: Must be a positive integer
+        level_id:
+          type: integer
+          writeOnly: true
+        semester_id:
+          type: integer
+          writeOnly: true
+        is_active:
+          type: boolean
+          title: Active Course
+    PatchedGradeRequest:
+      type: object
+      description: |-
+        Serializer for Grade model.
+
+        Handles grade recording with automatic calculation.
+      properties:
+        registration_id:
+          type: integer
+          writeOnly: true
+        score:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+          description: Score between 0 and 100
+    PatchedLevelRequest:
+      type: object
+      description: |-
+        Serializer for Level model.
+
+        Handles academic level management.
+      properties:
+        name:
+          type: string
+          minLength: 1
+          title: Level Name
+          description: e.g., 100 Level, 200 Level
+          maxLength: 20
+    PatchedParentProfileDetailRequest:
+      type: object
+      description: Detailed serializer for ParentProfile with full user information.
+      properties:
+        user_id:
+          type: integer
+          writeOnly: true
+        occupation:
+          type: string
+          maxLength: 100
+        phone_number:
+          type: string
+          maxLength: 20
+    PatchedParentStudentRelationDetailRequest:
+      type: object
+      description: Detailed serializer for ParentStudentRelation with full nested
+        information.
+      properties:
+        parent_id:
+          type: integer
+          writeOnly: true
+        student_id:
+          type: integer
+          writeOnly: true
+        relationship_type:
+          $ref: '#/components/schemas/RelationshipTypeEnum'
+    PatchedSemesterRequest:
+      type: object
+      description: |-
+        Serializer for Semester model.
+
+        Includes nested session information.
+      properties:
+        name:
+          allOf:
+          - $ref: '#/components/schemas/NameEnum'
+          title: Semester
+        session_id:
+          type: integer
+          writeOnly: true
+    PatchedStudentEnrollmentRequest:
+      type: object
+      description: |-
+        Serializer for StudentEnrollment model.
+
+        Handles student enrollment in academic sessions.
+      properties:
+        student_id:
+          type: integer
+          writeOnly: true
+        session_id:
+          type: integer
+          writeOnly: true
+        level_id:
+          type: integer
+          writeOnly: true
+    PatchedStudentProfileDetailRequest:
+      type: object
+      description: Detailed serializer for StudentProfile with full user information.
+      properties:
+        user_id:
+          type: integer
+          writeOnly: true
+        student_id:
+          type: string
+          minLength: 1
+          maxLength: 20
+        date_of_birth:
+          type: string
+          format: date
+        grade_level:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
+    RecentResult:
+      type: object
+      description: Serializer for recent results in dashboard.
+      properties:
+        course_code:
+          type: string
+          readOnly: true
+        course_title:
+          type: string
+          readOnly: true
+        score:
+          type: number
+          format: double
+          readOnly: true
+        grade:
+          type: string
+          readOnly: true
+        session:
+          type: string
+          readOnly: true
+        semester:
+          type: string
+          readOnly: true
+      required:
+      - course_code
+      - course_title
+      - grade
+      - score
+      - semester
+      - session
+    RelationshipTypeEnum:
+      enum:
+      - father
+      - mother
+      - guardian
+      type: string
+      description: |-
+        * `father` - Father
+        * `mother` - Mother
+        * `guardian` - Guardian
+    RoleEnum:
+      enum:
+      - student
+      - parent
+      - admin
+      type: string
+      description: |-
+        * `student` - Student
+        * `parent` - Parent
+        * `admin` - Admin
+    Semester:
+      type: object
+      description: |-
+        Serializer for Semester model.
+
+        Includes nested session information.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          allOf:
+          - $ref: '#/components/schemas/NameEnum'
+          title: Semester
+        name_display:
+          type: string
+          readOnly: true
+        session:
+          allOf:
+          - $ref: '#/components/schemas/AcademicSession'
+          readOnly: true
+      required:
+      - id
+      - name
+      - name_display
+      - session
+    SemesterRequest:
+      type: object
+      description: |-
+        Serializer for Semester model.
+
+        Includes nested session information.
+      properties:
+        name:
+          allOf:
+          - $ref: '#/components/schemas/NameEnum'
+          title: Semester
+        session_id:
+          type: integer
+          writeOnly: true
+      required:
+      - name
+      - session_id
+    StatusEnum:
+      enum:
+      - present
+      - absent
+      type: string
+      description: |-
+        * `present` - Present
+        * `absent` - Absent
+    StudentAttendance:
+      type: object
+      description: |-
+        Serializer for student attendance response.
+
+        Provides attendance records and statistics for the authenticated student.
+      properties:
+        attendance_percentage:
+          type: number
+          format: double
+          readOnly: true
+        total_records:
+          type: integer
+          readOnly: true
+        present_records:
+          type: integer
+          readOnly: true
+        absent_records:
+          type: integer
+          readOnly: true
+        records:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttendanceRecord'
+          readOnly: true
+      required:
+      - absent_records
+      - attendance_percentage
+      - present_records
+      - records
+      - total_records
+    StudentDashboard:
+      type: object
+      description: |-
+        Serializer for student dashboard response.
+
+        Provides comprehensive academic summary for the authenticated student.
+      properties:
+        student_info:
+          allOf:
+          - $ref: '#/components/schemas/StudentInfo'
+          readOnly: true
+        cgpa:
+          type: number
+          format: double
+          readOnly: true
+        academic_standing:
+          type: string
+          readOnly: true
+        attendance_percentage:
+          type: number
+          format: double
+          readOnly: true
+        carryover_count:
+          type: integer
+          readOnly: true
+        total_courses_registered:
+          type: integer
+          readOnly: true
+        recent_results:
+          type: array
+          items:
+            $ref: '#/components/schemas/RecentResult'
+          readOnly: true
+      required:
+      - academic_standing
+      - attendance_percentage
+      - carryover_count
+      - cgpa
+      - recent_results
+      - student_info
+      - total_courses_registered
+    StudentEnrollment:
+      type: object
+      description: |-
+        Serializer for StudentEnrollment model.
+
+        Handles student enrollment in academic sessions.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        student:
+          allOf:
+          - $ref: '#/components/schemas/StudentProfile'
+          readOnly: true
+        session:
+          allOf:
+          - $ref: '#/components/schemas/AcademicSession'
+          readOnly: true
+        level:
+          allOf:
+          - $ref: '#/components/schemas/Level'
+          readOnly: true
+        enrollment_date:
+          type: string
+          format: date
+          readOnly: true
+      required:
+      - enrollment_date
+      - id
+      - level
+      - session
+      - student
+    StudentEnrollmentRequest:
+      type: object
+      description: |-
+        Serializer for StudentEnrollment model.
+
+        Handles student enrollment in academic sessions.
+      properties:
+        student_id:
+          type: integer
+          writeOnly: true
+        session_id:
+          type: integer
+          writeOnly: true
+        level_id:
+          type: integer
+          writeOnly: true
+      required:
+      - level_id
+      - session_id
+      - student_id
+    StudentInfo:
+      type: object
+      description: Serializer for student information in dashboard.
+      properties:
+        name:
+          type: string
+          readOnly: true
+        matric_number:
+          type: string
+          readOnly: true
+        level:
+          type: string
+          readOnly: true
+      required:
+      - level
+      - matric_number
+      - name
+    StudentProfile:
+      type: object
+      description: |-
+        Serializer for StudentProfile model.
+
+        Includes nested user information and calculated fields.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        user:
+          allOf:
+          - $ref: '#/components/schemas/UserPublic'
+          readOnly: true
+        student_id:
+          type: string
+          maxLength: 20
+        date_of_birth:
+          type: string
+          format: date
+        grade_level:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
+        enrollment_date:
+          type: string
+          format: date
+          readOnly: true
+        age:
+          type: integer
+          nullable: true
+          description: |-
+            Calculate student's age based on date of birth.
+
+            Args:
+                obj: StudentProfile instance
+
+            Returns:
+                Age in years, or None if date of birth not set
+          readOnly: true
+      required:
+      - age
+      - date_of_birth
+      - enrollment_date
+      - grade_level
+      - id
+      - student_id
+      - user
+    StudentProfileDetail:
+      type: object
+      description: Detailed serializer for StudentProfile with full user information.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        user:
+          allOf:
+          - $ref: '#/components/schemas/User'
+          readOnly: true
+        student_id:
+          type: string
+          maxLength: 20
+        date_of_birth:
+          type: string
+          format: date
+        grade_level:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
+        enrollment_date:
+          type: string
+          format: date
+          readOnly: true
+        age:
+          type: integer
+          nullable: true
+          description: |-
+            Calculate student's age based on date of birth.
+
+            Args:
+                obj: StudentProfile instance
+
+            Returns:
+                Age in years, or None if date of birth not set
+          readOnly: true
+      required:
+      - age
+      - date_of_birth
+      - enrollment_date
+      - grade_level
+      - id
+      - student_id
+      - user
+    StudentProfileDetailRequest:
+      type: object
+      description: Detailed serializer for StudentProfile with full user information.
+      properties:
+        user_id:
+          type: integer
+          writeOnly: true
+        student_id:
+          type: string
+          minLength: 1
+          maxLength: 20
+        date_of_birth:
+          type: string
+          format: date
+        grade_level:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
+      required:
+      - date_of_birth
+      - grade_level
+      - student_id
+    StudentProfileRequest:
+      type: object
+      description: |-
+        Serializer for StudentProfile model.
+
+        Includes nested user information and calculated fields.
+      properties:
+        user_id:
+          type: integer
+          writeOnly: true
+        student_id:
+          type: string
+          minLength: 1
+          maxLength: 20
+        date_of_birth:
+          type: string
+          format: date
+        grade_level:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
+      required:
+      - date_of_birth
+      - grade_level
+      - student_id
+    StudentResult:
+      type: object
+      description: |-
+        Serializer for student results response.
+
+        Provides detailed grade information for the authenticated student.
+      properties:
+        course_code:
+          type: string
+          readOnly: true
+        course_title:
+          type: string
+          readOnly: true
+        score:
+          type: number
+          format: double
+          readOnly: true
+        letter_grade:
+          type: string
+          readOnly: true
+        grade_point:
+          type: integer
+          readOnly: true
+        session:
+          type: string
+          readOnly: true
+        semester:
+          type: string
+          readOnly: true
+        credit_unit:
+          type: integer
+          readOnly: true
+      required:
+      - course_code
+      - course_title
+      - credit_unit
+      - grade_point
+      - letter_grade
+      - score
+      - semester
+      - session
+    TokenRefresh:
+      type: object
+      properties:
+        access:
+          type: string
+          readOnly: true
+        refresh:
+          type: string
+      required:
+      - access
+      - refresh
+    TokenRefreshRequest:
+      type: object
+      properties:
+        refresh:
+          type: string
+          minLength: 1
+      required:
+      - refresh
+    User:
+      type: object
+      description: |-
+        Serializer for User model.
+
+        Handles user creation and updates with password validation.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+          description: Unique username for the user
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          description: Email address of the user
+          maxLength: 254
+        first_name:
+          type: string
+          maxLength: 150
+        last_name:
+          type: string
+          maxLength: 150
+        role:
+          allOf:
+          - $ref: '#/components/schemas/RoleEnum'
+          description: |-
+            Role of the user (student, parent, or admin)
+
+            * `student` - Student
+            * `parent` - Parent
+            * `admin` - Admin
+        is_active:
+          type: boolean
+          readOnly: true
+          title: Active
+          description: Designates whether this user should be treated as active. Unselect
+            this instead of deleting accounts.
+        date_joined:
+          type: string
+          format: date-time
+          readOnly: true
+        last_login:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+      required:
+      - date_joined
+      - email
+      - id
+      - is_active
+      - last_login
+      - username
+    UserPublic:
+      type: object
+      description: |-
+        Public serializer for User model with limited fields.
+
+        Used for displaying user information without sensitive data.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        first_name:
+          type: string
+          maxLength: 150
+        last_name:
+          type: string
+          maxLength: 150
+        role:
+          allOf:
+          - $ref: '#/components/schemas/RoleEnum'
+          readOnly: true
+      required:
+      - email
+      - id
+      - role
+      - username
+    UserPublicRequest:
+      type: object
+      description: |-
+        Public serializer for User model with limited fields.
+
+        Used for displaying user information without sensitive data.
+      properties:
+        username:
+          type: string
+          minLength: 1
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          minLength: 1
+          maxLength: 254
+        first_name:
+          type: string
+          maxLength: 150
+        last_name:
+          type: string
+          maxLength: 150
+      required:
+      - email
+      - username
+    UserRequest:
+      type: object
+      description: |-
+        Serializer for User model.
+
+        Handles user creation and updates with password validation.
+      properties:
+        username:
+          type: string
+          minLength: 1
+          description: Unique username for the user
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          minLength: 1
+          description: Email address of the user
+          maxLength: 254
+        first_name:
+          type: string
+          maxLength: 150
+        last_name:
+          type: string
+          maxLength: 150
+        role:
+          allOf:
+          - $ref: '#/components/schemas/RoleEnum'
+          description: |-
+            Role of the user (student, parent, or admin)
+
+            * `student` - Student
+            * `parent` - Parent
+            * `admin` - Admin
+        password:
+          type: string
+          writeOnly: true
+          minLength: 1
+          description: Password for the user account
+      required:
+      - email
+      - password
+      - username
+    WardDetailInfo:
+      type: object
+      description: Serializer for detailed ward information.
+      properties:
+        student_id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          readOnly: true
+        matric_number:
+          type: string
+          readOnly: true
+        level:
+          type: string
+          readOnly: true
+        email:
+          type: string
+          format: email
+          readOnly: true
+      required:
+      - email
+      - level
+      - matric_number
+      - name
+      - student_id
+    WardInfo:
+      type: object
+      description: Serializer for ward (student) information in parent dashboard.
+      properties:
+        student_id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          readOnly: true
+        matric_number:
+          type: string
+          readOnly: true
+        level:
+          type: string
+          readOnly: true
+        cgpa:
+          type: number
+          format: double
+          readOnly: true
+        academic_standing:
+          type: string
+          readOnly: true
+        attendance_percentage:
+          type: number
+          format: double
+          readOnly: true
+        carryover_count:
+          type: integer
+          readOnly: true
+        total_courses:
+          type: integer
+          readOnly: true
+        relationship_type:
+          type: string
+          readOnly: true
+      required:
+      - academic_standing
+      - attendance_percentage
+      - carryover_count
+      - cgpa
+      - level
+      - matric_number
+      - name
+      - relationship_type
+      - student_id
+      - total_courses
+  securitySchemes:
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+tags:
+- name: Authentication
+  description: JWT-based authentication endpoints
+- name: Students
+  description: Student profile management
+- name: Parents
+  description: Parent profile management
+- name: Academic Sessions
+  description: Academic session management
+- name: Courses
+  description: Course management
+- name: Grades
+  description: Grade management
+- name: Attendance
+  description: Attendance tracking
+- name: Student Dashboard
+  description: Student dashboard and monitoring
+- name: Parent Dashboard
+  description: Parent monitoring dashboard
