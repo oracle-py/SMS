@@ -1,7 +1,15 @@
 import axios from 'axios';
 
+// Determine API base URL based on environment
+const getBaseURL = () => {
+  if (window.location.hostname === 'sms-bv3a.onrender.com') {
+    return 'https://sms-bv3a.onrender.com/api/v1';
+  }
+  return 'http://127.0.0.1:8001/api/v1';
+};
+
 const api = axios.create({
-  baseURL: 'http://127.0.0.1:8001/api/v1',
+  baseURL: getBaseURL(),
   headers: {
     'Content-Type': 'application/json',
   },
@@ -32,7 +40,7 @@ api.interceptors.response.use(
       
       try {
         const refreshToken = localStorage.getItem('refresh_token');
-        const response = await axios.post('http://127.0.0.1:8001/api/v1/auth/refresh/', {
+        const response = await axios.post(`${getBaseURL()}/auth/refresh/`, {
           refresh: refreshToken,
         });
         
