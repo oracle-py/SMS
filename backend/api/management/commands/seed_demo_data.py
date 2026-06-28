@@ -15,7 +15,7 @@ from django.core.management.base import BaseCommand
 from django.db import transaction
 from django.utils import timezone
 
-from users.models import User, StudentProfile, ParentProfile, ParentStudentRelation
+from users.models import User, StudentProfile, ParentProfile, ParentStudentRelation, LecturerProfile
 from academics.models import (
     AcademicSession,
     Semester,
@@ -69,6 +69,7 @@ class Command(BaseCommand):
             self.stdout.write(self.style.SUCCESS('Admin: admin / admin123'))
             self.stdout.write(self.style.SUCCESS('Student: student1 / student123'))
             self.stdout.write(self.style.SUCCESS('Parent: parent1 / parent123'))
+            self.stdout.write(self.style.SUCCESS('Lecturer: lecturer1 / lecturer123'))
             
         except Exception as e:
             self.stdout.write(self.style.ERROR(f'Error seeding data: {str(e)}'))
@@ -91,13 +92,13 @@ class Command(BaseCommand):
         ParentProfile.objects.all().delete()
         StudentProfile.objects.all().delete()
         
-        # Delete demo users (admin, student1-10, parent1-5)
-        User.objects.filter(username__in=['admin'] + [f'student{i}' for i in range(1, 11)] + [f'parent{i}' for i in range(1, 6)]).delete()
+        # Delete demo users (admin, student1-10, parent1-5, lecturer1-5)
+        User.objects.filter(username__in=['admin'] + [f'student{i}' for i in range(1, 11)] + [f'parent{i}' for i in range(1, 6)] + [f'lecturer{i}' for i in range(1, 6)]).delete()
         
         self.stdout.write('Demo data deleted successfully.')
     
     def seed_users(self):
-        """Seed users including admin, students, and parents."""
+        """Seed users including admin, students, parents, and lecturers."""
         self.stdout.write('Seeding users...')
         
         # Create or get admin user
@@ -222,6 +223,45 @@ class Command(BaseCommand):
             )
             
             self.stdout.write(f'  Linked {parent.user.username} to {student1.student_id} and {student2.student_id}')
+        
+        # Create lecturers
+        lecturer_names = [
+            ('Dr.', 'Robert', 'Chen', 'lecturer1@school.edu'),
+            ('Prof.', 'Sarah', 'Williams', 'lecturer2@school.edu'),
+            ('Dr.', 'Michael', 'Brown', 'lecturer3@school.edu'),
+            ('Prof.', 'Emily', 'Davis', 'lecturer4@school.edu'),
+            ('Dr.', 'James', 'Wilson', 'lecturer5@school.edu'),
+        ]
+        
+        self.lecturers = []
+        for i, (title, first_name, last_name, email) in enumerate(lecturer_names, 1):
+            user, created = User.objects.get_or_create(
+                username=f'lecturer{i}',
+                defaults={
+                    'email': email,
+                    'first_name': first_name,
+                    'last_name': last_name,
+                    'role': 'lecturer'
+                }
+            )
+            if created:
+                user.set_password('lecturer123')
+                user.save()
+            else:
+                user.set_password('lecturer123')
+                user.save()
+            
+            lecturer, created = LecturerProfile.objects.update_or_create(
+                user=user,
+                defaults={
+                    'staff_id': f'STAFF/2024/{i:03d}',
+                    'department': 'Computer Science',
+                    'phone_number': f'+123456789{i:02d}'
+                }
+            )
+            self.lecturers.append(lecturer)
+            action = 'Created' if created else 'Updated'
+            self.stdout.write(f'  {action} lecturer: {user.username} ({lecturer.staff_id})')
     
     def seed_academic_structure(self):
         """Seed academic sessions, semesters, levels, and courses."""
