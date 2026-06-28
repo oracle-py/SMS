@@ -2,10 +2,12 @@ import axios from 'axios';
 
 // Determine API base URL based on environment
 const getBaseURL = () => {
-  if (window.location.hostname === 'sms-bv3a.onrender.com') {
-    return 'https://sms-bv3a.onrender.com/api/v1';
+  // If running on localhost, use local backend
+  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    return 'http://127.0.0.1:8001/api/v1';
   }
-  return 'http://127.0.0.1:8001/api/v1';
+  // Otherwise (production on Vercel, Netlify, etc.), use Render backend
+  return 'https://sms-bv3a.onrender.com/api/v1';
 };
 
 const api = axios.create({

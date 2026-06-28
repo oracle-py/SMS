@@ -3858,3 +3858,11 @@ INFO 2026-06-28 21:29:32,509 basehttp 3864 22940 "OPTIONS /api/v1/auth/login/ HT
 INFO 2026-06-28 21:29:34,204 basehttp 3864 22940 "POST /api/v1/auth/login/ HTTP/1.1" 200 918
 INFO 2026-06-28 22:15:10,445 autoreload 3864 1668 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\school_monitoring_system\settings.py changed, reloading.
 INFO 2026-06-28 22:15:17,207 autoreload 252 20524 Watching for file changes with StatReloader
+INFO 2026-06-28 22:32:00,162 basehttp 252 9928 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 0
+INFO 2026-06-28 22:32:03,345 basehttp 252 9928 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 0
+INFO 2026-06-28 22:32:04,605 basehttp 252 9928 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 0
+INFO 2026-06-28 22:32:08,642 basehttp 252 9928 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 0
+INFO 2026-06-28 22:32:10,573 basehttp 252 9928 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 0
+INFO 2026-06-28 22:32:11,500 basehttp 252 9928 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 0
+INFO 2026-06-28 22:32:33,819 basehttp 252 9928 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 0
+INFO 2026-06-28 22:33:52,125 basehttp 252 9928 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 0
