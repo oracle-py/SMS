@@ -19,7 +19,7 @@ import {
     FaUniversity
 } from "react-icons/fa";
 
-import "./login.css";
+import "./Login.css";
 
 function Login() {
 
