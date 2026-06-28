@@ -5,15 +5,17 @@ This module provides serializers for User, StudentProfile, ParentProfile,
 and ParentStudentRelation models with proper validation and nested relationships.
 """
 
-from datetime import date
+from datetime import date, datetime
 from typing import Dict, Any, Optional
+import uuid
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
+from django.db import transaction
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
-from users.models import StudentProfile, ParentProfile, ParentStudentRelation
+from users.models import StudentProfile, ParentProfile, ParentStudentRelation, LecturerProfile
 
 User = get_user_model()
 
@@ -74,37 +76,35 @@ class UserSerializer(serializers.ModelSerializer):
         Create a new user with hashed password.
         
         Args:
-            validated_data: Validated data from serializer
+            validated_data: Validated user data
             
         Returns:
             Created User instance
         """
-        password = validated_data.pop('password')
+        password = validated_data.pop('password', None)
         user = User(**validated_data)
-        user.set_password(password)
+        if password:
+            user.set_password(password)
         user.save()
         return user
+
+
+class UserNestedSerializer(serializers.ModelSerializer):
+    """
+    Serializer for nested user creation without password.
     
-    def update(self, instance: User, validated_data: Dict[str, Any]) -> User:
-        """
-        Update user instance with optional password update.
-        
-        Args:
-            instance: User instance to update
-            validated_data: Validated data from serializer
-            
-        Returns:
-            Updated User instance
-        """
-        password = validated_data.pop('password', None)
-        for attr, value in validated_data.items():
-            setattr(instance, attr, value)
-        
-        if password:
-            instance.set_password(password)
-        
-        instance.save()
-        return instance
+    Used when creating a user as part of another object creation.
+    """
+    
+    class Meta:
+        model = User
+        fields = [
+            'first_name',
+            'last_name',
+            'other_name',
+            'email',
+            'phone'
+        ]
 
 
 class UserPublicSerializer(serializers.ModelSerializer):
@@ -129,7 +129,11 @@ class StudentProfileSerializer(serializers.ModelSerializer):
     
     user = UserPublicSerializer(read_only=True)
     user_id = serializers.IntegerField(write_only=True, required=False)
+    user_data = UserNestedSerializer(write_only=True, required=False)
     age = serializers.SerializerMethodField()
+    programme_name = serializers.CharField(source='programme.name', read_only=True)
+    department_name = serializers.CharField(source='department.name', read_only=True)
+    faculty_name = serializers.CharField(source='faculty.name', read_only=True)
     
     class Meta:
         model = StudentProfile
@@ -137,13 +141,81 @@ class StudentProfileSerializer(serializers.ModelSerializer):
             'id',
             'user',
             'user_id',
+            'user_data',
             'student_id',
             'date_of_birth',
             'grade_level',
+            'programme',
+            'programme_name',
+            'department_name',
+            'faculty_name',
             'enrollment_date',
             'age'
         ]
         read_only_fields = ['id', 'enrollment_date', 'age']
+        extra_kwargs = {
+            'user': {'required': False}
+        }
+    
+    @transaction.atomic
+    def create(self, validated_data):
+        """
+        Create student profile with associated user.
+        
+        Args:
+            validated_data: Validated data from serializer
+            
+        Returns:
+            Created StudentProfile instance
+        """
+        user_data = validated_data.pop('user_data', None)
+        user_id = validated_data.pop('user_id', None)
+        
+        user = None
+        if user_data:
+            # Create user from nested data with new username format
+            username = f"{user_data['last_name'].lower()}{user_data['first_name'].lower()}@school.edu"
+            user = User.objects.create(
+                username=username,
+                email=user_data.get('email', ''),
+                first_name=user_data.get('first_name', ''),
+                last_name=user_data.get('last_name', ''),
+                phone=user_data.get('phone', ''),
+                other_name=user_data.get('other_name', ''),
+                role='student'
+            )
+            # Set default password
+            user.set_password('school1234')
+            user.save()
+        elif user_id:
+            user = User.objects.get(id=user_id)
+        
+        # Generate student_id with new format: year/faculty_code/serial
+        if not validated_data.get('student_id'):
+            # Get faculty code from programme
+            faculty_code = 'NS'  # Default
+            if validated_data.get('programme'):
+                from academics.models import Programme
+                try:
+                    programme = Programme.objects.get(id=validated_data['programme'])
+                    faculty_code = programme.department.faculty.code if programme.department and programme.department.faculty else 'NS'
+                except:
+                    pass
+            
+            # Get serial number for this faculty/year
+            from users.models import StudentProfile
+            year = datetime.now().year
+            count = StudentProfile.objects.filter(
+                student_id__startswith=f"{year}/{faculty_code}"
+            ).count()
+            serial = str(count + 1).zfill(3)
+            
+            validated_data['student_id'] = f"{year}/{faculty_code}/{serial}"
+        
+        # Create student profile with user
+        if user:
+            validated_data['user'] = user
+        return super().create(validated_data)
     
     def get_age(self, obj: StudentProfile) -> Optional[int]:
         """
@@ -377,5 +449,96 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
             data['profile'] = StudentProfileSerializer(self.user.student_profile).data
         elif self.user.role == 'parent' and hasattr(self.user, 'parent_profile'):
             data['profile'] = ParentProfileSerializer(self.user.parent_profile).data
+        elif self.user.role == 'lecturer' and hasattr(self.user, 'lecturer_profile'):
+            data['profile'] = LecturerProfileSerializer(self.user.lecturer_profile).data
         
         return data
+
+
+class LecturerProfileSerializer(serializers.ModelSerializer):
+    """
+    Serializer for LecturerProfile model.
+    """
+    
+    user = UserPublicSerializer(read_only=True)
+    user_id = serializers.IntegerField(write_only=True, required=False)
+    user_data = UserNestedSerializer(write_only=True, required=False)
+    username = serializers.CharField(source='user.username', read_only=True)
+    email = serializers.CharField(source='user.email', read_only=True)
+    first_name = serializers.CharField(source='user.first_name', read_only=True)
+    last_name = serializers.CharField(source='user.last_name', read_only=True)
+    department_name = serializers.CharField(source='department.name', read_only=True)
+    faculty_name = serializers.CharField(source='department.faculty.name', read_only=True)
+    rank_display = serializers.CharField(source='get_rank_display', read_only=True)
+    employment_type_display = serializers.CharField(source='get_employment_type_display', read_only=True)
+    
+    class Meta:
+        model = LecturerProfile
+        fields = [
+            'id', 'user', 'user_id', 'user_data', 'staff_id', 'rank', 'rank_display', 
+            'employment_type', 'employment_type_display', 'department', 'department_name', 
+            'faculty_name', 'date_of_birth', 'date_of_employment', 'username', 'email', 
+            'first_name', 'last_name'
+        ]
+        read_only_fields = ['id', 'date_of_employment']
+        extra_kwargs = {
+            'user': {'required': False}
+        }
+    
+    @transaction.atomic
+    def create(self, validated_data):
+        """
+        Create lecturer profile with associated user.
+        
+        Args:
+            validated_data: Validated data from serializer
+            
+        Returns:
+            Created LecturerProfile instance
+        """
+        user_data = validated_data.pop('user_data', None)
+        user_id = validated_data.pop('user_id', None)
+        
+        user = None
+        if user_data:
+            # Create user from nested data
+            username = f"{user_data['last_name'].lower()}{user_data['first_name'].lower()}@school.edu"
+            user = User.objects.create(
+                username=username,
+                email=user_data.get('email', ''),
+                first_name=user_data.get('first_name', ''),
+                last_name=user_data.get('last_name', ''),
+                phone=user_data.get('phone', ''),
+                other_name=user_data.get('other_name', ''),
+                role='lecturer'
+            )
+            # Set default password
+            user.set_password('school1234')
+            user.save()
+        elif user_id:
+            user = User.objects.get(id=user_id)
+        
+        # Generate staff_id if not provided
+        if not validated_data.get('staff_id'):
+            validated_data['staff_id'] = f"STF/{datetime.now().year}/{uuid.uuid4().hex[:6].upper()}"
+        
+        # Create lecturer profile with user
+        if user:
+            validated_data['user'] = user
+        return super().create(validated_data)
+
+
+class LecturerProfileDetailSerializer(LecturerProfileSerializer):
+    """
+    Detailed serializer for LecturerProfile with full nested information.
+    """
+    
+    user = UserSerializer(read_only=True)
+    department = serializers.SerializerMethodField()
+    
+    class Meta(LecturerProfileSerializer.Meta):
+        fields = LecturerProfileSerializer.Meta.fields + ['user']
+    
+    def get_department(self, obj):
+        from academics.serializers import DepartmentSerializer
+        return DepartmentSerializer(obj.department).data

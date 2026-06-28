@@ -1,111 +1,653 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+
+import {
+    FaUser,
+    FaLock,
+    FaEye,
+    FaEyeSlash,
+    FaGraduationCap,
+    FaUsers,
+    FaChalkboardTeacher,
+    FaChartLine,
+    FaCheckCircle,
+    FaUserGraduate,
+    FaUserShield,
+    FaUserTie,
+    FaArrowRight,
+    FaUniversity
+} from "react-icons/fa";
+
+import "./login.css";
 
 function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
-  const { login } = useAuth();
-  const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError('');
-    setLoading(true);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
+    const [remember, setRemember] = useState(false);
 
-    const result = await login(email, password);
-    
-    if (result.success) {
-      // Redirect based on user role
-      const userRole = JSON.parse(localStorage.getItem('user_data'))?.role;
-      switch (userRole) {
-        case 'student':
-          navigate('/student/dashboard');
-          break;
-        case 'parent':
-          navigate('/parent/dashboard');
-          break;
-        case 'admin':
-          navigate('/admin/dashboard');
-          break;
-        default:
-          navigate('/unauthorized');
-      }
-    } else {
-      setError(result.error);
-    }
-    
-    setLoading(false);
-  };
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
 
-  return (
-    <div style={{ maxWidth: '400px', margin: '50px auto', padding: '20px' }}>
-      <h1>Login Page</h1>
-      <p>Role: All Users</p>
-      
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-        <div>
-          <label htmlFor="username" style={{ display: 'block', marginBottom: '5px' }}>
-            Username:
-          </label>
-          <input
-            id="username"
-            type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            style={{ width: '100%', padding: '8px', boxSizing: 'border-box' }}
-            placeholder="Enter your username"
-          />
+    const { login } = useAuth();
+
+    const navigate = useNavigate();
+
+    const demoAccounts = [
+
+        {
+            role: "Administrator",
+            username: "admin",
+            password: "admin123",
+            icon: FaUserShield
+        },
+
+        {
+            role: "Student",
+            username: "student1",
+            password: "student123",
+            icon: FaUserGraduate
+        },
+
+        {
+            role: "Lecturer",
+            username: "lecturer1",
+            password: "lecturer123",
+            icon: FaChalkboardTeacher
+        },
+
+        {
+            role: "Parent",
+            username: "parent1",
+            password: "parent123",
+            icon: FaUsers
+        }
+
+    ];
+
+    const fillDemo = (username, pass) => {
+
+        setEmail(username);
+        setPassword(pass);
+
+    };
+
+    const handleSubmit = async (e) => {
+
+        e.preventDefault();
+
+        setError("");
+
+        setLoading(true);
+
+        const result = await login(email, password);
+
+        if (result.success) {
+
+            const role = JSON.parse(
+                localStorage.getItem("user_data")
+            )?.role;
+
+            switch (role) {
+
+                case "student":
+
+                    navigate("/student/dashboard");
+                    break;
+
+                case "parent":
+
+                    navigate("/parent/dashboard");
+                    break;
+
+                case "lecturer":
+
+                    navigate("/lecturer/dashboard");
+                    break;
+
+                case "admin":
+
+                    navigate("/admin/dashboard");
+                    break;
+
+                default:
+
+                    navigate("/unauthorized");
+
+            }
+
+        } else {
+
+            setError(result.error);
+
+        }
+
+        setLoading(false);
+
+    };
+
+    return (
+
+        <div className="login-page">
+
+            <div className="blob blob-one"></div>
+            <div className="blob blob-two"></div>
+            <div className="blob blob-three"></div>
+
+            <div className="login-wrapper">
+
+                {/* =========================
+                    LEFT PANEL
+                ========================= */}
+
+                <div className="brand-panel">
+
+                    <div>
+
+                        <div className="brand-logo">
+
+                            <FaUniversity />
+
+                            <span>SMS Portal</span>
+
+                        </div>
+
+                        <h1>
+
+                            Smart School
+
+                            <span> Management System</span>
+
+                        </h1>
+
+                        <p>
+
+                            A modern education platform connecting students,
+                            lecturers, parents and administrators through one
+                            intelligent academic ecosystem.
+
+                        </p>
+
+                    </div>
+
+                    <div className="hero-illustration">
+
+                        <svg
+                            viewBox="0 0 700 420"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+
+                            <defs>
+
+                                <linearGradient
+                                    id="grad1"
+                                    x1="0%"
+                                    y1="0%"
+                                    x2="100%"
+                                    y2="100%"
+                                >
+
+                                    <stop
+                                        offset="0%"
+                                        stopColor="#7C83FF"
+                                    />
+
+                                    <stop
+                                        offset="100%"
+                                        stopColor="#4F46E5"
+                                    />
+
+                                </linearGradient>
+
+                            </defs>
+
+                            <circle
+                                cx="350"
+                                cy="200"
+                                r="150"
+                                fill="rgba(255,255,255,.05)"
+                            />
+
+                            <rect
+                                x="170"
+                                y="110"
+                                rx="18"
+                                ry="18"
+                                width="360"
+                                height="210"
+                                fill="url(#grad1)"
+                            />
+
+                            <rect
+                                x="205"
+                                y="145"
+                                width="290"
+                                height="120"
+                                rx="12"
+                                fill="white"
+                            />
+
+                            <rect
+                                x="230"
+                                y="170"
+                                width="90"
+                                height="14"
+                                rx="7"
+                                fill="#CBD5E1"
+                            />
+
+                            <rect
+                                x="230"
+                                y="205"
+                                width="220"
+                                height="10"
+                                rx="5"
+                                fill="#E2E8F0"
+                            />
+
+                            <rect
+                                x="230"
+                                y="230"
+                                width="180"
+                                height="10"
+                                rx="5"
+                                fill="#E2E8F0"
+                            />
+
+                            <circle
+                                cx="470"
+                                cy="183"
+                                r="18"
+                                fill="#10B981"
+                            />
+
+                            <circle
+                                cx="470"
+                                cy="240"
+                                r="18"
+                                fill="#F59E0B"
+                            />
+
+                            <circle
+                                cx="150"
+                                cy="85"
+                                r="20"
+                                fill="#10B981"
+                            />
+
+                            <circle
+                                cx="560"
+                                cy="320"
+                                r="26"
+                                fill="#F59E0B"
+                            />
+
+                        </svg>
+
+                    </div>
+
+                    <div className="stats-grid">
+
+                        <div className="stat-card">
+
+                            <FaUsers />
+
+                            <h2>2,400+</h2>
+
+                            <p>Students</p>
+
+                        </div>
+
+                        <div className="stat-card">
+
+                            <FaChalkboardTeacher />
+
+                            <h2>160+</h2>
+
+                            <p>Lecturers</p>
+
+                        </div>
+
+                        <div className="stat-card">
+
+                            <FaChartLine />
+
+                            <h2>96%</h2>
+
+                            <p>Attendance</p>
+
+                        </div>
+
+                    </div>
+
+                    <div className="feature-list">
+
+                        <div>
+
+                            <FaCheckCircle />
+
+                            <span>Attendance Monitoring</span>
+
+                        </div>
+
+                        <div>
+
+                            <FaCheckCircle />
+
+                            <span>Academic Performance Tracking</span>
+
+                        </div>
+
+                        <div>
+
+                            <FaCheckCircle />
+
+                            <span>Parent Communication Portal</span>
+
+                        </div>
+
+                        <div>
+
+                            <FaCheckCircle />
+
+                            <span>Administrative Analytics</span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                                {/* =========================
+                    RIGHT PANEL
+                ========================= */}
+
+                <div className="login-section">
+
+                    <div className="login-card">
+
+                        <div className="login-header">
+
+                            <div className="login-badge">
+
+                                <FaGraduationCap />
+
+                            </div>
+
+                            <h2>
+
+                                Welcome Back 👋
+
+                            </h2>
+
+                            <p>
+
+                                Sign in to continue to your dashboard and manage
+                                your academic activities.
+
+                            </p>
+
+                        </div>
+
+                        <form onSubmit={handleSubmit}>
+
+                            <div className="input-group">
+
+                                <FaUser className="input-icon" />
+
+                                <input
+
+                                    type="text"
+
+                                    placeholder="Username"
+
+                                    value={email}
+
+                                    onChange={(e)=>setEmail(e.target.value)}
+
+                                    required
+
+                                />
+
+                            </div>
+
+                            <div className="input-group">
+
+                                <FaLock className="input-icon" />
+
+                                <input
+
+                                    type={showPassword ? "text" : "password"}
+
+                                    placeholder="Password"
+
+                                    value={password}
+
+                                    onChange={(e)=>setPassword(e.target.value)}
+
+                                    required
+
+                                />
+
+                                <button
+
+                                    type="button"
+
+                                    className="eye-btn"
+
+                                    onClick={()=>setShowPassword(!showPassword)}
+
+                                >
+
+                                    {
+
+                                        showPassword
+
+                                        ?
+
+                                        <FaEyeSlash/>
+
+                                        :
+
+                                        <FaEye/>
+
+                                    }
+
+                                </button>
+
+                            </div>
+
+                            <div className="login-options">
+
+                                <label>
+
+                                    <input
+
+                                        type="checkbox"
+
+                                        checked={remember}
+
+                                        onChange={()=>setRemember(!remember)}
+
+                                    />
+
+                                    Remember Me
+
+                                </label>
+
+                                <a href="#">
+
+                                    Forgot Password?
+
+                                </a>
+
+                            </div>
+
+                            {
+
+                                error &&
+
+                                <div className="login-error">
+
+                                    {error}
+
+                                </div>
+
+                            }
+
+                            <button
+
+                                type="submit"
+
+                                className="login-btn"
+
+                                disabled={loading}
+
+                            >
+
+                                {
+
+                                    loading
+
+                                    ?
+
+                                    <>
+
+                                        <span className="spinner"></span>
+
+                                        Signing In...
+
+                                    </>
+
+                                    :
+
+                                    <>
+
+                                        Sign In
+
+                                        <FaArrowRight/>
+
+                                    </>
+
+                                }
+
+                            </button>
+
+                        </form>
+
+                        {/* ==========================
+                            DEMO ACCOUNTS
+                        =========================== */}
+
+                        <div className="demo-box">
+
+                            <div className="demo-header">
+
+                                <h4>
+
+                                    Demo Accounts
+
+                                </h4>
+
+                                <p>
+
+                                    Click any account below to automatically
+                                    fill the login form.
+
+                                </p>
+
+                            </div>
+
+                            <div className="demo-grid">
+
+                                {
+
+                                    demoAccounts.map((account)=>{
+
+                                        const Icon=account.icon;
+
+                                        return(
+
+                                            <button
+
+                                                key={account.role}
+
+                                                type="button"
+
+                                                className="demo-card"
+
+                                                onClick={()=>fillDemo(
+
+                                                    account.username,
+
+                                                    account.password
+
+                                                )}
+
+                                            >
+
+                                                <div className="demo-icon">
+
+                                                    <Icon/>
+
+                                                </div>
+
+                                                <div className="demo-details">
+
+                                                    <h5>
+
+                                                        {account.role}
+
+                                                    </h5>
+
+                                                    <span>
+
+                                                        {account.username}
+
+                                                    </span>
+
+                                                </div>
+
+                                            </button>
+
+                                        );
+
+                                    })
+
+                                }
+
+                            </div>
+
+                        </div>
+
+                        <div className="login-footer">
+
+                            <span>
+
+                                Smart School Management System
+
+                            </span>
+
+                            <small>
+
+                                © 2026 All Rights Reserved
+
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
-        
-        <div>
-          <label htmlFor="password" style={{ display: 'block', marginBottom: '5px' }}>
-            Password:
-          </label>
-          <input
-            id="password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            style={{ width: '100%', padding: '8px', boxSizing: 'border-box' }}
-            placeholder="Enter your password"
-          />
-        </div>
-        
-        {error && (
-          <div style={{ color: 'red', fontSize: '14px' }}>
-            {error}
-          </div>
-        )}
-        
-        <button
-          type="submit"
-          disabled={loading}
-          style={{
-            padding: '10px',
-            backgroundColor: loading ? '#ccc' : '#007bff',
-            color: 'white',
-            border: 'none',
-            cursor: loading ? 'not-allowed' : 'pointer',
-            fontSize: '16px'
-          }}
-        >
-          {loading ? 'Logging in...' : 'Login'}
-        </button>
-      </form>
-      
-      <div style={{ marginTop: '20px', fontSize: '12px', color: '#666' }}>
-        <p>Test credentials:</p>
-        <p>Admin: username: admin, password: admin123</p>
-        <p>Student: username: student1, password: student123</p>
-        <p>Parent: username: parent1, password: parent123</p>
-      </div>
-    </div>
-  );
+
+    );
+
 }
 
 export default Login;

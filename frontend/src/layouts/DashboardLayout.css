@@ -1,0 +1,109 @@
+/* =========================================================
+   LAYOUT
+========================================================= */
+
+.dashboard-layout{
+
+    display:flex;
+
+    min-height:100vh;
+
+    background:var(--background);
+
+}
+
+/* =========================================================
+   MAIN CONTENT
+========================================================= */
+
+.dashboard-main{
+
+    flex:1;
+
+    display:flex;
+
+    flex-direction:column;
+
+    min-height:100vh;
+
+    transition:margin-left .28s ease;
+
+}
+
+/* Sidebar Expanded */
+
+.dashboard-main.sidebar-open{
+
+    margin-left:280px;
+
+}
+
+/* Sidebar Collapsed */
+
+.dashboard-main.sidebar-closed{
+
+    margin-left:88px;
+
+}
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.dashboard-content{
+
+    flex:1;
+
+    padding:32px;
+
+    width:100%;
+
+}
+
+/* Prevent cards stretching too much */
+/*
+.dashboard-content>*{
+
+    max-width:1500px;
+
+}
+
+/* =========================================================
+   MOBILE OVERLAY
+========================================================= */
+
+.sidebar-overlay{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(15,23,42,.55);
+
+    backdrop-filter:blur(2px);
+
+    z-index:900;
+
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:900px){
+
+    .dashboard-main{
+
+        margin-left:0 !important;
+
+        width:100%;
+
+    }
+
+    .dashboard-content{
+
+        padding:20px;
+
+    }
+
+}

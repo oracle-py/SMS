@@ -1,39 +1,90 @@
-import React, { useState } from 'react';
-import Sidebar from './Sidebar';
-import Topbar from './Topbar';
-import './DashboardLayout.css';
+import { useState, useEffect } from "react";
+import Sidebar from "./Sidebar";
+import Topbar from "./Topbar";
+import "./DashboardLayout.css";
 
+export default function DashboardLayout({ children }) {
 
-function DashboardLayout({ children, userRole }) {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+    const [sidebarOpen, setSidebarOpen] = useState(() => {
+        const saved = localStorage.getItem("sidebarOpen");
+        if (saved !== null) return saved === "true";
+        return true;
+    });
 
-  const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
-  };
+    useEffect(() => {
 
-  return (
-    <div className="dashboard-layout">
-      <Sidebar
-        isOpen={sidebarOpen}
-        userRole={userRole}
-        toggleSidebar={toggleSidebar}
-      />
+        localStorage.setItem("sidebarOpen", sidebarOpen);
 
-      <div
-        className={`dashboard-main ${
-          sidebarOpen ? 'sidebar-open' : 'sidebar-closed'
-        }`}
-      >
-        <Topbar
-          toggleSidebar={toggleSidebar}
-        />
+    }, [sidebarOpen]);
 
-        <main className="dashboard-content">
-          {children}
-        </main>
-      </div>
-    </div>
-  );
+    useEffect(() => {
+
+        const handleResize = () => {
+
+            if (window.innerWidth <= 900) {
+
+                setSidebarOpen(false);
+
+            }
+
+        };
+
+        window.addEventListener("resize", handleResize);
+
+        return () => window.removeEventListener("resize", handleResize);
+
+    }, []);
+
+    return (
+
+        <div className="dashboard-layout">
+
+            <Sidebar
+
+                isOpen={sidebarOpen}
+
+                toggleSidebar={() => setSidebarOpen(!sidebarOpen)}
+
+            />
+
+            {/* Mobile Overlay */}
+
+            {sidebarOpen && window.innerWidth <= 900 && (
+
+                <div
+
+                    className="sidebar-overlay"
+
+                    onClick={() => setSidebarOpen(false)}
+
+                />
+
+            )}
+
+            <div
+
+                className={`dashboard-main ${
+                    sidebarOpen ? "sidebar-open" : "sidebar-closed"
+                }`}
+
+            >
+
+                <Topbar
+
+                    toggleSidebar={() => setSidebarOpen(!sidebarOpen)}
+
+                />
+
+                <main className="dashboard-content">
+
+                    {children}
+
+                </main>
+
+            </div>
+
+        </div>
+
+    );
+
 }
-
-export default DashboardLayout;

@@ -64,14 +64,6 @@ class StudentDashboardView(GenericAPIView):
         try:
             student = request.user.student_profile
             
-            # Generate cache key
-            cache_key = f'student_dashboard_{student.id}'
-            
-            # Try to get cached data
-            cached_data = cache.get(cache_key)
-            if cached_data:
-                return Response(cached_data, status=status.HTTP_200_OK)
-            
             # Get dashboard data from service layer
             dashboard_data = StudentDashboardService.get_student_dashboard(student)
             
@@ -100,7 +92,10 @@ class StudentDashboardView(GenericAPIView):
             student_info = {
                 'name': f"{request.user.first_name} {request.user.last_name}",
                 'matric_number': student.student_id,
-                'level': student.grade_level
+                'level': f"{student.grade_level} Level",
+                'department': student.programme.department.name if student.programme and student.programme.department else 'N/A',
+                'faculty': student.programme.department.faculty.name if student.programme and student.programme.department and student.programme.department.faculty else 'N/A',
+                'credits': student.programme.total_credit_units if student.programme else 0
             }
             
             response_data = {
@@ -112,9 +107,6 @@ class StudentDashboardView(GenericAPIView):
                 'total_courses_registered': dashboard_data['total_courses'],
                 'recent_results': recent_results
             }
-            
-            # Cache the response for 5 minutes
-            cache.set(cache_key, response_data, getattr(settings, 'DASHBOARD_CACHE_TIMEOUT', 300))
             
             return Response(
                 {'success': True, 'data': response_data},

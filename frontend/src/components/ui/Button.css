@@ -1,0 +1,225 @@
+/* ======================================================
+   BUTTON
+====================================================== */
+
+.btn{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:10px;
+
+    border:none;
+
+    border-radius:14px;
+
+    font-family:inherit;
+
+    font-weight:600;
+
+    transition:.25s;
+
+    cursor:pointer;
+
+    white-space:nowrap;
+
+    position:relative;
+
+}
+
+/* ============================================= */
+
+.btn-sm{
+
+    height:38px;
+
+    padding:0 16px;
+
+    font-size:13px;
+
+}
+
+.btn-md{
+
+    height:46px;
+
+    padding:0 22px;
+
+    font-size:14px;
+
+}
+
+.btn-lg{
+
+    height:54px;
+
+    padding:0 28px;
+
+    font-size:15px;
+
+}
+
+/* ============================================= */
+
+.btn-full{
+
+    width:100%;
+
+}
+
+/* ============================================= */
+
+.btn-primary{
+
+    background:linear-gradient(
+        135deg,
+        var(--primary),
+        #675CFF
+    );
+
+    color:white;
+
+    box-shadow:
+        0 12px 28px rgba(79,70,229,.25);
+
+}
+
+.btn-primary:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 18px 35px rgba(79,70,229,.35);
+
+}
+
+/* ============================================= */
+
+.btn-secondary{
+
+    background:white;
+
+    color:var(--text);
+
+    border:1px solid var(--border);
+
+}
+
+.btn-secondary:hover{
+
+    background:#F8FAFC;
+
+}
+
+/* ============================================= */
+
+.btn-outline{
+
+    background:transparent;
+
+    border:1px solid var(--border);
+
+    color:var(--text);
+
+}
+
+.btn-outline:hover{
+
+    background:var(--primary-light);
+
+    border-color:#C7D2FE;
+
+}
+
+/* ============================================= */
+
+.btn-success{
+
+    background:var(--success);
+
+    color:white;
+
+}
+
+.btn-warning{
+
+    background:var(--warning);
+
+    color:white;
+
+}
+
+.btn-danger{
+
+    background:var(--danger);
+
+    color:white;
+
+}
+
+/* ============================================= */
+
+.btn:disabled{
+
+    opacity:.65;
+
+    cursor:not-allowed;
+
+    transform:none;
+
+    box-shadow:none;
+
+}
+
+/* ============================================= */
+
+.btn-spinner{
+
+    width:18px;
+
+    height:18px;
+
+    border-radius:50%;
+
+    border:2px solid rgba(255,255,255,.3);
+
+    border-top-color:white;
+
+    animation:spin .7s linear infinite;
+
+}
+
+/* ============================================= */
+
+.btn-icon{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+}
+
+.btn-icon svg{
+
+    width:18px;
+
+    height:18px;
+
+}
+
+/* ============================================= */
+
+@keyframes spin{
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}

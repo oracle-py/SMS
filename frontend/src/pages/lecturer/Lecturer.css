@@ -1,0 +1,247 @@
+/* ===========================
+   Lecturer Shared Styles
+=========================== */
+
+.lecturer-page {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 24px;
+}
+
+.lecturer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.lecturer-header h1 {
+    margin: 0;
+    font-size: 2rem;
+    color: #1f2937;
+    font-weight: 700;
+}
+
+.lecturer-header p {
+    margin: 6px 0 0;
+    color: #6b7280;
+}
+
+/* ===========================
+   Hero Section
+=========================== */
+
+.lecturer-hero {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: white;
+    padding: 30px;
+    border-radius: 16px;
+}
+
+.lecturer-hero h2 {
+    margin: 0;
+    font-size: 1.8rem;
+}
+
+.lecturer-hero p {
+    margin-top: 10px;
+    opacity: .95;
+}
+
+/* ===========================
+   Statistics
+=========================== */
+
+.lecturer-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.lecturer-stat-card {
+    background: white;
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: 0 6px 20px rgba(0,0,0,.08);
+    transition: .25s;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.lecturer-stat-card:hover {
+    transform: translateY(-4px);
+}
+
+.lecturer-stat-card svg {
+    font-size: 30px;
+    color: #2563eb;
+}
+
+.lecturer-stat-card h3 {
+    margin: 0;
+    font-size: 2rem;
+    color: #111827;
+}
+
+.lecturer-stat-card p {
+    margin: 0;
+    color: #6b7280;
+}
+
+/* ===========================
+   Cards
+=========================== */
+
+.lecturer-card {
+    background: white;
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: 0 6px 18px rgba(0,0,0,.08);
+}
+
+.lecturer-card h3 {
+    margin-top: 0;
+    margin-bottom: 18px;
+    color: #1f2937;
+}
+
+/* ===========================
+   Tables
+=========================== */
+
+.lecturer-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.lecturer-table th {
+    background: #f8fafc;
+    color: #374151;
+    text-align: left;
+    padding: 14px;
+    font-weight: 600;
+}
+
+.lecturer-table td {
+    padding: 14px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.lecturer-table tr:hover {
+    background: #f9fafb;
+}
+
+/* ===========================
+   Inputs
+=========================== */
+
+.lecturer-input,
+.lecturer-select,
+.lecturer-textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    font-size: .95rem;
+    outline: none;
+    transition: .2s;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+}
+
+.lecturer-input:focus,
+.lecturer-select:focus,
+.lecturer-textarea:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37,99,235,.15);
+}
+
+/* ===========================
+   Buttons
+=========================== */
+
+.lecturer-btn {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: .2s;
+}
+
+.lecturer-btn:hover {
+    background: #1d4ed8;
+}
+
+.lecturer-btn-secondary {
+    background: #f3f4f6;
+    color: #111827;
+}
+
+.lecturer-btn-secondary:hover {
+    background: #e5e7eb;
+}
+
+/* ===========================
+   Forms
+=========================== */
+
+.lecturer-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* ===========================
+   Activity List
+=========================== */
+
+.lecturer-activity {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.lecturer-activity li {
+    padding: 14px 0;
+    border-bottom: 1px solid #ececec;
+}
+
+.lecturer-activity li:last-child {
+    border-bottom: none;
+}
+
+/* ===========================
+   Responsive
+=========================== */
+
+@media (max-width: 768px) {
+
+    .lecturer-page {
+        padding: 16px;
+    }
+
+    .lecturer-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .lecturer-header h1 {
+        font-size: 1.6rem;
+    }
+
+    .lecturer-table {
+        display: block;
+        overflow-x: auto;
+    }
+
+    .lecturer-card {
+        padding: 18px;
+    }
+
+}

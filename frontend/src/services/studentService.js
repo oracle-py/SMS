@@ -4,8 +4,8 @@ const studentService = {
   getDashboard: async () => {
     try {
       const response = await api.get('/student/dashboard/');
-      // Backend returns data directly, not wrapped in a 'data' property
-      return response.data;
+      // Backend returns { success: true, data: {...} }
+      return response.data.data || response.data;
     } catch (error) {
       console.error('Error fetching student dashboard:', error);
       throw error;

@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from .models import User, StudentProfile, ParentProfile, ParentStudentRelation
+from .models import User, StudentProfile, ParentProfile, ParentStudentRelation, LecturerProfile
 
 
 @admin.register(User)
@@ -32,14 +32,14 @@ class UserAdmin(BaseUserAdmin):
 class StudentProfileAdmin(admin.ModelAdmin):
     """Admin configuration for Student Profile."""
     
-    list_display = ('user', 'student_id', 'grade_level', 'enrollment_date')
-    list_filter = ('grade_level', 'enrollment_date')
+    list_display = ('user', 'student_id', 'programme', 'grade_level', 'enrollment_date')
+    list_filter = ('grade_level', 'enrollment_date', 'programme')
     search_fields = ('user__username', 'user__email', 'student_id')
     ordering = ('student_id',)
     
     fieldsets = (
         ('Student Information', {
-            'fields': ('user', 'student_id', 'date_of_birth', 'grade_level')
+            'fields': ('user', 'student_id', 'date_of_birth', 'grade_level', 'programme')
         }),
         ('Enrollment', {
             'fields': ('enrollment_date',)
@@ -74,5 +74,27 @@ class ParentStudentRelationAdmin(admin.ModelAdmin):
     fieldsets = (
         ('Relationship', {
             'fields': ('parent', 'student', 'relationship_type')
+        }),
+    )
+
+
+@admin.register(LecturerProfile)
+class LecturerProfileAdmin(admin.ModelAdmin):
+    """Admin configuration for Lecturer Profile."""
+    
+    list_display = ('user', 'staff_id', 'rank', 'employment_type', 'department', 'date_of_employment')
+    list_filter = ('rank', 'employment_type', 'department')
+    search_fields = ('user__username', 'user__email', 'staff_id')
+    ordering = ('staff_id',)
+    
+    fieldsets = (
+        ('Lecturer Information', {
+            'fields': ('user', 'staff_id', 'rank', 'employment_type', 'department')
+        }),
+        ('Personal Details', {
+            'fields': ('date_of_birth',)
+        }),
+        ('Employment', {
+            'fields': ('date_of_employment',)
         }),
     )

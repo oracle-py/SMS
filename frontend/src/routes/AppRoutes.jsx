@@ -4,8 +4,21 @@ import Login from '../pages/Login';
 import StudentDashboard from '../pages/student/StudentDashboard';
 import StudentResults from '../pages/student/StudentResults';
 import StudentAttendance from '../pages/student/StudentAttendance';
+import StudentCourses from '../pages/student/StudentCourses';
+import StudentLecturers from '../pages/student/StudentLecturers';
+import StudentTimetable from '../pages/student/StudentTimetable';
 import ParentDashboard from '../pages/ParentDashboard';
-import AdminDashboard from '../pages/AdminDashboard';
+import LecturerDashboard from '../pages/lecturer/LecturerDashboard';
+import LecturerCourses from '../pages/lecturer/Courses';
+import LecturerStudents from '../pages/lecturer/Students';
+import LecturerResults from '../pages/lecturer/Results';
+import LecturerAnnouncements from '../pages/lecturer/Announcements';
+import LecturerProfile from '../pages/lecturer/Profile';
+import AdminDashboard from '../pages/admin/AdminDashboard';
+import Students from '../pages/admin/Students';
+import Teachers from '../pages/admin/Teachers';
+import Parents from '../pages/admin/Parents';
+import Courses from '../pages/admin/Courses';
 import Unauthorized from '../pages/Unauthorized';
 import ProtectedRoute from '../components/ProtectedRoute';
 
@@ -40,6 +53,30 @@ function AppRoutes() {
           } 
         />
         <Route 
+          path="/student/courses" 
+          element={
+            <ProtectedRoute allowedRoles={['student']}>
+              <StudentCourses />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/student/lecturers" 
+          element={
+            <ProtectedRoute allowedRoles={['student']}>
+              <StudentLecturers />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/student/timetable" 
+          element={
+            <ProtectedRoute allowedRoles={['student']}>
+              <StudentTimetable />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
           path="/parent/dashboard" 
           element={
             <ProtectedRoute allowedRoles={['parent']}>
@@ -48,10 +85,90 @@ function AppRoutes() {
           } 
         />
         <Route 
+          path="/lecturer/dashboard" 
+          element={
+            <ProtectedRoute allowedRoles={['lecturer']}>
+              <LecturerDashboard />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/lecturer/courses" 
+          element={
+            <ProtectedRoute allowedRoles={['lecturer']}>
+              <LecturerCourses />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/lecturer/students" 
+          element={
+            <ProtectedRoute allowedRoles={['lecturer']}>
+              <LecturerStudents />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/lecturer/results" 
+          element={
+            <ProtectedRoute allowedRoles={['lecturer']}>
+              <LecturerResults />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/lecturer/announcements" 
+          element={
+            <ProtectedRoute allowedRoles={['lecturer']}>
+              <LecturerAnnouncements />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/lecturer/profile" 
+          element={
+            <ProtectedRoute allowedRoles={['lecturer']}>
+              <LecturerProfile />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
           path="/admin/dashboard" 
           element={
             <ProtectedRoute allowedRoles={['admin']}>
               <AdminDashboard />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/admin/students" 
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <Students />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/admin/teachers" 
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <Teachers />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/admin/parents" 
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <Parents />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/admin/classes" 
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <Courses />
             </ProtectedRoute>
           } 
         />

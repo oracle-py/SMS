@@ -9,7 +9,7 @@ from rest_framework import viewsets, filters
 from rest_framework.permissions import IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
 
-from users.models import StudentProfile, ParentProfile, ParentStudentRelation
+from users.models import StudentProfile, ParentProfile, ParentStudentRelation, LecturerProfile
 from users.serializers import (
     StudentProfileSerializer,
     StudentProfileDetailSerializer,
@@ -17,6 +17,8 @@ from users.serializers import (
     ParentProfileDetailSerializer,
     ParentStudentRelationSerializer,
     ParentStudentRelationDetailSerializer,
+    LecturerProfileSerializer,
+    LecturerProfileDetailSerializer,
 )
 from users.permissions import (
     IsAdminRole,
@@ -191,3 +193,45 @@ class ParentStudentRelationViewSet(viewsets.ModelViewSet):
             serializer: Validated serializer instance
         """
         serializer.save()
+
+
+class LecturerProfileViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet for LecturerProfile model.
+    
+    Provides CRUD operations for lecturer profiles with role-based permissions.
+    - Admins: Full access
+    - Lecturers: Read-only access to their own profile
+    - Others: Read-only access
+    """
+    
+    queryset = LecturerProfile.objects.select_related('user', 'department', 'department__faculty').all()
+    serializer_class = LecturerProfileSerializer
+    permission_classes = [IsAuthenticated]
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    filterset_fields = ['rank', 'employment_type', 'department']
+    search_fields = ['staff_id', 'user__username', 'user__first_name', 'user__last_name']
+    ordering_fields = ['staff_id', 'date_of_employment']
+    ordering = ['staff_id']
+    
+    def get_serializer_class(self):
+        """
+        Return appropriate serializer based on action.
+        
+        Returns:
+            Detail serializer for retrieve action, list serializer otherwise
+        """
+        if self.action == 'retrieve':
+            return LecturerProfileDetailSerializer
+        return LecturerProfileSerializer
+    
+    def get_permissions(self):
+        """
+        Return appropriate permissions based on action.
+        
+        Returns:
+            Admin or lecturer owner permissions for object access
+        """
+        if self.action in ['create', 'update', 'partial_update', 'destroy']:
+            return [IsAuthenticated(), IsAdminRole()]
+        return [IsAuthenticated()]

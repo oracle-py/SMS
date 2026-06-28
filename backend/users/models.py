@@ -9,10 +9,20 @@ class User(AbstractUser):
         ('student', 'Student'),
         ('parent', 'Parent'),
         ('admin', 'Admin'),
+        ('lecturer', 'Lecturer'),
     ]
     
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='student')
     email = models.EmailField(unique=True)
+    phone = models.CharField(max_length=20, blank=True, null=True)
+    other_name = models.CharField(max_length=100, blank=True, null=True)
+    roles = models.ManyToManyField(
+        'academics.Role',
+        related_name='users',
+        blank=True,
+        verbose_name='RBAC Roles',
+        help_text='Additional roles for granular permissions'
+    )
     
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username', 'role']
@@ -36,14 +46,30 @@ class User(AbstractUser):
     @property
     def is_admin_user(self):
         return self.role == 'admin'
+    
+    @property
+    def is_lecturer(self):
+        return self.role == 'lecturer'
+    
+    def has_permission(self, permission_name):
+        """Check if user has a specific permission through their roles."""
+        return self.roles.filter(permissions__name=permission_name).exists()
 
 
 class StudentProfile(models.Model):
     """Extended profile for student users."""
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student_profile')
-    student_id = models.CharField(max_length=20, unique=True)
+    student_id = models.CharField(max_length=20, unique=True, null=True, blank=True)
     date_of_birth = models.DateField()
     grade_level = models.IntegerField()
+    programme = models.ForeignKey(
+        'academics.Programme',
+        on_delete=models.PROTECT,
+        related_name='students',
+        verbose_name='Programme',
+        null=True,
+        blank=True
+    )
     enrollment_date = models.DateField(auto_now_add=True)
     
     class Meta:
@@ -53,6 +79,14 @@ class StudentProfile(models.Model):
     
     def __str__(self):
         return f"{self.user.username} - {self.student_id}"
+    
+    @property
+    def department(self):
+        return self.programme.department if self.programme else None
+    
+    @property
+    def faculty(self):
+        return self.programme.faculty if self.programme else None
 
 
 class ParentProfile(models.Model):
@@ -88,3 +122,53 @@ class ParentStudentRelation(models.Model):
     
     def __str__(self):
         return f"{self.parent.user.username} - {self.student.user.username} ({self.relationship_type})"
+
+
+class LecturerProfile(models.Model):
+    """Extended profile for lecturer users."""
+    RANK_CHOICES = [
+        ('graduate_assistant', 'Graduate Assistant'),
+        ('assistant_lecturer', 'Assistant Lecturer'),
+        ('lecturer_ii', 'Lecturer II'),
+        ('lecturer_i', 'Lecturer I'),
+        ('senior_lecturer', 'Senior Lecturer'),
+        ('associate_professor', 'Associate Professor'),
+        ('professor', 'Professor'),
+    ]
+    
+    EMPLOYMENT_TYPE_CHOICES = [
+        ('full_time', 'Full Time'),
+        ('part_time', 'Part Time'),
+        ('visiting', 'Visiting'),
+        ('contract', 'Contract'),
+    ]
+    
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='lecturer_profile')
+    staff_id = models.CharField(max_length=20, unique=True, null=True, blank=True, verbose_name='Staff ID')
+    rank = models.CharField(max_length=30, choices=RANK_CHOICES, verbose_name='Academic Rank')
+    employment_type = models.CharField(
+        max_length=20,
+        choices=EMPLOYMENT_TYPE_CHOICES,
+        default='full_time',
+        verbose_name='Employment Type'
+    )
+    department = models.ForeignKey(
+        'academics.Department',
+        on_delete=models.PROTECT,
+        related_name='lecturers',
+        verbose_name='Department'
+    )
+    date_of_birth = models.DateField(verbose_name='Date of Birth')
+    date_of_employment = models.DateField(auto_now_add=True, verbose_name='Date of Employment')
+    
+    class Meta:
+        db_table = 'lecturer_profiles'
+        verbose_name = 'Lecturer Profile'
+        verbose_name_plural = 'Lecturer Profiles'
+    
+    def __str__(self):
+        return f"{self.user.username} - {self.staff_id}"
+    
+    @property
+    def faculty(self):
+        return self.department.faculty

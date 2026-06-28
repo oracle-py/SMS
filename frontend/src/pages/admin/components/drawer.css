@@ -1,0 +1,504 @@
+/* =========================================================
+   DRAWER OVERLAY
+========================================================= */
+
+.drawer-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.45);
+    z-index: 3000;
+}
+
+/* =========================================================
+   DRAWER
+========================================================= */
+
+.drawer {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 520px;
+    max-width: 100%;
+    height: 100vh;
+    background: #fff;
+    z-index: 3001;
+    display: flex;
+    flex-direction: column;
+    animation: slideDrawer 0.35s ease;
+    box-shadow: -10px 0 40px rgba(0, 0, 0, 0.15);
+}
+
+/* =========================================================
+   DRAWER HEADER
+========================================================= */
+
+.drawer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 28px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.drawer-header span {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: #64748b;
+    margin-bottom: 4px;
+}
+
+.drawer-header h2 {
+    color: #0f172a;
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.drawer-close {
+    width: 42px;
+    height: 42px;
+    border: none;
+    border-radius: 10px;
+    background: #f8fafc;
+    cursor: pointer;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.25s;
+}
+
+.drawer-close:hover {
+    background: #e2e8f0;
+}
+
+/* =========================================================
+   DRAWER BODY
+========================================================= */
+
+.drawer-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 28px;
+}
+
+/* =========================================================
+   DRAWER SECTION
+========================================================= */
+
+.drawer-section {
+    margin-bottom: 32px;
+}
+
+.drawer-section h3 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #0f172a;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+}
+
+.drawer-section h3 svg {
+    font-size: 1.3rem;
+    color: #4f46e5;
+}
+
+/* =========================================================
+   DRAWER GRID
+========================================================= */
+
+.drawer-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+
+/* =========================================================
+   DRAWER INPUT
+========================================================= */
+
+.drawer-input {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.drawer-input label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #334155;
+}
+
+.drawer-input input,
+.drawer-input select {
+    padding: 12px 16px;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    outline: none;
+    transition: 0.25s;
+}
+
+.drawer-input input:focus,
+.drawer-input select:focus {
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.drawer-input input::placeholder {
+    color: #94a3b8;
+}
+
+/* =========================================================
+   DRAWER SWITCH
+========================================================= */
+
+.drawer-switch {
+    margin-bottom: 18px;
+}
+
+.drawer-switch label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.95rem;
+    color: #334155;
+    cursor: pointer;
+}
+
+.drawer-switch input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #4f46e5;
+}
+
+/* =========================================================
+   DRAWER DERIVED
+========================================================= */
+
+.drawer-derived {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+    margin-top: 18px;
+}
+
+.drawer-derived label {
+    font-size: 0.85rem;
+    color: #64748b;
+    margin-bottom: 6px;
+    display: block;
+}
+
+.drawer-derived-box {
+    padding: 10px 14px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: #475569;
+}
+
+/* =========================================================
+   PREVIEW NOTE
+========================================================= */
+
+.preview-note {
+    margin-top: 18px;
+    padding: 16px;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 10px;
+}
+
+.preview-note strong {
+    display: block;
+    color: #1e40af;
+    margin-bottom: 6px;
+}
+
+.preview-note p {
+    font-size: 0.9rem;
+    color: #1e3a8a;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* =========================================================
+   REGISTRATION SUMMARY
+========================================================= */
+
+.registration-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.registration-summary > div {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: #f8fafc;
+    border-radius: 8px;
+}
+
+.registration-summary span {
+    color: #64748b;
+    font-size: 0.9rem;
+}
+
+.registration-summary strong {
+    color: #0f172a;
+    font-size: 0.95rem;
+}
+
+/* =========================================================
+   DRAWER ACTIONS
+========================================================= */
+
+.drawer-actions {
+    display: flex;
+    gap: 12px;
+    padding: 20px 28px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.drawer-btn {
+    flex: 1;
+    padding: 14px 24px;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.25s;
+    border: none;
+}
+
+.drawer-btn.primary {
+    background: #4f46e5;
+    color: white;
+}
+
+.drawer-btn.primary:hover {
+    background: #4338ca;
+    transform: translateY(-2px);
+}
+
+.drawer-btn.secondary {
+    background: #f8fafc;
+    color: #475569;
+    border: 1px solid #e2e8f0;
+}
+
+.drawer-btn.secondary:hover {
+    background: #e2e8f0;
+}
+
+/* =========================================================
+   ANIMATIONS
+========================================================= */
+
+@keyframes slideDrawer {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 640px) {
+    .drawer {
+        width: 100%;
+    }
+
+    .drawer-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .drawer-derived {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ==========================================================
+   RESULT REVIEW
+========================================================== */
+
+.result-review-card{
+
+    border:1px solid #e2e8f0;
+
+    border-radius:16px;
+
+    padding:20px;
+
+    margin-bottom:20px;
+
+    background:#fff;
+
+}
+
+.result-review-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:flex-start;
+
+    margin-bottom:20px;
+
+}
+
+.result-review-header h3{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    margin-bottom:6px;
+
+    color:#0f172a;
+
+}
+
+.result-review-header p{
+
+    color:#64748b;
+
+}
+
+.pending-badge{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    background:#fef3c7;
+
+    color:#92400e;
+
+    padding:8px 14px;
+
+    border-radius:999px;
+
+    font-size:.85rem;
+
+    font-weight:600;
+
+}
+
+.result-review-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:18px;
+
+    margin-bottom:24px;
+
+}
+
+.result-review-grid strong{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    color:#334155;
+
+    font-size:.9rem;
+
+    margin-bottom:4px;
+
+}
+
+.result-review-grid p{
+
+    color:#64748b;
+
+}
+
+.result-review-actions{
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    gap:12px;
+
+}
+
+.review-btn{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    border:none;
+
+    padding:12px 20px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+    transition:.25s;
+
+}
+
+.review-btn.approve{
+
+    background:#10b981;
+
+    color:white;
+
+}
+
+.review-btn.reject{
+
+    background:#ef4444;
+
+    color:white;
+
+}
+
+.review-btn:hover{
+
+    transform:translateY(-2px);
+
+}
+
+@media(max-width:700px){
+
+    .result-review-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .result-review-actions{
+
+        flex-direction:column;
+
+    }
+
+}

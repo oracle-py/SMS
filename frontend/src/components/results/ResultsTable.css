@@ -1,0 +1,254 @@
+/* ======================================================
+   RESULTS TABLE
+====================================================== */
+
+.rt-card{
+
+    background:#fff;
+
+    border:1px solid var(--border);
+
+    border-radius:18px;
+
+    box-shadow:var(--shadow-sm);
+
+    overflow:hidden;
+
+}
+
+/* ======================================================
+   TABLE
+====================================================== */
+
+.rt-table-wrapper{
+
+    overflow-x:auto;
+
+}
+
+.rt-table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    min-width:900px;
+
+}
+
+.rt-table thead{
+
+    background:#F8FAFC;
+
+    position:sticky;
+
+    top:0;
+
+    z-index:2;
+
+}
+
+.rt-table th{
+
+    padding:18px 22px;
+
+    text-align:left;
+
+    font-size:.75rem;
+
+    letter-spacing:.08em;
+
+    text-transform:uppercase;
+
+    color:#64748B;
+
+    font-weight:700;
+
+    border-bottom:1px solid var(--border);
+
+    white-space:nowrap;
+
+}
+
+.rt-table td{
+
+    padding:18px 22px;
+
+    font-size:.95rem;
+
+    color:#1E293B;
+
+    border-bottom:1px solid #F1F5F9;
+
+    transition:.2s;
+
+    white-space:nowrap;
+
+}
+
+.rt-table tbody tr{
+
+    transition:.25s;
+
+}
+
+.rt-table tbody tr:hover{
+
+    background:#F8FAFC;
+
+}
+
+.rt-table tbody tr:last-child td{
+
+    border-bottom:none;
+
+}
+
+/* ======================================================
+   GRADE BADGES
+====================================================== */
+
+.rt-grade{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    min-width:42px;
+
+    height:30px;
+
+    border-radius:999px;
+
+    font-weight:700;
+
+    font-size:.82rem;
+
+}
+
+.rt-grade-a{
+
+    background:#DCFCE7;
+
+    color:#15803D;
+
+}
+
+.rt-grade-b{
+
+    background:#DBEAFE;
+
+    color:#2563EB;
+
+}
+
+.rt-grade-c{
+
+    background:#FEF3C7;
+
+    color:#B45309;
+
+}
+
+.rt-grade-d{
+
+    background:#FEE2E2;
+
+    color:#DC2626;
+
+}
+
+.rt-grade-f{
+
+    background:#FEE2E2;
+
+    color:#B91C1C;
+
+}
+
+/* ======================================================
+   EMPTY STATE
+====================================================== */
+
+.rt-empty{
+
+    background:#fff;
+
+    border-radius:18px;
+
+    border:1px solid var(--border);
+
+    padding:70px 40px;
+
+    text-align:center;
+
+    box-shadow:var(--shadow-sm);
+
+}
+
+.rt-empty-icon{
+
+    width:80px;
+
+    height:80px;
+
+    margin:auto;
+
+    margin-bottom:18px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:var(--primary-light);
+
+    font-size:2rem;
+
+}
+
+.rt-empty h3{
+
+    font-size:1.3rem;
+
+    margin-bottom:8px;
+
+    color:#0F172A;
+
+}
+
+.rt-empty p{
+
+    color:#64748B;
+
+    max-width:420px;
+
+    margin:auto;
+
+}
+
+/* ======================================================
+   RESPONSIVE
+====================================================== */
+
+@media(max-width:768px){
+
+    .rt-table{
+
+        min-width:700px;
+
+    }
+
+    .rt-table th,
+    .rt-table td{
+
+        padding:14px 16px;
+
+    }
+
+}

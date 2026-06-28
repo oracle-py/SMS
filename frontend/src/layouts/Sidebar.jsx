@@ -1,128 +1,273 @@
-import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import './Sidebar.css';
+import { useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
-function Sidebar({ isOpen, userRole, toggleSidebar }) {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const { logout } = useAuth();
+import { navigation, BRAND } from "./navigation";
 
-  const handleLogout = async () => {
-    await logout();
-    navigate('/');
-  };
+import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
+import { HiOutlineLogout } from "react-icons/hi";
 
-  const studentLinks = [
-    {
-      path: '/student/dashboard',
-      label: 'Dashboard',
-      icon: '📊',
-    },
-    {
-      path: '/student/results',
-      label: 'Results',
-      icon: '📄',
-    },
-    {
-      path: '/student/attendance',
-      label: 'Attendance',
-      icon: '📅',
-    },
-  ];
+import "./Sidebar.css";
 
-  const parentLinks = [
-    {
-      path: '/parent/dashboard',
-      label: 'Dashboard',
-      icon: '🏠',
-    },
-    {
-      path: '/parent/wards',
-      label: 'Ward Details',
-      icon: '👨‍🎓',
-    },
-  ];
+function Sidebar({
 
-  const adminLinks = [
-    {
-      path: '/admin/dashboard',
-      label: 'Dashboard',
-      icon: '⚙️',
-    },
-  ];
+    isOpen,
 
-  const getLinks = () => {
-    switch (userRole) {
-      case 'student':
-        return studentLinks;
-      case 'parent':
-        return parentLinks;
-      case 'admin':
-        return adminLinks;
-      default:
-        return [];
+    toggleSidebar
+
+}){
+
+    const navigate = useNavigate();
+
+    const location = useLocation();
+
+    const { user, logout } = useAuth();
+
+    const role = user?.role || "student";
+
+    const menu = navigation[role] || [];
+
+    const Logo = BRAND.logo;
+
+    const fullName =
+
+        user?.first_name && user?.last_name
+
+            ? `${user.first_name} ${user.last_name}`
+
+            : user?.username || "John Doe";
+
+    const roleLabel = {
+
+        student:"Student",
+
+        parent:"Parent",
+
+        admin:"Administrator",
+
+        lecturer:"Lecturer"
+
+    };
+
+    async function handleLogout(){
+
+        await logout();
+
+        navigate("/");
+
     }
-  };
 
-  const links = getLinks();
+    return(
 
-  return (
-    <aside className={`sidebar ${isOpen ? 'open' : 'closed'}`}>
-      <div className="sidebar-brand">
-        <div className="brand-logo">🎓</div>
+        <aside
 
-        {isOpen && (
-          <div className="brand-content">
-            <h3>SMS Portal</h3>
-            <p>Student Monitoring</p>
-          </div>
-        )}
+            className={`sidebar ${isOpen ? "open" : "closed"}`}
 
-        <button
-          className="collapse-btn"
-          onClick={toggleSidebar}
         >
-          {isOpen ? '←' : '→'}
-        </button>
-      </div>
 
-      <nav className="sidebar-nav">
-        {links.map((link) => (
-          <div
-            key={link.path}
-            className={`sidebar-link ${
-              location.pathname === link.path
-                ? 'active'
-                : ''
-            }`}
-            onClick={() => navigate(link.path)}
-          >
-            <span className="sidebar-icon">
-              {link.icon}
-            </span>
+            {/* Brand */}
 
-            {isOpen && (
-              <span className="sidebar-label">
-                {link.label}
-              </span>
-            )}
-          </div>
-        ))}
-      </nav>
+            <div className="sidebar-brand">
 
-      <div className="sidebar-footer">
-        <button
-          className="logout-btn"
-          onClick={handleLogout}
-        >
-          <span>🚪</span>
+                <div className="brand-logo">
 
-          {isOpen && <span>Logout</span>}
-        </button>
-      </div>
-    </aside>
-  );
+                    <Logo/>
+
+                </div>
+
+                {
+
+                    isOpen &&
+
+                    <div className="brand-text">
+
+                        <h2>
+
+                            {BRAND.name}
+
+                        </h2>
+
+                        <p>
+
+                            {BRAND.subtitle}
+
+                        </p>
+
+                    </div>
+
+                }
+
+                <button
+
+                    className="collapse-button"
+
+                    onClick={toggleSidebar}
+
+                >
+
+                    {
+
+                        isOpen
+
+                        ?
+
+                        <HiChevronLeft/>
+
+                        :
+
+                        <HiChevronRight/>
+
+                    }
+
+                </button>
+
+            </div>
+
+            {/* Navigation */}
+
+            <div className="sidebar-menu">
+
+                {
+
+                    menu.map(section=>(
+
+                        <div
+
+                            key={section.section}
+
+                            className="sidebar-section"
+
+                        >
+
+                            {
+
+                                isOpen &&
+
+                                <span className="section-title">
+
+                                    {section.section}
+
+                                </span>
+
+                            }
+
+                            {
+
+                                section.items.map(item=>{
+
+                                    const Icon=item.icon;
+
+                                    const active=
+
+                                        location.pathname===item.path;
+
+                                    return(
+
+                                        <button
+
+                                            key={item.path}
+
+                                            className={`nav-item ${active?"active":""}`}
+
+                                            onClick={()=>navigate(item.path)}
+
+                                        >
+
+                                            <div className="nav-icon">
+
+                                                <Icon/>
+
+                                            </div>
+
+                                            {
+
+                                                isOpen &&
+
+                                                <span>
+
+                                                    {item.label}
+
+                                                </span>
+
+                                            }
+
+                                        </button>
+
+                                    );
+
+                                })
+
+                            }
+
+                        </div>
+
+                    ))
+
+                }
+
+            </div>
+
+            {/* Footer */}
+
+            <div className="sidebar-footer">
+
+                {
+
+                    isOpen &&
+
+                    <div className="user-card">
+
+                        <div className="online-dot"/>
+
+                        <div>
+
+                            <h4>
+
+                                {fullName}
+
+                            </h4>
+
+                            <p>
+
+                                {roleLabel[role]}
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                }
+
+                <button
+
+                    className="logout-button"
+
+                    onClick={handleLogout}
+
+                >
+
+                    <HiOutlineLogout/>
+
+                    {
+
+                        isOpen &&
+
+                        <span>
+
+                            Sign Out
+
+                        </span>
+
+                    }
+
+                </button>
+
+            </div>
+
+        </aside>
+
+    );
+
 }
 
 export default Sidebar;

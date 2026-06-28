@@ -20,6 +20,12 @@ from academics.models import (
     CourseRegistration,
     Grade,
     Attendance,
+    Faculty,
+    Department,
+    Programme,
+    CourseAssignment,
+    Timetable,
+    Announcement,
 )
 from users.models import StudentProfile
 from users.serializers import StudentProfileSerializer, StudentProfileDetailSerializer
@@ -483,3 +489,97 @@ class AttendanceDetailSerializer(AttendanceSerializer):
     
     class Meta(AttendanceSerializer.Meta):
         fields = AttendanceSerializer.Meta.fields
+
+
+class FacultySerializer(serializers.ModelSerializer):
+    """
+    Serializer for Faculty model.
+    """
+    
+    class Meta:
+        model = Faculty
+        fields = ['id', 'name', 'code']
+        read_only_fields = ['id']
+
+
+class DepartmentSerializer(serializers.ModelSerializer):
+    """
+    Serializer for Department model.
+    """
+    
+    faculty = FacultySerializer(read_only=True)
+    faculty_id = serializers.IntegerField(write_only=True)
+    faculty_name = serializers.CharField(source='faculty.name', read_only=True)
+    
+    class Meta:
+        model = Department
+        fields = ['id', 'name', 'code', 'faculty', 'faculty_id', 'faculty_name']
+        read_only_fields = ['id']
+
+
+class ProgrammeSerializer(serializers.ModelSerializer):
+    """
+    Serializer for Programme model.
+    """
+    
+    department = DepartmentSerializer(read_only=True)
+    department_id = serializers.IntegerField(write_only=True)
+    department_name = serializers.CharField(source='department.name', read_only=True)
+    faculty_name = serializers.CharField(source='department.faculty.name', read_only=True)
+    
+    class Meta:
+        model = Programme
+        fields = ['id', 'name', 'code', 'department', 'department_id', 'department_name', 'faculty_name', 
+                  'duration_years', 'total_credit_units']
+        read_only_fields = ['id']
+
+
+class CourseAssignmentSerializer(serializers.ModelSerializer):
+    """
+    Serializer for CourseAssignment model.
+    """
+    
+    course_code = serializers.CharField(source='course.course_code', read_only=True)
+    course_title = serializers.CharField(source='course.course_title', read_only=True)
+    lecturer_name = serializers.CharField(source='lecturer.get_full_name', read_only=True)
+    session_name = serializers.CharField(source='session.name', read_only=True)
+    semester_name = serializers.CharField(source='semester.get_name_display', read_only=True)
+    
+    class Meta:
+        model = CourseAssignment
+        fields = ['id', 'course', 'course_code', 'course_title', 'lecturer', 'lecturer_name',
+                  'session', 'session_name', 'semester', 'semester_name', 'role', 'assigned_at']
+        read_only_fields = ['id', 'assigned_at']
+
+
+class TimetableSerializer(serializers.ModelSerializer):
+    """
+    Serializer for Timetable model.
+    """
+    
+    course_code = serializers.CharField(source='course_assignment.course.course_code', read_only=True)
+    course_title = serializers.CharField(source='course_assignment.course.course_title', read_only=True)
+    lecturer_name = serializers.CharField(source='course_assignment.lecturer.get_full_name', read_only=True)
+    day_of_week_display = serializers.CharField(source='get_day_of_week_display', read_only=True)
+    
+    class Meta:
+        model = Timetable
+        fields = ['id', 'course_assignment', 'course_code', 'course_title', 'lecturer_name',
+                  'day_of_week', 'day_of_week_display', 'start_time', 'end_time', 'venue',
+                  'session', 'semester']
+        read_only_fields = ['id']
+
+
+class AnnouncementSerializer(serializers.ModelSerializer):
+    """
+    Serializer for Announcement model.
+    """
+    
+    created_by_name = serializers.CharField(source='created_by.get_full_name', read_only=True)
+    target_audience_display = serializers.CharField(source='get_target_audience_display', read_only=True)
+    
+    class Meta:
+        model = Announcement
+        fields = ['id', 'title', 'content', 'target_audience', 'target_audience_display',
+                  'is_active', 'created_by', 'created_by_name', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'created_at', 'updated_at']

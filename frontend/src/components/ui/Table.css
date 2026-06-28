@@ -1,0 +1,155 @@
+/* =====================================================
+   TABLE CONTAINER
+===================================================== */
+
+.table-container{
+
+    width:100%;
+
+    overflow-x:auto;
+
+    border:1px solid var(--border);
+
+    border-radius:18px;
+
+    background:white;
+
+    box-shadow:var(--shadow-sm);
+
+}
+
+/* ========================================= */
+
+.ui-table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    min-width:700px;
+
+}
+
+/* ========================================= */
+
+.ui-table thead{
+
+    background:#F8FAFC;
+
+    position:sticky;
+
+    top:0;
+
+    z-index:5;
+
+}
+
+/* ========================================= */
+
+.ui-table th{
+
+    text-align:left;
+
+    padding:18px 24px;
+
+    font-size:13px;
+
+    font-weight:700;
+
+    color:var(--muted);
+
+    text-transform:uppercase;
+
+    letter-spacing:.04em;
+
+    border-bottom:1px solid var(--border);
+
+}
+
+/* ========================================= */
+
+.ui-table td{
+
+    padding:18px 24px;
+
+    border-bottom:1px solid #F1F5F9;
+
+    color:var(--text);
+
+    font-size:14px;
+
+    vertical-align:middle;
+
+}
+
+/* ========================================= */
+
+.ui-table tbody tr{
+
+    transition:.2s;
+
+}
+
+.ui-table tbody tr:hover{
+
+    background:#F8FAFC;
+
+}
+
+/* ========================================= */
+
+.ui-table tbody tr:nth-child(even){
+
+    background:#FCFCFD;
+
+}
+
+.ui-table tbody tr:last-child td{
+
+    border-bottom:none;
+
+}
+
+/* ========================================= */
+
+.table-actions{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+}
+
+.table-actions button{
+
+    border:none;
+
+    background:none;
+
+    cursor:pointer;
+
+    color:var(--muted);
+
+    transition:.2s;
+
+}
+
+.table-actions button:hover{
+
+    color:var(--primary);
+
+}
+
+/* ========================================= */
+
+@media(max-width:768px){
+
+    .ui-table{
+
+        min-width:600px;
+
+    }
+
+}

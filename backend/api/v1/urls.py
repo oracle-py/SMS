@@ -18,6 +18,7 @@ from users.viewsets import (
     StudentProfileViewSet,
     ParentProfileViewSet,
     ParentStudentRelationViewSet,
+    LecturerProfileViewSet,
 )
 from academics.viewsets import (
     AcademicSessionViewSet,
@@ -28,6 +29,12 @@ from academics.viewsets import (
     CourseRegistrationViewSet,
     GradeViewSet,
     AttendanceViewSet,
+    FacultyViewSet,
+    DepartmentViewSet,
+    ProgrammeViewSet,
+    CourseAssignmentViewSet,
+    TimetableViewSet,
+    AnnouncementViewSet,
 )
 from api.views.student_dashboard import (
     StudentDashboardView,
@@ -37,6 +44,9 @@ from api.views.student_dashboard import (
 from api.views.parent_dashboard import (
     ParentDashboardView,
     ParentWardDetailView,
+)
+from api.views.admin_dashboard import (
+    AdminDashboardView,
 )
 
 app_name = 'api_v1'
@@ -48,6 +58,7 @@ router = DefaultRouter()
 router.register(r'students', StudentProfileViewSet, basename='student')
 router.register(r'parents', ParentProfileViewSet, basename='parent')
 router.register(r'parent-student-relations', ParentStudentRelationViewSet, basename='parent-student-relation')
+router.register(r'lecturers', LecturerProfileViewSet, basename='lecturer')
 
 # Academic ViewSets
 router.register(r'sessions', AcademicSessionViewSet, basename='session')
@@ -58,6 +69,16 @@ router.register(r'enrollments', StudentEnrollmentViewSet, basename='enrollment')
 router.register(r'registrations', CourseRegistrationViewSet, basename='registration')
 router.register(r'grades', GradeViewSet, basename='grade')
 router.register(r'attendance', AttendanceViewSet, basename='attendance')
+
+# Organization ViewSets
+router.register(r'faculties', FacultyViewSet, basename='faculty')
+router.register(r'departments', DepartmentViewSet, basename='department')
+router.register(r'programmes', ProgrammeViewSet, basename='programme')
+
+# Course Assignment ViewSets
+router.register(r'course-assignments', CourseAssignmentViewSet, basename='course-assignment')
+router.register(r'timetables', TimetableViewSet, basename='timetable')
+router.register(r'announcements', AnnouncementViewSet, basename='announcement')
 
 urlpatterns = [
     # Authentication endpoints
@@ -74,6 +95,9 @@ urlpatterns = [
     # Parent dashboard endpoints
     path('parent/dashboard/', ParentDashboardView.as_view(), name='parent-dashboard'),
     path('parent/wards/<int:student_id>/', ParentWardDetailView.as_view(), name='parent-ward-detail'),
+    
+    # Admin dashboard endpoints
+    path('dashboard/admin/', AdminDashboardView.as_view(), name='admin-dashboard'),
     
     # ViewSet endpoints
     path('', include(router.urls)),
