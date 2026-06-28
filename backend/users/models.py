@@ -156,7 +156,9 @@ class LecturerProfile(models.Model):
         'academics.Department',
         on_delete=models.PROTECT,
         related_name='lecturers',
-        verbose_name='Department'
+        verbose_name='Department',
+        null=True,
+        blank=True
     )
     date_of_birth = models.DateField(verbose_name='Date of Birth')
     date_of_employment = models.DateField(auto_now_add=True, verbose_name='Date of Employment')
