@@ -255,8 +255,8 @@ class Command(BaseCommand):
                 user=user,
                 defaults={
                     'staff_id': f'STAFF/2024/{i:03d}',
-                    'department': 'Computer Science',
-                    'phone_number': f'+123456789{i:02d}'
+                    'rank': 'lecturer_i',
+                    'date_of_birth': date(1980 + i, 1, 1)
                 }
             )
             self.lecturers.append(lecturer)
