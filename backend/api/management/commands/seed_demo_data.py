@@ -25,6 +25,9 @@ from academics.models import (
     CourseRegistration,
     Grade,
     Attendance,
+    Faculty,
+    Department,
+    Programme,
 )
 
 
@@ -89,6 +92,9 @@ class Command(BaseCommand):
         Semester.objects.all().delete()
         AcademicSession.objects.all().delete()
         Level.objects.all().delete()
+        Programme.objects.all().delete()
+        Department.objects.all().delete()
+        Faculty.objects.all().delete()
         ParentStudentRelation.objects.all().delete()
         ParentProfile.objects.all().delete()
         StudentProfile.objects.all().delete()
@@ -160,7 +166,8 @@ class Command(BaseCommand):
                 defaults={
                     'student_id': student_id,
                     'date_of_birth': date(2000 + i, 1, 1),
-                    'grade_level': 100
+                    'grade_level': 100,
+                    'programme': self.programmes[(i - 1) % len(self.programmes)]
                 }
             )
             self.students.append(student)
@@ -268,6 +275,15 @@ class Command(BaseCommand):
         """Seed academic sessions, semesters, levels, and courses."""
         self.stdout.write('Seeding academic structure...')
         
+        # Create faculties
+        self.seed_faculties()
+        
+        # Create departments
+        self.seed_departments()
+        
+        # Create programmes
+        self.seed_programmes()
+        
         # Create levels
         levels = ['100 Level', '200 Level', '300 Level', '400 Level', '500 Level']
         self.levels = []
@@ -349,6 +365,87 @@ class Command(BaseCommand):
                 self.courses.append(course)
                 action = 'Created' if created else 'Reused'
                 self.stdout.write(f'  {action} course: {course_code} - {course_title}')
+    
+    def seed_faculties(self):
+        """Seed faculties."""
+        self.stdout.write('Seeding faculties...')
+        
+        faculty_data = [
+            ('Faculty of Science', 'FOS'),
+            ('Faculty of Engineering', 'FOE'),
+            ('Faculty of Arts', 'FOA'),
+            ('Faculty of Social Sciences', 'FSS'),
+        ]
+        
+        self.faculties = []
+        for name, code in faculty_data:
+            faculty, created = Faculty.objects.get_or_create(
+                code=code,
+                defaults={'name': name}
+            )
+            self.faculties.append(faculty)
+            action = 'Created' if created else 'Reused'
+            self.stdout.write(f'  {action} faculty: {name}')
+    
+    def seed_departments(self):
+        """Seed departments."""
+        self.stdout.write('Seeding departments...')
+        
+        department_data = [
+            ('Computer Science', 'CSC', self.faculties[0]),
+            ('Mathematics', 'MTH', self.faculties[0]),
+            ('Physics', 'PHY', self.faculties[0]),
+            ('Chemistry', 'CHM', self.faculties[0]),
+            ('Civil Engineering', 'CVE', self.faculties[1]),
+            ('Electrical Engineering', 'EEE', self.faculties[1]),
+            ('Mechanical Engineering', 'MCE', self.faculties[1]),
+            ('English Language', 'ENG', self.faculties[2]),
+            ('History', 'HIS', self.faculties[2]),
+            ('Economics', 'ECO', self.faculties[3]),
+            ('Sociology', 'SOC', self.faculties[3]),
+        ]
+        
+        self.departments = []
+        for name, code, faculty in department_data:
+            department, created = Department.objects.get_or_create(
+                code=code,
+                defaults={'name': name, 'faculty': faculty}
+            )
+            self.departments.append(department)
+            action = 'Created' if created else 'Reused'
+            self.stdout.write(f'  {action} department: {name}')
+    
+    def seed_programmes(self):
+        """Seed programmes."""
+        self.stdout.write('Seeding programmes...')
+        
+        programme_data = [
+            ('Computer Science', 'B.Sc', 4, 120, self.departments[0]),
+            ('Mathematics', 'B.Sc', 4, 120, self.departments[1]),
+            ('Physics', 'B.Sc', 4, 120, self.departments[2]),
+            ('Chemistry', 'B.Sc', 4, 120, self.departments[3]),
+            ('Civil Engineering', 'B.Eng', 5, 150, self.departments[4]),
+            ('Electrical Engineering', 'B.Eng', 5, 150, self.departments[5]),
+            ('Mechanical Engineering', 'B.Eng', 5, 150, self.departments[6]),
+            ('English Language', 'B.A', 4, 100, self.departments[7]),
+            ('History', 'B.A', 4, 100, self.departments[8]),
+            ('Economics', 'B.Sc', 4, 120, self.departments[9]),
+        ]
+        
+        self.programmes = []
+        for name, degree, duration, credits, department in programme_data:
+            programme, created = Programme.objects.get_or_create(
+                code=f"{department.code}-{name.split()[0].upper()}",
+                defaults={
+                    'name': f"{name} ({degree})",
+                    'department': department,
+                    'duration_years': duration,
+                    'total_credit_units': credits
+                }
+            )
+            self.programmes.append(programme)
+            action = 'Created' if created else 'Reused'
+            self.stdout.write(f'  {action} programme: {name}')
     
     def seed_enrollments_and_grades(self):
         """Seed student enrollments, course registrations, and grades."""

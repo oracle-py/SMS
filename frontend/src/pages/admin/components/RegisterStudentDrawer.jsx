@@ -74,8 +74,7 @@ export default function RegisterStudentDrawer({
         setLoading(true);
         try {
             const response = await api.get('/programmes/');
-            const data = await response.json();
-            setProgrammes(data.results || data);
+            setProgrammes(response.data.results || response.data);
         } catch (error) {
             console.error('Error fetching programmes:', error);
         } finally {
