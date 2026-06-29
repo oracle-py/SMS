@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./drawer.css";
+import api from "../../../api/axios";
 
 import {
     HiOutlineXMark,
@@ -43,17 +44,8 @@ export default function CreateCourseDrawer({ open, onClose }) {
     const fetchDepartments = async () => {
         setLoading(true);
         try {
-            const token = localStorage.getItem('access_token');
-            const response = await fetch('http://localhost:8001/api/v1/departments/', {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                }
-            });
-            if (response.ok) {
-                const data = await response.json();
-                setDepartments(data.results || data);
-            }
+            const response = await api.get('/departments/');
+            setDepartments(response.data.results || response.data);
         } catch (error) {
             console.error('Error fetching departments:', error);
         } finally {
@@ -63,17 +55,8 @@ export default function CreateCourseDrawer({ open, onClose }) {
 
     const fetchLevels = async () => {
         try {
-            const token = localStorage.getItem('access_token');
-            const response = await fetch('http://localhost:8001/api/v1/levels/', {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                }
-            });
-            if (response.ok) {
-                const data = await response.json();
-                setLevels(data.results || data);
-            }
+            const response = await api.get('/levels/');
+            setLevels(response.data.results || response.data);
         } catch (error) {
             console.error('Error fetching levels:', error);
         }
@@ -81,17 +64,8 @@ export default function CreateCourseDrawer({ open, onClose }) {
 
     const fetchSemesters = async () => {
         try {
-            const token = localStorage.getItem('access_token');
-            const response = await fetch('http://localhost:8001/api/v1/semesters/', {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                }
-            });
-            if (response.ok) {
-                const data = await response.json();
-                setSemesters(data.results || data);
-            }
+            const response = await api.get('/semesters/');
+            setSemesters(response.data.results || response.data);
         } catch (error) {
             console.error('Error fetching semesters:', error);
         }
@@ -119,34 +93,21 @@ export default function CreateCourseDrawer({ open, onClose }) {
         e.preventDefault();
         
         try {
-            const token = localStorage.getItem('access_token');
-            const response = await fetch('http://localhost:8001/api/v1/courses/', {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    course_code: formData.course_code,
-                    course_title: formData.course_title,
-                    credit_unit: parseInt(formData.credit_units),
-                    level_id: formData.level,
-                    semester_id: formData.semester,
-                    department: formData.department,
-                    is_active: formData.status === 'Active'
-                })
+            const response = await api.post('/courses/', {
+                course_code: formData.course_code,
+                course_title: formData.course_title,
+                credit_unit: parseInt(formData.credit_units),
+                level_id: formData.level,
+                semester_id: formData.semester,
+                department: formData.department,
+                is_active: formData.status === 'Active'
             });
             
-            if (response.ok) {
-                alert('Course created successfully!');
-                onClose();
-            } else {
-                const error = await response.json();
-                alert(`Error: ${JSON.stringify(error)}`);
-            }
+            alert('Course created successfully!');
+            onClose();
         } catch (error) {
             console.error('Error creating course:', error);
-            alert('Failed to create course');
+            alert(`Error: ${error.response?.data || 'Failed to create course'}`);
         }
     };
 

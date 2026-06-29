@@ -84,6 +84,20 @@
 
     z-index:900;
 
+    opacity:0;
+
+    visibility:hidden;
+
+    transition:opacity .28s ease, visibility .28s ease;
+
+}
+
+.sidebar-overlay.active{
+
+    opacity:1;
+
+    visibility:visible;
+
 }
 
 /* =========================================================
@@ -103,6 +117,32 @@
     .dashboard-content{
 
         padding:20px;
+
+    }
+
+    .sidebar{
+
+        position:fixed;
+
+        left:0;
+
+        top:0;
+
+        width:280px;
+
+        height:100vh;
+
+        transform:translateX(-100%);
+
+        transition:transform .28s ease;
+
+        z-index:1000;
+
+    }
+
+    .sidebar.open{
+
+        transform:translateX(0);
 
     }
 

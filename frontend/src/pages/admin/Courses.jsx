@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { HiOutlineMagnifyingGlass, HiOutlinePencil, HiOutlineTrash, HiOutlinePlus } from 'react-icons/hi2';
 import DashboardLayout from '../../layouts/DashboardLayout';
+import api from '../../api/axios';
 
 function Courses() {
     const [courses, setCourses] = useState([]);
@@ -14,17 +15,8 @@ function Courses() {
     const fetchCourses = async () => {
         setLoading(true);
         try {
-            const token = localStorage.getItem('access_token');
-            const response = await fetch('http://localhost:8001/api/v1/courses/', {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                }
-            });
-            if (response.ok) {
-                const data = await response.json();
-                setCourses(data.results || data);
-            }
+            const response = await api.get('/courses/');
+            setCourses(response.data.results || response.data);
         } catch (error) {
             console.error('Error fetching courses:', error);
         } finally {

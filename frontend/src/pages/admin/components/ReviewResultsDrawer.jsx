@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./drawer.css";
+import api from "../../../api/axios";
 
 import {
     HiOutlineXMark,
@@ -25,17 +26,8 @@ export default function ReviewResultsDrawer({ open, onClose }) {
     const fetchPendingGrades = async () => {
         setLoading(true);
         try {
-            const token = localStorage.getItem('access_token');
-            const response = await fetch('http://localhost:8001/api/v1/grades/?status=pending', {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                }
-            });
-            if (response.ok) {
-                const data = await response.json();
-                setPendingGrades(data.results || data);
-            }
+            const response = await api.get('/grades/?status=pending');
+            setPendingGrades(response.data.results || response.data);
         } catch (error) {
             console.error('Error fetching pending grades:', error);
         } finally {
@@ -45,18 +37,8 @@ export default function ReviewResultsDrawer({ open, onClose }) {
 
     const handleApprove = async (grade) => {
         try {
-            const token = localStorage.getItem('access_token');
-            const response = await fetch(`http://localhost:8001/api/v1/grades/${grade.id}/`, {
-                method: 'PATCH',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ status: 'approved' })
-            });
-            if (response.ok) {
-                fetchPendingGrades();
-            }
+            await api.patch(`/grades/${grade.id}/`, { status: 'approved' });
+            fetchPendingGrades();
         } catch (error) {
             console.error('Error approving grade:', error);
         }
@@ -64,18 +46,8 @@ export default function ReviewResultsDrawer({ open, onClose }) {
 
     const handleReject = async (grade) => {
         try {
-            const token = localStorage.getItem('access_token');
-            const response = await fetch(`http://localhost:8001/api/v1/grades/${grade.id}/`, {
-                method: 'PATCH',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ status: 'rejected' })
-            });
-            if (response.ok) {
-                fetchPendingGrades();
-            }
+            await api.patch(`/grades/${grade.id}/`, { status: 'rejected' });
+            fetchPendingGrades();
         } catch (error) {
             console.error('Error rejecting grade:', error);
         }

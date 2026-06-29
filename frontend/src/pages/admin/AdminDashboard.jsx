@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
 import DashboardLayout from "../../layouts/DashboardLayout";
 import "./admin.css";
+import api from "../../api/axios";
 
 import RegisterStudentDrawer from "./components/RegisterStudentDrawer";
 import RegisterLecturerDrawer from "./components/RegisterLecturerDrawer";
@@ -53,20 +54,10 @@ function AdminDashboard() {
     const fetchDashboardData = async () => {
         setLoading(true);
         try {
-            const token = localStorage.getItem('access_token');
-            const response = await fetch('http://localhost:8001/api/v1/dashboard/admin/', {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                }
-            });
-            if (response.ok) {
-                const data = await response.json();
-                console.log('Dashboard data:', data);
-                setDashboardData(data.data);
-            } else {
-                console.error('Dashboard API error:', response.status, response.statusText);
-            }
+            const response = await api.get('/dashboard/admin/');
+            const data = response.data;
+            console.log('Dashboard data:', data);
+            setDashboardData(data.data);
         } catch (error) {
             console.error('Error fetching dashboard data:', error);
         } finally {

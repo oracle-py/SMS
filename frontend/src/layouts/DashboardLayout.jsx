@@ -8,7 +8,7 @@ export default function DashboardLayout({ children }) {
     const [sidebarOpen, setSidebarOpen] = useState(() => {
         const saved = localStorage.getItem("sidebarOpen");
         if (saved !== null) return saved === "true";
-        return true;
+        return window.innerWidth > 900;
     });
 
     useEffect(() => {
@@ -25,15 +25,26 @@ export default function DashboardLayout({ children }) {
 
                 setSidebarOpen(false);
 
+            } else {
+
+                setSidebarOpen(true);
+
             }
 
         };
+
+        // Set initial state based on screen size
+        handleResize();
 
         window.addEventListener("resize", handleResize);
 
         return () => window.removeEventListener("resize", handleResize);
 
     }, []);
+
+    const toggleSidebar = () => {
+        setSidebarOpen(!sidebarOpen);
+    };
 
     return (
 
@@ -43,36 +54,25 @@ export default function DashboardLayout({ children }) {
 
                 isOpen={sidebarOpen}
 
-                toggleSidebar={() => setSidebarOpen(!sidebarOpen)}
+                toggleSidebar={toggleSidebar}
 
             />
 
             {/* Mobile Overlay */}
 
-            {sidebarOpen && window.innerWidth <= 900 && (
-
-                <div
-
-                    className="sidebar-overlay"
-
-                    onClick={() => setSidebarOpen(false)}
-
-                />
-
-            )}
+            <div
+                className={`sidebar-overlay ${sidebarOpen ? 'active' : ''}`}
+                onClick={toggleSidebar}
+            />
 
             <div
-
                 className={`dashboard-main ${
                     sidebarOpen ? "sidebar-open" : "sidebar-closed"
                 }`}
-
             >
 
                 <Topbar
-
-                    toggleSidebar={() => setSidebarOpen(!sidebarOpen)}
-
+                    toggleSidebar={toggleSidebar}
                 />
 
                 <main className="dashboard-content">

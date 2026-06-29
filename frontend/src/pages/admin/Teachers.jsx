@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { HiOutlineMagnifyingGlass, HiOutlinePencil, HiOutlineTrash, HiOutlinePlus } from 'react-icons/hi2';
 import DashboardLayout from '../../layouts/DashboardLayout';
+import api from '../../api/axios';
 
 function Teachers() {
     const [teachers, setTeachers] = useState([]);
@@ -14,17 +15,8 @@ function Teachers() {
     const fetchTeachers = async () => {
         setLoading(true);
         try {
-            const token = localStorage.getItem('access_token');
-            const response = await fetch('http://localhost:8001/api/v1/lecturers/', {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                }
-            });
-            if (response.ok) {
-                const data = await response.json();
-                setTeachers(data.results || data);
-            }
+            const response = await api.get('/lecturers/');
+            setTeachers(response.data.results || response.data);
         } catch (error) {
             console.error('Error fetching teachers:', error);
         } finally {
