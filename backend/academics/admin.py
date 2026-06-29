@@ -189,6 +189,13 @@ class AttendanceAdmin(admin.ModelAdmin):
     )
 
 
+class DepartmentInline(admin.TabularInline):
+    """Inline admin for Department within Faculty."""
+    model = Department
+    extra = 0
+    fields = ('name', 'code')
+
+
 @admin.register(Faculty)
 class FacultyAdmin(admin.ModelAdmin):
     """Admin configuration for Faculty model."""
@@ -197,9 +204,32 @@ class FacultyAdmin(admin.ModelAdmin):
     search_fields = ('name', 'code')
     ordering = ('name',)
     
+    fieldsets = (
+        ('Faculty Information', {
+            'fields': ('name', 'code')
+        }),
+    )
+    
+    inlines = [DepartmentInline]
+    
+    def save_model(self, request, obj, form, change):
+        """Override save_model to handle saving with validation."""
+        try:
+            super().save_model(request, obj, form, change)
+        except Exception as e:
+            form.add_error(None, f"Error saving faculty: {str(e)}")
+            raise
+    
     def get_department_count(self, obj):
         return obj.departments.count()
     get_department_count.short_description = 'Departments'
+
+
+class ProgrammeInline(admin.TabularInline):
+    """Inline admin for Programme within Department."""
+    model = Programme
+    extra = 0
+    fields = ('name', 'code', 'duration_years', 'total_credit_units')
 
 
 @admin.register(Department)
@@ -210,6 +240,23 @@ class DepartmentAdmin(admin.ModelAdmin):
     list_filter = ('faculty',)
     search_fields = ('name', 'code', 'faculty__name')
     ordering = ('faculty', 'name')
+    
+    fieldsets = (
+        ('Department Information', {
+            'fields': ('name', 'code', 'faculty')
+        }),
+    )
+    
+    inlines = [ProgrammeInline]
+    
+    def save_model(self, request, obj, form, change):
+        """Override save_model to handle saving with validation."""
+        try:
+            obj.full_clean()
+            super().save_model(request, obj, form, change)
+        except Exception as e:
+            form.add_error(None, f"Error saving department: {str(e)}")
+            raise
     
     def get_programme_count(self, obj):
         return obj.programmes.count()
@@ -228,6 +275,24 @@ class ProgrammeAdmin(admin.ModelAdmin):
     list_filter = ('department', 'duration_years')
     search_fields = ('name', 'code', 'department__name')
     ordering = ('department', 'name')
+    
+    fieldsets = (
+        ('Programme Information', {
+            'fields': ('name', 'code', 'department')
+        }),
+        ('Programme Details', {
+            'fields': ('duration_years', 'total_credit_units')
+        }),
+    )
+    
+    def save_model(self, request, obj, form, change):
+        """Override save_model to handle saving with validation."""
+        try:
+            obj.full_clean()
+            super().save_model(request, obj, form, change)
+        except Exception as e:
+            form.add_error(None, f"Error saving programme: {str(e)}")
+            raise
     
     def get_student_count(self, obj):
         return obj.students.count()

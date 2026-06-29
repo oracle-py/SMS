@@ -3979,3 +3979,10 @@ INFO 2026-06-29 19:35:22,668 basehttp 22248 14476 "GET /api/v1/dashboard/admin/ 
 INFO 2026-06-29 19:40:18,207 basehttp 22248 14476 "GET /api/v1/dashboard/admin/ HTTP/1.1" 200 958
 INFO 2026-06-29 19:40:31,016 basehttp 22248 21508 "OPTIONS /api/v1/dashboard/admin/ HTTP/1.1" 200 0
 INFO 2026-06-29 19:40:31,091 basehttp 22248 21508 "GET /api/v1/dashboard/admin/ HTTP/1.1" 200 958
+INFO 2026-06-29 21:29:52,560 autoreload 22248 7004 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\academics\admin.py changed, reloading.
+INFO 2026-06-29 21:29:56,902 autoreload 23308 4384 Watching for file changes with StatReloader
+INFO 2026-06-29 21:30:12,994 autoreload 23308 4384 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\academics\admin.py changed, reloading.
+INFO 2026-06-29 21:30:16,662 autoreload 20260 23732 Watching for file changes with StatReloader
+INFO 2026-06-29 21:30:31,707 autoreload 20260 23732 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\academics\admin.py changed, reloading.
+INFO 2026-06-29 21:30:34,052 autoreload 13216 23480 Watching for file changes with StatReloader
+INFO 2026-06-29 21:30:53,243 autoreload 13216 23480 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\academics\admin.py changed, reloading.
