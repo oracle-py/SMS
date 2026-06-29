@@ -196,17 +196,27 @@
 
     backdrop-filter:blur(14px);
 
+    overflow:hidden;
+
 }
 
 .hero-stat svg{
 
     font-size:2rem;
 
+    flex-shrink:0;
+
 }
 
 .hero-stat h2{
 
     font-size:1.8rem;
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
 
 }
 
@@ -215,6 +225,12 @@
     opacity:.85;
 
     font-size:.88rem;
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
 
 }
 

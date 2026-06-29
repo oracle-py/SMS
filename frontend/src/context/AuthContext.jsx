@@ -87,9 +87,25 @@ export const AuthProvider = ({ children }) => {
       return userData;
     } catch (error) {
       console.error('Get current user error:', error);
-      // If token is invalid, clear auth state
+      // If token is invalid, try to refresh it
       if (error.response?.status === 401) {
-        await logout();
+        const newToken = await refreshAccessToken();
+        if (newToken) {
+          // Retry with new token
+          try {
+            const response = await api.get('/auth/me/');
+            const userData = response.data.data;
+            setUser(userData);
+            setAuthenticated(true);
+            localStorage.setItem('user_data', JSON.stringify(userData));
+            return userData;
+          } catch (retryError) {
+            console.error('Retry get current user error:', retryError);
+            await logout();
+          }
+        } else {
+          await logout();
+        }
       }
       return null;
     }

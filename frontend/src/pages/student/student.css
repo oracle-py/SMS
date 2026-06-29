@@ -383,8 +383,7 @@ STUDENT HUB HERO
     font-size:2rem;
     font-weight:700;
     white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
+    overflow:visible;
     line-height:1.1;
 }
 
@@ -468,7 +467,29 @@ STUDENT HUB HERO
 
     .hero-mini-card h2{
 
-        font-size:1.6rem;
+        font-size:1.4rem;
+
+    }
+
+}
+
+@media(max-width:480px){
+
+    .hub-hero-right{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .hero-mini-card h2{
+
+        font-size:1.2rem;
+
+    }
+
+    .hero-mini-card span{
+
+        font-size:.7rem;
 
     }
 

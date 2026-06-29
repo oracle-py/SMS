@@ -3948,3 +3948,10 @@ INFO 2026-06-29 18:35:44,098 basehttp 4856 12176 "GET /api/v1/auth/me/ HTTP/1.1"
 INFO 2026-06-29 18:35:44,149 basehttp 4856 21880 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 304
 INFO 2026-06-29 18:35:44,204 basehttp 4856 12176 "GET /api/v1/auth/me/ HTTP/1.1" 200 517
 INFO 2026-06-29 18:35:44,233 basehttp 4856 21880 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 304
+INFO 2026-06-29 18:36:37,891 basehttp 4856 2800 "GET /api/schema/ HTTP/1.1" 200 392673
+INFO 2026-06-29 19:06:26,644 basehttp 4856 4960 "GET /api/v1/auth/me/ HTTP/1.1" 200 517
+INFO 2026-06-29 19:06:26,678 basehttp 4856 4960 "GET /api/v1/auth/me/ HTTP/1.1" 200 517
+INFO 2026-06-29 19:10:19,976 basehttp 4856 4960 "GET /api/v1/auth/me/ HTTP/1.1" 200 517
+INFO 2026-06-29 19:10:21,435 basehttp 4856 11844 "GET /api/v1/auth/me/ HTTP/1.1" 200 517
+INFO 2026-06-29 19:10:21,458 basehttp 4856 4960 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 304
+INFO 2026-06-29 19:10:21,492 basehttp 4856 4960 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 304

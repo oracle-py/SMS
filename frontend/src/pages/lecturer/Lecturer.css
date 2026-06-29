@@ -38,16 +38,23 @@
     color: white;
     padding: 30px;
     border-radius: 16px;
+    overflow: hidden;
 }
 
 .lecturer-hero h2 {
     margin: 0;
     font-size: 1.8rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .lecturer-hero p {
     margin-top: 10px;
     opacity: .95;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* ===========================
