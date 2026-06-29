@@ -3986,3 +3986,4 @@ INFO 2026-06-29 21:30:16,662 autoreload 20260 23732 Watching for file changes wi
 INFO 2026-06-29 21:30:31,707 autoreload 20260 23732 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\academics\admin.py changed, reloading.
 INFO 2026-06-29 21:30:34,052 autoreload 13216 23480 Watching for file changes with StatReloader
 INFO 2026-06-29 21:30:53,243 autoreload 13216 23480 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\academics\admin.py changed, reloading.
+INFO 2026-06-29 21:30:56,860 autoreload 22868 3976 Watching for file changes with StatReloader

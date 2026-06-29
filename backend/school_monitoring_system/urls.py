@@ -16,9 +16,27 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.http import JsonResponse
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 
+
+def root_view(request):
+    """Root path handler that returns API information."""
+    return JsonResponse({
+        'message': 'School Monitoring System API',
+        'version': 'v1',
+        'endpoints': {
+            'api': '/api/',
+            'admin': '/admin/',
+            'docs': '/api/docs/',
+            'redoc': '/api/redoc/',
+            'schema': '/api/schema/'
+        }
+    })
+
+
 urlpatterns = [
+    path('', root_view),
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),
     # API documentation endpoints
