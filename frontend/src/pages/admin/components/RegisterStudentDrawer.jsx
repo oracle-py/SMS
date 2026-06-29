@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./drawer.css";
+import api from "../../../api/axios";
 
 import {
     HiOutlineXMark,
@@ -72,17 +73,9 @@ export default function RegisterStudentDrawer({
     const fetchProgrammes = async () => {
         setLoading(true);
         try {
-            const token = localStorage.getItem('access_token');
-            const response = await fetch('http://localhost:8001/api/v1/programmes/', {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                }
-            });
-            if (response.ok) {
-                const data = await response.json();
-                setProgrammes(data.results || data);
-            }
+            const response = await api.get('/programmes/');
+            const data = await response.json();
+            setProgrammes(data.results || data);
         } catch (error) {
             console.error('Error fetching programmes:', error);
         } finally {
@@ -117,40 +110,27 @@ export default function RegisterStudentDrawer({
         setLoading(true);
         
         try {
-            const token = localStorage.getItem('access_token');
-            const response = await fetch('http://localhost:8001/api/v1/students/', {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
+            const response = await api.post('/students/', {
+                user_data: {
+                    first_name: formData.first_name,
+                    last_name: formData.last_name,
+                    other_name: formData.other_name,
+                    email: formData.email,
+                    phone: formData.phone
                 },
-                body: JSON.stringify({
-                    user_data: {
-                        first_name: formData.first_name,
-                        last_name: formData.last_name,
-                        other_name: formData.other_name,
-                        email: formData.email,
-                        phone: formData.phone
-                    },
-                    gender: formData.gender,
-                    date_of_birth: formData.date_of_birth,
-                    student_id: formData.auto_generate_matric ? null : formData.matric_number,
-                    grade_level: parseInt(formData.entry_level),
-                    programme: formData.programme
-                })
+                gender: formData.gender,
+                date_of_birth: formData.date_of_birth,
+                student_id: formData.auto_generate_matric ? null : formData.matric_number,
+                grade_level: parseInt(formData.entry_level),
+                programme: formData.programme
             });
             
-            if (response.ok) {
-                alert('Student registered successfully!');
-                setFormData(initialData);
-                onClose();
-            } else {
-                const error = await response.json();
-                alert(`Error: ${JSON.stringify(error)}`);
-            }
+            alert('Student registered successfully!');
+            setFormData(initialData);
+            onClose();
         } catch (error) {
             console.error('Error registering student:', error);
-            alert('Failed to register student');
+            alert(`Error: ${error.response?.data || 'Failed to register student'}`);
         } finally {
             setLoading(false);
         }

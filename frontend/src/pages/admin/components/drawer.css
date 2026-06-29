@@ -139,6 +139,8 @@
     font-size: 0.95rem;
     outline: none;
     transition: 0.25s;
+    width: 100%;
+    min-height: 48px;
 }
 
 .drawer-input input:focus,

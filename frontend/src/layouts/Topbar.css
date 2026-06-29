@@ -302,6 +302,18 @@
 
     }
 
+    .topbar-left h2{
+
+        font-size:18px;
+
+    }
+
+    .topbar-left p{
+
+        font-size:11px;
+
+    }
+
 }
 
 @media(max-width:640px){
@@ -315,6 +327,26 @@
     .topbar{
 
         padding:0 18px;
+
+    }
+
+    .topbar-left h2{
+
+        font-size:16px;
+
+    }
+
+    .topbar-left p{
+
+        font-size:10px;
+
+        white-space:nowrap;
+
+        overflow:hidden;
+
+        text-overflow:ellipsis;
+
+        max-width:120px;
 
     }
 
