@@ -182,21 +182,11 @@ export const navigation = {
 
                 {
 
-                    label: "Classes",
+                    label: "Courses",
 
                     path: "/admin/classes",
 
                     icon: LuSchool
-
-                },
-
-                {
-
-                    label: "Courses",
-
-                    path: "/admin/subjects",
-
-                    icon: LuBookOpen
 
                 },
 

@@ -198,14 +198,6 @@ function AppRoutes() {
           } 
         />
         <Route 
-          path="/admin/subjects" 
-          element={
-            <ProtectedRoute allowedRoles={['admin']}>
-              <UnderDevelopment feature="Courses Management" />
-            </ProtectedRoute>
-          } 
-        />
-        <Route 
           path="/admin/results" 
           element={
             <ProtectedRoute allowedRoles={['admin']}>
