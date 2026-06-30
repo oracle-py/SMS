@@ -8,7 +8,7 @@ export default function DashboardLayout({ children }) {
     const [sidebarOpen, setSidebarOpen] = useState(() => {
         const saved = localStorage.getItem("sidebarOpen");
         if (saved !== null) return saved === "true";
-        return window.innerWidth > 900;
+        return false; // Start closed by default for all accounts
     });
 
     useEffect(() => {
@@ -25,16 +25,10 @@ export default function DashboardLayout({ children }) {
 
                 setSidebarOpen(false);
 
-            } else {
-
-                setSidebarOpen(true);
-
             }
+            // Don't auto-open on desktop - respect user preference
 
         };
-
-        // Set initial state based on screen size
-        handleResize();
 
         window.addEventListener("resize", handleResize);
 

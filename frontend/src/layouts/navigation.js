@@ -162,7 +162,7 @@ export const navigation = {
 
                 {
 
-                    label: "Teachers",
+                    label: "Lecturers",
 
                     path: "/admin/teachers",
 
@@ -192,7 +192,7 @@ export const navigation = {
 
                 {
 
-                    label: "Subjects",
+                    label: "Courses",
 
                     path: "/admin/subjects",
 

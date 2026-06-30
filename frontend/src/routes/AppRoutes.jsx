@@ -19,6 +19,7 @@ import Students from '../pages/admin/Students';
 import Teachers from '../pages/admin/Teachers';
 import Parents from '../pages/admin/Parents';
 import Courses from '../pages/admin/Courses';
+import UnderDevelopment from '../pages/UnderDevelopment';
 import Unauthorized from '../pages/Unauthorized';
 import ProtectedRoute from '../components/ProtectedRoute';
 
@@ -81,6 +82,30 @@ function AppRoutes() {
           element={
             <ProtectedRoute allowedRoles={['parent']}>
               <ParentDashboard />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/parent/wards" 
+          element={
+            <ProtectedRoute allowedRoles={['parent']}>
+              <UnderDevelopment feature="Children Management" />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/parent/results" 
+          element={
+            <ProtectedRoute allowedRoles={['parent']}>
+              <UnderDevelopment feature="Results Management" />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/parent/attendance" 
+          element={
+            <ProtectedRoute allowedRoles={['parent']}>
+              <UnderDevelopment feature="Attendance Management" />
             </ProtectedRoute>
           } 
         />
@@ -169,6 +194,46 @@ function AppRoutes() {
           element={
             <ProtectedRoute allowedRoles={['admin']}>
               <Courses />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/admin/subjects" 
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <UnderDevelopment feature="Courses Management" />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/admin/results" 
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <UnderDevelopment feature="Results Management" />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/admin/attendance" 
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <UnderDevelopment feature="Attendance Management" />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/admin/analytics" 
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <UnderDevelopment feature="Analytics Dashboard" />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/admin/settings" 
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <UnderDevelopment feature="Settings" />
             </ProtectedRoute>
           } 
         />

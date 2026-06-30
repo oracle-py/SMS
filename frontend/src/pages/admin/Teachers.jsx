@@ -18,7 +18,7 @@ function Teachers() {
             const response = await api.get('/lecturers/');
             setTeachers(response.data.results || response.data);
         } catch (error) {
-            console.error('Error fetching teachers:', error);
+            console.error('Error fetching lecturers:', error);
         } finally {
             setLoading(false);
         }
@@ -34,10 +34,10 @@ function Teachers() {
         <DashboardLayout userRole="admin">
             <div className="ad-page">
                 <div className="ad-page-header">
-                    <h1>Teachers Management</h1>
+                    <h1>Lecturers Management</h1>
                     <button className="ad-button-primary">
                         <HiOutlinePlus />
-                        Add Teacher
+                        Add Lecturer
                     </button>
                 </div>
 
@@ -45,14 +45,14 @@ function Teachers() {
                     <HiOutlineMagnifyingGlass />
                     <input
                         type="text"
-                        placeholder="Search teachers..."
+                        placeholder="Search lecturers..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
                 </div>
 
                 {loading ? (
-                    <div className="ad-loading">Loading teachers...</div>
+                    <div className="ad-loading">Loading lecturers...</div>
                 ) : (
                     <div className="ad-table-container">
                         <table className="ad-table">
@@ -92,7 +92,7 @@ function Teachers() {
                                 ) : (
                                     <tr>
                                         <td colSpan="6" className="ad-empty-state">
-                                            No teachers found
+                                            No lecturers found
                                         </td>
                                     </tr>
                                 )}
