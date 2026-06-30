@@ -544,7 +544,7 @@
 
     }
 
-    /* Prevent scroll from closing sidebar */
+    /* Prevent scroll from closing sidebar - only apply to menu */
     .sidebar-menu{
 
         -webkit-overflow-scrolling:touch;
@@ -553,9 +553,16 @@
 
     }
 
-    .sidebar{
+    /* Allow footer and logout button to be clickable */
+    .sidebar-footer{
 
-        touch-action:none;
+        touch-action:auto;
+
+    }
+
+    .logout-button{
+
+        touch-action:auto;
 
     }
 
