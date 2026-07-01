@@ -94,13 +94,30 @@ export default function RegisterStudentDrawer({
 
         }=e.target;
 
-        setFormData(prev=>({
+        setFormData(prev=>{
 
-            ...prev,
+            const newData = {
 
-            [name]:value
+                ...prev,
 
-        }));
+                [name]:value
+
+            };
+
+            // Auto-fill entry level based on student type
+            if (name === 'student_type') {
+                if (value === 'UTME') {
+                    newData.entry_level = '100';
+                } else if (value === 'Direct Entry') {
+                    newData.entry_level = '200';
+                } else if (value === 'Transfer') {
+                    newData.entry_level = '300';
+                }
+            }
+
+            return newData;
+
+        });
 
     }
 
@@ -525,6 +542,10 @@ export default function RegisterStudentDrawer({
 
                 onChange={handleChange}
 
+                disabled
+
+                style={{ backgroundColor: '#f1f5f9', cursor: 'not-allowed' }}
+
             >
 
                 <option value="">
@@ -533,19 +554,19 @@ export default function RegisterStudentDrawer({
 
                 </option>
 
-                <option>
+                <option value="100">
 
                     100
 
                 </option>
 
-                <option>
+                <option value="200">
 
                     200 (Direct Entry)
 
                 </option>
 
-                <option>
+                <option value="300">
 
                     300 (Transfer)
 
@@ -1016,3 +1037,10 @@ export default function RegisterStudentDrawer({
     );
 
 }
+
+
+
+
+
+
+

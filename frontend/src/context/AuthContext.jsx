@@ -72,6 +72,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.removeItem('access_token');
       localStorage.removeItem('refresh_token');
       localStorage.removeItem('user_data');
+      localStorage.removeItem('sidebarOpen'); // Clear sidebar state on logout
     }
   };
 

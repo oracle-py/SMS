@@ -36,6 +36,11 @@ export default function DashboardLayout({ children }) {
 
     }, []);
 
+    // Scroll to top on mount
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
     const toggleSidebar = () => {
         setSidebarOpen(!sidebarOpen);
     };

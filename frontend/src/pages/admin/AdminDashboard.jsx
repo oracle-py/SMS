@@ -257,6 +257,20 @@ function AdminDashboard() {
 
                         </div>
 
+                        <div className="hero-stat">
+
+                            <HiOutlineBellAlert />
+
+                            <div>
+
+                                <h2>{recentRegistrations.length > 0 ? recentRegistrations[0]?.name || 'N/A' : 'N/A'}</h2>
+
+                                <span>Latest Registration</span>
+
+                            </div>
+
+                        </div>
+
                     </div>
 
                 </section>

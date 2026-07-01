@@ -50,6 +50,154 @@
 }
 
 /* ==========================================================
+   STUDENTS HEADER BOX
+========================================================== */
+
+.students-header-box{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:28px 32px;
+
+    background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+    border-radius:20px;
+
+    box-shadow:0 20px 60px rgba(102, 126, 234, 0.3);
+
+    color:white;
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+.students-header-box::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:200px;
+
+    height:200px;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,0.1);
+
+    right:-50px;
+
+    top:-50px;
+
+}
+
+.students-header-box::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:150px;
+
+    height:150px;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,0.08);
+
+    left:-30px;
+
+    bottom:-30px;
+
+}
+
+.students-header-content{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+    position:relative;
+
+    z-index:1;
+
+}
+
+.students-header-icon{
+
+    width:64px;
+
+    height:64px;
+
+    border-radius:16px;
+
+    background:rgba(255,255,255,0.2);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:32px;
+
+    backdrop-filter:blur(10px);
+
+}
+
+.students-header-text h1{
+
+    font-size:28px;
+
+    font-weight:700;
+
+    margin:0 0 8px 0;
+
+    color:white;
+
+}
+
+.students-header-text p{
+
+    font-size:14px;
+
+    margin:0;
+
+    color:rgba(255,255,255,0.85);
+
+}
+
+.students-header-box .ad-button-primary{
+
+    background:rgba(255,255,255,0.2);
+
+    backdrop-filter:blur(10px);
+
+    border:1px solid rgba(255,255,255,0.3);
+
+    color:white;
+
+    position:relative;
+
+    z-index:1;
+
+}
+
+.students-header-box .ad-button-primary:hover{
+
+    background:rgba(255,255,255,0.3);
+
+}
+
+/* ==========================================================
    HERO
 ========================================================== */
 
@@ -1010,7 +1158,7 @@
 
 .ad-table thead{
 
-    background:#F8FAFC;
+    background:linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
 
 }
 
@@ -1024,9 +1172,11 @@
 
     text-transform:uppercase;
 
-    color:#64748B;
+    color:#ffffff;
 
     letter-spacing:.06em;
+
+    font-weight:600;
 
 }
 
@@ -1047,6 +1197,62 @@
 .ad-table tbody tr:hover{
 
     background:#F8FAFC;
+
+}
+
+/* ==========================================================
+   RESPONSIVE TABLE
+========================================================== */
+
+@media(max-width:768px){
+
+    .ad-card{
+
+        overflow-x:auto;
+
+        -webkit-overflow-scrolling:touch;
+
+    }
+
+    .ad-table{
+
+        min-width:600px;
+
+    }
+
+    .ad-table th,
+
+    .ad-table td{
+
+        padding:14px 16px;
+
+        font-size:13px;
+
+    }
+
+    .students-header-box{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        gap:20px;
+
+    }
+
+    .students-header-box .ad-button-primary{
+
+        width:100%;
+
+        justify-content:center;
+
+    }
+
+    .students-header-content{
+
+        width:100%;
+
+    }
 
 }
 
@@ -1155,5 +1361,129 @@
     padding:60px;
 
     color:#64748B;
+
+}
+
+/* ==========================================
+   LECTURER HERO
+========================================== */
+
+.ad-hero-card{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:34px 40px;
+
+    border-radius:24px;
+
+    margin-bottom:24px;
+
+    color:white;
+
+    background:
+    linear-gradient(
+        135deg,
+        #1E3A8A,
+        #4338CA,
+        #6366F1
+    );
+
+    box-shadow:
+        0 18px 40px rgba(67,56,202,.22);
+
+}
+
+.ad-hero-card h1{
+
+    margin:0;
+
+    font-size:34px;
+
+    font-weight:700;
+
+}
+
+.ad-hero-card p{
+
+    margin-top:8px;
+
+    color:rgba(255,255,255,.82);
+
+    font-size:15px;
+
+}
+
+/* ==========================================
+   PREMIUM TABLE HEADER
+========================================== */
+
+.lecturer-table thead{
+
+    background:
+    linear-gradient(
+        90deg,
+        #1E293B,
+        #334155
+    );
+
+}
+
+.lecturer-table th{
+
+    color:white;
+
+    font-weight:600;
+
+    border:none;
+
+    letter-spacing:.04em;
+
+}
+
+/* ==========================================
+   HOVER EFFECT
+========================================== */
+
+.lecturer-table tbody tr{
+
+    transition:.3s;
+
+}
+
+.lecturer-table tbody tr:hover{
+
+    background:#F8FAFC;
+
+    transform:scale(1.003);
+
+}
+
+/* ==========================================
+   BUTTON IMPROVEMENT
+========================================== */
+
+.ad-hero-card .ad-button-primary{
+
+    background:white;
+
+    color:#4338CA;
+
+    font-weight:700;
+
+}
+
+.ad-hero-card .ad-button-primary:hover{
+
+    background:#F8FAFC;
+
+    transform:translateY(-3px);
+
+    box-shadow:
+
+        0 14px 28px rgba(255,255,255,.22);
 
 }

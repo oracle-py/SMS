@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import api from "../api/axios";
 
 import {
     FaUser,
@@ -16,7 +17,8 @@ import {
     FaUserShield,
     FaUserTie,
     FaArrowRight,
-    FaUniversity
+    FaUniversity,
+    FaShieldAlt
 } from "react-icons/fa";
 
 import "./Login.css";
@@ -31,9 +33,37 @@ function Login() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
+    const [stats, setStats] = useState({
+        students: "Loading...",
+        lecturers: "Loading...",
+        trustScore: "Loading..."
+    });
+
     const { login } = useAuth();
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        fetchLoginStats();
+    }, []);
+
+    const fetchLoginStats = async () => {
+        try {
+            const response = await api.get('/stats/public/');
+            setStats({
+                students: response.data.students || "0",
+                lecturers: response.data.lecturers || "0",
+                trustScore: response.data.trust_score || "95%"
+            });
+        } catch (error) {
+            console.error('Error fetching login stats:', error);
+            setStats({
+                students: "2,400+",
+                lecturers: "160+",
+                trustScore: "95%"
+            });
+        }
+    };
 
     const demoAccounts = [
 
@@ -294,7 +324,7 @@ function Login() {
 
                             <FaUsers />
 
-                            <h2>2,400+</h2>
+                            <h2>{stats.students}</h2>
 
                             <p>Students</p>
 
@@ -304,7 +334,7 @@ function Login() {
 
                             <FaChalkboardTeacher />
 
-                            <h2>160+</h2>
+                            <h2>{stats.lecturers}</h2>
 
                             <p>Lecturers</p>
 
@@ -312,11 +342,11 @@ function Login() {
 
                         <div className="stat-card">
 
-                            <FaChartLine />
+                            <FaShieldAlt />
 
-                            <h2>96%</h2>
+                            <h2>{stats.trustScore}</h2>
 
-                            <p>Attendance</p>
+                            <p>Trust Score</p>
 
                         </div>
 

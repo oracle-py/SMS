@@ -249,15 +249,6 @@ class DepartmentAdmin(admin.ModelAdmin):
     
     inlines = [ProgrammeInline]
     
-    def save_model(self, request, obj, form, change):
-        """Override save_model to handle saving with validation."""
-        try:
-            obj.full_clean()
-            super().save_model(request, obj, form, change)
-        except Exception as e:
-            form.add_error(None, f"Error saving department: {str(e)}")
-            raise
-    
     def get_programme_count(self, obj):
         return obj.programmes.count()
     get_programme_count.short_description = 'Programmes'

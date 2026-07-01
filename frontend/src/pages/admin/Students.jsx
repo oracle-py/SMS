@@ -9,6 +9,7 @@ import {
 
 import DashboardLayout from "../../layouts/DashboardLayout";
 import api from "../../api/axios";
+import RegisterStudentDrawer from "./components/RegisterStudentDrawer";
 
 import "./admin.css";
 
@@ -17,6 +18,8 @@ function Students() {
     const [students,setStudents]=useState([]);
 
     const [loading,setLoading]=useState(true);
+
+    const [drawerOpen, setDrawerOpen] = useState(false);
 
     useEffect(()=>{
 
@@ -56,31 +59,49 @@ function Students() {
 
     }
 
+    const handleDrawerClose = () => {
+        setDrawerOpen(false);
+        fetchStudents(); // Refresh students list after adding
+    };
+
     return(
 
         <DashboardLayout>
 
             <div className="ad-page">
 
-                <div className="ad-page-header">
+                <div className="students-header-box">
 
-                    <div>
+                    <div className="students-header-content">
 
-                        <h1>
+                        <div className="students-header-icon">
 
-                            Students
+                            <HiOutlineUserCircle />
 
-                        </h1>
+                        </div>
 
-                        <p>
+                        <div className="students-header-text">
 
-                            Manage registered students across the institution.
+                            <h1>
 
-                        </p>
+                                Students
+
+                            </h1>
+
+                            <p>
+
+                                Manage registered students across the institution.
+
+                            </p>
+
+                        </div>
 
                     </div>
 
-                    <button className="ad-button-primary">
+                    <button 
+                        className="ad-button-primary"
+                        onClick={() => setDrawerOpen(true)}
+                    >
 
                         <HiOutlinePlus/>
 
@@ -130,7 +151,7 @@ function Students() {
 
                                     <th>Student</th>
 
-                                    <th>Student ID</th>
+                                    <th>Matric No</th>
 
                                     <th>Email</th>
 
@@ -222,7 +243,7 @@ function Students() {
 
                                                 <td>
 
-                                                    {student.student_id}
+                                                    {student.matric_number || student.student_id}
 
                                                 </td>
 
@@ -250,7 +271,7 @@ function Students() {
 
                                                         student.grade_level
 
-                                                    }00 Level
+                                                    } Level
 
                                                 </td>
 
@@ -319,6 +340,11 @@ function Students() {
                 }
 
             </div>
+
+            <RegisterStudentDrawer 
+                open={drawerOpen} 
+                onClose={handleDrawerClose} 
+            />
 
         </DashboardLayout>
 
