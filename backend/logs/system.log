@@ -4027,3 +4027,5 @@ INFO 2026-06-29 21:58:16,250 basehttp 21632 24236 "GET /admin/academics/departme
 INFO 2026-06-29 21:58:16,467 basehttp 21632 24236 "GET /admin/jsi18n/ HTTP/1.1" 200 3342
 INFO 2026-06-29 22:03:05,763 autoreload 21632 17036 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\school_monitoring_system\settings.py changed, reloading.
 INFO 2026-06-29 22:03:13,148 autoreload 8532 3052 Watching for file changes with StatReloader
+INFO 2026-07-01 14:34:00,711 autoreload 19656 2596 Watching for file changes with StatReloader
+INFO 2026-07-01 14:37:43,747 autoreload 18956 17948 Watching for file changes with StatReloader

@@ -1,108 +1,329 @@
-import { useState, useEffect } from 'react';
-import { HiOutlineMagnifyingGlass, HiOutlinePencil, HiOutlineTrash, HiOutlinePlus } from 'react-icons/hi2';
-import DashboardLayout from '../../layouts/DashboardLayout';
-import api from '../../api/axios';
+import { useState, useEffect } from "react";
+
+import {
+    HiOutlinePencil,
+    HiOutlineTrash,
+    HiOutlinePlus,
+    HiOutlineUserCircle
+} from "react-icons/hi2";
+
+import DashboardLayout from "../../layouts/DashboardLayout";
+import api from "../../api/axios";
+
+import "./admin.css";
 
 function Students() {
-    const [students, setStudents] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [searchTerm, setSearchTerm] = useState('');
 
-    useEffect(() => {
+    const [students,setStudents]=useState([]);
+
+    const [loading,setLoading]=useState(true);
+
+    useEffect(()=>{
+
         fetchStudents();
-    }, []);
 
-    const fetchStudents = async () => {
+    },[]);
+
+    async function fetchStudents(){
+
         setLoading(true);
-        try {
-            const response = await api.get('/students/');
-            setStudents(response.data.results || response.data);
-        } catch (error) {
-            console.error('Error fetching students:', error);
-        } finally {
-            setLoading(false);
+
+        try{
+
+            const response=await api.get("/students/");
+
+            setStudents(
+
+                response.data.results ||
+
+                response.data
+
+            );
+
         }
-    };
 
-    const filteredStudents = students.filter(student =>
-        student.user?.first_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        student.user?.last_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        student.student_id?.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+        catch(error){
 
-    return (
-        <DashboardLayout userRole="admin">
+            console.error(error);
+
+        }
+
+        finally{
+
+            setLoading(false);
+
+        }
+
+    }
+
+    return(
+
+        <DashboardLayout>
+
             <div className="ad-page">
+
                 <div className="ad-page-header">
-                    <h1>Students Management</h1>
-                    <button className="ad-button-primary">
-                        <HiOutlinePlus />
-                        Add Student
-                    </button>
-                </div>
 
-                <div className="ad-search-bar">
-                    <HiOutlineMagnifyingGlass />
-                    <input
-                        type="text"
-                        placeholder="Search students..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                    />
-                </div>
+                    <div>
 
-                {loading ? (
-                    <div className="ad-loading">Loading students...</div>
-                ) : (
-                    <div className="ad-table-container">
-                        <table className="ad-table">
-                            <thead>
-                                <tr>
-                                    <th>Student ID</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Programme</th>
-                                    <th>Grade Level</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {filteredStudents.length > 0 ? (
-                                    filteredStudents.map((student) => (
-                                        <tr key={student.id}>
-                                            <td>{student.student_id || 'N/A'}</td>
-                                            <td>
-                                                {student.user?.first_name} {student.user?.last_name}
-                                            </td>
-                                            <td>{student.user?.email}</td>
-                                            <td>{student.programme_name || 'N/A'}</td>
-                                            <td>{student.grade_level}00 Level</td>
-                                            <td>
-                                                <div className="ad-action-buttons">
-                                                    <button className="ad-button-icon" title="Edit">
-                                                        <HiOutlinePencil />
-                                                    </button>
-                                                    <button className="ad-button-icon" title="Delete">
-                                                        <HiOutlineTrash />
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    ))
-                                ) : (
-                                    <tr>
-                                        <td colSpan="6" className="ad-empty-state">
-                                            No students found
-                                        </td>
-                                    </tr>
-                                )}
-                            </tbody>
-                        </table>
+                        <h1>
+
+                            Students
+
+                        </h1>
+
+                        <p>
+
+                            Manage registered students across the institution.
+
+                        </p>
+
                     </div>
-                )}
+
+                    <button className="ad-button-primary">
+
+                        <HiOutlinePlus/>
+
+                        Add Student
+
+                    </button>
+
+                </div>
+
+                <div className="ad-stat-strip">
+
+                    <div>
+
+                        <span>Total Students</span>
+
+                        <h2>
+
+                            {students.length}
+
+                        </h2>
+
+                    </div>
+
+                </div>
+
+                {
+
+                    loading
+
+                    ?
+
+                    <div className="ad-loading">
+
+                        Loading students...
+
+                    </div>
+
+                    :
+
+                    <div className="ad-card">
+
+                        <table className="ad-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>Student</th>
+
+                                    <th>Student ID</th>
+
+                                    <th>Email</th>
+
+                                    <th>Programme</th>
+
+                                    <th>Level</th>
+
+                                    <th>Status</th>
+
+                                    <th></th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                {
+
+                                    students.length>0
+
+                                    ?
+
+                                    students.map(student=>{
+
+                                        const fullName=
+
+                                        `${student.user?.first_name || ""} ${student.user?.last_name || ""}`;
+
+                                        const initials=
+
+                                        fullName
+
+                                        .trim()
+
+                                        .split(" ")
+
+                                        .map(n=>n[0])
+
+                                        .join("")
+
+                                        .substring(0,2)
+
+                                        .toUpperCase();
+
+                                        return(
+
+                                            <tr
+
+                                                key={student.id}
+
+                                            >
+
+                                                <td>
+
+                                                    <div className="ad-student">
+
+                                                        <div className="ad-avatar">
+
+                                                            {
+
+                                                                initials ||
+
+                                                                <HiOutlineUserCircle/>
+
+                                                            }
+
+                                                        </div>
+
+                                                        <div>
+
+                                                            <h4>
+
+                                                                {fullName}
+
+                                                            </h4>
+
+                                                            <span>
+
+                                                                Student
+
+                                                            </span>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                </td>
+
+                                                <td>
+
+                                                    {student.student_id}
+
+                                                </td>
+
+                                                <td>
+
+                                                    {student.user?.email}
+
+                                                </td>
+
+                                                <td>
+
+                                                    {
+
+                                                        student.programme_name ||
+
+                                                        "—"
+
+                                                    }
+
+                                                </td>
+
+                                                <td>
+
+                                                    {
+
+                                                        student.grade_level
+
+                                                    }00 Level
+
+                                                </td>
+
+                                                <td>
+
+                                                    <span className="ad-status">
+
+                                                        Active
+
+                                                    </span>
+
+                                                </td>
+
+                                                <td>
+
+                                                    <div className="ad-action-buttons">
+
+                                                        <button>
+
+                                                            <HiOutlinePencil/>
+
+                                                        </button>
+
+                                                        <button>
+
+                                                            <HiOutlineTrash/>
+
+                                                        </button>
+
+                                                    </div>
+
+                                                </td>
+
+                                            </tr>
+
+                                        );
+
+                                    })
+
+                                    :
+
+                                    <tr>
+
+                                        <td
+
+                                            colSpan="7"
+
+                                            className="ad-empty-state"
+
+                                        >
+
+                                            No students have been added.
+
+                                        </td>
+
+                                    </tr>
+
+                                }
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                }
+
             </div>
+
         </DashboardLayout>
+
     );
+
 }
 
 export default Students;
