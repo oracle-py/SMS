@@ -85,7 +85,7 @@ Authenticate user and obtain JWT tokens.
     "id": 1,
     "username": "admin",
     "email": "admin@school.edu",
-    "first_name": "System",
+    "first_name": "Admin",
     "last_name": "Administrator",
     "role": "admin"
   },
@@ -95,7 +95,7 @@ Authenticate user and obtain JWT tokens.
       "id": 1,
       "username": "admin",
       "email": "admin@school.edu",
-      "first_name": "System",
+      "first_name": "Admin",
       "last_name": "Administrator",
       "role": "admin"
     },
@@ -251,7 +251,7 @@ Get current authenticated user information with profile data.
     "id": 1,
     "username": "admin",
     "email": "admin@school.edu",
-    "first_name": "System",
+    "first_name": "Admin",
     "last_name": "Administrator",
     "role": "admin",
     "profile": null

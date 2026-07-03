@@ -107,7 +107,7 @@ class Command(BaseCommand):
             username='admin',
             defaults={
                 'email': 'admin@school.edu',
-                'first_name': 'System',
+                'first_name': 'Admin',
                 'last_name': 'Administrator',
                 'role': 'admin'
             }
