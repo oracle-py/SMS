@@ -43,7 +43,7 @@ export default function RegisterStudentDrawer({
 
         entry_level:"",
 
-        student_type:"UTME",
+        student_type:"",
 
         auto_generate_matric:true,
 
@@ -595,19 +595,25 @@ export default function RegisterStudentDrawer({
 
             >
 
-                <option>
+                <option value="">
+
+                    Select Student Type
+
+                </option>
+
+                <option value="UTME">
 
                     UTME
 
                 </option>
 
-                <option>
+                <option value="Direct Entry">
 
                     Direct Entry
 
                 </option>
 
-                <option>
+                <option value="Transfer">
 
                     Transfer
 
