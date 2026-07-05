@@ -58,8 +58,14 @@ class User(AbstractUser):
 
 class StudentProfile(models.Model):
     """Extended profile for student users."""
+    GENDER_CHOICES = [
+        ('Male', 'Male'),
+        ('Female', 'Female'),
+    ]
+    
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student_profile')
     student_id = models.CharField(max_length=20, unique=True, null=True, blank=True)
+    gender = models.CharField(max_length=10, choices=GENDER_CHOICES, verbose_name='Gender')
     date_of_birth = models.DateField()
     grade_level = models.IntegerField()
     programme = models.ForeignKey(

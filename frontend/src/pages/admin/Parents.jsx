@@ -1,108 +1,254 @@
-import { useState, useEffect } from 'react';
-import { HiOutlineMagnifyingGlass, HiOutlinePencil, HiOutlineTrash, HiOutlinePlus } from 'react-icons/hi2';
-import DashboardLayout from '../../layouts/DashboardLayout';
-import api from '../../api/axios';
+import { useState, useEffect } from "react";
+import {
+    HiOutlinePencil,
+    HiOutlineTrash,
+    HiOutlineUserGroup
+} from "react-icons/hi2";
+
+import DashboardLayout from "../../layouts/DashboardLayout";
+import api from "../../api/axios";
+
+import "./admin.css";
 
 function Parents() {
+
     const [parents, setParents] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         fetchParents();
     }, []);
 
-    const fetchParents = async () => {
-        setLoading(true);
-        try {
-            const response = await api.get('/parents/');
-            setParents(response.data.results || response.data);
-        } catch (error) {
-            console.error('Error fetching parents:', error);
-        } finally {
-            setLoading(false);
-        }
-    };
+    async function fetchParents() {
 
-    const filteredParents = parents.filter(parent =>
-        parent.user?.first_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        parent.user?.last_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        parent.user?.email?.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+        setLoading(true);
+
+        try {
+
+            const response = await api.get("/parents/");
+            setParents(response.data.results || response.data);
+
+        } catch (error) {
+
+            console.error(error);
+
+        } finally {
+
+            setLoading(false);
+
+        }
+    }
+
 
     return (
-        <DashboardLayout userRole="admin">
+
+        <DashboardLayout>
+
             <div className="ad-page">
-                <div className="ad-page-header">
-                    <h1>Parents Management</h1>
-                    <button className="ad-button-primary">
-                        <HiOutlinePlus />
-                        Add Parent
-                    </button>
-                </div>
 
-                <div className="ad-search-bar">
-                    <HiOutlineMagnifyingGlass />
-                    <input
-                        type="text"
-                        placeholder="Search parents..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                    />
-                </div>
+                <div className="students-header-box">
 
-                {loading ? (
-                    <div className="ad-loading">Loading parents...</div>
-                ) : (
-                    <div className="ad-table-container">
-                        <table className="ad-table">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Phone</th>
-                                    <th>Occupation</th>
-                                    <th>Children</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {filteredParents.length > 0 ? (
-                                    filteredParents.map((parent) => (
-                                        <tr key={parent.id}>
-                                            <td>
-                                                {parent.user?.first_name} {parent.user?.last_name}
-                                            </td>
-                                            <td>{parent.user?.email}</td>
-                                            <td>{parent.user?.phone || 'N/A'}</td>
-                                            <td>{parent.occupation || 'N/A'}</td>
-                                            <td>{parent.children_count || 0}</td>
-                                            <td>
-                                                <div className="ad-action-buttons">
-                                                    <button className="ad-button-icon" title="Edit">
-                                                        <HiOutlinePencil />
-                                                    </button>
-                                                    <button className="ad-button-icon" title="Delete">
-                                                        <HiOutlineTrash />
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    ))
-                                ) : (
-                                    <tr>
-                                        <td colSpan="6" className="ad-empty-state">
-                                            No parents found
-                                        </td>
-                                    </tr>
-                                )}
-                            </tbody>
-                        </table>
+                    <div className="students-header-content">
+
+                        <div className="students-header-icon">
+
+                            <HiOutlineUserGroup />
+
+                        </div>
+
+                        <div className="students-header-text">
+
+                            <h1>
+                                Parents
+                            </h1>
+
+                            <p>
+                                Manage parents and guardians linked to registered students.
+                            </p>
+
+                        </div>
+
                     </div>
-                )}
+
+                </div>
+
+                <div className="ad-stat-strip">
+
+                    <div>
+
+                        <span>Total Parents</span>
+
+                        <h2>{parents.length}</h2>
+
+                    </div>
+
+                </div>
+
+                {
+
+                    loading ?
+
+                        <div className="ad-loading">
+
+                            Loading parents...
+
+                        </div>
+
+                        :
+
+                        <div className="ad-card">
+
+                            <table className="ad-table">
+
+                                <thead>
+
+                                    <tr>
+
+                                        <th>Parent</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Occupation</th>
+                                        <th>Children</th>
+                                        <th></th>
+
+                                    </tr>
+
+                                </thead>
+
+                                <tbody>
+
+                                    {
+
+                                        parents.length > 0 ?
+
+                                            parents.map((parent) => {
+
+                                                const fullName =
+                                                    `${parent.user?.first_name || ""} ${parent.user?.last_name || ""}`;
+
+                                                const initials = fullName
+                                                    .trim()
+                                                    .split(" ")
+                                                    .map((n) => n[0])
+                                                    .join("")
+                                                    .substring(0, 2)
+                                                    .toUpperCase();
+
+                                                return (
+
+                                                    <tr key={parent.id}>
+
+                                                        <td>
+
+                                                            <div className="ad-student">
+
+                                                                <div className="ad-avatar">
+
+                                                                    {initials}
+
+                                                                </div>
+
+                                                                <div>
+
+                                                                    <h4>
+
+                                                                        {fullName}
+
+                                                                    </h4>
+
+                                                                    <span>
+
+                                                                        Parent / Guardian
+
+                                                                    </span>
+
+                                                                </div>
+
+                                                            </div>
+
+                                                        </td>
+
+                                                        <td>
+
+                                                            {parent.user?.email}
+
+                                                        </td>
+
+                                                        <td>
+
+                                                            {parent.user?.phone || "—"}
+
+                                                        </td>
+
+                                                        <td>
+
+                                                            {parent.occupation || "—"}
+
+                                                        </td>
+
+                                                        <td>
+
+                                                            {parent.children_count || 0}
+
+                                                        </td>
+
+                                                        <td>
+
+                                                            <div className="ad-action-buttons">
+
+                                                                <button>
+
+                                                                    <HiOutlinePencil />
+
+                                                                </button>
+
+                                                                <button>
+
+                                                                    <HiOutlineTrash />
+
+                                                                </button>
+
+                                                            </div>
+
+                                                        </td>
+
+                                                    </tr>
+
+                                                );
+
+                                            })
+
+                                            :
+
+                                            <tr>
+
+                                                <td
+                                                    colSpan="6"
+                                                    className="ad-empty-state"
+                                                >
+
+                                                    No parents found.
+
+                                                </td>
+
+                                            </tr>
+
+                                    }
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                }
+
             </div>
+
         </DashboardLayout>
+
     );
+
 }
 
 export default Parents;

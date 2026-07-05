@@ -143,6 +143,7 @@ class StudentProfileSerializer(serializers.ModelSerializer):
             'user_id',
             'user_data',
             'student_id',
+            'gender',
             'date_of_birth',
             'grade_level',
             'programme',
