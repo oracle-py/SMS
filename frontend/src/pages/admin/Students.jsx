@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 
 import {
-    HiOutlinePencil,
     HiOutlineTrash,
     HiOutlinePlus,
     HiOutlineUserCircle
@@ -10,10 +9,13 @@ import {
 import DashboardLayout from "../../layouts/DashboardLayout";
 import api from "../../api/axios";
 import RegisterStudentDrawer from "./components/RegisterStudentDrawer";
+import { useDashboardRefresh } from "../../context/DashboardContext";
 
 import "./admin.css";
 
 function Students() {
+
+    const { refreshDashboard } = useDashboardRefresh();
 
     const [students,setStudents]=useState([]);
 
@@ -62,6 +64,21 @@ function Students() {
     const handleDrawerClose = () => {
         setDrawerOpen(false);
         fetchStudents(); // Refresh students list after adding
+        refreshDashboard(); // Refresh dashboard statistics
+    };
+
+    const handleDelete = async (studentId) => {
+        if (!window.confirm('Are you sure you want to delete this student?')) {
+            return;
+        }
+        try {
+            await api.delete(`/students/${studentId}/`);
+            fetchStudents();
+            refreshDashboard();
+        } catch (error) {
+            console.error('Error deleting student:', error);
+            alert('Failed to delete student');
+        }
     };
 
     return(
@@ -289,13 +306,7 @@ function Students() {
 
                                                     <div className="ad-action-buttons">
 
-                                                        <button>
-
-                                                            <HiOutlinePencil/>
-
-                                                        </button>
-
-                                                        <button>
+                                                        <button onClick={() => handleDelete(student.id)}>
 
                                                             <HiOutlineTrash/>
 

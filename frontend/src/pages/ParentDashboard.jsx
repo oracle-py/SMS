@@ -1,10 +1,12 @@
 import React from "react";
 import { useAuth } from "../context/AuthContext";
+import { useDashboardRefresh } from "../context/DashboardContext";
 import DashboardLayout from "../layouts/DashboardLayout";
 import "./Parent.css";
 
 function ParentDashboard() {
     const { user } = useAuth();
+    const { refreshKey } = useDashboardRefresh();
 
     // Temporary data until API integration
     const student = {

@@ -45,6 +45,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem('access_token', access);
       localStorage.setItem('refresh_token', refresh);
       localStorage.setItem('user_data', JSON.stringify(userData));
+      localStorage.setItem('user_role', userData.role);
       
       return { success: true };
     } catch (error) {
@@ -73,6 +74,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.removeItem('refresh_token');
       localStorage.removeItem('user_data');
       localStorage.removeItem('sidebarOpen'); // Clear sidebar state on logout
+      localStorage.removeItem('user_role'); // Clear role state on logout
     }
   };
 

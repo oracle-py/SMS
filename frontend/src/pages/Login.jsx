@@ -45,6 +45,9 @@ function Login() {
 
     useEffect(() => {
         fetchLoginStats();
+        // Clear form data on mount
+        setEmail("");
+        setPassword("");
     }, []);
 
     const fetchLoginStats = async () => {

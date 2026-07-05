@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { useDashboardRefresh } from '../../context/DashboardContext';
 import DashboardLayout from '../../layouts/DashboardLayout';
 import studentService from '../../services/studentService';
 import './student.css';
@@ -95,6 +96,7 @@ function DashboardSkeleton() {
 /* -- Main Component ----------------------------------- */
 function StudentDashboard() {
   const { user } = useAuth();
+  const { refreshKey, refreshDashboard } = useDashboardRefresh();
   const navigate = useNavigate();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -111,7 +113,7 @@ function StudentDashboard() {
         setLoading(false);
       }
     })();
-  }, []);
+  }, [refreshKey]); // Refetch when refreshKey changes
 
   if (loading) {
     return (

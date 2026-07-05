@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import {
-    HiOutlinePencil,
     HiOutlineTrash,
     HiOutlinePlus,
     HiOutlineBookOpen
@@ -8,13 +7,18 @@ import {
 
 import DashboardLayout from "../../layouts/DashboardLayout";
 import api from "../../api/axios";
+import { useDashboardRefresh } from "../../context/DashboardContext";
+import CreateCourseDrawer from "./components/CreateCourseDrawer";
 
 import "./admin.css";
 
 function Courses() {
 
+    const { refreshDashboard } = useDashboardRefresh();
+
     const [courses, setCourses] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [drawerOpen, setDrawerOpen] = useState(false);
 
     useEffect(() => {
         fetchCourses();
@@ -32,6 +36,26 @@ function Courses() {
             setLoading(false);
         }
     }
+
+    const handleDrawerClose = () => {
+        setDrawerOpen(false);
+        fetchCourses();
+        refreshDashboard();
+    };
+
+    const handleDelete = async (courseId) => {
+        if (!window.confirm('Are you sure you want to delete this course?')) {
+            return;
+        }
+        try {
+            await api.delete(`/courses/${courseId}/`);
+            fetchCourses();
+            refreshDashboard();
+        } catch (error) {
+            console.error('Error deleting course:', error);
+            alert('Failed to delete course');
+        }
+    };
 
 
     return (
@@ -63,7 +87,7 @@ function Courses() {
 
                     </div>
 
-                    <button className="ad-button-primary">
+                    <button className="ad-button-primary" onClick={() => setDrawerOpen(true)}>
 
                         <HiOutlinePlus />
 
@@ -200,13 +224,7 @@ function Courses() {
 
                                                             <div className="ad-action-buttons">
 
-                                                                <button>
-
-                                                                    <HiOutlinePencil />
-
-                                                                </button>
-
-                                                                <button>
+                                                                <button onClick={() => handleDelete(course.id)}>
 
                                                                     <HiOutlineTrash />
 
@@ -246,6 +264,11 @@ function Courses() {
                         </div>
 
                 }
+
+                <CreateCourseDrawer 
+                    open={drawerOpen}
+                    onClose={handleDrawerClose}
+                />
 
             </div>
 

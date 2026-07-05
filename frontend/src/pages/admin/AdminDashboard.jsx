@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
+import { useDashboardRefresh } from "../../context/DashboardContext";
 import DashboardLayout from "../../layouts/DashboardLayout";
 import "./admin.css";
 import api from "../../api/axios";
@@ -27,17 +28,21 @@ import {
 function AdminDashboard() {
 
     const { user } = useAuth();
+    const { refreshKey, refreshDashboard } = useDashboardRefresh();
 
     const [drawer, setDrawer] = useState(null);
     const [dashboardData, setDashboardData] = useState(null);
     const [loading, setLoading] = useState(false);
 
     const openDrawer = (name) => setDrawer(name);
-    const closeDrawer = () => setDrawer(null);
+    const closeDrawer = () => {
+        setDrawer(null);
+        refreshDashboard(); // Refresh dashboard when drawer closes
+    };
 
     useEffect(() => {
         fetchDashboardData();
-    }, []);
+    }, [refreshKey]); // Refetch when refreshKey changes
 
     useEffect(() => {
         // Refetch data when component gains focus (user returns to tab)

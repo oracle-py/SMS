@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { HiOutlineBookOpen, HiOutlineUsers, HiOutlineDocumentText, HiOutlineSpeakerWave } from 'react-icons/hi2';
 import { useAuth } from '../../context/AuthContext';
+import { useDashboardRefresh } from '../../context/DashboardContext';
 import DashboardLayout from '../../layouts/DashboardLayout';
 import './Lecturer.css';
 
 function LecturerDashboard() {
     const { user } = useAuth();
+    const { refreshKey } = useDashboardRefresh();
     const [loading, setLoading] = useState(true);
 
     const stats = {

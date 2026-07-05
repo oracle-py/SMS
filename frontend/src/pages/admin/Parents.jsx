@@ -1,16 +1,18 @@
 import { useState, useEffect } from "react";
 import {
-    HiOutlinePencil,
     HiOutlineTrash,
     HiOutlineUserGroup
 } from "react-icons/hi2";
 
 import DashboardLayout from "../../layouts/DashboardLayout";
 import api from "../../api/axios";
+import { useDashboardRefresh } from "../../context/DashboardContext";
 
 import "./admin.css";
 
 function Parents() {
+
+    const { refreshDashboard } = useDashboardRefresh();
 
     const [parents, setParents] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -39,6 +41,19 @@ function Parents() {
         }
     }
 
+    const handleDelete = async (parentId) => {
+        if (!window.confirm('Are you sure you want to delete this parent?')) {
+            return;
+        }
+        try {
+            await api.delete(`/parents/${parentId}/`);
+            fetchParents();
+            refreshDashboard();
+        } catch (error) {
+            console.error('Error deleting parent:', error);
+            alert('Failed to delete parent');
+        }
+    };
 
     return (
 
@@ -196,13 +211,7 @@ function Parents() {
 
                                                             <div className="ad-action-buttons">
 
-                                                                <button>
-
-                                                                    <HiOutlinePencil />
-
-                                                                </button>
-
-                                                                <button>
+                                                                <button onClick={() => handleDelete(parent.id)}>
 
                                                                     <HiOutlineTrash />
 

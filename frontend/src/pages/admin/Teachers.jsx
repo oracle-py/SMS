@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 
 import {
-    HiOutlinePencil,
     HiOutlineTrash,
     HiOutlinePlus,
     HiOutlineUserCircle
@@ -9,14 +8,20 @@ import {
 
 import DashboardLayout from "../../layouts/DashboardLayout";
 import api from "../../api/axios";
+import { useDashboardRefresh } from "../../context/DashboardContext";
+import RegisterLecturerDrawer from "./components/RegisterLecturerDrawer";
 
 import "./admin.css";
 
 function Teachers() {
 
+    const { refreshDashboard } = useDashboardRefresh();
+
     const [teachers,setTeachers]=useState([]);
 
     const [loading,setLoading]=useState(true);
+
+    const [drawerOpen, setDrawerOpen] = useState(false);
 
     useEffect(()=>{
 
@@ -56,6 +61,26 @@ function Teachers() {
 
     }
 
+    const handleDrawerClose = () => {
+        setDrawerOpen(false);
+        fetchTeachers();
+        refreshDashboard();
+    };
+
+    const handleDelete = async (teacherId) => {
+        if (!window.confirm('Are you sure you want to delete this lecturer?')) {
+            return;
+        }
+        try {
+            await api.delete(`/lecturers/${teacherId}/`);
+            fetchTeachers();
+            refreshDashboard();
+        } catch (error) {
+            console.error('Error deleting lecturer:', error);
+            alert('Failed to delete lecturer');
+        }
+    };
+
     return(
 
         <DashboardLayout>
@@ -80,7 +105,7 @@ function Teachers() {
 
                     </div>
 
-                    <button className="ad-button-primary">
+                    <button className="ad-button-primary" onClick={() => setDrawerOpen(true)}>
 
                         <HiOutlinePlus/>
 
@@ -266,13 +291,7 @@ function Teachers() {
 
                                                     <div className="ad-action-buttons">
 
-                                                        <button>
-
-                                                            <HiOutlinePencil/>
-
-                                                        </button>
-
-                                                        <button>
+                                                        <button onClick={() => handleDelete(teacher.id)}>
 
                                                             <HiOutlineTrash/>
 
@@ -315,6 +334,11 @@ function Teachers() {
                     </div>
 
                 }
+
+                <RegisterLecturerDrawer 
+                    open={drawerOpen}
+                    onClose={handleDrawerClose}
+                />
 
             </div>
 
