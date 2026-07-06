@@ -218,7 +218,15 @@ class StudentProfileSerializer(serializers.ModelSerializer):
             if validated_data.get('programme'):
                 from academics.models import Programme
                 try:
-                    programme = Programme.objects.get(id=validated_data['programme'])
+                    # Handle both programme object and programme ID
+                    programme = validated_data['programme']
+                    if isinstance(programme, Programme):
+                        # Already a Programme object
+                        pass
+                    else:
+                        # It's an ID, need to fetch the object
+                        programme = Programme.objects.get(id=programme)
+                    
                     if programme.department and programme.department.faculty:
                         faculty_code = programme.department.faculty.code
                     logger.info(f"Faculty code: {faculty_code} from programme {programme.name}")

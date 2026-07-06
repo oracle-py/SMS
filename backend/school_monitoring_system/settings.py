@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     'django_filters',
     'drf_spectacular',
+    'django_q',
     'users',
     'academics',
     'api',
@@ -287,16 +288,14 @@ CACHES = {
 DASHBOARD_CACHE_TIMEOUT = 300
 
 # CORS Configuration
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',
-    'http://localhost:3001',
-    'http://127.0.0.1:3000',
-    'http://127.0.0.1:3001',
-    'https://sms-bv3a.onrender.com',
-    'https://onsms.vercel.app',
-]
+# In production, these should be set as environment variables
+CORS_ALLOWED_ORIGINS = config(
+    'CORS_ALLOWED_ORIGINS',
+    default='http://localhost:3000,http://localhost:3001,http://127.0.0.1:3000,http://127.0.0.1:3001,https://sms-bv3a.onrender.com,https://onsms.vercel.app',
+    cast=lambda x: [s.strip() for s in x.split(',')]
+)
 
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = config('CORS_ALLOW_ALL_ORIGINS', default=True, cast=bool)
 
 CORS_ALLOW_HEADERS = [
     'accept',
@@ -319,7 +318,7 @@ CORS_ALLOW_METHODS = [
     'PUT',
 ]
 
-CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_CREDENTIALS = config('CORS_ALLOW_CREDENTIALS', default=True, cast=bool)
 
 # Email Configuration
 # In production, these should be set as environment variables
