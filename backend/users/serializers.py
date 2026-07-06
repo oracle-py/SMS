@@ -130,8 +130,12 @@ class StudentProfileSerializer(serializers.ModelSerializer):
     user = UserPublicSerializer(read_only=True)
     user_id = serializers.IntegerField(write_only=True, required=False)
     user_data = UserNestedSerializer(write_only=True, required=False)
-    programme = serializers.PrimaryKeyRelatedField(read_only=True)
-    programme_id = serializers.IntegerField(write_only=True, required=False)
+    programme = serializers.PrimaryKeyRelatedField(
+        queryset=None,
+        required=False,
+        allow_null=True
+    )
+    programme_id = serializers.IntegerField(write_only=True, required=False, allow_null=True)
     age = serializers.SerializerMethodField()
     programme_name = serializers.CharField(source='programme.name', read_only=True)
     department_name = serializers.CharField(source='department.name', read_only=True)
@@ -253,7 +257,12 @@ class StudentProfileSerializer(serializers.ModelSerializer):
         if user:
             validated_data['user'] = user
         if programme_id:
-            validated_data['programme_id'] = programme_id
+            from academics.models import Programme
+            try:
+                programme = Programme.objects.get(id=programme_id)
+                validated_data['programme'] = programme
+            except Programme.DoesNotExist:
+                raise serializers.ValidationError("Invalid programme ID")
         try:
             return super().create(validated_data)
         except Exception as e:

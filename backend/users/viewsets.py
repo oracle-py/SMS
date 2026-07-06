@@ -97,11 +97,7 @@ class StudentProfileViewSet(viewsets.ModelViewSet):
         logger.info(f"Student created: {student.user.email}, ID: {student.id}")
         
         # Send registration email to personal email (real address)
-        # TEMPORARILY DISABLED to fix 500 timeout errors on production
-        # Gmail SMTP connection is timing out on Render, causing worker timeout
-        # TODO: Implement background task queue (Celery/Django-Q) for email sending
-        logger.info("Email sending temporarily disabled due to SMTP timeout issues")
-        """
+        # Wrapped in try/except to prevent 500 errors if email fails
         try:
             logger.info(f"Attempting to send registration email to personal email: {student.user.email}")
             logger.info(f"Email backend: {settings.EMAIL_BACKEND}")
@@ -129,7 +125,6 @@ class StudentProfileViewSet(viewsets.ModelViewSet):
             logger.error(f"Email settings - HOST: {settings.EMAIL_HOST}, PORT: {settings.EMAIL_PORT}, USE_TLS: {settings.EMAIL_USE_TLS}")
             logger.error(f"Email user: {settings.EMAIL_HOST_USER}")
             logger.error(f"Default from email: {settings.DEFAULT_FROM_EMAIL}")
-        """
     
     def perform_destroy(self, instance):
         """

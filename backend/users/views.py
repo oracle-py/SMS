@@ -46,7 +46,28 @@ class CustomTokenRefreshView(TokenRefreshView):
     
     Handles token refresh requests with proper error handling.
     """
-    pass
+    
+    def post(self, request, *args, **kwargs):
+        """
+        Handle token refresh with proper error handling for deleted users.
+        
+        Args:
+            request: The HTTP request
+            
+        Returns:
+            Response with new tokens or error message
+        """
+        try:
+            return super().post(request, *args, **kwargs)
+        except Exception as e:
+            # Handle case where user no longer exists
+            if 'does not exist' in str(e).lower():
+                return Response(
+                    {'success': False, 'error': 'User account no longer exists. Please log in again.'},
+                    status=status.HTTP_401_UNAUTHORIZED
+                )
+            # Re-raise other exceptions
+            raise
 
 
 class LogoutView(GenericAPIView):
