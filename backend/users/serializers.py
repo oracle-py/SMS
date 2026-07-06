@@ -130,11 +130,7 @@ class StudentProfileSerializer(serializers.ModelSerializer):
     user = UserPublicSerializer(read_only=True)
     user_id = serializers.IntegerField(write_only=True, required=False)
     user_data = UserNestedSerializer(write_only=True, required=False)
-    programme = serializers.PrimaryKeyRelatedField(
-        queryset=None,
-        required=False,
-        allow_null=True
-    )
+    programme = serializers.PrimaryKeyRelatedField(read_only=True)
     programme_id = serializers.IntegerField(write_only=True, required=False, allow_null=True)
     age = serializers.SerializerMethodField()
     programme_name = serializers.CharField(source='programme.name', read_only=True)
