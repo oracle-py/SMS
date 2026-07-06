@@ -1,3 +1,20 @@
-from django.shortcuts import render
+from django.core.mail import send_mail
+from django.http import JsonResponse
+from django.conf import settings
 
-# Create your views here.
+
+def test_email(request):
+    """
+    Standalone email test endpoint to isolate SMTP configuration issues.
+    """
+    try:
+        send_mail(
+            subject="SMTP Test",
+            message="This is a test email.",
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=["conectuj@gmail.com"],  # Replace with your test email
+            fail_silently=False,
+        )
+        return JsonResponse({"success": True, "message": "Email sent successfully"})
+    except Exception as e:
+        return JsonResponse({"success": False, "error": str(e)})

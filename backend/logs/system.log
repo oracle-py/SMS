@@ -4823,3 +4823,64 @@ INFO 2026-07-06 06:31:18,201 basehttp 24080 24296 "GET /api/v1/activity-logs/ HT
 INFO 2026-07-06 06:31:18,227 basehttp 24080 24296 "GET /api/v1/activity-logs/ HTTP/1.1" 200 52
 INFO 2026-07-06 06:31:23,847 basehttp 24080 24296 "GET /api/v1/auth/me/ HTTP/1.1" 200 265
 INFO 2026-07-06 06:31:23,917 basehttp 24080 24296 "GET /api/v1/auth/me/ HTTP/1.1" 200 265
+INFO 2026-07-06 15:41:18,964 autoreload 17908 16432 Watching for file changes with StatReloader
+INFO 2026-07-06 15:42:20,670 autoreload 17908 16432 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\school_monitoring_system\settings.py changed, reloading.
+INFO 2026-07-06 15:42:22,038 autoreload 14200 9232 Watching for file changes with StatReloader
+INFO 2026-07-06 15:42:41,173 basehttp 14200 2972 "OPTIONS /api/v1/auth/me/ HTTP/1.1" 200 0
+INFO 2026-07-06 15:42:41,173 basehttp 14200 7848 "OPTIONS /api/v1/auth/me/ HTTP/1.1" 200 0
+INFO 2026-07-06 15:42:41,174 basehttp 14200 14104 "OPTIONS /api/v1/auth/me/ HTTP/1.1" 200 0
+INFO 2026-07-06 15:42:41,179 basehttp 14200 3272 "OPTIONS /api/v1/auth/me/ HTTP/1.1" 200 0
+WARNING 2026-07-06 15:42:41,306 basehttp 14200 14104 "GET /api/v1/auth/me/ HTTP/1.1" 401 172
+INFO 2026-07-06 15:42:41,323 basehttp 14200 14104 "OPTIONS /api/v1/auth/refresh/ HTTP/1.1" 200 0
+WARNING 2026-07-06 15:42:41,341 basehttp 14200 3272 "GET /api/v1/auth/me/ HTTP/1.1" 401 172
+WARNING 2026-07-06 15:42:41,357 basehttp 14200 7848 "GET /api/v1/auth/me/ HTTP/1.1" 401 172
+WARNING 2026-07-06 15:42:41,393 basehttp 14200 2972 "GET /api/v1/auth/me/ HTTP/1.1" 401 172
+WARNING 2026-07-06 15:42:41,449 basehttp 14200 3272 "POST /api/v1/auth/refresh/ HTTP/1.1" 401 58
+WARNING 2026-07-06 15:42:41,471 basehttp 14200 3272 "POST /api/v1/auth/refresh/ HTTP/1.1" 400 43
+INFO 2026-07-06 15:42:41,499 basehttp 14200 14104 "POST /api/v1/auth/refresh/ HTTP/1.1" 200 601
+WARNING 2026-07-06 15:42:41,505 basehttp 14200 7848 "POST /api/v1/auth/refresh/ HTTP/1.1" 401 58
+WARNING 2026-07-06 15:42:41,506 basehttp 14200 2972 "POST /api/v1/auth/refresh/ HTTP/1.1" 401 58
+INFO 2026-07-06 15:42:41,560 basehttp 14200 3272 "OPTIONS /api/v1/auth/logout/ HTTP/1.1" 200 0
+WARNING 2026-07-06 15:42:41,801 basehttp 14200 7848 "POST /api/v1/auth/refresh/ HTTP/1.1" 400 43
+WARNING 2026-07-06 15:42:41,861 basehttp 14200 2972 "POST /api/v1/auth/refresh/ HTTP/1.1" 400 43
+WARNING 2026-07-06 15:42:41,878 basehttp 14200 3272 "POST /api/v1/auth/logout/ HTTP/1.1" 401 58
+INFO 2026-07-06 15:42:42,191 basehttp 14200 14104 "GET /api/v1/auth/me/ HTTP/1.1" 200 265
+INFO 2026-07-06 15:42:43,519 basehttp 14200 14104 "GET /api/v1/stats/public/ HTTP/1.1" 200 48
+INFO 2026-07-06 15:42:43,525 basehttp 14200 14104 "GET /api/v1/stats/public/ HTTP/1.1" 200 48
+INFO 2026-07-06 15:42:51,188 basehttp 14200 14104 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 0
+INFO 2026-07-06 15:42:52,741 basehttp 14200 14104 "POST /api/v1/auth/login/ HTTP/1.1" 200 709
+INFO 2026-07-06 15:42:52,956 basehttp 14200 14104 "OPTIONS /api/v1/dashboard/admin/ HTTP/1.1" 200 0
+INFO 2026-07-06 15:42:52,956 basehttp 14200 3272 "OPTIONS /api/v1/dashboard/admin/ HTTP/1.1" 200 0
+INFO 2026-07-06 15:42:53,116 basehttp 14200 3272 "GET /api/v1/dashboard/admin/ HTTP/1.1" 200 957
+INFO 2026-07-06 15:42:53,217 basehttp 14200 3272 "GET /api/v1/dashboard/admin/ HTTP/1.1" 200 957
+INFO 2026-07-06 15:42:59,610 basehttp 14200 3272 "OPTIONS /api/v1/programmes/ HTTP/1.1" 200 0
+INFO 2026-07-06 15:42:59,632 basehttp 14200 3272 "GET /api/v1/programmes/ HTTP/1.1" 200 52
+INFO 2026-07-06 15:43:31,144 basehttp 14200 3272 "OPTIONS /api/v1/students/ HTTP/1.1" 200 0
+INFO 2026-07-06 15:43:31,236 viewsets 14200 3272 StudentProfileViewSet.perform_create called
+INFO 2026-07-06 15:43:31,238 serializers 14200 3272 StudentProfileSerializer.create called
+INFO 2026-07-06 15:43:31,239 serializers 14200 3272 Validated data keys: dict_keys(['user_data', 'student_id', 'gender', 'date_of_birth', 'grade_level'])
+INFO 2026-07-06 15:43:31,240 serializers 14200 3272 Creating user with username: conectujmiraclee1be@school.edu, email: conectuj@gmail.com
+INFO 2026-07-06 15:43:31,975 serializers 14200 3272 User created with ID: 71, default password set
+WARNING 2026-07-06 15:43:31,979 serializers 14200 3272 No programme provided, using default faculty code 'NS'
+INFO 2026-07-06 15:43:31,986 serializers 14200 3272 Generated student_id: 2026/NS/001
+INFO 2026-07-06 15:43:32,002 viewsets 14200 3272 Student created: conectuj@gmail.com, ID: 31
+INFO 2026-07-06 15:43:32,003 viewsets 14200 3272 Attempting to send registration email to personal email: conectuj@gmail.com
+INFO 2026-07-06 15:43:32,005 viewsets 14200 3272 Email backend: django.core.mail.backends.smtp.EmailBackend
+INFO 2026-07-06 15:43:32,007 viewsets 14200 3272 Email host: smtp.gmail.com
+INFO 2026-07-06 15:43:32,008 viewsets 14200 3272 Email port: 587
+INFO 2026-07-06 15:43:32,013 email_utils 14200 3272 Attempting to send student registration email to conectuj@gmail.com
+INFO 2026-07-06 15:43:39,627 email_utils 14200 3272 Email sent successfully to conectuj@gmail.com. Result: 1
+INFO 2026-07-06 15:43:39,629 viewsets 14200 3272 Registration email sent successfully
+INFO 2026-07-06 15:43:39,633 basehttp 14200 3272 "POST /api/v1/students/ HTTP/1.1" 201 308
+INFO 2026-07-06 15:43:42,030 basehttp 14200 3272 "GET /api/v1/dashboard/admin/ HTTP/1.1" 200 963
+INFO 2026-07-06 15:46:36,857 autoreload 14200 9232 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\school_monitoring_system\settings.py changed, reloading.
+INFO 2026-07-06 15:46:38,929 autoreload 18952 13652 Watching for file changes with StatReloader
+INFO 2026-07-06 15:47:17,070 autoreload 18544 17664 Watching for file changes with StatReloader
+INFO 2026-07-06 15:47:53,950 autoreload 18544 17664 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\school_monitoring_system\settings.py changed, reloading.
+INFO 2026-07-06 15:47:55,268 autoreload 6932 20604 Watching for file changes with StatReloader
+INFO 2026-07-06 16:46:06,554 autoreload 6932 20604 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\school_monitoring_system\settings.py changed, reloading.
+INFO 2026-07-06 16:46:08,782 autoreload 19992 440 Watching for file changes with StatReloader
+INFO 2026-07-06 16:46:18,304 autoreload 19992 440 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\api\urls.py changed, reloading.
+INFO 2026-07-06 16:46:19,394 autoreload 12632 16928 Watching for file changes with StatReloader
+INFO 2026-07-06 16:47:01,694 autoreload 12632 16928 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\api\urls.py changed, reloading.
+INFO 2026-07-06 16:47:02,572 autoreload 14072 6232 Watching for file changes with StatReloader

@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     'django_filters',
     'drf_spectacular',
-    'django_q',
+    # 'django_q',  # Incompatible with Django 5.2 - requires baseconv which was removed
+    # TODO: Use Celery or Django-RQ for background tasks instead
     'users',
     'academics',
     'api',
@@ -347,7 +348,7 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
 
 DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='noreply@school.edu')
 
-EMAIL_TIMEOUT = 30
+EMAIL_TIMEOUT = 5
 
 # Email templates directory
 EMAIL_TEMPLATE_DIR = BASE_DIR / 'templates' / 'emails'
