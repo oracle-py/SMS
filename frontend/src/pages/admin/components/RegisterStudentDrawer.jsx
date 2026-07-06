@@ -76,7 +76,7 @@ export default function RegisterStudentDrawer({
             const response = await api.get('/programmes/');
             setProgrammes(response.data.results || response.data);
         } catch (error) {
-            console.error('Error fetching programmes:', error);
+            // Silently handle error
         } finally {
             setLoading(false);
         }
@@ -141,12 +141,39 @@ export default function RegisterStudentDrawer({
                 programme: formData.programme
             });
             
+            // Only close drawer and reset form on success
             alert('Student registered successfully!');
             setFormData(initialData);
             onClose();
         } catch (error) {
-            console.error('Error registering student:', error);
-            alert(`Error: ${error.response?.data || 'Failed to register student'}`);
+            // Handle specific error messages
+            let errorMessage = 'Failed to register student';
+            if (error.response?.data) {
+                const errorData = error.response.data;
+                
+                // Check for duplicate email error
+                if (errorData.user_data?.email) {
+                    errorMessage = 'Email already exists. Please use a different email address.';
+                }
+                // Check for other user_data errors
+                else if (errorData.user_data) {
+                    const userErrors = Object.values(errorData.user_data).join(', ');
+                    errorMessage = `Validation error: ${userErrors}`;
+                }
+                // Check for general errors
+                else if (errorData.detail) {
+                    errorMessage = errorData.detail;
+                }
+                else if (errorData.error) {
+                    errorMessage = errorData.error;
+                }
+                else if (typeof errorData === 'string') {
+                    errorMessage = errorData;
+                }
+            }
+            
+            alert(`Error: ${errorMessage}`);
+            // Do NOT close drawer or reset form on error
         } finally {
             setLoading(false);
         }

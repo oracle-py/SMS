@@ -98,9 +98,13 @@ class StudentProfileViewSet(viewsets.ModelViewSet):
         # Send registration email to personal email (real address)
         try:
             logger.info(f"Attempting to send registration email to personal email: {student.user.email}")
+            logger.info(f"Email backend: {settings.EMAIL_BACKEND}")
+            logger.info(f"Email host: {settings.EMAIL_HOST}")
+            logger.info(f"Email port: {settings.EMAIL_PORT}")
+            
             # Use the default password that was set in the serializer
             default_password = 'school1234'
-            send_student_registration_email(
+            result = send_student_registration_email(
                 email=student.user.email,  # Send to personal email (real address)
                 first_name=student.user.first_name,
                 last_name=student.user.last_name,
@@ -108,10 +112,17 @@ class StudentProfileViewSet(viewsets.ModelViewSet):
                 school_email=student.user.username,  # School email for login
                 password=default_password
             )
-            logger.info("Registration email sent successfully")
+            
+            if result:
+                logger.info("Registration email sent successfully")
+            else:
+                logger.warning("Registration email function returned False")
         except Exception as e:
             # Log error but don't fail the registration
             logger.error(f"Failed to send registration email: {e}", exc_info=True)
+            logger.error(f"Email settings - HOST: {settings.EMAIL_HOST}, PORT: {settings.EMAIL_PORT}, USE_TLS: {settings.EMAIL_USE_TLS}")
+            logger.error(f"Email user: {settings.EMAIL_HOST_USER}")
+            logger.error(f"Default from email: {settings.DEFAULT_FROM_EMAIL}")
     
     def perform_destroy(self, instance):
         """

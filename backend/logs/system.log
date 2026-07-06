@@ -4811,3 +4811,15 @@ INFO 2026-07-06 06:28:02,860 basehttp 24080 23556 "GET /api/v1/student/dashboard
 INFO 2026-07-06 06:28:02,863 basehttp 24080 24296 "GET /api/v1/announcements/?target_audience=student HTTP/1.1" 200 52
 INFO 2026-07-06 06:28:02,881 basehttp 24080 23556 "GET /api/v1/timetables/ HTTP/1.1" 200 52
 INFO 2026-07-06 06:28:02,947 basehttp 24080 23556 "GET /api/v1/announcements/?target_audience=student HTTP/1.1" 200 52
+INFO 2026-07-06 06:31:03,699 basehttp 24080 23556 "POST /api/v1/auth/logout/ HTTP/1.1" 200 53
+WARNING 2026-07-06 06:31:04,103 basehttp 24080 23556 "GET /api/v1/stats/public/ HTTP/1.1" 404 52312
+WARNING 2026-07-06 06:31:04,236 basehttp 24080 24296 "GET /api/v1/stats/public/ HTTP/1.1" 404 52312
+INFO 2026-07-06 06:31:18,005 basehttp 24080 24296 "POST /api/v1/auth/login/ HTTP/1.1" 200 1201
+INFO 2026-07-06 06:31:18,094 basehttp 24080 24296 "GET /api/v1/auth/me/ HTTP/1.1" 200 265
+INFO 2026-07-06 06:31:18,136 basehttp 24080 24296 "GET /api/v1/auth/me/ HTTP/1.1" 200 265
+INFO 2026-07-06 06:31:18,167 basehttp 24080 23556 "GET /api/v1/announcements/?target_audience=lecturer HTTP/1.1" 200 52
+INFO 2026-07-06 06:31:18,200 basehttp 24080 23556 "GET /api/v1/announcements/?target_audience=lecturer HTTP/1.1" 200 52
+INFO 2026-07-06 06:31:18,201 basehttp 24080 24296 "GET /api/v1/activity-logs/ HTTP/1.1" 200 52
+INFO 2026-07-06 06:31:18,227 basehttp 24080 24296 "GET /api/v1/activity-logs/ HTTP/1.1" 200 52
+INFO 2026-07-06 06:31:23,847 basehttp 24080 24296 "GET /api/v1/auth/me/ HTTP/1.1" 200 265
+INFO 2026-07-06 06:31:23,917 basehttp 24080 24296 "GET /api/v1/auth/me/ HTTP/1.1" 200 265

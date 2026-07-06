@@ -49,7 +49,7 @@ function Students() {
 
         catch(error){
 
-            console.error(error);
+            // Silently handle error
 
         }
 
@@ -76,7 +76,6 @@ function Students() {
             fetchStudents();
             refreshDashboard();
         } catch (error) {
-            console.error('Error deleting student:', error);
             alert('Failed to delete student');
         }
     };

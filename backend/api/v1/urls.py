@@ -50,6 +50,7 @@ from api.views.parent_dashboard import (
 from api.views.admin_dashboard import (
     AdminDashboardView,
 )
+from api.views.stats import PublicStatsView
 
 app_name = 'api_v1'
 
@@ -90,6 +91,9 @@ urlpatterns = [
     path('auth/refresh/', CustomTokenRefreshView.as_view(), name='refresh'),
     path('auth/logout/', LogoutView.as_view(), name='logout'),
     path('auth/me/', CurrentUserView.as_view(), name='current_user'),
+    
+    # Public statistics endpoint
+    path('stats/public/', PublicStatsView.as_view(), name='public-stats'),
     
     # Student dashboard endpoints
     path('student/dashboard/', StudentDashboardView.as_view(), name='student-dashboard'),
