@@ -172,6 +172,7 @@ class StudentProfileSerializer(serializers.ModelSerializer):
         import logging
         logger = logging.getLogger(__name__)
         logger.info("StudentProfileSerializer.create called")
+        logger.info(f"Validated data keys: {validated_data.keys()}")
         
         user_data = validated_data.pop('user_data', None)
         user_id = validated_data.pop('user_id', None)
@@ -179,24 +180,36 @@ class StudentProfileSerializer(serializers.ModelSerializer):
         user = None
         if user_data:
             # Create user from nested data with new username format
-            username = f"{user_data['last_name'].lower()}{user_data['first_name'].lower()}@school.edu"
+            # Add random suffix to avoid duplicate usernames
+            import random
+            import string
+            suffix = ''.join(random.choices(string.ascii_lowercase + string.digits, k=4))
+            username = f"{user_data['last_name'].lower()}{user_data['first_name'].lower()}{suffix}@school.edu"
             logger.info(f"Creating user with username: {username}, email: {user_data.get('email')}")
-            user = User.objects.create(
-                username=username,
-                email=user_data.get('email', ''),
-                first_name=user_data.get('first_name', ''),
-                last_name=user_data.get('last_name', ''),
-                phone=user_data.get('phone', ''),
-                other_name=user_data.get('other_name', ''),
-                role='student'
-            )
-            # Set default password
-            default_password = 'school1234'
-            user.set_password(default_password)
-            user.save()
-            logger.info(f"User created with ID: {user.id}, default password set")
+            
+            try:
+                user = User.objects.create(
+                    username=username,
+                    email=user_data.get('email', ''),
+                    first_name=user_data.get('first_name', ''),
+                    last_name=user_data.get('last_name', ''),
+                    phone=user_data.get('phone', ''),
+                    other_name=user_data.get('other_name', ''),
+                    role='student'
+                )
+                # Set default password
+                default_password = 'school1234'
+                user.set_password(default_password)
+                user.save()
+                logger.info(f"User created with ID: {user.id}, default password set")
+            except Exception as e:
+                logger.error(f"Error creating user: {e}", exc_info=True)
+                raise serializers.ValidationError(f"Failed to create user: {str(e)}")
         elif user_id:
-            user = User.objects.get(id=user_id)
+            try:
+                user = User.objects.get(id=user_id)
+            except User.DoesNotExist:
+                raise serializers.ValidationError("User with provided ID does not exist")
         
         # Generate student_id with new format: year/faculty_code/serial
         if not validated_data.get('student_id'):
@@ -206,24 +219,39 @@ class StudentProfileSerializer(serializers.ModelSerializer):
                 from academics.models import Programme
                 try:
                     programme = Programme.objects.get(id=validated_data['programme'])
-                    faculty_code = programme.department.faculty.code if programme.department and programme.department.faculty else 'NS'
-                except:
-                    pass
+                    if programme.department and programme.department.faculty:
+                        faculty_code = programme.department.faculty.code
+                    logger.info(f"Faculty code: {faculty_code} from programme {programme.name}")
+                except Programme.DoesNotExist:
+                    logger.warning(f"Programme with ID {validated_data['programme']} does not exist")
+                    raise serializers.ValidationError("Invalid programme ID")
+                except Exception as e:
+                    logger.error(f"Error getting faculty code: {e}", exc_info=True)
+            else:
+                logger.warning("No programme provided, using default faculty code 'NS'")
             
             # Get serial number for this faculty/year
             from users.models import StudentProfile
             year = datetime.now().year
-            count = StudentProfile.objects.filter(
-                student_id__startswith=f"{year}/{faculty_code}"
-            ).count()
-            serial = str(count + 1).zfill(3)
-            
-            validated_data['student_id'] = f"{year}/{faculty_code}/{serial}"
+            try:
+                count = StudentProfile.objects.filter(
+                    student_id__startswith=f"{year}/{faculty_code}"
+                ).count()
+                serial = str(count + 1).zfill(3)
+                validated_data['student_id'] = f"{year}/{faculty_code}/{serial}"
+                logger.info(f"Generated student_id: {validated_data['student_id']}")
+            except Exception as e:
+                logger.error(f"Error generating student_id: {e}", exc_info=True)
+                raise serializers.ValidationError(f"Failed to generate student ID: {str(e)}")
         
         # Create student profile with user
         if user:
             validated_data['user'] = user
-        return super().create(validated_data)
+        try:
+            return super().create(validated_data)
+        except Exception as e:
+            logger.error(f"Error creating student profile: {e}", exc_info=True)
+            raise serializers.ValidationError(f"Failed to create student profile: {str(e)}")
     
     def get_age(self, obj: StudentProfile) -> Optional[int]:
         """
