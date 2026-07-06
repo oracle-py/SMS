@@ -295,7 +295,12 @@ CORS_ALLOWED_ORIGINS = config(
     cast=lambda x: [s.strip() for s in x.split(',')]
 )
 
-CORS_ALLOW_ALL_ORIGINS = config('CORS_ALLOW_ALL_ORIGINS', default=True, cast=bool)
+# Handle CORS_ALLOW_ALL_ORIGINS with robust parsing
+cors_allow_all = config('CORS_ALLOW_ALL_ORIGINS', default='True', cast=str)
+# Handle case where the entire key=value might be passed
+if '=' in cors_allow_all:
+    cors_allow_all = cors_allow_all.split('=')[-1].strip()
+CORS_ALLOW_ALL_ORIGINS = cors_allow_all.lower() in ('true', '1', 'yes', 'on')
 
 CORS_ALLOW_HEADERS = [
     'accept',
