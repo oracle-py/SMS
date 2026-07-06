@@ -338,3 +338,14 @@ EMAIL_TIMEOUT = 30
 
 # Email templates directory
 EMAIL_TEMPLATE_DIR = BASE_DIR / 'templates' / 'emails'
+
+# Django-Q Configuration for background tasks
+Q_CLUSTER = {
+    'name': 'sms_cluster',
+    'workers': 4,
+    'timeout': 90,
+    'retry': 120,
+    'queue_limit': 50,
+    'bulk': 10,
+    'orm': 'default',
+}

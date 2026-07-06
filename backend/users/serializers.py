@@ -130,6 +130,8 @@ class StudentProfileSerializer(serializers.ModelSerializer):
     user = UserPublicSerializer(read_only=True)
     user_id = serializers.IntegerField(write_only=True, required=False)
     user_data = UserNestedSerializer(write_only=True, required=False)
+    programme = serializers.PrimaryKeyRelatedField(read_only=True)
+    programme_id = serializers.IntegerField(write_only=True, required=False)
     age = serializers.SerializerMethodField()
     programme_name = serializers.CharField(source='programme.name', read_only=True)
     department_name = serializers.CharField(source='department.name', read_only=True)
@@ -147,6 +149,7 @@ class StudentProfileSerializer(serializers.ModelSerializer):
             'date_of_birth',
             'grade_level',
             'programme',
+            'programme_id',
             'programme_name',
             'department_name',
             'faculty_name',
@@ -176,6 +179,7 @@ class StudentProfileSerializer(serializers.ModelSerializer):
         
         user_data = validated_data.pop('user_data', None)
         user_id = validated_data.pop('user_id', None)
+        programme_id = validated_data.pop('programme_id', None)
         
         user = None
         if user_data:
@@ -215,23 +219,16 @@ class StudentProfileSerializer(serializers.ModelSerializer):
         if not validated_data.get('student_id'):
             # Get faculty code from programme
             faculty_code = 'NS'  # Default
-            if validated_data.get('programme'):
+            if programme_id:
                 from academics.models import Programme
                 try:
-                    # Handle both programme object and programme ID
-                    programme = validated_data['programme']
-                    if isinstance(programme, Programme):
-                        # Already a Programme object
-                        pass
-                    else:
-                        # It's an ID, need to fetch the object
-                        programme = Programme.objects.get(id=programme)
+                    programme = Programme.objects.get(id=programme_id)
                     
                     if programme.department and programme.department.faculty:
                         faculty_code = programme.department.faculty.code
                     logger.info(f"Faculty code: {faculty_code} from programme {programme.name}")
                 except Programme.DoesNotExist:
-                    logger.warning(f"Programme with ID {validated_data['programme']} does not exist")
+                    logger.warning(f"Programme with ID {programme_id} does not exist")
                     raise serializers.ValidationError("Invalid programme ID")
                 except Exception as e:
                     logger.error(f"Error getting faculty code: {e}", exc_info=True)
@@ -252,9 +249,11 @@ class StudentProfileSerializer(serializers.ModelSerializer):
                 logger.error(f"Error generating student_id: {e}", exc_info=True)
                 raise serializers.ValidationError(f"Failed to generate student ID: {str(e)}")
         
-        # Create student profile with user
+        # Create student profile with user and programme
         if user:
             validated_data['user'] = user
+        if programme_id:
+            validated_data['programme_id'] = programme_id
         try:
             return super().create(validated_data)
         except Exception as e:
