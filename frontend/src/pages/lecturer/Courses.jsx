@@ -1,25 +1,56 @@
+import { useState, useEffect } from "react";
 import DashboardLayout from "../../layouts/DashboardLayout";
+import api from "../../api/axios";
 import './Lecturer.css';
 
-const courses = [
-    {
-        code: "CSC401",
-        title: "Database Systems",
-        level: "400"
-    },
-    {
-        code: "CSC402",
-        title: "Artificial Intelligence",
-        level: "400"
-    },
-    {
-        code: "MEE302",
-        title: "Thermodynamics",
-        level: "300"
-    }
-];
-
 export default function Courses() {
+
+    const [courses, setCourses] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [selectedCourse, setSelectedCourse] = useState(null);
+    const [students, setStudents] = useState([]);
+    const [showStudentsModal, setShowStudentsModal] = useState(false);
+
+    useEffect(() => {
+        fetchAssignedCourses();
+    }, []);
+
+    const fetchAssignedCourses = async () => {
+        setLoading(true);
+        try {
+            // Get current lecturer's profile
+            const userResponse = await api.get('/auth/me/');
+            const lecturerId = userResponse.data.profile?.id;
+            
+            if (lecturerId) {
+                // Get lecturer details with assigned courses
+                const lecturerResponse = await api.get(`/lecturers/${lecturerId}/`);
+                const assignedCourses = lecturerResponse.data.courses || [];
+                setCourses(assignedCourses);
+            }
+        } catch (error) {
+            console.error('Error fetching assigned courses:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleViewStudents = async (course) => {
+        setSelectedCourse(course);
+        setShowStudentsModal(true);
+        
+        // Fetch students enrolled in this course at the course's level
+        try {
+            const response = await api.get('/students/', {
+                params: {
+                    grade_level: course.level
+                }
+            });
+            setStudents(response.data.results || response.data);
+        } catch (error) {
+            console.error('Error fetching students:', error);
+        }
+    };
 
     return (
 
@@ -33,45 +64,89 @@ export default function Courses() {
 
                 <div className="lecturer-card">
 
-                    <table className="lecturer-table">
+                    {loading ? (
+                        <p>Loading courses...</p>
+                    ) : courses.length === 0 ? (
+                        <p>No courses assigned to you yet.</p>
+                    ) : (
+                        <table className="lecturer-table">
 
-                        <thead>
+                            <thead>
 
-                            <tr>
-                                <th>Code</th>
-                                <th>Course</th>
-                                <th>Level</th>
-                                <th></th>
-                            </tr>
-
-                        </thead>
-
-                        <tbody>
-
-                            {courses.map(course => (
-
-                                <tr key={course.code}>
-                                    <td>{course.code}</td>
-                                    <td>{course.title}</td>
-                                    <td>{course.level}</td>
-
-                                    <td>
-                                        <button className="lecturer-btn">
-                                            View Students
-                                        </button>
-                                    </td>
-
+                                <tr>
+                                    <th>Code</th>
+                                    <th>Course</th>
+                                    <th>Level</th>
+                                    <th></th>
                                 </tr>
 
-                            ))}
+                            </thead>
 
-                        </tbody>
+                            <tbody>
 
-                    </table>
+                                {courses.map(course => (
+
+                                    <tr key={course.id}>
+                                        <td>{course.code}</td>
+                                        <td>{course.title}</td>
+                                        <td>{course.level}</td>
+
+                                        <td>
+                                            <button 
+                                                className="lecturer-btn"
+                                                onClick={() => handleViewStudents(course)}
+                                            >
+                                                View Students
+                                            </button>
+                                        </td>
+
+                                    </tr>
+
+                                ))}
+
+                            </tbody>
+
+                        </table>
+                    )}
 
                 </div>
 
             </div>
+
+            {showStudentsModal && (
+                <div className="modal-overlay" onClick={() => setShowStudentsModal(false)}>
+                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                        <div className="modal-header">
+                            <h2>Students in {selectedCourse?.title} (Level {selectedCourse?.level})</h2>
+                            <button onClick={() => setShowStudentsModal(false)}>×</button>
+                        </div>
+                        <div className="modal-body">
+                            {students.length === 0 ? (
+                                <p>No students found for this course.</p>
+                            ) : (
+                                <table className="lecturer-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Matric Number</th>
+                                            <th>Name</th>
+                                            <th>Level</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {students.map(student => (
+                                            <tr key={student.id}>
+                                                <td>{student.student_id}</td>
+                                                <td>{student.user?.first_name} {student.user?.last_name}</td>
+                                                <td>{student.grade_level}</td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            )}
 
         </DashboardLayout>
 

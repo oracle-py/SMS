@@ -6,9 +6,12 @@ sessions, semesters, levels, courses, enrollments, registrations,
 grades, and attendance with proper permissions and filtering.
 """
 
-from rest_framework import viewsets, filters
+from rest_framework import viewsets, filters, status
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import action
+from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
+from django.utils import timezone
 
 from academics.models import (
     AcademicSession,
@@ -25,6 +28,8 @@ from academics.models import (
     CourseAssignment,
     Timetable,
     Announcement,
+    Result,
+    ActivityLog,
 )
 from academics.serializers import (
     AcademicSessionSerializer,
@@ -44,6 +49,9 @@ from academics.serializers import (
     CourseAssignmentSerializer,
     TimetableSerializer,
     AnnouncementSerializer,
+    ResultSerializer,
+    BatchResultSerializer,
+    ActivityLogSerializer,
 )
 from users.permissions import (
     IsAdminRole,
@@ -537,3 +545,131 @@ class AnnouncementViewSet(viewsets.ModelViewSet):
             )
         
         return queryset.filter(is_active=True)
+
+
+class ResultViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet for Result model.
+    
+    Provides CRUD operations for student results.
+    - Admins: Full access including approval
+    - Lecturers: Can create and view their submitted results
+    - Students: Can only view their own approved results
+    - Parents: Can only view their children's approved results
+    """
+    
+    queryset = Result.objects.select_related(
+        'student', 'course', 'lecturer', 'session', 'semester', 'approved_by'
+    ).all()
+    serializer_class = ResultSerializer
+    permission_classes = [IsAuthenticated]
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    filterset_fields = ['student', 'course', 'lecturer', 'session', 'semester', 'status']
+    search_fields = ['student__username', 'student__first_name', 'student__last_name', 'course__course_code']
+    ordering_fields = ['submitted_at', 'approved_at', 'total_score']
+    ordering = ['-submitted_at']
+    
+    def get_permissions(self):
+        if self.action in ['create', 'update', 'partial_update']:
+            return [IsAuthenticated()]
+        elif self.action == 'destroy':
+            return [IsAuthenticated(), IsAdminRole()]
+        return [IsAuthenticated()]
+    
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        user = self.request.user
+        
+        if user.is_admin_user:
+            return queryset
+        elif user.is_lecturer:
+            # Lecturers can see results they submitted
+            return queryset.filter(lecturer=user)
+        elif user.is_student:
+            # Students can only see their own approved results
+            return queryset.filter(student=user, status='approved')
+        elif user.is_parent:
+            # Parents can see their children's approved results
+            from users.models import ParentStudentRelation
+            child_ids = ParentStudentRelation.objects.filter(
+                parent=user.parent_profile
+            ).values_list('student__user_id', flat=True)
+            return queryset.filter(student_id__in=child_ids, status='approved')
+        return queryset.none()
+    
+    @action(detail=False, methods=['post'])
+    def batch(self, request):
+        """
+        Batch create results for multiple students.
+        Used by lecturers to submit results for a course.
+        """
+        serializer = BatchResultSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    @action(detail=True, methods=['post'])
+    def approve(self, request, pk=None):
+        """
+        Approve a result (admin only).
+        """
+        result = self.get_object()
+        if not request.user.is_admin_user:
+            return Response(
+                {'detail': 'Only admins can approve results'},
+                status=status.HTTP_403_FORBIDDEN
+            )
+        
+        result.status = 'approved'
+        result.approved_by = request.user
+        result.approved_at = timezone.now()
+        result.save()
+        
+        return Response({'detail': 'Result approved successfully'})
+    
+    @action(detail=True, methods=['post'])
+    def reject(self, request, pk=None):
+        """
+        Reject a result (admin only).
+        """
+        result = self.get_object()
+        if not request.user.is_admin_user:
+            return Response(
+                {'detail': 'Only admins can reject results'},
+                status=status.HTTP_403_FORBIDDEN
+            )
+        
+        result.status = 'rejected'
+        result.save()
+        
+        return Response({'detail': 'Result rejected successfully'})
+
+
+class ActivityLogViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    ViewSet for ActivityLog model.
+    
+    Provides read-only access to activity logs.
+    - Admins: Can see all activity logs
+    - Other users: Can only see their own activity logs
+    """
+    
+    queryset = ActivityLog.objects.select_related('user').all()
+    serializer_class = ActivityLogSerializer
+    permission_classes = [IsAuthenticated]
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    filterset_fields = ['user', 'action', 'entity_type']
+    search_fields = ['description', 'action']
+    ordering_fields = ['created_at']
+    ordering = ['-created_at']
+    
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        user = self.request.user
+        
+        if user.is_admin_user:
+            return queryset
+        else:
+            # Non-admin users can only see their own activity logs
+            return queryset.filter(user=user)

@@ -35,6 +35,8 @@ from academics.viewsets import (
     CourseAssignmentViewSet,
     TimetableViewSet,
     AnnouncementViewSet,
+    ResultViewSet,
+    ActivityLogViewSet,
 )
 from api.views.student_dashboard import (
     StudentDashboardView,
@@ -79,6 +81,8 @@ router.register(r'programmes', ProgrammeViewSet, basename='programme')
 router.register(r'course-assignments', CourseAssignmentViewSet, basename='course-assignment')
 router.register(r'timetables', TimetableViewSet, basename='timetable')
 router.register(r'announcements', AnnouncementViewSet, basename='announcement')
+router.register(r'results', ResultViewSet, basename='result')
+router.register(r'activity-logs', ActivityLogViewSet, basename='activity-log')
 
 urlpatterns = [
     # Authentication endpoints

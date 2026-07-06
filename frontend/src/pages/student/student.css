@@ -328,6 +328,27 @@ STUDENT HUB HERO
 
 }
 
+/* Standing color variants */
+.hub-standing.standing-red .standing-dot {
+    background: #EF4444;
+}
+
+.hub-standing.standing-green .standing-dot {
+    background: #10B981;
+}
+
+.hub-standing.standing-blue .standing-dot {
+    background: #3B82F6;
+}
+
+.hub-standing.standing-amber .standing-dot {
+    background: #F59E0B;
+}
+
+.hub-standing.standing-default .standing-dot {
+    background: #64748B;
+}
+
 .hub-message{
 
     max-width:480px;

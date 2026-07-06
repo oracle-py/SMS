@@ -8,7 +8,8 @@ import {
     HiOutlineEnvelope,
     HiOutlinePhone,
     HiOutlineAcademicCap,
-    HiOutlineIdentification
+    HiOutlineIdentification,
+    HiOutlineBookOpen
 } from "react-icons/hi2";
 
 export default function RegisterLecturerDrawer({ open, onClose }) {
@@ -34,17 +35,22 @@ export default function RegisterLecturerDrawer({ open, onClose }) {
 
         date_of_birth: "",
 
-        auto_generate_staff_id: true
+        auto_generate_staff_id: true,
+
+        courses: []
 
     };
 
     const [formData, setFormData] = useState(initialData);
     const [departments, setDepartments] = useState([]);
+    const [courses, setCourses] = useState([]);
+    const [courseSearch, setCourseSearch] = useState("");
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         if (open) {
             fetchDepartments();
+            fetchCourses();
         }
     }, [open]);
 
@@ -60,7 +66,25 @@ export default function RegisterLecturerDrawer({ open, onClose }) {
         }
     };
 
+    const fetchCourses = async () => {
+        try {
+            const response = await api.get('/courses/');
+            setCourses(response.data.results || response.data);
+        } catch (error) {
+            console.error('Error fetching courses:', error);
+        }
+    };
+
     const selectedDepartment = departments.find(d => d.id === parseInt(formData.department));
+
+    const filteredCourses = courses.filter(course => {
+        const search = courseSearch.toLowerCase();
+
+        return (
+            course.course_code?.toLowerCase().includes(search) ||
+            course.course_title?.toLowerCase().includes(search)
+        );
+    });
 
     function handleChange(e){
 
@@ -75,6 +99,15 @@ export default function RegisterLecturerDrawer({ open, onClose }) {
         }));
 
     }
+
+    const handleCourseToggle = (courseId) => {
+        setFormData(prev => ({
+            ...prev,
+            courses: prev.courses.includes(courseId)
+                ? prev.courses.filter(id => id !== courseId)
+                : [...prev.courses, courseId]
+        }));
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -93,10 +126,12 @@ export default function RegisterLecturerDrawer({ open, onClose }) {
                 department: formData.department,
                 rank: formData.rank,
                 employment_type: formData.employment_type,
-                date_of_birth: formData.date_of_birth
+                date_of_birth: formData.date_of_birth,
+                courses: formData.courses
             });
             
             alert('Lecturer registered successfully!');
+            setFormData(initialData);
             onClose();
         } catch (error) {
             console.error('Error registering lecturer:', error);
@@ -365,6 +400,160 @@ export default function RegisterLecturerDrawer({ open, onClose }) {
                     </div>
 
                 </section>
+
+               {/* COURSE ASSIGNMENT */}
+
+<section className="drawer-section">
+
+    <h3>
+
+        <HiOutlineBookOpen />
+
+        Course Assignment
+
+    </h3>
+
+    <p className="drawer-hint">
+        Select the courses this lecturer will be responsible for.
+    </p>
+
+    <div className="course-assignment-card">
+
+        <div className="course-assignment-header">
+
+            <div>
+
+                <h4>Available Courses</h4>
+
+                <span>
+
+                    {formData.courses.length} selected
+
+                </span>
+
+            </div>
+
+        </div>
+
+        <div className="course-search">
+
+            <input
+                type="text"
+                placeholder="Search course code or title..."
+                value={courseSearch}
+                onChange={(e)=>setCourseSearch(e.target.value)}
+            />
+
+        </div>
+
+        <div className="course-list">
+
+            {
+
+                filteredCourses.length > 0
+
+                ?
+
+                filteredCourses.map(course=>(
+
+                    <label
+
+                        key={course.id}
+
+                        className={`course-card ${
+                            formData.courses.includes(course.id)
+                                ? "selected"
+                                : ""
+                        }`}
+
+                    >
+
+                        <input
+
+                            type="checkbox"
+
+                            checked={formData.courses.includes(course.id)}
+
+                            onChange={()=>handleCourseToggle(course.id)}
+
+                        />
+
+                        <div className="course-card-body">
+
+                            <div className="course-code">
+
+                                {course.course_code}
+
+                            </div>
+
+                            <div className="course-title">
+
+                                {course.course_title}
+
+                            </div>
+
+                        </div>
+
+                    </label>
+
+                ))
+
+                :
+
+                <div className="drawer-empty">
+
+                    No matching courses found.
+
+                </div>
+
+            }
+
+        </div>
+
+        {
+
+            formData.courses.length > 0 &&
+
+            <div className="selected-course-summary">
+
+                <span>
+
+                    Assigned Courses
+
+                </span>
+
+                <div className="selected-course-tags">
+
+                    {
+
+                        courses
+
+                        .filter(course=>formData.courses.includes(course.id))
+
+                        .map(course=>(
+
+                            <span
+                                key={course.id}
+                                className="course-tag"
+                            >
+
+                                {course.course_code}
+
+                            </span>
+
+                        ))
+
+                    }
+
+                </div>
+
+            </div>
+
+        }
+
+    </div>
+
+</section>
 
                 {/* ACCOUNT */}
 

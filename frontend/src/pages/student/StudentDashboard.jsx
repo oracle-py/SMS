@@ -4,6 +4,7 @@ import { useAuth } from '../../context/AuthContext';
 import { useDashboardRefresh } from '../../context/DashboardContext';
 import DashboardLayout from '../../layouts/DashboardLayout';
 import studentService from '../../services/studentService';
+import api from '../../api/axios';
 import './student.css';
 
 /* -- Icon Components ---------------------------------- */
@@ -101,12 +102,32 @@ function StudentDashboard() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [timetable, setTimetable] = useState([]);
+  const [announcements, setAnnouncements] = useState([]);
 
   useEffect(() => {
     (async () => {
       try {
         const res = await studentService.getDashboard();
         setData(res);
+        
+        // Fetch timetable data
+        try {
+          const timetableRes = await api.get('/timetables/');
+          setTimetable(timetableRes.data?.results || timetableRes.data || []);
+        } catch (err) {
+          console.error('Error fetching timetable:', err);
+        }
+        
+        // Fetch announcements
+        try {
+          const announcementsRes = await api.get('/announcements/', {
+            params: { target_audience: 'student' }
+          });
+          setAnnouncements(announcementsRes.data?.results || announcementsRes.data || []);
+        } catch (err) {
+          console.error('Error fetching announcements:', err);
+        }
       } catch (err) {
         setError(err.response?.data?.error || 'Failed to load dashboard data');
       } finally {
@@ -143,6 +164,44 @@ function StudentDashboard() {
   const cgpa = data?.cgpa || 0;
   const attendance = data?.attendance_percentage || 0;
   const carryovers = data?.carryover_count || 0;
+  
+  // Calculate total credits earned from approved results
+  const totalCreditsEarned = data?.recent_results?.reduce((sum, result) => {
+    return sum + (result.credit_unit || 0);
+  }, 0) || 0;
+  
+  // Programme total credits (from backend or default)
+  const programmeTotalCredits = data?.student_info?.credits || 140;
+
+  // Determine standing color class
+  const getStandingColorClass = (standing) => {
+    if (standing === 'Probation') return 'standing-red';
+    if (standing === 'First Class') return 'standing-green';
+    if (standing.includes('Second Class')) return 'standing-blue';
+    if (standing === 'Third Class') return 'standing-amber';
+    return 'standing-default';
+  };
+
+  // Get CGPA status message
+  const getCGPAStatus = (cgpa) => {
+    if (cgpa >= 4.5) return { message: 'Excellent Progress', color: 'hub-positive' };
+    if (cgpa >= 3.5) return { message: 'Good Progress', color: 'hub-positive' };
+    if (cgpa >= 2.5) return { message: 'Average Progress', color: 'hub-neutral' };
+    if (cgpa >= 1.5) return { message: 'Needs Improvement', color: 'hub-warning' };
+    return { message: 'Critical - Action Required', color: 'hub-negative' };
+  };
+
+  // Get standing message
+  const getStandingMessage = (standing) => {
+    if (standing === 'Probation') return 'Requires immediate attention';
+    if (standing === 'First Class') return 'Outstanding performance';
+    if (standing.includes('Second Class Upper')) return 'Very good performance';
+    if (standing.includes('Second Class Lower')) return 'Good performance';
+    if (standing === 'Third Class') return 'Fair performance';
+    return 'Keep working hard';
+  };
+
+  const cgpaStatus = getCGPAStatus(cgpa);
 
   return (
     <DashboardLayout userRole="student">
@@ -155,12 +214,12 @@ function StudentDashboard() {
           <div className="hero-blob hero-blob-3"></div>
 
           <div className="hub-hero-left">
-            <p className="hub-greeting">? Good Morning,</p>
+            <p className="hub-greeting">Good Morning,</p>
             <h1 className="hub-name">{studentName}</h1>
             <p className="hub-programme">
               {data?.student_info?.department || "N/A"} • {data?.student_info?.level || "N/A"}
             </p>
-            <div className="hub-standing">
+            <div className={`hub-standing ${getStandingColorClass(standing)}`}>
               <span className="standing-dot"></span>
               {standing}
             </div>
@@ -202,7 +261,7 @@ function StudentDashboard() {
             <h2>{cgpa.toFixed(2)}</h2>
             <p>Cumulative GPA</p>
             <div className="hub-kpi-footer">
-              <span className="hub-positive">? Excellent Progress</span>
+              <span className={cgpaStatus.color}>{cgpaStatus.message}</span>
             </div>
           </div>
 
@@ -231,7 +290,7 @@ function StudentDashboard() {
             <h2>{standing}</h2>
             <p>Academic Standing</p>
             <div className="hub-kpi-footer">
-              Ranked among top performers.
+              {getStandingMessage(standing)}
             </div>
           </div>
 
@@ -331,7 +390,7 @@ function StudentDashboard() {
 
                 <label>Carryovers</label>
 
-                <progress value={carryovers === 0 ? 100 : 25} max="100"></progress>
+                <progress value={carryovers === 0 ? 0 : Math.min(carryovers * 20, 100)} max="100"></progress>
 
             </div>
 
@@ -508,83 +567,41 @@ function StudentDashboard() {
 
         </div>
 
-        <div className="hub-schedule-item">
+        {timetable.length > 0 ? (
+            timetable.slice(0, 3).map((schedule, index) => (
+                <div key={index} className="hub-schedule-item">
 
-            <div className="hub-time">
+                    <div className="hub-time">
 
-                10:00
+                        {schedule.day_of_week}
 
-            </div>
+                    </div>
 
-            <div>
+                    <div>
 
-                <strong>
+                        <strong>
 
-                    Software Engineering
+                            {schedule.course?.course_title || schedule.course_name || 'Course'}
 
-                </strong>
+                        </strong>
 
-                <p>
+                        <p>
 
-                    Today
+                            {schedule.start_time} - {schedule.end_time} • {schedule.venue || 'TBD'}
 
-                </p>
+                        </p>
 
-            </div>
+                    </div>
 
-        </div>
+                </div>
+            ))
+        ) : (
+            <div className="hub-empty">
 
-        <div className="hub-schedule-item">
-
-            <div className="hub-time">
-
-                08:00
-
-            </div>
-
-            <div>
-
-                <strong>
-
-                    Control Systems
-
-                </strong>
-
-                <p>
-
-                    Tomorrow
-
-                </p>
+                No upcoming classes scheduled.
 
             </div>
-
-        </div>
-
-        <div className="hub-schedule-item">
-
-            <div className="hub-time">
-
-                13:00
-
-            </div>
-
-            <div>
-
-                <strong>
-
-                    Engineering Mathematics
-
-                </strong>
-
-                <p>
-
-                    Thursday
-
-                </p>
-
-            </div>
-
-        </div>
+        )}
 
     </div>
 
@@ -602,83 +619,41 @@ function StudentDashboard() {
 
     </div>
 
-    <div className="announcement-item">
+    {announcements.length > 0 ? (
+        announcements.slice(0, 3).map((announcement, index) => (
+            <div key={index} className="announcement-item">
 
-        <div className="announcement-icon">
+                <div className="announcement-icon">
 
-            📢
+                    📢
 
-        </div>
+                </div>
 
-        <div>
+                <div>
 
-            <strong>
+                    <strong>
 
-                Course Registration closes this Friday
+                        {announcement.title}
 
-            </strong>
+                    </strong>
 
-            <p>
+                    <p>
 
-                Complete registration before the deadline.
+                        {announcement.message}
 
-            </p>
+                    </p>
 
-        </div>
+                </div>
 
-    </div>
+            </div>
+        ))
+    ) : (
+        <div className="hub-empty">
 
-    <div className="announcement-item">
-
-        <div className="announcement-icon">
-
-            🎓
-
-        </div>
-
-        <div>
-
-            <strong>
-
-                SIWES Orientation
-
-            </strong>
-
-            <p>
-
-                Monday • Engineering Auditorium
-
-            </p>
+            No recent announcements.
 
         </div>
-
-    </div>
-
-    <div className="announcement-item">
-
-        <div className="announcement-icon">
-
-            📝
-
-        </div>
-
-        <div>
-
-            <strong>
-
-                CBT Examination Timetable Released
-
-            </strong>
-
-            <p>
-
-                View your examination schedule.
-
-            </p>
-
-        </div>
-
-    </div>
+    )}
 
 </div>
 
@@ -700,7 +675,7 @@ function StudentDashboard() {
 
         <h2>
 
-            {data?.student_info?.credits || 94}
+            {totalCreditsEarned}
 
         </h2>
 
@@ -718,7 +693,7 @@ function StudentDashboard() {
 
                 style={{
 
-                    width: `${((data?.student_info?.credits || 94) / 140) * 100}%`
+                    width: `${(totalCreditsEarned / programmeTotalCredits) * 100}%`
 
                 }}
 
@@ -730,13 +705,13 @@ function StudentDashboard() {
 
             <span>
 
-                {data?.student_info?.credits || 94} / 140
+                {totalCreditsEarned} / {programmeTotalCredits}
 
             </span>
 
             <span>
 
-                {Math.round(((data?.student_info?.credits || 94) / 140) * 100)}%
+                {Math.round((totalCreditsEarned / programmeTotalCredits) * 100)}%
 
             </span>
 

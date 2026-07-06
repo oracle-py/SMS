@@ -93,6 +93,42 @@ class StudentProfile(models.Model):
     @property
     def faculty(self):
         return self.programme.faculty if self.programme else None
+    
+    def calculate_session_cgpa(self, session):
+        """Calculate CGPA for a specific academic session."""
+        from academics.models import Result
+        results = Result.objects.filter(
+            student=self.user,
+            session=session,
+            status='approved'
+        )
+        total_quality_points = sum(r.quality_point for r in results)
+        total_credit_units = sum(r.course.credit_unit for r in results if r.course.credit_unit)
+        return round(total_quality_points / total_credit_units, 2) if total_credit_units > 0 else 0.0
+    
+    def calculate_semester_cgpa(self, session, semester):
+        """Calculate CGPA for a specific semester."""
+        from academics.models import Result
+        results = Result.objects.filter(
+            student=self.user,
+            session=session,
+            semester=semester,
+            status='approved'
+        )
+        total_quality_points = sum(r.quality_point for r in results)
+        total_credit_units = sum(r.course.credit_unit for r in results if r.course.credit_unit)
+        return round(total_quality_points / total_credit_units, 2) if total_credit_units > 0 else 0.0
+    
+    def calculate_cumulative_cgpa(self):
+        """Calculate cumulative CGPA across all sessions."""
+        from academics.models import Result
+        results = Result.objects.filter(
+            student=self.user,
+            status='approved'
+        )
+        total_quality_points = sum(r.quality_point for r in results)
+        total_credit_units = sum(r.course.credit_unit for r in results if r.course.credit_unit)
+        return round(total_quality_points / total_credit_units, 2) if total_credit_units > 0 else 0.0
 
 
 class ParentProfile(models.Model):

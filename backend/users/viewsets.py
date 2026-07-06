@@ -5,8 +5,11 @@ This module provides ViewSets for StudentProfile, ParentProfile,
 and ParentStudentRelation models with proper permissions and filtering.
 """
 
-from rest_framework import viewsets, filters
+import logging
+from rest_framework import viewsets, filters, status
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import action
+from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 
 from users.models import StudentProfile, ParentProfile, ParentStudentRelation, LecturerProfile
@@ -30,6 +33,13 @@ from users.permissions import (
     IsAdminOrParentLinkedToStudent,
     IsAdminOrReadOnly,
 )
+from users.utils.email_utils import (
+    send_student_registration_email,
+    send_lecturer_registration_email,
+    send_parent_registration_email
+)
+
+logger = logging.getLogger(__name__)
 
 
 class StudentProfileViewSet(viewsets.ModelViewSet):
@@ -76,12 +86,108 @@ class StudentProfileViewSet(viewsets.ModelViewSet):
     
     def perform_create(self, serializer):
         """
-        Create student profile with proper validation.
+        Create student profile with proper validation and send registration email.
         
         Args:
             serializer: Validated serializer instance
         """
-        serializer.save()
+        logger.info("StudentProfileViewSet.perform_create called")
+        student = serializer.save()
+        logger.info(f"Student created: {student.user.email}, ID: {student.id}")
+        
+        # Send registration email to personal email (real address)
+        try:
+            logger.info(f"Attempting to send registration email to personal email: {student.user.email}")
+            # Use the default password that was set in the serializer
+            default_password = 'school1234'
+            send_student_registration_email(
+                email=student.user.email,  # Send to personal email (real address)
+                first_name=student.user.first_name,
+                last_name=student.user.last_name,
+                matric_number=student.student_id,
+                school_email=student.user.username,  # School email for login
+                password=default_password
+            )
+            logger.info("Registration email sent successfully")
+        except Exception as e:
+            # Log error but don't fail the registration
+            logger.error(f"Failed to send registration email: {e}", exc_info=True)
+    
+    def perform_destroy(self, instance):
+        """
+        Delete student profile and associated user from database.
+        
+        Args:
+            instance: StudentProfile instance to delete
+        """
+        logger.info(f"StudentProfileViewSet.perform_destroy called for ID: {instance.id}")
+        # Delete the associated user first, which will cascade to the profile
+        if instance.user:
+            user_id = instance.user.id
+            instance.user.delete()
+            logger.info(f"User deleted successfully: {user_id}")
+        else:
+            instance.delete()
+        logger.info(f"Student deleted successfully: {instance.id}")
+    
+    @action(detail=True, methods=['get'])
+    def cgpa(self, request, pk=None):
+        """
+        Get cumulative CGPA for a student.
+        """
+        student = self.get_object()
+        cgpa = student.calculate_cumulative_cgpa()
+        return Response({
+            'student_id': student.student_id,
+            'student_name': student.user.get_full_name(),
+            'cumulative_cgpa': cgpa
+        })
+    
+    @action(detail=True, methods=['get'], url_path='cgpa/session/(?P<session_id>[^/.]+)')
+    def session_cgpa(self, request, pk=None, session_id=None):
+        """
+        Get CGPA for a specific academic session.
+        """
+        student = self.get_object()
+        from academics.models import AcademicSession
+        try:
+            session = AcademicSession.objects.get(id=session_id)
+            cgpa = student.calculate_session_cgpa(session)
+            return Response({
+                'student_id': student.student_id,
+                'student_name': student.user.get_full_name(),
+                'session': session.name,
+                'session_cgpa': cgpa
+            })
+        except AcademicSession.DoesNotExist:
+            return Response(
+                {'detail': 'Session not found'},
+                status=status.HTTP_404_NOT_FOUND
+            )
+    
+    @action(detail=True, methods=['get'], url_path='cgpa/session/(?P<session_id>[^/.]+)/semester/(?P<semester_id>[^/.]+)')
+    def semester_cgpa(self, request, pk=None, session_id=None, semester_id=None):
+        """
+        Get CGPA for a specific semester.
+        """
+        student = self.get_object()
+        from academics.models import AcademicSession, Semester
+        try:
+            session = AcademicSession.objects.get(id=session_id)
+            semester = Semester.objects.get(id=semester_id)
+            cgpa = student.calculate_semester_cgpa(session, semester)
+            return Response({
+                'student_id': student.student_id,
+                'student_name': student.user.get_full_name(),
+                'session': session.name,
+                'semester': semester.get_name_display(),
+                'semester_cgpa': cgpa
+            })
+        except (AcademicSession.DoesNotExist, Semester.DoesNotExist):
+            return Response(
+                {'detail': 'Session or semester not found'},
+                status=status.HTTP_404_NOT_FOUND
+            )
 
 
 class ParentProfileViewSet(viewsets.ModelViewSet):
@@ -125,12 +231,57 @@ class ParentProfileViewSet(viewsets.ModelViewSet):
     
     def perform_create(self, serializer):
         """
-        Create parent profile with proper validation.
+        Create parent profile with proper validation and send registration email.
         
         Args:
             serializer: Validated serializer instance
         """
-        serializer.save()
+        parent = serializer.save()
+        logger.info(f"Parent created: {parent.user.email}, ID: {parent.id}")
+        
+        # Send registration email to personal email (real address)
+        try:
+            logger.info(f"Attempting to send registration email to personal email: {parent.user.email}")
+            # Get linked student if available
+            child_name = None
+            child_matric = None
+            relation = parent.parentstudentrelation_set.first()
+            if relation and relation.student:
+                child_name = f"{relation.student.user.first_name} {relation.student.user.last_name}"
+                child_matric = relation.student.student_id
+            
+            # Use the default password that should be set in the serializer
+            default_password = 'school1234'
+            send_parent_registration_email(
+                email=parent.user.email,  # Send to personal email (real address)
+                first_name=parent.user.first_name,
+                last_name=parent.user.last_name,
+                password=default_password,
+                child_name=child_name,
+                child_matric=child_matric,
+                school_email=parent.user.username  # School email for login
+            )
+            logger.info("Registration email sent successfully")
+        except Exception as e:
+            # Log error but don't fail the registration
+            logger.error(f"Failed to send registration email: {e}", exc_info=True)
+    
+    def perform_destroy(self, instance):
+        """
+        Delete parent profile and associated user from database.
+        
+        Args:
+            instance: ParentProfile instance to delete
+        """
+        logger.info(f"ParentProfileViewSet.perform_destroy called for ID: {instance.id}")
+        # Delete the associated user first, which will cascade to the profile
+        if instance.user:
+            user_id = instance.user.id
+            instance.user.delete()
+            logger.info(f"User deleted successfully: {user_id}")
+        else:
+            instance.delete()
+        logger.info(f"Parent deleted successfully: {instance.id}")
 
 
 class ParentStudentRelationViewSet(viewsets.ModelViewSet):
@@ -235,3 +386,50 @@ class LecturerProfileViewSet(viewsets.ModelViewSet):
         if self.action in ['create', 'update', 'partial_update', 'destroy']:
             return [IsAuthenticated(), IsAdminRole()]
         return [IsAuthenticated()]
+    
+    def perform_create(self, serializer):
+        """
+        Create lecturer profile with proper validation and send registration email.
+        
+        Args:
+            serializer: Validated serializer instance
+        """
+        lecturer = serializer.save()
+        logger.info(f"Lecturer created: {lecturer.user.email}, ID: {lecturer.id}")
+        
+        # Send registration email to personal email (real address)
+        try:
+            logger.info(f"Attempting to send registration email to personal email: {lecturer.user.email}")
+            # Use the default password that was set in the serializer
+            default_password = 'school1234'
+            send_lecturer_registration_email(
+                email=lecturer.user.email,  # Send to personal email (real address)
+                first_name=lecturer.user.first_name,
+                last_name=lecturer.user.last_name,
+                staff_id=lecturer.staff_id,
+                department=lecturer.department.name if lecturer.department else 'Not Assigned',
+                rank=lecturer.rank if lecturer.rank else 'Not Assigned',
+                password=default_password,
+                school_email=lecturer.user.username  # School email for login
+            )
+            logger.info("Registration email sent successfully")
+        except Exception as e:
+            # Log error but don't fail the registration
+            logger.error(f"Failed to send registration email: {e}", exc_info=True)
+    
+    def perform_destroy(self, instance):
+        """
+        Delete lecturer profile and associated user from database.
+        
+        Args:
+            instance: LecturerProfile instance to delete
+        """
+        logger.info(f"LecturerProfileViewSet.perform_destroy called for ID: {instance.id}")
+        # Delete the associated user first, which will cascade to the profile
+        if instance.user:
+            user_id = instance.user.id
+            instance.user.delete()
+            logger.info(f"User deleted successfully: {user_id}")
+        else:
+            instance.delete()
+        logger.info(f"Lecturer deleted successfully: {instance.id}")

@@ -759,6 +759,209 @@ class Announcement(models.Model):
         return f"{self.title} ({self.get_target_audience_display()})"
 
 
+class Result(models.Model):
+    """
+    Represents student academic results for a course.
+    Supports pending and approved workflow.
+    """
+    STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('approved', 'Approved'),
+        ('rejected', 'Rejected'),
+    ]
+    
+    student = models.ForeignKey(
+        'users.User',
+        on_delete=models.CASCADE,
+        related_name='results',
+        verbose_name='Student',
+        limit_choices_to={'role': 'student'}
+    )
+    course = models.ForeignKey(
+        Course,
+        on_delete=models.CASCADE,
+        related_name='results',
+        verbose_name='Course'
+    )
+    lecturer = models.ForeignKey(
+        'users.User',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='submitted_results',
+        verbose_name='Lecturer',
+        limit_choices_to={'role': 'lecturer'}
+    )
+    session = models.ForeignKey(
+        AcademicSession,
+        on_delete=models.CASCADE,
+        related_name='results',
+        verbose_name='Academic Session'
+    )
+    semester = models.ForeignKey(
+        Semester,
+        on_delete=models.CASCADE,
+        related_name='results',
+        verbose_name='Semester'
+    )
+    ca_score = models.DecimalField(
+        max_digits=5,
+        decimal_places=2,
+        default=0,
+        verbose_name='CA Score',
+        help_text='Continuous Assessment score (max 40)'
+    )
+    exam_score = models.DecimalField(
+        max_digits=5,
+        decimal_places=2,
+        default=0,
+        verbose_name='Exam Score',
+        help_text='Examination score (max 60)'
+    )
+    total_score = models.DecimalField(
+        max_digits=5,
+        decimal_places=2,
+        default=0,
+        verbose_name='Total Score',
+        help_text='Total score (CA + Exam)'
+    )
+    grade = models.CharField(
+        max_length=2,
+        blank=True,
+        null=True,
+        verbose_name='Grade'
+    )
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default='pending',
+        verbose_name='Status'
+    )
+    remarks = models.TextField(
+        blank=True,
+        null=True,
+        verbose_name='Remarks'
+    )
+    submitted_at = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name='Submitted At'
+    )
+    approved_at = models.DateTimeField(
+        null=True,
+        blank=True,
+        verbose_name='Approved At'
+    )
+    approved_by = models.ForeignKey(
+        'users.User',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='approved_results',
+        verbose_name='Approved By',
+        limit_choices_to={'role': 'admin'}
+    )
+    
+    class Meta:
+        db_table = 'results'
+        unique_together = ['student', 'course', 'session', 'semester']
+        ordering = ['-session', 'semester', 'course', 'student']
+        verbose_name = 'Result'
+        verbose_name_plural = 'Results'
+    
+    def __str__(self):
+        return f"{self.student.username} - {self.course.course_code} - {self.total_score} ({self.get_status_display()})"
+    
+    def save(self, *args, **kwargs):
+        # Calculate total score
+        self.total_score = self.ca_score + self.exam_score
+        # Auto-calculate grade based on total score
+        self.grade = self.calculate_grade(self.total_score)
+        super().save(*args, **kwargs)
+    
+    @staticmethod
+    def calculate_grade(score):
+        """Calculate grade based on total score."""
+        if score >= 70:
+            return 'A'
+        elif score >= 60:
+            return 'B'
+        elif score >= 50:
+            return 'C'
+        elif score >= 45:
+            return 'D'
+        elif score >= 40:
+            return 'E'
+        else:
+            return 'F'
+    
+    @property
+    def grade_point(self):
+        """Calculate grade point based on grade (5-point scale)."""
+        grade_points = {'A': 5.0, 'B': 4.0, 'C': 3.0, 'D': 2.0, 'E': 1.0, 'F': 0.0}
+        return grade_points.get(self.grade, 0.0)
+    
+    @property
+    def quality_point(self):
+        """Calculate quality point (grade_point × course credit_unit)."""
+        return self.grade_point * (self.course.credit_unit or 0)
+
+
+class CGPARecord(models.Model):
+    """
+    Records CGPA calculations for tracking student academic performance history.
+    """
+    student = models.ForeignKey(
+        'users.User',
+        on_delete=models.CASCADE,
+        related_name='cgpa_records',
+        verbose_name='Student',
+        limit_choices_to={'role': 'student'}
+    )
+    session = models.ForeignKey(
+        AcademicSession,
+        on_delete=models.CASCADE,
+        related_name='cgpa_records',
+        verbose_name='Academic Session'
+    )
+    semester = models.ForeignKey(
+        Semester,
+        on_delete=models.CASCADE,
+        related_name='cgpa_records',
+        verbose_name='Semester',
+        null=True,
+        blank=True
+    )
+    cgpa = models.DecimalField(
+        max_digits=3,
+        decimal_places=2,
+        verbose_name='CGPA',
+        help_text='Cumulative Grade Point Average'
+    )
+    total_credit_units = models.PositiveIntegerField(
+        verbose_name='Total Credit Units'
+    )
+    total_quality_points = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        verbose_name='Total Quality Points'
+    )
+    calculated_at = models.DateTimeField(
+        auto_now=True,
+        verbose_name='Calculated At'
+    )
+    
+    class Meta:
+        db_table = 'cgpa_records'
+        unique_together = ['student', 'session', 'semester']
+        ordering = ['-session', 'semester', '-calculated_at']
+        verbose_name = 'CGPA Record'
+        verbose_name_plural = 'CGPA Records'
+    
+    def __str__(self):
+        semester_str = f" - {self.semester.get_name_display()}" if self.semester else ""
+        return f"{self.student.username} - {self.session.name}{semester_str} - CGPA: {self.cgpa}"
+
+
 class ActivityLog(models.Model):
     """
     Enhanced activity logging for tracking system actions.

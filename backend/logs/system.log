@@ -4201,3 +4201,613 @@ INFO 2026-07-06 00:34:27,303 basehttp 1980 19636 "GET /api/v1/courses/ HTTP/1.1"
 INFO 2026-07-06 00:34:27,353 basehttp 1980 6320 "GET /api/v1/courses/ HTTP/1.1" 200 4701
 INFO 2026-07-06 00:34:28,471 basehttp 1980 6320 "GET /api/v1/parents/ HTTP/1.1" 200 1031
 INFO 2026-07-06 00:34:28,497 basehttp 1980 19636 "GET /api/v1/parents/ HTTP/1.1" 200 1031
+INFO 2026-07-06 00:35:26,042 basehttp 1980 19636 "OPTIONS /api/v1/auth/logout/ HTTP/1.1" 200 0
+WARNING 2026-07-06 00:35:26,051 basehttp 1980 19636 "POST /api/v1/auth/logout/ HTTP/1.1" 400 48
+WARNING 2026-07-06 00:35:26,284 basehttp 1980 19636 "GET /api/v1/stats/public/ HTTP/1.1" 404 42306
+WARNING 2026-07-06 00:35:26,346 basehttp 1980 6320 "GET /api/v1/stats/public/ HTTP/1.1" 404 42306
+INFO 2026-07-06 00:35:33,107 basehttp 1980 6320 "POST /api/v1/auth/login/ HTTP/1.1" 200 1201
+INFO 2026-07-06 00:35:45,479 basehttp 1980 6320 "POST /api/v1/auth/logout/ HTTP/1.1" 200 53
+WARNING 2026-07-06 00:35:45,585 basehttp 1980 6320 "GET /api/v1/stats/public/ HTTP/1.1" 404 42306
+WARNING 2026-07-06 00:35:45,633 basehttp 1980 19636 "GET /api/v1/stats/public/ HTTP/1.1" 404 42306
+INFO 2026-07-06 00:35:49,760 basehttp 1980 19636 "POST /api/v1/auth/login/ HTTP/1.1" 200 709
+INFO 2026-07-06 00:35:49,976 basehttp 1980 19636 "GET /api/v1/dashboard/admin/ HTTP/1.1" 200 957
+INFO 2026-07-06 00:35:50,030 basehttp 1980 6320 "GET /api/v1/dashboard/admin/ HTTP/1.1" 200 957
+INFO 2026-07-06 00:36:12,097 basehttp 1980 6320 "POST /api/v1/auth/logout/ HTTP/1.1" 200 53
+WARNING 2026-07-06 00:36:12,188 basehttp 1980 6320 "GET /api/v1/stats/public/ HTTP/1.1" 404 42306
+WARNING 2026-07-06 00:36:12,234 basehttp 1980 19636 "GET /api/v1/stats/public/ HTTP/1.1" 404 42306
+INFO 2026-07-06 00:36:21,885 basehttp 1980 19636 "POST /api/v1/auth/login/ HTTP/1.1" 200 1201
+INFO 2026-07-06 00:55:31,478 basehttp 1980 12672 "OPTIONS /api/v1/lecturers/my-courses/ HTTP/1.1" 200 0
+INFO 2026-07-06 00:55:31,490 basehttp 1980 7720 "OPTIONS /api/v1/lecturers/my-courses/ HTTP/1.1" 200 0
+WARNING 2026-07-06 00:55:31,767 basehttp 1980 12672 "GET /api/v1/lecturers/my-courses/ HTTP/1.1" 404 23
+WARNING 2026-07-06 00:55:31,782 basehttp 1980 7720 "GET /api/v1/lecturers/my-courses/ HTTP/1.1" 404 23
+INFO 2026-07-06 00:56:19,613 basehttp 1980 22460 "POST /api/v1/auth/logout/ HTTP/1.1" 200 53
+WARNING 2026-07-06 00:56:20,026 basehttp 1980 22460 "GET /api/v1/stats/public/ HTTP/1.1" 404 42306
+WARNING 2026-07-06 00:56:20,105 basehttp 1980 22460 "GET /api/v1/stats/public/ HTTP/1.1" 404 42306
+INFO 2026-07-06 00:56:25,952 basehttp 1980 22460 "POST /api/v1/auth/login/ HTTP/1.1" 200 709
+INFO 2026-07-06 00:56:27,031 basehttp 1980 22460 "GET /api/v1/dashboard/admin/ HTTP/1.1" 200 957
+INFO 2026-07-06 00:56:27,068 basehttp 1980 18824 "GET /api/v1/dashboard/admin/ HTTP/1.1" 200 957
+INFO 2026-07-06 00:56:36,434 basehttp 1980 18824 "OPTIONS /api/v1/departments/ HTTP/1.1" 200 0
+INFO 2026-07-06 00:56:36,435 basehttp 1980 22460 "OPTIONS /api/v1/levels/ HTTP/1.1" 200 0
+INFO 2026-07-06 00:56:36,490 basehttp 1980 5008 "OPTIONS /api/v1/semesters/ HTTP/1.1" 200 0
+INFO 2026-07-06 00:56:36,490 basehttp 1980 22460 "GET /api/v1/departments/ HTTP/1.1" 200 52
+INFO 2026-07-06 00:56:36,491 basehttp 1980 18824 "GET /api/v1/levels/ HTTP/1.1" 200 196
+INFO 2026-07-06 00:56:36,558 basehttp 1980 5008 "GET /api/v1/semesters/ HTTP/1.1" 200 704
+INFO 2026-07-06 00:56:37,589 basehttp 1980 5008 "GET /api/v1/dashboard/admin/ HTTP/1.1" 200 957
+INFO 2026-07-06 00:56:38,743 basehttp 1980 5008 "GET /api/v1/departments/ HTTP/1.1" 200 52
+INFO 2026-07-06 00:56:38,755 basehttp 1980 22460 "GET /api/v1/courses/ HTTP/1.1" 200 4701
+INFO 2026-07-06 01:04:42,768 basehttp 1980 15332 "GET /api/v1/dashboard/admin/ HTTP/1.1" 200 957
+INFO 2026-07-06 01:06:29,971 basehttp 1980 15332 "GET /api/v1/departments/ HTTP/1.1" 200 52
+INFO 2026-07-06 01:06:30,094 basehttp 1980 4836 "GET /api/v1/courses/ HTTP/1.1" 200 4701
+INFO 2026-07-06 01:06:31,171 basehttp 1980 4836 "GET /api/v1/departments/ HTTP/1.1" 200 52
+INFO 2026-07-06 01:06:31,193 basehttp 1980 15332 "GET /api/v1/courses/ HTTP/1.1" 200 4701
+INFO 2026-07-06 01:06:31,275 basehttp 1980 4836 "GET /api/v1/departments/ HTTP/1.1" 200 52
+INFO 2026-07-06 01:06:31,508 basehttp 1980 14928 "GET /api/v1/courses/ HTTP/1.1" 200 4701
+INFO 2026-07-06 01:08:27,435 basehttp 1980 8400 "GET /api/v1/departments/ HTTP/1.1" 200 52
+INFO 2026-07-06 01:08:27,474 basehttp 1980 15892 "GET /api/v1/courses/ HTTP/1.1" 200 4701
+INFO 2026-07-06 01:08:32,369 basehttp 1980 15892 "GET /api/v1/departments/ HTTP/1.1" 200 52
+INFO 2026-07-06 01:08:32,395 basehttp 1980 8400 "GET /api/v1/courses/ HTTP/1.1" 200 4701
+INFO 2026-07-06 01:08:35,378 basehttp 1980 8400 "GET /api/v1/departments/ HTTP/1.1" 200 52
+INFO 2026-07-06 01:08:35,396 basehttp 1980 15892 "GET /api/v1/courses/ HTTP/1.1" 200 4701
+INFO 2026-07-06 01:08:54,135 basehttp 1980 15892 "GET /api/v1/departments/ HTTP/1.1" 200 52
+INFO 2026-07-06 01:08:54,147 basehttp 1980 8400 "GET /api/v1/courses/ HTTP/1.1" 200 4701
+INFO 2026-07-06 01:08:57,424 basehttp 1980 8400 "GET /api/v1/departments/ HTTP/1.1" 200 52
+INFO 2026-07-06 01:08:57,435 basehttp 1980 15892 "GET /api/v1/courses/ HTTP/1.1" 200 4701
+INFO 2026-07-06 01:09:00,318 basehttp 1980 15892 "GET /api/v1/departments/ HTTP/1.1" 200 52
+INFO 2026-07-06 01:09:00,328 basehttp 1980 8400 "GET /api/v1/courses/ HTTP/1.1" 200 4701
+INFO 2026-07-06 01:09:03,501 basehttp 1980 8400 "GET /api/v1/departments/ HTTP/1.1" 200 52
+INFO 2026-07-06 01:09:03,515 basehttp 1980 15892 "GET /api/v1/courses/ HTTP/1.1" 200 4701
+INFO 2026-07-06 01:09:05,942 basehttp 1980 15892 "GET /api/v1/departments/ HTTP/1.1" 200 52
+INFO 2026-07-06 01:09:05,952 basehttp 1980 8400 "GET /api/v1/courses/ HTTP/1.1" 200 4701
+INFO 2026-07-06 01:09:14,165 basehttp 1980 8400 "GET /api/v1/departments/ HTTP/1.1" 200 52
+INFO 2026-07-06 01:09:14,165 basehttp 1980 15892 "GET /api/v1/courses/ HTTP/1.1" 200 4701
+INFO 2026-07-06 01:09:16,078 basehttp 1980 15892 "GET /api/v1/departments/ HTTP/1.1" 200 52
+INFO 2026-07-06 01:09:16,089 basehttp 1980 8400 "GET /api/v1/courses/ HTTP/1.1" 200 4701
+INFO 2026-07-06 01:09:18,707 basehttp 1980 8400 "GET /api/v1/departments/ HTTP/1.1" 200 52
+INFO 2026-07-06 01:09:18,719 basehttp 1980 15892 "GET /api/v1/courses/ HTTP/1.1" 200 4701
+INFO 2026-07-06 01:09:34,583 basehttp 1980 15892 "GET /api/v1/departments/ HTTP/1.1" 200 52
+INFO 2026-07-06 01:09:34,598 basehttp 1980 8400 "GET /api/v1/courses/ HTTP/1.1" 200 4701
+INFO 2026-07-06 01:09:37,065 basehttp 1980 8400 "GET /api/v1/departments/ HTTP/1.1" 200 52
+INFO 2026-07-06 01:09:37,076 basehttp 1980 15892 "GET /api/v1/courses/ HTTP/1.1" 200 4701
+INFO 2026-07-06 01:09:41,233 basehttp 1980 15892 "GET /api/v1/departments/ HTTP/1.1" 200 52
+INFO 2026-07-06 01:09:41,242 basehttp 1980 8400 "GET /api/v1/courses/ HTTP/1.1" 200 4701
+INFO 2026-07-06 01:09:43,390 basehttp 1980 8400 "GET /api/v1/departments/ HTTP/1.1" 200 52
+INFO 2026-07-06 01:09:43,390 basehttp 1980 15892 "GET /api/v1/courses/ HTTP/1.1" 200 4701
+INFO 2026-07-06 01:09:48,813 basehttp 1980 8400 "GET /api/v1/courses/ HTTP/1.1" 200 4701
+INFO 2026-07-06 01:09:48,814 basehttp 1980 15892 "GET /api/v1/departments/ HTTP/1.1" 200 52
+INFO 2026-07-06 01:09:53,291 basehttp 1980 15892 "GET /api/v1/departments/ HTTP/1.1" 200 52
+INFO 2026-07-06 01:09:53,301 basehttp 1980 8400 "GET /api/v1/courses/ HTTP/1.1" 200 4701
+INFO 2026-07-06 01:10:02,754 basehttp 1980 8400 "GET /api/v1/departments/ HTTP/1.1" 200 52
+INFO 2026-07-06 01:10:02,764 basehttp 1980 15892 "GET /api/v1/courses/ HTTP/1.1" 200 4701
+INFO 2026-07-06 01:10:50,970 basehttp 1980 15892 "GET /api/v1/departments/ HTTP/1.1" 200 52
+INFO 2026-07-06 01:10:50,981 basehttp 1980 8400 "GET /api/v1/courses/ HTTP/1.1" 200 4701
+INFO 2026-07-06 01:15:58,588 basehttp 1980 6352 "GET /api/v1/dashboard/admin/ HTTP/1.1" 200 957
+INFO 2026-07-06 01:16:02,410 basehttp 1980 6352 "POST /api/v1/auth/logout/ HTTP/1.1" 200 53
+WARNING 2026-07-06 01:16:02,650 basehttp 1980 6352 "GET /api/v1/stats/public/ HTTP/1.1" 404 42306
+WARNING 2026-07-06 01:16:02,756 basehttp 1980 20212 "GET /api/v1/stats/public/ HTTP/1.1" 404 42306
+INFO 2026-07-06 01:16:12,331 basehttp 1980 20212 "POST /api/v1/auth/login/ HTTP/1.1" 200 1201
+WARNING 2026-07-06 01:16:12,434 basehttp 1980 20212 "GET /api/v1/lecturers/my-courses/ HTTP/1.1" 404 23
+WARNING 2026-07-06 01:16:12,442 basehttp 1980 6352 "GET /api/v1/lecturers/my-courses/ HTTP/1.1" 404 23
+INFO 2026-07-06 01:23:45,866 autoreload 1980 16008 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\school_monitoring_system\settings.py changed, reloading.
+INFO 2026-07-06 01:23:53,188 autoreload 3244 22132 Watching for file changes with StatReloader
+INFO 2026-07-06 01:30:56,942 autoreload 3244 22132 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\users\viewsets.py changed, reloading.
+INFO 2026-07-06 01:30:59,950 autoreload 2264 21536 Watching for file changes with StatReloader
+INFO 2026-07-06 01:31:13,975 autoreload 2264 21536 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\users\viewsets.py changed, reloading.
+INFO 2026-07-06 01:31:16,068 autoreload 2308 22460 Watching for file changes with StatReloader
+INFO 2026-07-06 01:31:21,230 autoreload 2308 22460 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\users\viewsets.py changed, reloading.
+INFO 2026-07-06 01:31:22,829 autoreload 13268 15740 Watching for file changes with StatReloader
+INFO 2026-07-06 01:31:33,961 autoreload 13268 15740 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\users\viewsets.py changed, reloading.
+INFO 2026-07-06 01:31:35,265 autoreload 18328 12688 Watching for file changes with StatReloader
+INFO 2026-07-06 01:31:59,079 autoreload 18328 12688 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\users\viewsets.py changed, reloading.
+INFO 2026-07-06 01:32:01,531 autoreload 20324 15768 Watching for file changes with StatReloader
+INFO 2026-07-06 02:03:34,023 basehttp 20324 18772 "POST /api/v1/auth/logout/ HTTP/1.1" 200 53
+WARNING 2026-07-06 02:03:34,238 basehttp 20324 18772 "GET /api/v1/stats/public/ HTTP/1.1" 404 42306
+WARNING 2026-07-06 02:03:34,305 basehttp 20324 18772 "GET /api/v1/stats/public/ HTTP/1.1" 404 42306
+INFO 2026-07-06 02:03:39,556 basehttp 20324 18772 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 0
+INFO 2026-07-06 02:03:40,498 basehttp 20324 18772 "POST /api/v1/auth/login/ HTTP/1.1" 200 709
+INFO 2026-07-06 02:03:40,578 basehttp 20324 18772 "OPTIONS /api/v1/dashboard/admin/ HTTP/1.1" 200 0
+INFO 2026-07-06 02:03:40,674 basehttp 20324 18772 "GET /api/v1/dashboard/admin/ HTTP/1.1" 200 957
+INFO 2026-07-06 02:03:40,702 basehttp 20324 2488 "GET /api/v1/dashboard/admin/ HTTP/1.1" 200 957
+INFO 2026-07-06 02:03:44,632 basehttp 20324 2488 "GET /api/v1/departments/ HTTP/1.1" 200 52
+INFO 2026-07-06 02:03:44,650 basehttp 20324 18772 "GET /api/v1/courses/ HTTP/1.1" 200 4701
+INFO 2026-07-06 02:04:25,567 basehttp 20324 18772 "OPTIONS /api/v1/lecturers/ HTTP/1.1" 200 0
+INFO 2026-07-06 02:04:26,394 basehttp 20324 18772 "POST /api/v1/lecturers/ HTTP/1.1" 201 502
+INFO 2026-07-06 02:04:29,834 basehttp 20324 18772 "GET /api/v1/dashboard/admin/ HTTP/1.1" 200 957
+INFO 2026-07-06 02:05:47,767 basehttp 20324 18772 "OPTIONS /api/v1/auth/me/ HTTP/1.1" 200 0
+INFO 2026-07-06 02:05:47,768 basehttp 20324 2488 "OPTIONS /api/v1/auth/me/ HTTP/1.1" 200 0
+INFO 2026-07-06 02:05:47,777 basehttp 20324 18772 "OPTIONS /api/v1/auth/me/ HTTP/1.1" 200 0
+INFO 2026-07-06 02:05:47,792 basehttp 20324 2488 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-06 02:05:47,793 basehttp 20324 15380 "OPTIONS /api/v1/auth/me/ HTTP/1.1" 200 0
+INFO 2026-07-06 02:05:47,809 basehttp 20324 15380 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-06 02:05:47,817 basehttp 20324 2488 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-06 02:05:47,826 basehttp 20324 15380 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-06 02:05:47,975 basehttp 20324 15380 "GET /api/v1/dashboard/admin/ HTTP/1.1" 200 957
+INFO 2026-07-06 02:05:48,050 basehttp 20324 2488 "GET /api/v1/dashboard/admin/ HTTP/1.1" 200 957
+INFO 2026-07-06 02:06:04,773 basehttp 20324 2488 "GET /api/v1/lecturers/ HTTP/1.1" 200 2866
+INFO 2026-07-06 02:06:04,805 basehttp 20324 15380 "GET /api/v1/lecturers/ HTTP/1.1" 200 2866
+INFO 2026-07-06 02:06:24,212 basehttp 20324 15380 "GET /api/v1/departments/ HTTP/1.1" 200 52
+INFO 2026-07-06 02:06:24,223 basehttp 20324 2488 "GET /api/v1/courses/ HTTP/1.1" 200 4701
+INFO 2026-07-06 02:06:26,924 basehttp 20324 2488 "GET /api/v1/lecturers/ HTTP/1.1" 200 2866
+INFO 2026-07-06 02:24:19,637 autoreload 20324 15768 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\school_monitoring_system\settings.py changed, reloading.
+INFO 2026-07-06 02:24:22,982 autoreload 16452 16156 Watching for file changes with StatReloader
+INFO 2026-07-06 02:25:43,925 autoreload 8756 19632 Watching for file changes with StatReloader
+INFO 2026-07-06 02:34:10,445 basehttp 8756 1060 "OPTIONS /api/v1/stats/public/ HTTP/1.1" 200 0
+INFO 2026-07-06 02:34:10,448 basehttp 8756 2860 "OPTIONS /api/v1/stats/public/ HTTP/1.1" 200 0
+WARNING 2026-07-06 02:34:10,548 basehttp 8756 1060 "GET /api/v1/stats/public/ HTTP/1.1" 404 42306
+INFO 2026-07-06 02:34:18,247 basehttp 8756 1060 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 0
+INFO 2026-07-06 02:34:20,112 basehttp 8756 1060 "POST /api/v1/auth/login/ HTTP/1.1" 200 709
+INFO 2026-07-06 02:34:20,284 basehttp 8756 1060 "OPTIONS /api/v1/dashboard/admin/ HTTP/1.1" 200 0
+INFO 2026-07-06 02:34:20,284 basehttp 8756 2860 "OPTIONS /api/v1/dashboard/admin/ HTTP/1.1" 200 0
+INFO 2026-07-06 02:34:20,445 basehttp 8756 2860 "GET /api/v1/dashboard/admin/ HTTP/1.1" 200 957
+INFO 2026-07-06 02:34:20,490 basehttp 8756 2860 "GET /api/v1/dashboard/admin/ HTTP/1.1" 200 957
+INFO 2026-07-06 02:34:27,411 basehttp 8756 2860 "OPTIONS /api/v1/departments/ HTTP/1.1" 200 0
+INFO 2026-07-06 02:34:27,411 basehttp 8756 1060 "OPTIONS /api/v1/courses/ HTTP/1.1" 200 0
+INFO 2026-07-06 02:34:27,519 basehttp 8756 1060 "GET /api/v1/departments/ HTTP/1.1" 200 52
+INFO 2026-07-06 02:34:27,553 basehttp 8756 2860 "GET /api/v1/courses/ HTTP/1.1" 200 4701
+INFO 2026-07-06 02:35:38,859 basehttp 8756 2860 "GET /api/v1/dashboard/admin/ HTTP/1.1" 200 957
+INFO 2026-07-06 02:35:44,684 basehttp 8756 2860 "OPTIONS /api/v1/lecturers/ HTTP/1.1" 200 0
+INFO 2026-07-06 02:35:44,723 basehttp 8756 2860 "GET /api/v1/lecturers/ HTTP/1.1" 200 2866
+INFO 2026-07-06 02:35:44,756 basehttp 8756 2860 "GET /api/v1/lecturers/ HTTP/1.1" 200 2866
+INFO 2026-07-06 02:35:59,666 basehttp 8756 2860 "OPTIONS /api/v1/lecturers/16/ HTTP/1.1" 200 0
+INFO 2026-07-06 02:35:59,711 basehttp 8756 2860 "DELETE /api/v1/lecturers/16/ HTTP/1.1" 204 0
+INFO 2026-07-06 02:35:59,748 basehttp 8756 2860 "GET /api/v1/lecturers/ HTTP/1.1" 200 2363
+INFO 2026-07-06 02:37:18,025 basehttp 8756 2860 "GET /api/v1/departments/ HTTP/1.1" 200 52
+INFO 2026-07-06 02:37:18,025 basehttp 8756 1060 "GET /api/v1/courses/ HTTP/1.1" 200 4701
+INFO 2026-07-06 02:38:31,413 basehttp 8756 1060 "POST /api/v1/lecturers/ HTTP/1.1" 201 492
+INFO 2026-07-06 02:38:34,771 basehttp 8756 1060 "GET /api/v1/lecturers/ HTTP/1.1" 200 2856
+INFO 2026-07-06 02:41:53,111 basehttp 8756 1060 "GET /api/v1/departments/ HTTP/1.1" 200 52
+INFO 2026-07-06 02:41:53,114 basehttp 8756 2860 "GET /api/v1/courses/ HTTP/1.1" 200 4701
+INFO 2026-07-06 02:41:55,982 basehttp 8756 2860 "GET /api/v1/lecturers/ HTTP/1.1" 200 2856
+INFO 2026-07-06 02:43:16,837 autoreload 8756 19632 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\users\utils\email_utils.py changed, reloading.
+INFO 2026-07-06 02:43:20,519 autoreload 17528 15348 Watching for file changes with StatReloader
+INFO 2026-07-06 02:43:54,456 autoreload 17528 15348 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\users\viewsets.py changed, reloading.
+INFO 2026-07-06 02:43:56,598 autoreload 12108 14392 Watching for file changes with StatReloader
+INFO 2026-07-06 02:44:16,087 autoreload 12108 14392 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\users\viewsets.py changed, reloading.
+INFO 2026-07-06 02:44:18,238 autoreload 9904 19580 Watching for file changes with StatReloader
+INFO 2026-07-06 02:45:03,852 autoreload 9904 19580 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\users\serializers.py changed, reloading.
+INFO 2026-07-06 02:45:06,774 autoreload 10900 18260 Watching for file changes with StatReloader
+INFO 2026-07-06 02:45:23,513 autoreload 10900 18260 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\users\viewsets.py changed, reloading.
+INFO 2026-07-06 02:45:24,809 autoreload 8016 13688 Watching for file changes with StatReloader
+INFO 2026-07-06 02:46:17,198 autoreload 8016 13688 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\users\viewsets.py changed, reloading.
+INFO 2026-07-06 02:46:19,498 autoreload 15584 12448 Watching for file changes with StatReloader
+INFO 2026-07-06 02:48:43,718 autoreload 15584 12448 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\users\viewsets.py changed, reloading.
+INFO 2026-07-06 02:48:46,906 autoreload 22408 1104 Watching for file changes with StatReloader
+INFO 2026-07-06 02:49:04,086 autoreload 22408 1104 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\users\viewsets.py changed, reloading.
+INFO 2026-07-06 02:49:05,418 autoreload 2224 3244 Watching for file changes with StatReloader
+INFO 2026-07-06 03:04:21,321 autoreload 2224 3244 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\users\serializers.py changed, reloading.
+INFO 2026-07-06 03:04:27,491 autoreload 1388 5740 Watching for file changes with StatReloader
+INFO 2026-07-06 03:17:18,961 basehttp 1388 3320 "OPTIONS /api/v1/auth/me/ HTTP/1.1" 200 0
+INFO 2026-07-06 03:17:18,979 basehttp 1388 5884 "OPTIONS /api/v1/auth/me/ HTTP/1.1" 200 0
+INFO 2026-07-06 03:17:18,979 basehttp 1388 7736 "OPTIONS /api/v1/auth/me/ HTTP/1.1" 200 0
+INFO 2026-07-06 03:17:18,979 basehttp 1388 21720 "OPTIONS /api/v1/auth/me/ HTTP/1.1" 200 0
+INFO 2026-07-06 03:17:19,404 basehttp 1388 15336 "GET /api/v1/lecturers/ HTTP/1.1" 200 2856
+INFO 2026-07-06 03:17:19,442 basehttp 1388 15336 "GET /api/v1/lecturers/ HTTP/1.1" 200 2856
+INFO 2026-07-06 03:17:19,578 basehttp 1388 5884 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-06 03:17:19,588 basehttp 1388 5884 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-06 03:17:19,598 basehttp 1388 5884 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-06 03:17:19,609 basehttp 1388 5884 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-06 03:17:35,565 autoreload 18144 16548 Watching for file changes with StatReloader
+INFO 2026-07-06 03:17:39,540 basehttp 18144 12972 "GET /api/v1/lecturers/ HTTP/1.1" 200 2856
+INFO 2026-07-06 03:17:39,560 basehttp 18144 12972 "GET /api/v1/lecturers/ HTTP/1.1" 200 2856
+INFO 2026-07-06 03:17:39,563 basehttp 18144 964 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-06 03:17:39,613 basehttp 18144 964 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-06 03:17:39,645 basehttp 18144 964 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-06 03:17:39,664 basehttp 18144 964 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-06 03:17:44,149 basehttp 18144 964 "GET /api/v1/departments/ HTTP/1.1" 200 52
+INFO 2026-07-06 03:17:44,159 basehttp 18144 12972 "GET /api/v1/courses/ HTTP/1.1" 200 4701
+INFO 2026-07-06 03:18:21,333 basehttp 18144 12972 "GET /api/v1/lecturers/ HTTP/1.1" 200 2856
+INFO 2026-07-06 03:18:48,245 basehttp 18144 12972 "OPTIONS /api/v1/lecturers/17/ HTTP/1.1" 200 0
+INFO 2026-07-06 03:18:48,378 viewsets 18144 12972 LecturerProfileViewSet.perform_destroy called for ID: 17
+INFO 2026-07-06 03:18:49,149 viewsets 18144 12972 Lecturer deleted successfully: None
+INFO 2026-07-06 03:18:49,152 basehttp 18144 12972 "DELETE /api/v1/lecturers/17/ HTTP/1.1" 204 0
+INFO 2026-07-06 03:18:49,178 basehttp 18144 12972 "GET /api/v1/lecturers/ HTTP/1.1" 200 2363
+INFO 2026-07-06 03:19:22,727 basehttp 18144 12972 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-06 03:19:22,762 basehttp 18144 964 "GET /api/v1/lecturers/ HTTP/1.1" 200 2363
+INFO 2026-07-06 03:19:22,817 basehttp 18144 12972 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-06 03:19:22,873 basehttp 18144 964 "GET /api/v1/lecturers/ HTTP/1.1" 200 2363
+INFO 2026-07-06 03:19:22,874 basehttp 18144 12972 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-06 03:19:22,906 basehttp 18144 12972 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-06 03:20:42,617 basehttp 18144 12972 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-06 03:20:42,638 basehttp 18144 964 "GET /api/v1/lecturers/ HTTP/1.1" 200 1901
+INFO 2026-07-06 03:20:42,701 basehttp 18144 12972 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-06 03:20:42,740 basehttp 18144 964 "GET /api/v1/lecturers/ HTTP/1.1" 200 1901
+INFO 2026-07-06 03:20:42,752 basehttp 18144 12972 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-06 03:20:42,771 basehttp 18144 12972 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-06 03:20:48,856 basehttp 18144 12972 "GET /api/v1/departments/ HTTP/1.1" 200 52
+INFO 2026-07-06 03:20:49,377 basehttp 18144 964 "GET /api/v1/courses/ HTTP/1.1" 200 4701
+INFO 2026-07-06 03:21:32,780 viewsets 18144 964 Lecturer created: mgbegraphics@gmail.com, ID: 18
+INFO 2026-07-06 03:21:32,782 viewsets 18144 964 Attempting to send registration email to mgbegraphics@gmail.com
+INFO 2026-07-06 03:21:32,783 email_utils 18144 964 Attempting to send lecturer registration email to mgbegraphics@gmail.com
+ERROR 2026-07-06 03:21:32,788 email_utils 18144 964 Error sending registration email to mgbegraphics@gmail.com: emails/lecturer_registration.html
+Traceback (most recent call last):
+  File "C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\users\utils\email_utils.py", line 41, in send_registration_email
+    html_content = render_to_string(template_name, context)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: emails/lecturer_registration.html
+INFO 2026-07-06 03:21:32,795 viewsets 18144 964 Registration email sent successfully
+INFO 2026-07-06 03:21:32,801 basehttp 18144 964 "POST /api/v1/lecturers/ HTTP/1.1" 201 490
+INFO 2026-07-06 03:21:38,588 basehttp 18144 964 "GET /api/v1/lecturers/ HTTP/1.1" 200 2392
+INFO 2026-07-06 03:29:35,508 autoreload 18144 16548 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\school_monitoring_system\settings.py changed, reloading.
+INFO 2026-07-06 03:29:45,152 autoreload 15268 8224 Watching for file changes with StatReloader
+INFO 2026-07-06 03:37:05,785 autoreload 23028 23032 Watching for file changes with StatReloader
+WARNING 2026-07-06 03:37:07,748 basehttp 23028 23216 "GET /api/v1/auth/me/ HTTP/1.1" 401 172
+WARNING 2026-07-06 03:37:07,748 basehttp 23028 23304 "GET /api/v1/lecturers/ HTTP/1.1" 401 172
+WARNING 2026-07-06 03:37:07,754 basehttp 23028 23216 "GET /api/v1/auth/me/ HTTP/1.1" 401 172
+WARNING 2026-07-06 03:37:07,759 basehttp 23028 23304 "GET /api/v1/lecturers/ HTTP/1.1" 401 172
+WARNING 2026-07-06 03:37:07,762 basehttp 23028 23216 "GET /api/v1/auth/me/ HTTP/1.1" 401 172
+WARNING 2026-07-06 03:37:07,773 basehttp 23028 23216 "GET /api/v1/auth/me/ HTTP/1.1" 401 172
+INFO 2026-07-06 03:37:07,814 basehttp 23028 23216 "OPTIONS /api/v1/auth/refresh/ HTTP/1.1" 200 0
+INFO 2026-07-06 03:37:07,820 basehttp 23028 23304 "OPTIONS /api/v1/auth/refresh/ HTTP/1.1" 200 0
+INFO 2026-07-06 03:37:07,946 basehttp 23028 23352 "OPTIONS /api/v1/auth/refresh/ HTTP/1.1" 200 0
+INFO 2026-07-06 03:37:07,997 basehttp 23028 22792 "OPTIONS /api/v1/auth/refresh/ HTTP/1.1" 200 0
+INFO 2026-07-06 03:37:08,029 basehttp 23028 23384 "OPTIONS /api/v1/auth/refresh/ HTTP/1.1" 200 0
+INFO 2026-07-06 03:37:08,043 basehttp 23028 23392 "OPTIONS /api/v1/auth/refresh/ HTTP/1.1" 200 0
+WARNING 2026-07-06 03:37:08,375 basehttp 23028 23392 "POST /api/v1/auth/refresh/ HTTP/1.1" 401 58
+WARNING 2026-07-06 03:37:08,377 basehttp 23028 23384 "POST /api/v1/auth/refresh/ HTTP/1.1" 401 58
+WARNING 2026-07-06 03:37:08,378 basehttp 23028 23352 "POST /api/v1/auth/refresh/ HTTP/1.1" 401 58
+INFO 2026-07-06 03:37:08,675 basehttp 23028 23216 "POST /api/v1/auth/refresh/ HTTP/1.1" 200 582
+WARNING 2026-07-06 03:37:08,683 basehttp 23028 23216 "POST /api/v1/auth/refresh/ HTTP/1.1" 400 43
+INFO 2026-07-06 03:37:08,700 basehttp 23028 23352 "OPTIONS /api/v1/auth/logout/ HTTP/1.1" 200 0
+INFO 2026-07-06 03:37:08,751 basehttp 23028 23304 "POST /api/v1/auth/refresh/ HTTP/1.1" 200 582
+WARNING 2026-07-06 03:37:08,756 basehttp 23028 23216 "POST /api/v1/auth/refresh/ HTTP/1.1" 400 43
+INFO 2026-07-06 03:37:08,784 basehttp 23028 23384 "GET /api/v1/lecturers/ HTTP/1.1" 200 1901
+WARNING 2026-07-06 03:37:08,790 basehttp 23028 22792 "POST /api/v1/auth/refresh/ HTTP/1.1" 401 58
+WARNING 2026-07-06 03:37:08,807 basehttp 23028 23352 "POST /api/v1/auth/logout/ HTTP/1.1" 400 54
+INFO 2026-07-06 03:37:08,879 basehttp 23028 23304 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+WARNING 2026-07-06 03:37:08,973 basehttp 23028 23216 "POST /api/v1/auth/logout/ HTTP/1.1" 400 54
+WARNING 2026-07-06 03:37:09,212 basehttp 23028 23216 "GET /api/v1/stats/public/ HTTP/1.1" 404 42306
+WARNING 2026-07-06 03:37:09,240 basehttp 23028 23304 "GET /api/v1/stats/public/ HTTP/1.1" 404 42306
+INFO 2026-07-06 03:37:16,403 basehttp 23028 23304 "POST /api/v1/auth/login/ HTTP/1.1" 200 709
+INFO 2026-07-06 03:37:16,618 basehttp 23028 23304 "GET /api/v1/dashboard/admin/ HTTP/1.1" 200 957
+INFO 2026-07-06 03:37:16,658 basehttp 23028 23304 "GET /api/v1/dashboard/admin/ HTTP/1.1" 200 957
+INFO 2026-07-06 03:37:22,750 basehttp 23028 23304 "GET /api/v1/departments/ HTTP/1.1" 200 52
+INFO 2026-07-06 03:37:22,769 basehttp 23028 23216 "GET /api/v1/courses/ HTTP/1.1" 200 4701
+INFO 2026-07-06 03:38:05,546 viewsets 23028 23216 Lecturer created: mgbegraphics@gmail.com, ID: 19
+INFO 2026-07-06 03:38:05,547 viewsets 23028 23216 Attempting to send registration email to mgbegraphics@gmail.com
+INFO 2026-07-06 03:38:05,548 email_utils 23028 23216 Attempting to send lecturer registration email to mgbegraphics@gmail.com
+INFO 2026-07-06 03:38:09,436 email_utils 23028 23216 Email sent successfully to mgbegraphics@gmail.com. Result: 1
+INFO 2026-07-06 03:38:09,437 viewsets 23028 23216 Registration email sent successfully
+INFO 2026-07-06 03:38:09,441 basehttp 23028 23216 "POST /api/v1/lecturers/ HTTP/1.1" 201 488
+INFO 2026-07-06 03:38:11,620 basehttp 23028 23216 "GET /api/v1/dashboard/admin/ HTTP/1.1" 200 957
+INFO 2026-07-06 03:41:42,473 basehttp 23028 23216 "GET /api/v1/lecturers/ HTTP/1.1" 200 2390
+INFO 2026-07-06 03:41:42,812 basehttp 23028 23216 "GET /api/v1/lecturers/ HTTP/1.1" 200 2390
+INFO 2026-07-06 03:42:49,795 autoreload 23028 23032 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\users\viewsets.py changed, reloading.
+INFO 2026-07-06 03:43:05,553 autoreload 19240 7688 Watching for file changes with StatReloader
+INFO 2026-07-06 03:44:04,238 autoreload 19240 7688 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\users\viewsets.py changed, reloading.
+INFO 2026-07-06 03:44:06,030 autoreload 23136 10488 Watching for file changes with StatReloader
+INFO 2026-07-06 03:44:19,670 autoreload 23136 10488 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\users\viewsets.py changed, reloading.
+INFO 2026-07-06 03:44:22,318 autoreload 8240 21368 Watching for file changes with StatReloader
+INFO 2026-07-06 03:45:36,382 basehttp 8240 21660 "GET /api/v1/lecturers/ HTTP/1.1" 200 1901
+INFO 2026-07-06 03:45:36,440 basehttp 8240 8400 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-06 03:45:36,495 basehttp 8240 21660 "GET /api/v1/lecturers/ HTTP/1.1" 200 1901
+INFO 2026-07-06 03:45:36,526 basehttp 8240 8400 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-06 03:45:36,555 basehttp 8240 8400 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-06 03:45:36,666 basehttp 8240 8400 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-06 03:45:37,457 basehttp 8240 8400 "GET /api/v1/departments/ HTTP/1.1" 200 52
+INFO 2026-07-06 03:45:37,467 basehttp 8240 21660 "GET /api/v1/courses/ HTTP/1.1" 200 4701
+INFO 2026-07-06 03:46:18,243 viewsets 8240 21660 Lecturer created: mgbegraphics@gmail.com, ID: 20
+INFO 2026-07-06 03:46:18,244 viewsets 8240 21660 Attempting to send registration email to school email: nnnmiracle@school.edu
+INFO 2026-07-06 03:46:18,245 email_utils 8240 21660 Attempting to send lecturer registration email to nnnmiracle@school.edu
+INFO 2026-07-06 03:46:22,697 email_utils 8240 21660 Email sent successfully to nnnmiracle@school.edu. Result: 1
+INFO 2026-07-06 03:46:22,699 viewsets 8240 21660 Registration email sent successfully
+INFO 2026-07-06 03:46:22,702 basehttp 8240 21660 "POST /api/v1/lecturers/ HTTP/1.1" 201 498
+INFO 2026-07-06 03:46:24,559 basehttp 8240 21660 "GET /api/v1/lecturers/ HTTP/1.1" 200 2400
+INFO 2026-07-06 03:48:28,754 basehttp 8240 21660 "GET /api/v1/departments/ HTTP/1.1" 200 52
+INFO 2026-07-06 03:48:28,770 basehttp 8240 8400 "GET /api/v1/courses/ HTTP/1.1" 200 4701
+ERROR 2026-07-06 03:48:49,686 log 8240 8400 Internal Server Error: /api/v1/lecturers/
+Traceback (most recent call last):
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\backends\sqlite3\base.py", line 360, in execute
+    return super().execute(query, params)
+sqlite3.IntegrityError: UNIQUE constraint failed: users.username
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\mixins.py", line 19, in create
+    self.perform_create(serializer)
+  File "C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\users\viewsets.py", line 322, in perform_create
+    lecturer = serializer.save()
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\serializers.py", line 210, in save
+    self.instance = self.create(validated_data)
+  File "C:\Program Files\Python310\lib\contextlib.py", line 79, in inner
+    return func(*args, **kwds)
+  File "C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\users\serializers.py", line 561, in create
+    user = User.objects.create(
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\query.py", line 665, in create
+    obj.save(force_insert=True, using=self.db)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\contrib\auth\base_user.py", line 65, in save
+    super().save(*args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\base.py", line 902, in save
+    self.save_base(
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\base.py", line 1008, in save_base
+    updated = self._save_table(
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\base.py", line 1169, in _save_table
+    results = self._do_insert(
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\base.py", line 1210, in _do_insert
+    return manager._insert(
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\query.py", line 1873, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\sql\compiler.py", line 1882, in execute_sql
+    cursor.execute(sql, params)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\backends\utils.py", line 122, in execute
+    return super().execute(sql, params)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\backends\utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\backends\utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\backends\sqlite3\base.py", line 360, in execute
+    return super().execute(query, params)
+django.db.utils.IntegrityError: UNIQUE constraint failed: users.username
+ERROR 2026-07-06 03:48:49,713 basehttp 8240 8400 "POST /api/v1/lecturers/ HTTP/1.1" 500 243450
+INFO 2026-07-06 03:49:14,706 viewsets 8240 8400 Lecturer created: miraclemgbe001@gmail.com, ID: 21
+INFO 2026-07-06 03:49:14,707 viewsets 8240 8400 Attempting to send registration email to school email: nnnjames@school.edu
+INFO 2026-07-06 03:49:14,709 email_utils 8240 8400 Attempting to send lecturer registration email to nnnjames@school.edu
+INFO 2026-07-06 03:49:17,899 email_utils 8240 8400 Email sent successfully to nnnjames@school.edu. Result: 1
+INFO 2026-07-06 03:49:17,900 viewsets 8240 8400 Registration email sent successfully
+INFO 2026-07-06 03:49:17,904 basehttp 8240 8400 "POST /api/v1/lecturers/ HTTP/1.1" 201 494
+INFO 2026-07-06 03:49:19,185 basehttp 8240 8400 "GET /api/v1/lecturers/ HTTP/1.1" 200 2895
+INFO 2026-07-06 03:54:03,809 autoreload 8240 21368 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\users\viewsets.py changed, reloading.
+INFO 2026-07-06 03:54:09,837 autoreload 19320 23256 Watching for file changes with StatReloader
+INFO 2026-07-06 03:54:28,983 autoreload 19320 23256 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\users\viewsets.py changed, reloading.
+INFO 2026-07-06 03:54:30,793 autoreload 8216 19764 Watching for file changes with StatReloader
+INFO 2026-07-06 03:54:43,860 autoreload 8216 19764 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\users\viewsets.py changed, reloading.
+INFO 2026-07-06 03:54:45,529 autoreload 17840 16932 Watching for file changes with StatReloader
+INFO 2026-07-06 03:55:23,658 autoreload 17840 16932 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\users\viewsets.py changed, reloading.
+INFO 2026-07-06 03:55:25,437 autoreload 18376 76 Watching for file changes with StatReloader
+INFO 2026-07-06 03:55:34,056 autoreload 18376 76 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\users\utils\email_utils.py changed, reloading.
+INFO 2026-07-06 03:55:35,478 autoreload 21536 20424 Watching for file changes with StatReloader
+INFO 2026-07-06 03:56:03,825 autoreload 21536 20424 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\users\utils\email_utils.py changed, reloading.
+INFO 2026-07-06 03:56:05,453 autoreload 21768 23476 Watching for file changes with StatReloader
+INFO 2026-07-06 03:56:24,478 autoreload 21768 23476 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\users\viewsets.py changed, reloading.
+INFO 2026-07-06 03:56:27,116 autoreload 8040 15068 Watching for file changes with StatReloader
+INFO 2026-07-06 03:59:13,327 autoreload 8040 15068 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\users\utils\email_utils.py changed, reloading.
+INFO 2026-07-06 03:59:17,552 autoreload 18292 22400 Watching for file changes with StatReloader
+INFO 2026-07-06 03:59:30,816 autoreload 18292 22400 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\users\viewsets.py changed, reloading.
+INFO 2026-07-06 03:59:32,266 autoreload 12956 4016 Watching for file changes with StatReloader
+INFO 2026-07-06 04:01:51,315 basehttp 12956 18328 "GET /api/v1/lecturers/ HTTP/1.1" 200 1901
+INFO 2026-07-06 04:01:51,340 basehttp 12956 18328 "GET /api/v1/lecturers/ HTTP/1.1" 200 1901
+INFO 2026-07-06 04:01:51,355 basehttp 12956 17364 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-06 04:01:51,369 basehttp 12956 17364 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-06 04:01:51,393 basehttp 12956 17364 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-06 04:01:51,408 basehttp 12956 17364 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-06 04:02:00,270 basehttp 12956 17364 "GET /api/v1/departments/ HTTP/1.1" 200 52
+INFO 2026-07-06 04:02:00,280 basehttp 12956 18328 "GET /api/v1/courses/ HTTP/1.1" 200 4701
+INFO 2026-07-06 04:02:40,012 viewsets 12956 18328 Lecturer created: mgbegraphics@gmail.com, ID: 22
+INFO 2026-07-06 04:02:40,015 viewsets 12956 18328 Attempting to send registration email to personal email: mgbegraphics@gmail.com
+INFO 2026-07-06 04:02:40,017 email_utils 12956 18328 Attempting to send lecturer registration email to mgbegraphics@gmail.com
+INFO 2026-07-06 04:02:44,788 email_utils 12956 18328 Email sent successfully to mgbegraphics@gmail.com. Result: 1
+INFO 2026-07-06 04:02:44,789 viewsets 12956 18328 Registration email sent successfully
+INFO 2026-07-06 04:02:44,792 basehttp 12956 18328 "POST /api/v1/lecturers/ HTTP/1.1" 201 498
+INFO 2026-07-06 04:02:46,636 basehttp 12956 18328 "GET /api/v1/lecturers/ HTTP/1.1" 200 2401
+INFO 2026-07-06 04:03:45,751 basehttp 12956 18328 "GET /api/v1/departments/ HTTP/1.1" 200 52
+INFO 2026-07-06 04:03:45,770 basehttp 12956 17364 "GET /api/v1/courses/ HTTP/1.1" 200 4701
+INFO 2026-07-06 04:03:52,246 basehttp 12956 17364 "GET /api/v1/lecturers/ HTTP/1.1" 200 2401
+INFO 2026-07-06 04:04:57,106 basehttp 12956 17364 "GET /api/v1/dashboard/admin/ HTTP/1.1" 200 958
+INFO 2026-07-06 04:04:57,137 basehttp 12956 17364 "GET /api/v1/dashboard/admin/ HTTP/1.1" 200 958
+INFO 2026-07-06 04:05:01,261 basehttp 12956 17364 "POST /api/v1/auth/logout/ HTTP/1.1" 200 53
+WARNING 2026-07-06 04:05:01,666 basehttp 12956 17364 "GET /api/v1/stats/public/ HTTP/1.1" 404 42306
+WARNING 2026-07-06 04:05:01,731 basehttp 12956 17364 "GET /api/v1/stats/public/ HTTP/1.1" 404 42306
+INFO 2026-07-06 04:05:18,206 basehttp 12956 17364 "POST /api/v1/auth/login/ HTTP/1.1" 200 1201
+INFO 2026-07-06 04:05:18,247 basehttp 12956 17364 "OPTIONS /api/v1/lecturers/my-courses/ HTTP/1.1" 200 0
+INFO 2026-07-06 04:05:18,247 basehttp 12956 18328 "OPTIONS /api/v1/lecturers/my-courses/ HTTP/1.1" 200 0
+WARNING 2026-07-06 04:05:18,288 basehttp 12956 18328 "GET /api/v1/lecturers/my-courses/ HTTP/1.1" 404 23
+WARNING 2026-07-06 04:05:18,299 basehttp 12956 18328 "GET /api/v1/lecturers/my-courses/ HTTP/1.1" 404 23
+INFO 2026-07-06 04:05:29,937 basehttp 12956 18328 "POST /api/v1/auth/logout/ HTTP/1.1" 200 53
+WARNING 2026-07-06 04:05:29,989 basehttp 12956 18328 "GET /api/v1/stats/public/ HTTP/1.1" 404 42306
+WARNING 2026-07-06 04:05:30,026 basehttp 12956 18328 "GET /api/v1/stats/public/ HTTP/1.1" 404 42306
+INFO 2026-07-06 04:05:35,169 basehttp 12956 18328 "POST /api/v1/auth/login/ HTTP/1.1" 200 1201
+WARNING 2026-07-06 04:05:35,226 basehttp 12956 18328 "GET /api/v1/lecturers/my-courses/ HTTP/1.1" 404 23
+WARNING 2026-07-06 04:05:35,244 basehttp 12956 18328 "GET /api/v1/lecturers/my-courses/ HTTP/1.1" 404 23
+INFO 2026-07-06 04:09:10,688 autoreload 12956 4016 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\users\viewsets.py changed, reloading.
+INFO 2026-07-06 04:09:13,584 autoreload 18512 2792 Watching for file changes with StatReloader
+INFO 2026-07-06 04:09:23,654 autoreload 18512 2792 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\users\viewsets.py changed, reloading.
+INFO 2026-07-06 04:09:25,433 autoreload 19540 11444 Watching for file changes with StatReloader
+INFO 2026-07-06 04:09:34,008 autoreload 19540 11444 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\users\viewsets.py changed, reloading.
+INFO 2026-07-06 04:09:35,117 autoreload 14600 15700 Watching for file changes with StatReloader
+INFO 2026-07-06 04:10:22,310 basehttp 14600 12960 "GET /api/v1/auth/me/ HTTP/1.1" 200 265
+INFO 2026-07-06 04:10:22,424 basehttp 14600 12960 "GET /api/v1/auth/me/ HTTP/1.1" 200 265
+INFO 2026-07-06 04:10:59,954 autoreload 14600 15700 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\users\serializers.py changed, reloading.
+INFO 2026-07-06 04:11:02,101 autoreload 22564 9980 Watching for file changes with StatReloader
+INFO 2026-07-06 04:18:23,209 autoreload 22564 9980 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\academics\models.py changed, reloading.
+INFO 2026-07-06 04:18:26,570 autoreload 19096 3128 Watching for file changes with StatReloader
+INFO 2026-07-06 04:22:25,038 autoreload 19096 3128 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\academics\serializers.py changed, reloading.
+INFO 2026-07-06 04:22:35,469 autoreload 23088 4348 Watching for file changes with StatReloader
+INFO 2026-07-06 04:22:44,131 autoreload 23088 4348 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\academics\serializers.py changed, reloading.
+INFO 2026-07-06 04:22:46,854 autoreload 7144 13412 Watching for file changes with StatReloader
+INFO 2026-07-06 04:39:38,145 autoreload 7144 13412 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\academics\serializers.py changed, reloading.
+INFO 2026-07-06 04:39:45,581 autoreload 22936 9124 Watching for file changes with StatReloader
+INFO 2026-07-06 04:52:30,765 basehttp 22936 11380 "GET /api/v1/auth/me/ HTTP/1.1" 200 265
+INFO 2026-07-06 04:52:30,779 basehttp 22936 11380 "GET /api/v1/auth/me/ HTTP/1.1" 200 265
+INFO 2026-07-06 04:52:30,789 basehttp 22936 11380 "GET /api/v1/auth/me/ HTTP/1.1" 200 265
+INFO 2026-07-06 04:52:30,800 basehttp 22936 11380 "GET /api/v1/auth/me/ HTTP/1.1" 200 265
+INFO 2026-07-06 04:52:57,811 basehttp 22936 11380 "GET /api/v1/auth/me/ HTTP/1.1" 200 265
+INFO 2026-07-06 04:52:57,824 basehttp 22936 11380 "GET /api/v1/auth/me/ HTTP/1.1" 200 265
+INFO 2026-07-06 04:52:59,294 basehttp 22936 11380 "GET /api/v1/auth/me/ HTTP/1.1" 200 265
+INFO 2026-07-06 04:52:59,320 basehttp 22936 11380 "GET /api/v1/auth/me/ HTTP/1.1" 200 265
+INFO 2026-07-06 04:52:59,340 basehttp 22936 22460 "OPTIONS /api/v1/announcements/?target_audience=lecturer HTTP/1.1" 200 0
+INFO 2026-07-06 04:52:59,442 basehttp 22936 22460 "GET /api/v1/announcements/?target_audience=lecturer HTTP/1.1" 200 52
+INFO 2026-07-06 04:52:59,486 basehttp 22936 22460 "GET /api/v1/announcements/?target_audience=lecturer HTTP/1.1" 200 52
+INFO 2026-07-06 04:53:40,122 basehttp 22936 22460 "GET /api/v1/auth/me/ HTTP/1.1" 200 265
+INFO 2026-07-06 04:53:40,130 basehttp 22936 22460 "GET /api/v1/auth/me/ HTTP/1.1" 200 265
+INFO 2026-07-06 04:54:35,641 basehttp 22936 22460 "GET /api/v1/auth/me/ HTTP/1.1" 200 265
+INFO 2026-07-06 04:54:35,754 basehttp 22936 11380 "GET /api/v1/announcements/?target_audience=lecturer HTTP/1.1" 200 52
+INFO 2026-07-06 04:54:35,828 basehttp 22936 22460 "GET /api/v1/auth/me/ HTTP/1.1" 200 265
+INFO 2026-07-06 04:54:36,095 basehttp 22936 22460 "GET /api/v1/announcements/?target_audience=lecturer HTTP/1.1" 200 52
+INFO 2026-07-06 05:00:10,096 basehttp 22936 1576 "GET /api/v1/auth/me/ HTTP/1.1" 200 265
+INFO 2026-07-06 05:00:10,155 basehttp 22936 1576 "GET /api/v1/auth/me/ HTTP/1.1" 200 265
+INFO 2026-07-06 05:00:53,102 autoreload 22936 9124 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\academics\serializers.py changed, reloading.
+INFO 2026-07-06 05:00:56,354 autoreload 1832 18292 Watching for file changes with StatReloader
+INFO 2026-07-06 05:01:13,938 autoreload 1832 18292 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\academics\serializers.py changed, reloading.
+INFO 2026-07-06 05:01:15,586 autoreload 12976 23252 Watching for file changes with StatReloader
+INFO 2026-07-06 05:01:34,572 autoreload 12976 23252 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\academics\viewsets.py changed, reloading.
+INFO 2026-07-06 05:01:38,532 autoreload 2196 4072 Watching for file changes with StatReloader
+INFO 2026-07-06 05:02:40,284 autoreload 2196 4072 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\academics\viewsets.py changed, reloading.
+INFO 2026-07-06 05:02:50,223 autoreload 17748 756 Watching for file changes with StatReloader
+INFO 2026-07-06 05:03:04,842 autoreload 17748 756 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\academics\viewsets.py changed, reloading.
+INFO 2026-07-06 05:03:07,383 autoreload 2668 21516 Watching for file changes with StatReloader
+INFO 2026-07-06 05:03:27,141 autoreload 2668 21516 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\api\v1\urls.py changed, reloading.
+INFO 2026-07-06 05:03:28,620 autoreload 19064 18712 Watching for file changes with StatReloader
+INFO 2026-07-06 05:04:19,110 autoreload 19064 18712 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\api\v1\urls.py changed, reloading.
+INFO 2026-07-06 05:04:27,741 autoreload 17728 22372 Watching for file changes with StatReloader
+INFO 2026-07-06 05:10:21,700 autoreload 17728 22372 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\academics\serializers.py changed, reloading.
+INFO 2026-07-06 05:10:26,178 autoreload 19452 23408 Watching for file changes with StatReloader
+WARNING 2026-07-06 05:13:37,961 basehttp 19452 7068 "GET /api/v1/auth/me/ HTTP/1.1" 401 172
+WARNING 2026-07-06 05:13:37,970 basehttp 19452 7068 "GET /api/v1/auth/me/ HTTP/1.1" 401 172
+INFO 2026-07-06 05:13:38,062 basehttp 19452 7068 "POST /api/v1/auth/refresh/ HTTP/1.1" 200 601
+INFO 2026-07-06 05:13:38,113 basehttp 19452 11332 "POST /api/v1/auth/refresh/ HTTP/1.1" 200 601
+INFO 2026-07-06 05:13:38,120 basehttp 19452 7068 "GET /api/v1/auth/me/ HTTP/1.1" 200 265
+INFO 2026-07-06 05:13:38,166 basehttp 19452 7068 "GET /api/v1/auth/me/ HTTP/1.1" 200 265
+INFO 2026-07-06 05:13:38,172 basehttp 19452 11332 "GET /api/v1/announcements/?target_audience=lecturer HTTP/1.1" 200 52
+INFO 2026-07-06 05:13:38,194 basehttp 19452 7068 "OPTIONS /api/v1/activity-logs/ HTTP/1.1" 200 0
+INFO 2026-07-06 05:13:38,199 basehttp 19452 11332 "GET /api/v1/announcements/?target_audience=lecturer HTTP/1.1" 200 52
+INFO 2026-07-06 05:13:38,224 basehttp 19452 7068 "GET /api/v1/activity-logs/ HTTP/1.1" 200 52
+INFO 2026-07-06 05:13:38,238 basehttp 19452 7068 "GET /api/v1/activity-logs/ HTTP/1.1" 200 52
+WARNING 2026-07-06 05:15:33,183 basehttp 19452 7068 "POST /api/v1/auth/logout/ HTTP/1.1" 400 48
+WARNING 2026-07-06 05:15:33,371 basehttp 19452 7068 "GET /api/v1/stats/public/ HTTP/1.1" 404 49094
+WARNING 2026-07-06 05:15:33,405 basehttp 19452 7068 "GET /api/v1/stats/public/ HTTP/1.1" 404 49094
+INFO 2026-07-06 05:16:03,884 basehttp 19452 7068 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 0
+INFO 2026-07-06 05:16:04,869 basehttp 19452 7068 "POST /api/v1/auth/login/ HTTP/1.1" 200 1011
+INFO 2026-07-06 05:16:04,928 basehttp 19452 7068 "OPTIONS /api/v1/student/dashboard/ HTTP/1.1" 200 0
+INFO 2026-07-06 05:16:04,978 basehttp 19452 7068 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 304
+INFO 2026-07-06 05:16:04,995 basehttp 19452 7068 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 304
+INFO 2026-07-06 05:22:51,230 autoreload 19452 23408 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\academics\models.py changed, reloading.
+INFO 2026-07-06 05:22:54,829 autoreload 23340 6320 Watching for file changes with StatReloader
+INFO 2026-07-06 05:24:57,657 autoreload 23340 6320 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\users\models.py changed, reloading.
+INFO 2026-07-06 05:25:06,760 autoreload 16036 12664 Watching for file changes with StatReloader
+INFO 2026-07-06 05:29:33,677 autoreload 16036 12664 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\academics\models.py changed, reloading.
+INFO 2026-07-06 05:29:37,428 autoreload 22132 20424 Watching for file changes with StatReloader
+INFO 2026-07-06 05:29:48,350 autoreload 22132 20424 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\academics\serializers.py changed, reloading.
+INFO 2026-07-06 05:29:50,461 autoreload 12064 10860 Watching for file changes with StatReloader
+INFO 2026-07-06 05:30:06,736 autoreload 12064 10860 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\academics\serializers.py changed, reloading.
+INFO 2026-07-06 05:30:08,179 autoreload 18712 21552 Watching for file changes with StatReloader
+INFO 2026-07-06 05:30:26,165 autoreload 18712 21552 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\academics\serializers.py changed, reloading.
+INFO 2026-07-06 05:30:27,159 autoreload 2124 12256 Watching for file changes with StatReloader
+INFO 2026-07-06 05:30:43,551 autoreload 2124 12256 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\users\viewsets.py changed, reloading.
+INFO 2026-07-06 05:30:45,359 autoreload 15436 76 Watching for file changes with StatReloader
+INFO 2026-07-06 05:31:07,924 autoreload 15436 76 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\users\viewsets.py changed, reloading.
+INFO 2026-07-06 05:31:09,765 autoreload 21916 4796 Watching for file changes with StatReloader
+INFO 2026-07-06 05:34:56,368 autoreload 21916 4796 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\api\views\student_dashboard.py changed, reloading.
+INFO 2026-07-06 05:35:02,876 autoreload 23380 11332 Watching for file changes with StatReloader
+INFO 2026-07-06 05:35:37,841 autoreload 23380 11332 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\api\views\student_dashboard.py changed, reloading.
+INFO 2026-07-06 05:35:39,829 autoreload 12508 22392 Watching for file changes with StatReloader
+INFO 2026-07-06 05:36:11,229 basehttp 12508 6828 "OPTIONS /api/v1/student/attendance/ HTTP/1.1" 200 0
+INFO 2026-07-06 05:36:11,234 basehttp 12508 12328 "OPTIONS /api/v1/student/attendance/ HTTP/1.1" 200 0
+INFO 2026-07-06 05:36:11,527 basehttp 12508 12328 "GET /api/v1/student/attendance/ HTTP/1.1" 200 123
+INFO 2026-07-06 05:36:11,559 basehttp 12508 12328 "GET /api/v1/student/attendance/ HTTP/1.1" 200 123
+INFO 2026-07-06 05:38:26,198 basehttp 12508 12328 "GET /api/v1/student/attendance/ HTTP/1.1" 200 123
+INFO 2026-07-06 06:06:16,365 basehttp 12508 3280 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 298
+INFO 2026-07-06 06:06:16,451 basehttp 12508 3280 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 298
+INFO 2026-07-06 06:10:24,910 basehttp 12508 3280 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 298
+INFO 2026-07-06 06:11:23,510 basehttp 12508 3280 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 298
+INFO 2026-07-06 06:11:23,603 basehttp 12508 3280 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 298
+INFO 2026-07-06 06:11:44,073 basehttp 12508 3280 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 298
+INFO 2026-07-06 06:11:44,093 basehttp 12508 3280 "OPTIONS /api/v1/timetables/ HTTP/1.1" 200 0
+INFO 2026-07-06 06:11:44,296 basehttp 12508 3280 "GET /api/v1/timetables/ HTTP/1.1" 200 52
+INFO 2026-07-06 06:11:44,364 basehttp 12508 3280 "OPTIONS /api/v1/announcements/?target_audience=student HTTP/1.1" 200 0
+INFO 2026-07-06 06:11:44,398 basehttp 12508 3280 "GET /api/v1/announcements/?target_audience=student HTTP/1.1" 200 52
+INFO 2026-07-06 06:12:09,279 basehttp 12508 3280 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 298
+INFO 2026-07-06 06:12:09,363 basehttp 12508 3280 "GET /api/v1/timetables/ HTTP/1.1" 200 52
+INFO 2026-07-06 06:12:09,425 basehttp 12508 3280 "GET /api/v1/announcements/?target_audience=student HTTP/1.1" 200 52
+INFO 2026-07-06 06:13:06,120 basehttp 12508 3280 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 298
+INFO 2026-07-06 06:13:06,395 basehttp 12508 3280 "GET /api/v1/timetables/ HTTP/1.1" 200 52
+INFO 2026-07-06 06:13:06,462 basehttp 12508 3280 "GET /api/v1/announcements/?target_audience=student HTTP/1.1" 200 52
+INFO 2026-07-06 06:14:17,102 basehttp 12508 3280 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 298
+INFO 2026-07-06 06:14:17,197 basehttp 12508 3280 "GET /api/v1/timetables/ HTTP/1.1" 200 52
+INFO 2026-07-06 06:14:17,257 basehttp 12508 3280 "GET /api/v1/announcements/?target_audience=student HTTP/1.1" 200 52
+INFO 2026-07-06 06:14:32,421 basehttp 12508 3280 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 298
+INFO 2026-07-06 06:14:32,494 basehttp 12508 3280 "GET /api/v1/timetables/ HTTP/1.1" 200 52
+INFO 2026-07-06 06:14:32,513 basehttp 12508 3280 "GET /api/v1/announcements/?target_audience=student HTTP/1.1" 200 52
+INFO 2026-07-06 06:14:44,890 autoreload 12508 22392 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\api\views\student_dashboard.py changed, reloading.
+INFO 2026-07-06 06:14:49,164 autoreload 24080 12652 Watching for file changes with StatReloader
+INFO 2026-07-06 06:16:38,459 basehttp 24080 24128 "OPTIONS /api/v1/student/results/ HTTP/1.1" 200 0
+INFO 2026-07-06 06:16:38,469 basehttp 24080 22768 "OPTIONS /api/v1/student/results/ HTTP/1.1" 200 0
+WARNING 2026-07-06 06:16:38,758 basehttp 24080 24128 "GET /api/v1/student/results/ HTTP/1.1" 401 172
+WARNING 2026-07-06 06:16:38,770 basehttp 24080 24128 "GET /api/v1/student/results/ HTTP/1.1" 401 172
+INFO 2026-07-06 06:16:38,779 basehttp 24080 22768 "OPTIONS /api/v1/auth/refresh/ HTTP/1.1" 200 0
+INFO 2026-07-06 06:16:38,804 basehttp 24080 24128 "OPTIONS /api/v1/auth/refresh/ HTTP/1.1" 200 0
+INFO 2026-07-06 06:16:39,008 basehttp 24080 24128 "POST /api/v1/auth/refresh/ HTTP/1.1" 200 595
+INFO 2026-07-06 06:16:39,044 basehttp 24080 24128 "GET /api/v1/student/results/ HTTP/1.1" 200 26
+INFO 2026-07-06 06:16:39,078 basehttp 24080 22768 "POST /api/v1/auth/refresh/ HTTP/1.1" 200 595
+INFO 2026-07-06 06:16:39,203 basehttp 24080 22768 "GET /api/v1/student/results/ HTTP/1.1" 200 26
+INFO 2026-07-06 06:17:56,133 basehttp 24080 22768 "GET /api/v1/student/attendance/ HTTP/1.1" 200 123
+INFO 2026-07-06 06:17:56,160 basehttp 24080 22768 "GET /api/v1/student/attendance/ HTTP/1.1" 200 123
+INFO 2026-07-06 06:18:26,109 basehttp 24080 22768 "GET /api/v1/student/attendance/ HTTP/1.1" 200 123
+INFO 2026-07-06 06:18:26,129 basehttp 24080 22768 "GET /api/v1/student/attendance/ HTTP/1.1" 200 123
+INFO 2026-07-06 06:18:50,639 basehttp 24080 22768 "OPTIONS /api/v1/stats/public/ HTTP/1.1" 200 0
+INFO 2026-07-06 06:18:50,644 basehttp 24080 24128 "OPTIONS /api/v1/auth/me/ HTTP/1.1" 200 0
+INFO 2026-07-06 06:18:50,703 basehttp 24080 22768 "OPTIONS /api/v1/auth/me/ HTTP/1.1" 200 0
+INFO 2026-07-06 06:18:50,883 basehttp 24080 19488 "OPTIONS /api/v1/stats/public/ HTTP/1.1" 200 0
+INFO 2026-07-06 06:18:50,913 basehttp 24080 10952 "OPTIONS /api/v1/auth/me/ HTTP/1.1" 200 0
+WARNING 2026-07-06 06:18:50,967 basehttp 24080 22768 "GET /api/v1/stats/public/ HTTP/1.1" 404 52312
+INFO 2026-07-06 06:18:50,983 basehttp 24080 7736 "OPTIONS /api/v1/auth/me/ HTTP/1.1" 200 0
+WARNING 2026-07-06 06:18:51,063 basehttp 24080 7736 "GET /api/v1/stats/public/ HTTP/1.1" 404 52312
+INFO 2026-07-06 06:18:51,107 basehttp 24080 24128 "GET /api/v1/auth/me/ HTTP/1.1" 200 536
+INFO 2026-07-06 06:18:51,146 basehttp 24080 24128 "GET /api/v1/auth/me/ HTTP/1.1" 200 536
+INFO 2026-07-06 06:18:51,188 basehttp 24080 24128 "GET /api/v1/auth/me/ HTTP/1.1" 200 536
+INFO 2026-07-06 06:18:51,218 basehttp 24080 24128 "GET /api/v1/auth/me/ HTTP/1.1" 200 536
+INFO 2026-07-06 06:19:17,855 basehttp 24080 24128 "POST /api/v1/auth/login/ HTTP/1.1" 200 918
+WARNING 2026-07-06 06:26:31,820 basehttp 24080 24296 "GET /api/v1/student/results/ HTTP/1.1" 403 63
+WARNING 2026-07-06 06:26:31,839 basehttp 24080 24296 "GET /api/v1/student/results/ HTTP/1.1" 403 63
+INFO 2026-07-06 06:26:49,061 basehttp 24080 24296 "GET /api/v1/auth/me/ HTTP/1.1" 200 448
+WARNING 2026-07-06 06:26:49,066 basehttp 24080 23556 "GET /api/v1/student/results/ HTTP/1.1" 403 63
+WARNING 2026-07-06 06:26:49,106 basehttp 24080 23556 "GET /api/v1/student/results/ HTTP/1.1" 403 63
+INFO 2026-07-06 06:26:49,107 basehttp 24080 24296 "GET /api/v1/auth/me/ HTTP/1.1" 200 448
+INFO 2026-07-06 06:26:49,130 basehttp 24080 24296 "GET /api/v1/auth/me/ HTTP/1.1" 200 448
+INFO 2026-07-06 06:26:49,147 basehttp 24080 24296 "GET /api/v1/auth/me/ HTTP/1.1" 200 448
+WARNING 2026-07-06 06:26:51,752 basehttp 24080 24296 "GET /api/v1/student/results/ HTTP/1.1" 403 63
+WARNING 2026-07-06 06:26:52,936 basehttp 24080 24296 "GET /api/v1/student/results/ HTTP/1.1" 403 63
+WARNING 2026-07-06 06:26:53,962 basehttp 24080 24296 "GET /api/v1/student/results/ HTTP/1.1" 403 63
+INFO 2026-07-06 06:27:26,081 basehttp 24080 24296 "OPTIONS /api/v1/auth/logout/ HTTP/1.1" 200 0
+INFO 2026-07-06 06:27:26,139 basehttp 24080 24296 "POST /api/v1/auth/logout/ HTTP/1.1" 200 53
+WARNING 2026-07-06 06:27:26,550 basehttp 24080 24296 "GET /api/v1/stats/public/ HTTP/1.1" 404 52312
+WARNING 2026-07-06 06:27:26,592 basehttp 24080 24296 "GET /api/v1/stats/public/ HTTP/1.1" 404 52312
+INFO 2026-07-06 06:27:36,588 basehttp 24080 24296 "POST /api/v1/auth/login/ HTTP/1.1" 200 1011
+INFO 2026-07-06 06:27:36,690 basehttp 24080 24296 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 298
+INFO 2026-07-06 06:27:36,721 basehttp 24080 23556 "GET /api/v1/timetables/ HTTP/1.1" 200 52
+INFO 2026-07-06 06:27:36,734 basehttp 24080 24296 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 298
+INFO 2026-07-06 06:27:36,768 basehttp 24080 23556 "GET /api/v1/timetables/ HTTP/1.1" 200 52
+INFO 2026-07-06 06:27:36,782 basehttp 24080 24296 "GET /api/v1/announcements/?target_audience=student HTTP/1.1" 200 52
+INFO 2026-07-06 06:27:36,792 basehttp 24080 24296 "GET /api/v1/announcements/?target_audience=student HTTP/1.1" 200 52
+INFO 2026-07-06 06:27:44,432 basehttp 24080 24296 "GET /api/v1/student/results/ HTTP/1.1" 200 26
+INFO 2026-07-06 06:27:44,447 basehttp 24080 23556 "OPTIONS /api/v1/sessions/ HTTP/1.1" 200 0
+INFO 2026-07-06 06:27:44,463 basehttp 24080 24296 "GET /api/v1/student/results/ HTTP/1.1" 200 26
+INFO 2026-07-06 06:27:44,475 basehttp 24080 23556 "GET /api/v1/sessions/ HTTP/1.1" 200 242
+INFO 2026-07-06 06:27:44,514 basehttp 24080 23556 "GET /api/v1/sessions/ HTTP/1.1" 200 242
+INFO 2026-07-06 06:27:57,056 basehttp 24080 23556 "GET /api/v1/student/attendance/ HTTP/1.1" 200 123
+INFO 2026-07-06 06:27:57,119 basehttp 24080 23556 "GET /api/v1/student/attendance/ HTTP/1.1" 200 123
+INFO 2026-07-06 06:28:02,733 basehttp 24080 23556 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 298
+INFO 2026-07-06 06:28:02,763 basehttp 24080 24296 "GET /api/v1/timetables/ HTTP/1.1" 200 52
+INFO 2026-07-06 06:28:02,860 basehttp 24080 23556 "GET /api/v1/student/dashboard/ HTTP/1.1" 200 298
+INFO 2026-07-06 06:28:02,863 basehttp 24080 24296 "GET /api/v1/announcements/?target_audience=student HTTP/1.1" 200 52
+INFO 2026-07-06 06:28:02,881 basehttp 24080 23556 "GET /api/v1/timetables/ HTTP/1.1" 200 52
+INFO 2026-07-06 06:28:02,947 basehttp 24080 23556 "GET /api/v1/announcements/?target_audience=student HTTP/1.1" 200 52

@@ -20,7 +20,7 @@ from rest_framework.response import Response
 
 from users.models import StudentProfile
 from users.permissions import IsStudentRole
-from academics.models import Grade, Attendance, CourseRegistration
+from academics.models import Grade, Attendance, CourseRegistration, Result
 from academics.services import (
     StudentDashboardService,
     GPAService,
@@ -64,29 +64,46 @@ class StudentDashboardView(GenericAPIView):
         try:
             student = request.user.student_profile
             
-            # Get dashboard data from service layer
-            dashboard_data = StudentDashboardService.get_student_dashboard(student)
+            # Calculate CGPA using the new Result-based system
+            cgpa = student.calculate_cumulative_cgpa()
             
-            # Get recent results (last 5 grades)
-            recent_grades = Grade.objects.filter(
-                registration__student=student
+            # Get recent results (last 5 approved results)
+            recent_results_data = Result.objects.filter(
+                student=request.user,
+                status='approved'
             ).select_related(
-                'registration__course',
-                'registration__session',
-                'registration__semester'
-            ).order_by('-created_at')[:5]
+                'course',
+                'session',
+                'semester'
+            ).order_by('-submitted_at')[:5]
             
             recent_results = [
                 {
-                    'course_code': grade.registration.course.course_code,
-                    'course_title': grade.registration.course.course_title,
-                    'score': float(grade.score),
-                    'grade': grade.letter_grade,
-                    'session': grade.registration.session.name,
-                    'semester': grade.registration.semester.get_name_display()
+                    'course_code': result.course.course_code,
+                    'course_title': result.course.course_title,
+                    'score': float(result.total_score),
+                    'grade': result.grade,
+                    'credit_unit': result.course.credit_unit,
+                    'session': result.session.name if result.session else 'N/A',
+                    'semester': result.semester.get_name_display() if result.semester else 'N/A'
                 }
-                for grade in recent_grades
+                for result in recent_results_data
             ]
+            
+            # Calculate attendance percentage
+            attendance_records = Attendance.objects.filter(student=student)
+            total_attendance = attendance_records.count()
+            present_attendance = attendance_records.filter(status='present').count()
+            attendance_percentage = (
+                (present_attendance / total_attendance * 100) if total_attendance > 0 else 0.0
+            )
+            
+            # Calculate carryovers (failed courses)
+            carryover_count = Result.objects.filter(
+                student=request.user,
+                status='approved',
+                grade='F'
+            ).count()
             
             # Build student info
             student_info = {
@@ -98,13 +115,28 @@ class StudentDashboardView(GenericAPIView):
                 'credits': student.programme.total_credit_units if student.programme else 0
             }
             
+            # Determine academic standing based on CGPA
+            if cgpa >= 4.5:
+                standing = 'First Class'
+            elif cgpa >= 3.5:
+                standing = 'Second Class Upper'
+            elif cgpa >= 2.5:
+                standing = 'Second Class Lower'
+            elif cgpa >= 1.5:
+                standing = 'Third Class'
+            else:
+                standing = 'Probation'
+            
+            # Get total courses registered
+            total_courses = CourseRegistration.objects.filter(student=student).count()
+            
             response_data = {
                 'student_info': student_info,
-                'cgpa': dashboard_data['cgpa'],
-                'academic_standing': dashboard_data['standing'],
-                'attendance_percentage': dashboard_data['attendance_percentage'],
-                'carryover_count': dashboard_data['carryover_count'],
-                'total_courses_registered': dashboard_data['total_courses'],
+                'cgpa': cgpa,
+                'academic_standing': standing,
+                'attendance_percentage': attendance_percentage,
+                'carryover_count': carryover_count,
+                'total_courses_registered': total_courses,
                 'recent_results': recent_results
             }
             

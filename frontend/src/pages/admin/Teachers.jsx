@@ -87,21 +87,27 @@ function Teachers() {
 
             <div className="ad-page">
 
-                <div className="ad-hero-card">
+                <div className="students-header-box">
 
-                    <div>
+                    <div className="students-header-content">
 
-                        <h1>
+                        <div className="students-header-icon">
 
-                            Lecturers Management
+                            <HiOutlineUserCircle />
 
-                        </h1>
+                        </div>
 
-                        <p>
+                        <div className="students-header-text">
 
-                            Manage lecturers, departments and staff records.
+                            <h1>
+                                Lecturers
+                            </h1>
 
-                        </p>
+                            <p>
+                                Manage lecturers, departments and staff records.
+                            </p>
+
+                        </div>
 
                     </div>
 

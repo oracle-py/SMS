@@ -3,31 +3,102 @@ import { HiOutlineBookOpen, HiOutlineUsers, HiOutlineDocumentText, HiOutlineSpea
 import { useAuth } from '../../context/AuthContext';
 import { useDashboardRefresh } from '../../context/DashboardContext';
 import DashboardLayout from '../../layouts/DashboardLayout';
+import api from '../../api/axios';
 import './Lecturer.css';
 
 function LecturerDashboard() {
     const { user } = useAuth();
     const { refreshKey } = useDashboardRefresh();
     const [loading, setLoading] = useState(true);
-
-    const stats = {
-        courses: 4,
-        students: 186,
-        pendingResults: 42,
-        announcements: 7
-    };
+    const [stats, setStats] = useState({
+        courses: 0,
+        students: 0,
+        pendingResults: 0,
+        announcements: 0
+    });
+    const [recentActivities, setRecentActivities] = useState([]);
 
     useEffect(() => {
-        setLoading(false);
-    }, []);
+        fetchDashboardData();
+    }, [refreshKey]);
+
+    const fetchDashboardData = async () => {
+        setLoading(true);
+        try {
+            // Get current lecturer's profile
+            const userResponse = await api.get('/auth/me/');
+            const lecturerId = userResponse.data.profile?.id;
+            
+            // Fetch lecturer's courses
+            let courses = [];
+            if (lecturerId) {
+                const lecturerResponse = await api.get(`/lecturers/${lecturerId}/`);
+                courses = lecturerResponse.data.courses || [];
+            }
+            
+            // Fetch lecturer's students (total students across all assigned courses)
+            let totalStudents = 0;
+            for (const course of courses) {
+                try {
+                    const studentsResponse = await api.get('/students/', {
+                        params: {
+                            grade_level: course.level
+                        }
+                    });
+                    totalStudents += studentsResponse.data?.results?.length || 0;
+                } catch (error) {
+                    console.error(`Error fetching students for course ${course.id}:`, error);
+                }
+            }
+
+            // Fetch pending results (results not yet approved by this lecturer)
+            let pendingResults = 0;
+            if (lecturerId) {
+                const pendingResponse = await api.get('/results/', {
+                    params: {
+                        status: 'pending',
+                        lecturer: userResponse.data.id
+                    }
+                });
+                pendingResults = pendingResponse.data?.count || pendingResponse.data?.results?.length || 0;
+            }
+
+            // Fetch lecturer's announcements
+            const announcementsResponse = await api.get('/announcements/', {
+                params: {
+                    target_audience: 'lecturer'
+                }
+            });
+            const announcements = announcementsResponse.data?.count || announcementsResponse.data?.results?.length || 0;
+
+            // Fetch recent activities
+            const activitiesResponse = await api.get('/activity-logs/', {
+                params: {
+                    user: userResponse.data.id
+                }
+            });
+            const activities = activitiesResponse.data?.results || activitiesResponse.data || [];
+
+            setStats({
+                courses: courses.length,
+                students: totalStudents,
+                pendingResults: pendingResults,
+                announcements: announcements
+            });
+            
+            // Get last 5 activities
+            setRecentActivities(activities.slice(0, 5));
+        } catch (error) {
+            console.error('Error fetching dashboard data:', error);
+            // Keep default values on error
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <DashboardLayout userRole="lecturer">
             <div className="lecturer-page">
-
-                <div className="lecturer-header">
-                    <h1>Lecturer Dashboard</h1>
-                </div>
 
                 {loading ? (
                     <div className="ad-loading">
@@ -85,20 +156,18 @@ function LecturerDashboard() {
                                 </thead>
 
                                 <tbody>
-                                    <tr>
-                                        <td>Uploaded CSC401 Results</td>
-                                        <td>Today</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>Viewed Student List</td>
-                                        <td>Yesterday</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>Created Announcement</td>
-                                        <td>2 days ago</td>
-                                    </tr>
+                                    {recentActivities.length === 0 ? (
+                                        <tr>
+                                            <td colSpan="2">No recent activities</td>
+                                        </tr>
+                                    ) : (
+                                        recentActivities.map(activity => (
+                                            <tr key={activity.id}>
+                                                <td>{activity.description}</td>
+                                                <td>{new Date(activity.created_at).toLocaleDateString()}</td>
+                                            </tr>
+                                        ))
+                                    )}
                                 </tbody>
                             </table>
 

@@ -169,6 +169,10 @@ class StudentProfileSerializer(serializers.ModelSerializer):
         Returns:
             Created StudentProfile instance
         """
+        import logging
+        logger = logging.getLogger(__name__)
+        logger.info("StudentProfileSerializer.create called")
+        
         user_data = validated_data.pop('user_data', None)
         user_id = validated_data.pop('user_id', None)
         
@@ -176,6 +180,7 @@ class StudentProfileSerializer(serializers.ModelSerializer):
         if user_data:
             # Create user from nested data with new username format
             username = f"{user_data['last_name'].lower()}{user_data['first_name'].lower()}@school.edu"
+            logger.info(f"Creating user with username: {username}, email: {user_data.get('email')}")
             user = User.objects.create(
                 username=username,
                 email=user_data.get('email', ''),
@@ -186,8 +191,10 @@ class StudentProfileSerializer(serializers.ModelSerializer):
                 role='student'
             )
             # Set default password
-            user.set_password('school1234')
+            default_password = 'school1234'
+            user.set_password(default_password)
             user.save()
+            logger.info(f"User created with ID: {user.id}, default password set")
         elif user_id:
             user = User.objects.get(id=user_id)
         
@@ -280,6 +287,7 @@ class ParentProfileSerializer(serializers.ModelSerializer):
     
     user = UserPublicSerializer(read_only=True)
     user_id = serializers.IntegerField(write_only=True, required=False)
+    user_data = UserNestedSerializer(write_only=True, required=False)
     
     class Meta:
         model = ParentProfile
@@ -287,10 +295,56 @@ class ParentProfileSerializer(serializers.ModelSerializer):
             'id',
             'user',
             'user_id',
+            'user_data',
             'occupation',
             'phone_number'
         ]
         read_only_fields = ['id']
+    
+    @transaction.atomic
+    def create(self, validated_data):
+        """
+        Create parent profile with associated user.
+        
+        Args:
+            validated_data: Validated data from serializer
+            
+        Returns:
+            Created ParentProfile instance
+        """
+        import logging
+        logger = logging.getLogger(__name__)
+        logger.info("ParentProfileSerializer.create called")
+        
+        user_data = validated_data.pop('user_data', None)
+        user_id = validated_data.pop('user_id', None)
+        
+        user = None
+        if user_data:
+            # Create user from nested data
+            username = f"{user_data['last_name'].lower()}{user_data['first_name'].lower()}@school.edu"
+            logger.info(f"Creating user with username: {username}, email: {user_data.get('email')}")
+            user = User.objects.create(
+                username=username,
+                email=user_data.get('email', ''),
+                first_name=user_data.get('first_name', ''),
+                last_name=user_data.get('last_name', ''),
+                phone=user_data.get('phone', ''),
+                other_name=user_data.get('other_name', ''),
+                role='parent'
+            )
+            # Set default password
+            default_password = 'school1234'
+            user.set_password(default_password)
+            user.save()
+            logger.info(f"User created with ID: {user.id}, default password set")
+        elif user_id:
+            user = User.objects.get(id=user_id)
+        
+        # Create parent profile with user
+        if user:
+            validated_data['user'] = user
+        return super().create(validated_data)
 
 
 class ParentProfileDetailSerializer(ParentProfileSerializer):
@@ -536,10 +590,30 @@ class LecturerProfileDetailSerializer(LecturerProfileSerializer):
     
     user = UserSerializer(read_only=True)
     department = serializers.SerializerMethodField()
+    courses = serializers.SerializerMethodField()
     
     class Meta(LecturerProfileSerializer.Meta):
-        fields = LecturerProfileSerializer.Meta.fields + ['user']
+        fields = LecturerProfileSerializer.Meta.fields + ['user', 'courses']
     
     def get_department(self, obj):
         from academics.serializers import DepartmentSerializer
         return DepartmentSerializer(obj.department).data
+    
+    def get_courses(self, obj):
+        """Get courses assigned to this lecturer through CourseAssignment."""
+        from academics.models import CourseAssignment
+        from academics.serializers import CourseSerializer
+        
+        # Get all course assignments for this lecturer
+        assignments = CourseAssignment.objects.filter(lecturer=obj.user).select_related('course')
+        
+        # Extract unique courses
+        courses = []
+        seen_courses = set()
+        for assignment in assignments:
+            if assignment.course.id not in seen_courses:
+                seen_courses.add(assignment.course.id)
+                course_data = CourseSerializer(assignment.course).data
+                courses.append(course_data)
+        
+        return courses

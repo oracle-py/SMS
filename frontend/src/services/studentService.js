@@ -33,6 +33,26 @@ const studentService = {
       throw error;
     }
   },
+
+  getCGPA: async (studentId) => {
+    try {
+      const response = await api.get(`/students/${studentId}/cgpa/`);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching student CGPA:', error);
+      throw error;
+    }
+  },
+
+  getSessionCGPA: async (studentId, sessionId) => {
+    try {
+      const response = await api.get(`/students/${studentId}/cgpa/session/${sessionId}/`);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching session CGPA:', error);
+      throw error;
+    }
+  },
 };
 
 export default studentService;

@@ -2,13 +2,8 @@ import React, { useState, useEffect } from 'react';
 import DashboardLayout from '../../layouts/DashboardLayout';
 import ResultsTable from '../../components/results/ResultsTable';
 import studentService from '../../services/studentService';
+import api from '../../api/axios';
 import './student.css';
-
-const IconSearch = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-  </svg>
-);
 
 const IconFileText = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -29,16 +24,49 @@ function StudentResults() {
   const [results,         setResults]         = useState([]);
   const [loading,         setLoading]         = useState(true);
   const [error,           setError]           = useState(null);
-  const [searchTerm,      setSearchTerm]      = useState('');
-  const [sessionFilter,   setSessionFilter]   = useState('');
-  const [semesterFilter,  setSemesterFilter]  = useState('');
+  const [cgpa,            setCgpa]            = useState(0);
+  const [totalCredits,    setTotalCredits]    = useState(0);
+  const [totalQualityPoints, setTotalQualityPoints] = useState(0);
+  const [sessions,        setSessions]        = useState([]);
+  const [semesters,       setSemesters]       = useState(0);
 
   const fetchResults = async () => {
     try {
       setLoading(true);
       setError(null);
       const res = await studentService.getResults();
-      setResults(res.data || []);
+      const resultsData = res.data || [];
+      setResults(resultsData);
+      
+      // Calculate CGPA from results
+      let totalCreditUnits = 0;
+      let totalQualityPoints = 0;
+      resultsData.forEach(result => {
+        if (result.grade_point && result.credit_unit) {
+          totalCreditUnits += result.credit_unit;
+          totalQualityPoints += result.grade_point * result.credit_unit;
+        }
+      });
+      
+      setTotalCredits(totalCreditUnits);
+      setTotalQualityPoints(totalQualityPoints);
+      setCgpa(totalCreditUnits > 0 ? (totalQualityPoints / totalCreditUnits).toFixed(2) : 0);
+      
+      // Get unique sessions (by years)
+      const uniqueSessions = [...new Set(resultsData.map(r => r.session).filter(Boolean))];
+      setSessions(uniqueSessions);
+      
+      // Semesters = 2x sessions (2 semesters per academic year)
+      setSemesters(uniqueSessions.length * 2);
+      
+      // Fetch available sessions from backend
+      try {
+        const sessionsRes = await api.get('/sessions/');
+        const allSessions = sessionsRes.data?.results || sessionsRes.data || [];
+        setSessions(allSessions);
+      } catch (err) {
+        console.error('Error fetching sessions:', err);
+      }
     } catch (err) {
       setError(err.response?.data?.error || 'Failed to load results');
     } finally {
@@ -47,20 +75,6 @@ function StudentResults() {
   };
 
   useEffect(() => { fetchResults(); }, []);
-
-  const sessions  = [...new Set(results.map(r => r.session).filter(Boolean))];
-  const semesters = [...new Set(results.map(r => r.semester).filter(Boolean))];
-
-  const filtered = results.filter(r => {
-    const q = searchTerm.toLowerCase();
-    const matchSearch   = !q || r.course_code?.toLowerCase().includes(q) || r.course_title?.toLowerCase().includes(q);
-    const matchSession  = !sessionFilter  || r.session  === sessionFilter;
-    const matchSemester = !semesterFilter || r.semester === semesterFilter;
-    return matchSearch && matchSession && matchSemester;
-  });
-
-  const hasFilters = searchTerm || sessionFilter || semesterFilter;
-  const clearFilters = () => { setSearchTerm(''); setSessionFilter(''); setSemesterFilter(''); };
 
   if (loading) return (
     <DashboardLayout userRole="student">
@@ -165,7 +179,7 @@ function StudentResults() {
 
             <h2>
 
-                {semesters.length}
+                {semesters}
 
             </h2>
 
@@ -181,6 +195,36 @@ function StudentResults() {
 
     <div className="results-summary-card">
 
+        <span>Cumulative CGPA</span>
+
+        <h2>{cgpa}</h2>
+
+        <p>5-point scale</p>
+
+    </div>
+
+    <div className="results-summary-card">
+
+        <span>Total Credits</span>
+
+        <h2>{totalCredits}</h2>
+
+        <p>Credit units earned</p>
+
+    </div>
+
+    <div className="results-summary-card">
+
+        <span>Quality Points</span>
+
+        <h2>{totalQualityPoints.toFixed(2)}</h2>
+
+        <p>Total quality points</p>
+
+    </div>
+
+    <div className="results-summary-card">
+
         <span>Total Results</span>
 
         <h2>{results.length}</h2>
@@ -189,87 +233,19 @@ function StudentResults() {
 
     </div>
 
-    <div className="results-summary-card">
-
-        <span>Visible Results</span>
-
-        <h2>{filtered.length}</h2>
-
-        <p>After filtering</p>
-
-    </div>
-
-    <div className="results-summary-card">
-
-        <span>Sessions</span>
-
-        <h2>{sessions.length}</h2>
-
-        <p>Academic sessions</p>
-
-    </div>
-
-    <div className="results-summary-card">
-
-        <span>Semesters</span>
-
-        <h2>{semesters.length}</h2>
-
-        <p>Available semesters</p>
-
-    </div>
-
 </div>
 
-        {/* Filter Bar */}
-        <div className="sp-filter-bar">
-          <div className="sp-filter-group grow">
-            <label className="sp-filter-label">Search</label>
-            <input
-              className="sp-filter-input"
-              type="text"
-              placeholder="Course code or title…"
-              value={searchTerm}
-              onChange={e => setSearchTerm(e.target.value)}
-            />
-          </div>
-
-          {sessions.length > 0 && (
-            <div className="sp-filter-group fixed">
-              <label className="sp-filter-label">Session</label>
-              <select className="sp-filter-select" value={sessionFilter} onChange={e => setSessionFilter(e.target.value)}>
-                <option value="">All Sessions</option>
-                {sessions.map(s => <option key={s} value={s}>{s}</option>)}
-              </select>
-            </div>
-          )}
-
-          {semesters.length > 0 && (
-            <div className="sp-filter-group fixed">
-              <label className="sp-filter-label">Semester</label>
-              <select className="sp-filter-select" value={semesterFilter} onChange={e => setSemesterFilter(e.target.value)}>
-                <option value="">All Semesters</option>
-                {semesters.map(s => <option key={s} value={s}>{s}</option>)}
-              </select>
-            </div>
-          )}
-
-          {hasFilters && (
-            <button className="sp-filter-clear" onClick={clearFilters}>Clear filters</button>
-          )}
-        </div>
-
         <p className="sp-results-count">
-          Showing <strong>{filtered.length}</strong> of <strong>{results.length}</strong> results
+          Showing <strong>{results.length}</strong> results
         </p>
 
-        {filtered.length > 0 ? (
-          <ResultsTable results={filtered} loading={false} />
+        {results.length > 0 ? (
+          <ResultsTable results={results} loading={false} />
         ) : (
           <div className="sp-empty">
             <div className="sp-empty-icon"><IconFileText /></div>
             <h3>No results found</h3>
-            <p>{hasFilters ? 'Try adjusting your filters.' : 'Your results will appear here once published.'}</p>
+            <p>Your results will appear here once published.</p>
           </div>
         )}
 

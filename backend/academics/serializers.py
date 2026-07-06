@@ -26,6 +26,9 @@ from academics.models import (
     CourseAssignment,
     Timetable,
     Announcement,
+    Result,
+    ActivityLog,
+    CGPARecord,
 )
 from users.models import StudentProfile
 from users.serializers import StudentProfileSerializer, StudentProfileDetailSerializer
@@ -580,6 +583,121 @@ class AnnouncementSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Announcement
-        fields = ['id', 'title', 'content', 'target_audience', 'target_audience_display',
+        fields = ['id', 'title', 'content', 'target_audience', 'target_audience_display', 
                   'is_active', 'created_by', 'created_by_name', 'created_at', 'updated_at']
         read_only_fields = ['id', 'created_at', 'updated_at']
+
+
+class ResultSerializer(serializers.ModelSerializer):
+    """
+    Serializer for Result model.
+    """
+    
+    student_name = serializers.CharField(source='student.get_full_name', read_only=True)
+    student_matric = serializers.CharField(source='student.username', read_only=True)
+    course_code = serializers.CharField(source='course.course_code', read_only=True)
+    course_title = serializers.CharField(source='course.course_title', read_only=True)
+    course_credit_unit = serializers.IntegerField(source='course.credit_unit', read_only=True)
+    lecturer_name = serializers.CharField(source='lecturer.get_full_name', read_only=True)
+    session_name = serializers.CharField(source='session.name', read_only=True)
+    semester_name = serializers.CharField(source='semester.get_name_display', read_only=True)
+    status_display = serializers.CharField(source='get_status_display', read_only=True)
+    grade_point = serializers.DecimalField(max_digits=3, decimal_places=2, read_only=True)
+    quality_point = serializers.DecimalField(max_digits=10, decimal_places=2, read_only=True)
+    
+    class Meta:
+        model = Result
+        fields = ['id', 'student', 'student_name', 'student_matric', 'course', 'course_code', 
+                  'course_title', 'course_credit_unit', 'lecturer', 'lecturer_name', 'session', 'session_name', 
+                  'semester', 'semester_name', 'ca_score', 'exam_score', 'total_score', 
+                  'grade', 'grade_point', 'quality_point', 'status', 'status_display', 'remarks', 'submitted_at', 
+                  'approved_at', 'approved_by']
+        read_only_fields = ['id', 'total_score', 'grade', 'grade_point', 'quality_point', 'submitted_at', 'approved_at', 'approved_by']
+
+
+class BatchResultSerializer(serializers.Serializer):
+    """
+    Serializer for batch result submission.
+    """
+    results = ResultSerializer(many=True)
+    
+    def create(self, validated_data):
+        """Create multiple results in a single transaction."""
+        from django.db import transaction
+        from academics.models import Result, AcademicSession, Semester, ActivityLog
+        
+        results_data = validated_data['results']
+        created_results = []
+        
+        # Get current active session and semester
+        try:
+            current_session = AcademicSession.objects.filter(is_active=True).first()
+            current_semester = Semester.objects.filter(is_active=True).first()
+        except:
+            current_session = None
+            current_semester = None
+        
+        # Get the lecturer from the first result (all should be from same lecturer)
+        lecturer = None
+        if results_data and results_data[0].get('lecturer'):
+            from users.models import User
+            lecturer = User.objects.get(id=results_data[0]['lecturer'])
+        
+        with transaction.atomic():
+            for result_data in results_data:
+                result = Result.objects.create(
+                    student=result_data['student'],
+                    course=result_data['course'],
+                    lecturer=result_data.get('lecturer'),
+                    session=current_session,
+                    semester=current_semester,
+                    ca_score=result_data.get('ca_score', 0),
+                    exam_score=result_data.get('exam_score', 0),
+                    status='pending'
+                )
+                created_results.append(result)
+            
+            # Log activity for the lecturer
+            if lecturer and created_results:
+                ActivityLog.objects.create(
+                    user=lecturer,
+                    action='SUBMIT_RESULTS',
+                    entity_type='Result',
+                    entity_id=created_results[0].id,
+                    description=f'Submitted {len(created_results)} results for {created_results[0].course.course_code}'
+                )
+        
+        return {'results': created_results}
+
+
+class ActivityLogSerializer(serializers.ModelSerializer):
+    """
+    Serializer for ActivityLog model.
+    """
+    
+    user_name = serializers.CharField(source='user.get_full_name', read_only=True)
+    user_role = serializers.CharField(source='user.role', read_only=True)
+    
+    class Meta:
+        model = ActivityLog
+        fields = ['id', 'user', 'user_name', 'user_role', 'action', 'entity_type', 
+                  'entity_id', 'description', 'ip_address', 'created_at']
+        read_only_fields = ['id', 'created_at']
+
+
+class CGPARecordSerializer(serializers.ModelSerializer):
+    """
+    Serializer for CGPARecord model.
+    """
+    
+    student_name = serializers.CharField(source='student.get_full_name', read_only=True)
+    student_matric = serializers.CharField(source='student.username', read_only=True)
+    session_name = serializers.CharField(source='session.name', read_only=True)
+    semester_name = serializers.CharField(source='semester.get_name_display', read_only=True)
+    
+    class Meta:
+        model = CGPARecord
+        fields = ['id', 'student', 'student_name', 'student_matric', 'session', 'session_name',
+                  'semester', 'semester_name', 'cgpa', 'total_credit_units', 
+                  'total_quality_points', 'calculated_at']
+        read_only_fields = ['id', 'calculated_at']
