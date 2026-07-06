@@ -4884,3 +4884,5 @@ INFO 2026-07-06 16:46:18,304 autoreload 19992 440 C:\Users\ORACLE\CascadeProject
 INFO 2026-07-06 16:46:19,394 autoreload 12632 16928 Watching for file changes with StatReloader
 INFO 2026-07-06 16:47:01,694 autoreload 12632 16928 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\api\urls.py changed, reloading.
 INFO 2026-07-06 16:47:02,572 autoreload 14072 6232 Watching for file changes with StatReloader
+INFO 2026-07-06 17:08:12,336 autoreload 14072 6232 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\api\urls.py changed, reloading.
+INFO 2026-07-06 17:08:16,197 autoreload 9112 2756 Watching for file changes with StatReloader

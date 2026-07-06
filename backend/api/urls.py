@@ -7,23 +7,17 @@ including versioned routes.
 
 from django.urls import path, include
 from django.http import JsonResponse
-from django.core.mail import send_mail
-from django.conf import settings
+import socket
 
 
 def test_email(request):
     """
-    Standalone email test endpoint to isolate SMTP configuration issues.
+    Network connectivity test to smtp.gmail.com.
+    Tests if the machine can reach Gmail SMTP server.
     """
     try:
-        send_mail(
-            subject="SMTP Test",
-            message="This is a test email.",
-            from_email=settings.DEFAULT_FROM_EMAIL,
-            recipient_list=["conectuj@gmail.com"],  # Replace with your test email
-            fail_silently=False,
-        )
-        return JsonResponse({"success": True, "message": "Email sent successfully"})
+        socket.create_connection(("smtp.gmail.com", 587), timeout=5)
+        return JsonResponse({"success": True, "message": "Connected to Gmail SMTP"})
     except Exception as e:
         return JsonResponse({"success": False, "error": str(e)})
 
