@@ -323,7 +323,11 @@ CORS_ALLOW_METHODS = [
     'PUT',
 ]
 
-CORS_ALLOW_CREDENTIALS = config('CORS_ALLOW_CREDENTIALS', default=True, cast=bool)
+# Handle CORS_ALLOW_CREDENTIALS with robust parsing
+cors_allow_credentials = config('CORS_ALLOW_CREDENTIALS', default='True', cast=str)
+if '=' in cors_allow_credentials:
+    cors_allow_credentials = cors_allow_credentials.split('=')[-1].strip()
+CORS_ALLOW_CREDENTIALS = cors_allow_credentials.lower() in ('true', '1', 'yes', 'on')
 
 # Email Configuration
 # In production, these should be set as environment variables
@@ -332,7 +336,11 @@ EMAIL_BACKEND = config('EMAIL_BACKEND', default='django.core.mail.backends.conso
 
 EMAIL_HOST = config('EMAIL_HOST', default='smtp.gmail.com')
 EMAIL_PORT = config('EMAIL_PORT', cast=int, default=587)
-EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool, default=True)
+# Handle EMAIL_USE_TLS with robust parsing
+email_use_tls = config('EMAIL_USE_TLS', default='True', cast=str)
+if '=' in email_use_tls:
+    email_use_tls = email_use_tls.split('=')[-1].strip()
+EMAIL_USE_TLS = email_use_tls.lower() in ('true', '1', 'yes', 'on')
 
 EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
