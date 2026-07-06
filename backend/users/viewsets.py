@@ -6,6 +6,7 @@ and ParentStudentRelation models with proper permissions and filtering.
 """
 
 import logging
+from django.conf import settings
 from rest_framework import viewsets, filters, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import action
