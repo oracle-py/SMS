@@ -51,6 +51,12 @@ from api.views.admin_dashboard import (
     AdminDashboardView,
 )
 from api.views.stats import PublicStatsView
+from academics.views import (
+    assign_course_to_student,
+    assign_level_courses_to_student,
+    assign_courses_to_level_students,
+    assign_courses_to_all_students,
+)
 
 app_name = 'api_v1'
 
@@ -106,6 +112,12 @@ urlpatterns = [
     
     # Admin dashboard endpoints
     path('dashboard/admin/', AdminDashboardView.as_view(), name='admin-dashboard'),
+    
+    # Course assignment endpoints
+    path('courses/assign-to-student/', assign_course_to_student, name='assign-course-to-student'),
+    path('courses/assign-level-to-student/', assign_level_courses_to_student, name='assign-level-to-student'),
+    path('courses/assign-to-level/', assign_courses_to_level_students, name='assign-to-level'),
+    path('courses/assign-to-all/', assign_courses_to_all_students, name='assign-to-all'),
     
     # ViewSet endpoints
     path('', include(router.urls)),
