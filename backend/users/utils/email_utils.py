@@ -66,7 +66,7 @@ def send_registration_email(user_type, recipient_email, context):
             },
             json={
                 "sender": {
-                    "name": "School Monitoring System",
+                    "name": "PLASU",
                     "email": settings.DEFAULT_FROM_EMAIL,
                 },
                 "to": [
