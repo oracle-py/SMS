@@ -1,7 +1,7 @@
 """
 Public statistics view for login page.
 
-This module provides public statistics (student count, lecturer count, trust score)
+This module provides public statistics (student count, faculty count, trust score)
 for the login page without requiring authentication.
 """
 
@@ -11,6 +11,7 @@ from rest_framework import status
 from django.db.models import Count
 
 from users.models import User, StudentProfile, LecturerProfile
+from academics.models import Faculty
 
 
 class PublicStatsView(APIView):
@@ -19,7 +20,7 @@ class PublicStatsView(APIView):
     
     Returns public statistics for the login page including:
     - Total number of students
-    - Total number of lecturers
+    - Total number of faculties
     - Trust score (placeholder)
     """
     
@@ -36,15 +37,15 @@ class PublicStatsView(APIView):
             # Count students
             student_count = StudentProfile.objects.count()
             
-            # Count lecturers
-            lecturer_count = LecturerProfile.objects.count()
+            # Count faculties
+            faculty_count = Faculty.objects.count()
             
             # Trust score (placeholder - could be calculated from actual metrics)
             trust_score = "95%"
             
             response_data = {
                 'students': student_count,
-                'lecturers': lecturer_count,
+                'faculties': faculty_count,
                 'trust_score': trust_score
             }
             

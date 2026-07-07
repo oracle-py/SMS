@@ -13,7 +13,7 @@ class User(AbstractUser):
     ]
     
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='student')
-    email = models.EmailField(unique=True)
+    email = models.EmailField(unique=True)  # Required for USERNAME_FIELD
     phone = models.CharField(max_length=20, blank=True, null=True)
     other_name = models.CharField(max_length=100, blank=True, null=True)
     roles = models.ManyToManyField(

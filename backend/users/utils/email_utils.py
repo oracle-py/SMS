@@ -24,7 +24,7 @@ def send_registration_email(user_type, recipient_email, context):
         
         # Add common context
         context['year'] = datetime.now().year
-        context['login_url'] = getattr(settings, 'FRONTEND_URL''https://onsms.vercel.app')
+        context['login_url'] = getattr(settings, 'FRONTEND_URL','https://onsms.vercel.app')
         
         # Select template based on user type
         template_map = {
