@@ -130,9 +130,7 @@ class StudentProfileSerializer(serializers.ModelSerializer):
     user = UserPublicSerializer(read_only=True)
     user_id = serializers.IntegerField(write_only=True, required=False)
     user_data = UserNestedSerializer(write_only=True, required=False)
-    programme = serializers.PrimaryKeyRelatedField(read_only=True)
-    programme_id = serializers.IntegerField(write_only=True, required=False, allow_null=True)
-    programme_name = serializers.CharField(write_only=True, required=False, allow_null=True, help_text='Programme name (e.g., "B.Sc Computer Science")')
+    programme = serializers.PrimaryKeyRelatedField(queryset='academics.Programme.objects.all()', required=True)
     programme_code = serializers.CharField(write_only=True, required=False, allow_null=True, help_text='Programme code (e.g., "CS-001")')
     age = serializers.SerializerMethodField()
     programme_display_name = serializers.CharField(source='programme.name', read_only=True)
@@ -163,8 +161,6 @@ class StudentProfileSerializer(serializers.ModelSerializer):
             'date_of_birth',
             'grade_level',
             'programme',
-            'programme_id',
-            'programme_name',
             'programme_code',
             'programme_display_name',
             'department_name',
@@ -200,8 +196,7 @@ class StudentProfileSerializer(serializers.ModelSerializer):
         
         user_data = validated_data.pop('user_data', None)
         user_id = validated_data.pop('user_id', None)
-        programme_id = validated_data.pop('programme_id', None)
-        programme_name = validated_data.pop('programme_name', None)
+        programme = validated_data.pop('programme', None)
         programme_code = validated_data.pop('programme_code', None)
         
         # Extract parent registration fields
@@ -247,36 +242,11 @@ class StudentProfileSerializer(serializers.ModelSerializer):
             except User.DoesNotExist:
                 raise serializers.ValidationError("User with provided ID does not exist")
         
-        # Resolve programme from ID, code, or name
-        programme = None
-        logger.info(f"Programme inputs - ID: {programme_id}, Code: {programme_code}, Name: {programme_name}")
+        # Programme is required - if not provided, raise error
+        if not programme:
+            raise serializers.ValidationError("Programme is required for student registration")
         
-        if programme_id:
-            from academics.models import Programme
-            try:
-                programme = Programme.objects.get(id=programme_id)
-                logger.info(f"Programme found by ID: {programme.name}")
-            except Programme.DoesNotExist:
-                logger.error(f"Programme with ID {programme_id} does not exist")
-                raise serializers.ValidationError("Invalid programme ID")
-        elif programme_code:
-            from academics.models import Programme
-            try:
-                programme = Programme.objects.get(code=programme_code)
-                logger.info(f"Programme found by code: {programme.name}")
-            except Programme.DoesNotExist:
-                logger.error(f"Programme with code {programme_code} does not exist")
-                raise serializers.ValidationError(f"Invalid programme code: {programme_code}")
-        elif programme_name:
-            from academics.models import Programme
-            try:
-                programme = Programme.objects.get(name=programme_name)
-                logger.info(f"Programme found by name: {programme.name}")
-            except Programme.DoesNotExist:
-                logger.error(f"Programme with name {programme_name} does not exist")
-                raise serializers.ValidationError(f"Invalid programme name: {programme_name}")
-        else:
-            logger.warning("No programme data provided - student will be created without programme assignment")
+        logger.info(f"Programme: {programme.name} ({programme.code})")
         
         # Generate student_id with new format: year/faculty_code/serial
         if not validated_data.get('student_id'):
