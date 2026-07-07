@@ -16,6 +16,7 @@ from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 from users.models import StudentProfile, ParentProfile, ParentStudentRelation, LecturerProfile
+from academics.models import Programme
 
 User = get_user_model()
 
@@ -130,7 +131,7 @@ class StudentProfileSerializer(serializers.ModelSerializer):
     user = UserPublicSerializer(read_only=True)
     user_id = serializers.IntegerField(write_only=True, required=False)
     user_data = UserNestedSerializer(write_only=True, required=False)
-    programme = serializers.PrimaryKeyRelatedField(queryset='academics.Programme.objects.all()', required=True)
+    programme = serializers.PrimaryKeyRelatedField(queryset=Programme.objects.all(), required=True)
     programme_code = serializers.CharField(write_only=True, required=False, allow_null=True, help_text='Programme code (e.g., "CS-001")')
     age = serializers.SerializerMethodField()
     programme_display_name = serializers.CharField(source='programme.name', read_only=True)
