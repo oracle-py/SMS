@@ -333,20 +333,20 @@ CORS_ALLOW_CREDENTIALS = cors_allow_credentials.lower() in ('true', '1', 'yes', 
 # Email Configuration
 # In production, these should be set as environment variables
 # For local development, uses console backend by default
-EMAIL_BACKEND = config('EMAIL_BACKEND', default='django.core.mail.backends.console.EmailBackend')
+#EMAIL_BACKEND = config('EMAIL_BACKEND', default='django.core.mail.backends.console.EmailBackend')
 
-EMAIL_HOST = config('EMAIL_HOST', default='smtp.gmail.com')
-EMAIL_PORT = config('EMAIL_PORT', cast=int, default=587)
+#EMAIL_HOST = config('EMAIL_HOST', default='smtp.gmail.com')
+#EMAIL_PORT = config('EMAIL_PORT', cast=int, default=587)
 # Handle EMAIL_USE_TLS with robust parsing
-email_use_tls = config('EMAIL_USE_TLS', default='True', cast=str)
-if '=' in email_use_tls:
-    email_use_tls = email_use_tls.split('=')[-1].strip()
-EMAIL_USE_TLS = email_use_tls.lower() in ('true', '1', 'yes', 'on')
+#email_use_tls = config('EMAIL_USE_TLS', default='True', cast=str)
+#if '=' in email_use_tls:
+#   email_use_tls = email_use_tls.split('=')[-1].strip()
+#EMAIL_USE_TLS = email_use_tls.lower() in ('true', '1', 'yes', 'on')
 
-EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
+#EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
+#EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
 
-DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='noreply@school.edu')
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='')
 
 # Brevo API Configuration
 BREVO_API_KEY = config('BREVO_API_KEY', default='')

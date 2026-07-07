@@ -55,6 +55,8 @@ def send_registration_email(user_type, recipient_email, context):
         text_content = re.sub('<[^<]+?>', '', text_content)
         
         # Send email using Brevo API
+        logger.info("=== USING BREVO HTTP API ===")
+
         response = requests.post(
             "https://api.brevo.com/v3/smtp/email",
             headers={
@@ -64,7 +66,7 @@ def send_registration_email(user_type, recipient_email, context):
             },
             json={
                 "sender": {
-                    "name": "School Monitoring",
+                    "name": "School Monitoring System",
                     "email": settings.DEFAULT_FROM_EMAIL,
                 },
                 "to": [
@@ -79,9 +81,11 @@ def send_registration_email(user_type, recipient_email, context):
             timeout=15,
         )
         
+        logger.info(f"Brevo Status: {response.status_code}")
+        logger.info(f"Brevo Response: {response.text}")
+
         response.raise_for_status()
-        
-        logger.info(f"Brevo response: {response.json()}")
+
         return True
         
     except Exception as e:
