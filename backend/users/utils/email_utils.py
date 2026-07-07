@@ -1,15 +1,15 @@
-from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.conf import settings
 from datetime import datetime
 import logging
+import requests
 
 logger = logging.getLogger(__name__)
 
 
 def send_registration_email(user_type, recipient_email, context):
     """
-    Send registration email to students, lecturers, or parents.
+    Send registration email to students, lecturers, or parents using Brevo API.
     
     Args:
         user_type (str): Type of user ('student', 'lecturer', 'parent')
@@ -40,7 +40,7 @@ def send_registration_email(user_type, recipient_email, context):
         # Render HTML content
         html_content = render_to_string(template_name, context)
         
-        # Create email
+        # Create email subject
         subject_map = {
             'student': 'Welcome to School Monitoring System - Your Student Account',
             'lecturer': 'Welcome to School Monitoring System - Your Lecturer Account',
@@ -49,17 +49,39 @@ def send_registration_email(user_type, recipient_email, context):
         
         subject = subject_map.get(user_type, 'Welcome to School Monitoring System')
         
-        email = EmailMultiAlternatives(
-            subject=subject,
-            body='',  # Text content will be generated from HTML
-            from_email=settings.DEFAULT_FROM_EMAIL,
-            to=[recipient_email]
+        # Generate plain text content from HTML (basic fallback)
+        text_content = html_content.replace('<br>', '\n').replace('<br/>', '\n')
+        import re
+        text_content = re.sub('<[^<]+?>', '', text_content)
+        
+        # Send email using Brevo API
+        response = requests.post(
+            "https://api.brevo.com/v3/smtp/email",
+            headers={
+                "accept": "application/json",
+                "api-key": settings.BREVO_API_KEY,
+                "content-type": "application/json",
+            },
+            json={
+                "sender": {
+                    "name": "School Monitoring",
+                    "email": settings.DEFAULT_FROM_EMAIL,
+                },
+                "to": [
+                    {
+                        "email": recipient_email,
+                    }
+                ],
+                "subject": subject,
+                "htmlContent": html_content,
+                "textContent": text_content,
+            },
+            timeout=15,
         )
         
-        email.attach_alternative(html_content, 'text/html')
-        result = email.send()
+        response.raise_for_status()
         
-        logger.info(f"Email sent successfully to {recipient_email}. Result: {result}")
+        logger.info(f"Brevo response: {response.json()}")
         return True
         
     except Exception as e:

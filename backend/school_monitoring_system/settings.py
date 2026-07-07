@@ -348,6 +348,9 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
 
 DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='noreply@school.edu')
 
+# Brevo API Configuration
+BREVO_API_KEY = config('BREVO_API_KEY', default='')
+
 EMAIL_TIMEOUT = 5
 
 # Email templates directory
@@ -363,3 +366,5 @@ Q_CLUSTER = {
     'bulk': 10,
     'orm': 'default',
 }
+
+BREVO_API_KEY = config("BREVO_API_KEY")
