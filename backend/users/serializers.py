@@ -134,6 +134,7 @@ class StudentProfileSerializer(serializers.ModelSerializer):
     programme = serializers.PrimaryKeyRelatedField(queryset=Programme.objects.all(), required=True)
     programme_code = serializers.CharField(write_only=True, required=False, allow_null=True, help_text='Programme code (e.g., "CS-001")')
     age = serializers.SerializerMethodField()
+    programme_name = serializers.CharField(source='programme.name', read_only=True)
     programme_display_name = serializers.CharField(source='programme.name', read_only=True)
     department_name = serializers.CharField(source='department.name', read_only=True)
     faculty_name = serializers.CharField(source='faculty.name', read_only=True)
@@ -163,6 +164,7 @@ class StudentProfileSerializer(serializers.ModelSerializer):
             'grade_level',
             'programme',
             'programme_code',
+            'programme_name',
             'programme_display_name',
             'department_name',
             'faculty_name',
@@ -209,13 +211,38 @@ class StudentProfileSerializer(serializers.ModelSerializer):
         
         user = None
         if user_data:
-            # Create user from nested data with new username format
-            # Use matric number as username for uniqueness
-            matric_number = validated_data.get('student_id', '')
-            if matric_number:
-                username = f"{matric_number}@school.edu"
+            # Generate student_id first if not provided
+            if not validated_data.get('student_id'):
+                # Get faculty code from programme
+                faculty_code = 'NS'  # Default
+                if programme:
+                    if programme.department and programme.department.faculty:
+                        faculty_code = programme.department.faculty.code
+                    logger.info(f"Faculty code: {faculty_code} from programme {programme.name}")
+                else:
+                    logger.warning("No programme provided, using default faculty code 'NS'")
+                
+                # Get serial number for this faculty/year
+                from users.models import StudentProfile
+                year = datetime.now().year
+                try:
+                    count = StudentProfile.objects.filter(
+                        student_id__startswith=f"{year}/{faculty_code}"
+                    ).count()
+                    serial = str(count + 1).zfill(3)
+                    validated_data['student_id'] = f"{year}/{faculty_code}/{serial}"
+                    logger.info(f"Generated student_id: {validated_data['student_id']}")
+                except Exception as e:
+                    logger.error(f"Error generating student_id: {e}", exc_info=True)
+                    raise serializers.ValidationError(f"Failed to generate student ID: {str(e)}")
+            
+            # Generate username as year + faculty_code + serial + @school.edu (all lowercase)
+            student_id = validated_data.get('student_id', '')
+            if student_id:
+                # Remove slashes from student_id and convert to lowercase
+                username = student_id.replace('/', '').lower() + '@school.edu'
             else:
-                # Fallback to name-based username if no matric number yet
+                # Fallback to name-based username if no student_id
                 username = f"{user_data['last_name'].lower()}{user_data['first_name'].lower()}@school.edu"
             logger.info(f"Creating user with username: {username}, email: {user_data.get('email')}")
             
@@ -249,31 +276,6 @@ class StudentProfileSerializer(serializers.ModelSerializer):
         
         logger.info(f"Programme: {programme.name} ({programme.code})")
         
-        # Generate student_id with new format: year/faculty_code/serial
-        if not validated_data.get('student_id'):
-            # Get faculty code from programme
-            faculty_code = 'NS'  # Default
-            if programme:
-                if programme.department and programme.department.faculty:
-                    faculty_code = programme.department.faculty.code
-                logger.info(f"Faculty code: {faculty_code} from programme {programme.name}")
-            else:
-                logger.warning("No programme provided, using default faculty code 'NS'")
-            
-            # Get serial number for this faculty/year
-            from users.models import StudentProfile
-            year = datetime.now().year
-            try:
-                count = StudentProfile.objects.filter(
-                    student_id__startswith=f"{year}/{faculty_code}"
-                ).count()
-                serial = str(count + 1).zfill(3)
-                validated_data['student_id'] = f"{year}/{faculty_code}/{serial}"
-                logger.info(f"Generated student_id: {validated_data['student_id']}")
-            except Exception as e:
-                logger.error(f"Error generating student_id: {e}", exc_info=True)
-                raise serializers.ValidationError(f"Failed to generate student ID: {str(e)}")
-        
         # Create student profile with user and programme
         if user:
             validated_data['user'] = user
@@ -284,18 +286,35 @@ class StudentProfileSerializer(serializers.ModelSerializer):
             
             # Auto-assign courses based on entry level
             grade_level = validated_data.get('grade_level')
+            logger.info(f"Grade level from validated_data: {grade_level}")
             if grade_level:
                 logger.info(f"Auto-assigning courses for level: {grade_level}")
                 try:
                     from academics.models import Level, Course, CourseRegistration, AcademicSession, Semester
                     
-                    # Find the level object (e.g., "100 Level" for grade_level 100)
-                    level_name = f"{grade_level} Level"
-                    level = Level.objects.filter(name=level_name).first()
+                    # Try multiple level name formats
+                    level_name_variants = [
+                        f"{grade_level} Level",
+                        str(grade_level),
+                        f"{grade_level}L",
+                        f"L{grade_level}"
+                    ]
+                    
+                    level = None
+                    for level_name in level_name_variants:
+                        logger.info(f"Trying to find level with name: {level_name}")
+                        level = Level.objects.filter(name__iexact=level_name).first()
+                        if level:
+                            logger.info(f"Found level: {level.name} (ID: {level.id})")
+                            break
+                    
+                    if not level:
+                        # Try to find level by name containing the grade level number
+                        level = Level.objects.filter(name__icontains=str(grade_level)).first()
+                        if level:
+                            logger.info(f"Found level by partial match: {level.name} (ID: {level.id})")
                     
                     if level:
-                        logger.info(f"Found level: {level.name}")
-                        
                         # Get current academic session
                         current_session = AcademicSession.objects.filter(is_current=True).first()
                         if not current_session:
@@ -303,16 +322,31 @@ class StudentProfileSerializer(serializers.ModelSerializer):
                             current_session = AcademicSession.objects.first()
                         
                         if current_session:
-                            logger.info(f"Using session: {current_session.name}")
+                            logger.info(f"Using session: {current_session.name} (ID: {current_session.id})")
                             
-                            # Get all courses for this level
-                            courses = Course.objects.filter(level=level, is_active=True)
-                            logger.info(f"Found {courses.count()} courses for level {level.name}")
+                            # Get all courses for this level (include inactive courses if no active ones)
+                            courses = Course.objects.filter(level=level)
+                            active_courses = courses.filter(is_active=True)
+                            logger.info(f"Found {active_courses.count()} active courses for level {level.name}")
+                            
+                            if active_courses.count() == 0:
+                                logger.warning(f"No active courses found for level {level.name}, trying all courses")
+                                courses_to_assign = courses
+                            else:
+                                courses_to_assign = active_courses
+                            
+                            logger.info(f"Assigning {courses_to_assign.count()} courses")
                             
                             # Register student for all courses in both semesters
                             semesters = Semester.objects.all()
+                            logger.info(f"Found {semesters.count()} semesters")
+                            
+                            assigned_count = 0
                             for semester in semesters:
-                                for course in courses.filter(semester=semester):
+                                semester_courses = courses_to_assign.filter(semester=semester)
+                                logger.info(f"Found {semester_courses.count()} courses for {semester.name}")
+                                
+                                for course in semester_courses:
                                     # Check if already registered
                                     existing = CourseRegistration.objects.filter(
                                         student=student_profile,
@@ -329,68 +363,83 @@ class StudentProfileSerializer(serializers.ModelSerializer):
                                             semester=semester,
                                             is_carryover=False
                                         )
+                                        assigned_count += 1
                                         logger.info(f"Registered {student_profile.student_id} for course {course.course_code} ({semester.name})")
                                     else:
                                         logger.info(f"Already registered for {course.course_code} ({semester.name})")
+                            
+                            logger.info(f"Total courses assigned: {assigned_count}")
                         else:
                             logger.warning("No academic session available for course registration")
                     else:
-                        logger.warning(f"Level '{level_name}' not found in database")
+                        logger.warning(f"Level for grade {grade_level} not found in database")
+                        # List all available levels for debugging
+                        all_levels = Level.objects.all()
+                        logger.info(f"Available levels in database: {list(all_levels.values_list('name', flat=True))}")
                 except Exception as e:
                     logger.error(f"Error auto-assigning courses: {e}", exc_info=True)
                     # Don't fail student creation if course assignment fails
+            else:
+                logger.warning("No grade_level provided - skipping course assignment")
             
             # Register parent if parent data is provided
+            logger.info(f"Parent data check - first_name: {parent_first_name}, last_name: {parent_last_name}, email: {parent_email}")
             if parent_first_name and parent_last_name and parent_email:
                 logger.info(f"Registering parent: {parent_first_name} {parent_last_name}")
                 
-                # Create parent username based on student's matric number
-                parent_username = f"{student_profile.student_id}_parent@school.edu"
-                
-                # Create parent user
-                parent_user = User.objects.create(
-                    username=parent_username,
-                    email=parent_email,
-                    first_name=parent_first_name,
-                    last_name=parent_last_name,
-                    phone=parent_phone or '',
-                    role='parent'
-                )
-                parent_user.set_password('school1234')
-                parent_user.save()
-                
-                # Create parent profile
-                from users.models import ParentProfile
-                parent_profile = ParentProfile.objects.create(
-                    user=parent_user,
-                    phone_number=parent_phone or ''
-                )
-                
-                # Link parent to student
-                from users.models import ParentStudentRelation
-                ParentStudentRelation.objects.create(
-                    parent=parent_profile,
-                    student=student_profile,
-                    relationship_type=parent_relationship or 'guardian'
-                )
-                
-                logger.info(f"Parent registered and linked to student: {student_profile.student_id}")
-                
-                # Send registration email to parent
-                from users.utils.email_utils import send_parent_registration_email
                 try:
-                    send_parent_registration_email(
+                    # Create parent username based on student's matric number
+                    parent_username = f"{student_profile.student_id}_parent@school.edu"
+                    
+                    # Create parent user
+                    parent_user = User.objects.create(
+                        username=parent_username,
                         email=parent_email,
                         first_name=parent_first_name,
                         last_name=parent_last_name,
-                        password='school1234',
-                        child_name=f"{user.first_name} {user.last_name}" if user else '',
-                        child_matric=student_profile.student_id,
-                        school_email=parent_username
+                        phone=parent_phone or '',
+                        role='parent'
                     )
-                    logger.info(f"Parent registration email sent to: {parent_email}")
+                    parent_user.set_password('school1234')
+                    parent_user.save()
+                    
+                    # Create parent profile
+                    from users.models import ParentProfile
+                    parent_profile = ParentProfile.objects.create(
+                        user=parent_user,
+                        phone_number=parent_phone or ''
+                    )
+                    
+                    # Link parent to student
+                    from users.models import ParentStudentRelation
+                    ParentStudentRelation.objects.create(
+                        parent=parent_profile,
+                        student=student_profile,
+                        relationship_type=parent_relationship or 'guardian'
+                    )
+                    
+                    logger.info(f"Parent registered and linked to student: {student_profile.student_id}")
+                    
+                    # Send registration email to parent
+                    from users.utils.email_utils import send_parent_registration_email
+                    try:
+                        send_parent_registration_email(
+                            email=parent_email,
+                            first_name=parent_first_name,
+                            last_name=parent_last_name,
+                            password='school1234',
+                            child_name=f"{user.first_name} {user.last_name}" if user else '',
+                            child_matric=student_profile.student_id,
+                            school_email=parent_username
+                        )
+                        logger.info(f"Parent registration email sent to: {parent_email}")
+                    except Exception as e:
+                        logger.error(f"Failed to send parent registration email: {e}", exc_info=True)
                 except Exception as e:
-                    logger.error(f"Failed to send parent registration email: {e}", exc_info=True)
+                    logger.error(f"Failed to create parent account: {e}", exc_info=True)
+                    # Don't fail student creation if parent creation fails
+            else:
+                logger.info("No parent data provided or incomplete - skipping parent registration")
             
             return student_profile
         except Exception as e:
@@ -723,31 +772,68 @@ class LecturerProfileSerializer(serializers.ModelSerializer):
         Returns:
             Created LecturerProfile instance
         """
+        import logging
+        logger = logging.getLogger(__name__)
+        
         user_data = validated_data.pop('user_data', None)
         user_id = validated_data.pop('user_id', None)
         
         user = None
         if user_data:
-            # Create user from nested data
-            username = f"{user_data['last_name'].lower()}{user_data['first_name'].lower()}@school.edu"
-            user = User.objects.create(
-                username=username,
-                email=user_data.get('email', ''),
-                first_name=user_data.get('first_name', ''),
-                last_name=user_data.get('last_name', ''),
-                phone=user_data.get('phone', ''),
-                other_name=user_data.get('other_name', ''),
-                role='lecturer'
-            )
-            # Set default password
-            user.set_password('school1234')
-            user.save()
+            # Get faculty code from department
+            department = validated_data.get('department')
+            faculty_code = 'NS'  # Default
+            if department and department.faculty:
+                faculty_code = department.faculty.code.lower()
+                logger.info(f"Faculty code: {faculty_code} from department {department.name}")
+            else:
+                logger.warning("No department provided, using default faculty code 'ns'")
+            
+            # Generate serial number for lecturers
+            from users.models import LecturerProfile
+            try:
+                count = LecturerProfile.objects.count()
+                serial = str(count + 1).zfill(4)
+                logger.info(f"Generated lecturer serial: {serial}")
+            except Exception as e:
+                logger.error(f"Error generating lecturer serial: {e}", exc_info=True)
+                serial = '0001'
+            
+            # Generate username as plasu+serial+faculty_code+@school.edu (all lowercase)
+            username = f"plasu{serial}{faculty_code}@school.edu"
+            
+            # Check if username already exists and generate a new one if needed
+            while User.objects.filter(username=username).exists():
+                count = LecturerProfile.objects.count()
+                serial = str(count + 1).zfill(4)
+                username = f"plasu{serial}{faculty_code}@school.edu"
+                logger.warning(f"Username {username} already exists, generating new one")
+            
+            logger.info(f"Creating lecturer user with username: {username}, email: {user_data.get('email')}")
+            
+            try:
+                user = User.objects.create(
+                    username=username,
+                    email=user_data.get('email', ''),
+                    first_name=user_data.get('first_name', ''),
+                    last_name=user_data.get('last_name', ''),
+                    phone=user_data.get('phone', ''),
+                    other_name=user_data.get('other_name', ''),
+                    role='lecturer'
+                )
+                # Set default password
+                user.set_password('school1234')
+                user.save()
+                logger.info(f"Lecturer user created with ID: {user.id}")
+            except Exception as e:
+                logger.error(f"Error creating lecturer user: {e}", exc_info=True)
+                raise serializers.ValidationError(f"Failed to create lecturer user: {str(e)}")
         elif user_id:
             user = User.objects.get(id=user_id)
         
         # Generate staff_id if not provided
         if not validated_data.get('staff_id'):
-            validated_data['staff_id'] = f"STF/{datetime.now().year}/{uuid.uuid4().hex[:6].upper()}"
+            validated_data['staff_id'] = f"PLASU/{datetime.now().year}/{uuid.uuid4().hex[:6].upper()}"
         
         # Create lecturer profile with user
         if user:

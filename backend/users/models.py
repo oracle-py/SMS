@@ -13,7 +13,8 @@ class User(AbstractUser):
     ]
     
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='student')
-    email = models.EmailField(unique=True)  # Required for USERNAME_FIELD
+    email = models.EmailField(unique=False)  # Personal email, not unique
+    username = models.CharField(max_length=150, unique=True)  # School email, unique identifier
     phone = models.CharField(max_length=20, blank=True, null=True)
     other_name = models.CharField(max_length=100, blank=True, null=True)
     roles = models.ManyToManyField(
@@ -24,8 +25,8 @@ class User(AbstractUser):
         help_text='Additional roles for granular permissions'
     )
     
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username', 'role']
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['email', 'role']
     
     class Meta:
         db_table = 'users'

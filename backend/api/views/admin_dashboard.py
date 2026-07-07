@@ -18,7 +18,7 @@ from rest_framework.response import Response
 
 from users.models import User, StudentProfile, ParentProfile, LecturerProfile
 from users.permissions import IsAdminRole
-from academics.models import Course, Grade, CourseRegistration, ActivityLog, Department
+from academics.models import Course, Grade, CourseRegistration, ActivityLog, Department, Faculty
 from api.serializers import ErrorResponseSerializer
 
 
@@ -52,7 +52,7 @@ class AdminDashboardView(GenericAPIView):
             total_lecturers = LecturerProfile.objects.count()
             total_parents = ParentProfile.objects.count()
             total_courses = Course.objects.filter(is_active=True).count()
-            total_departments = Department.objects.count()
+            total_faculties = Faculty.objects.count()
             
             # Calculate weekly changes (last 7 days)
             from django.utils import timezone
@@ -68,7 +68,7 @@ class AdminDashboardView(GenericAPIView):
             # Get recent registrations (last 5 students)
             recent_students = StudentProfile.objects.select_related(
                 'user', 'programme', 'programme__department'
-            ).order_by('-enrollment_date')[:5]
+            ).order_by('-enrollment_date', '-id')[:5]
             
             recent_registrations = []
             for student in recent_students:
@@ -134,8 +134,8 @@ class AdminDashboardView(GenericAPIView):
                         'total': total_courses,
                         'change_this_week': f"+{courses_this_week}" if courses_this_week > 0 else "0"
                     },
-                    'departments': {
-                        'total': total_departments
+                    'faculties': {
+                        'total': total_faculties
                     }
                 },
                 'recent_registrations': recent_registrations,
