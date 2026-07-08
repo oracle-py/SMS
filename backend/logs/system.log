@@ -14097,3 +14097,642 @@ INFO 2026-07-08 17:32:11,621 basehttp 7760 12724 "GET /api/v1/dashboard/admin/ H
 INFO 2026-07-08 17:34:38,770 basehttp 7760 12724 "GET /api/v1/dashboard/admin/ HTTP/1.1" 200 4339
 INFO 2026-07-08 17:34:48,793 basehttp 7760 12724 "GET /api/v1/results/?status=pending HTTP/1.1" 200 8247
 INFO 2026-07-08 17:34:48,998 basehttp 7760 3644 "GET /api/v1/results/?status=pending HTTP/1.1" 200 8247
+INFO 2026-07-08 17:36:33,526 basehttp 7760 1520 "OPTIONS /api/v1/auth/me/ HTTP/1.1" 200 0
+INFO 2026-07-08 17:36:33,527 basehttp 7760 9524 "OPTIONS /api/v1/auth/me/ HTTP/1.1" 200 0
+INFO 2026-07-08 17:36:33,533 basehttp 7760 16728 "OPTIONS /api/v1/auth/me/ HTTP/1.1" 200 0
+INFO 2026-07-08 17:36:33,569 basehttp 7760 16868 "OPTIONS /api/v1/auth/me/ HTTP/1.1" 200 0
+WARNING 2026-07-08 17:36:33,572 basehttp 7760 1520 "GET /api/v1/auth/me/ HTTP/1.1" 401 172
+WARNING 2026-07-08 17:36:33,610 basehttp 7760 1520 "GET /api/v1/auth/me/ HTTP/1.1" 401 172
+WARNING 2026-07-08 17:36:33,627 basehttp 7760 1520 "GET /api/v1/auth/me/ HTTP/1.1" 401 172
+WARNING 2026-07-08 17:36:33,641 basehttp 7760 1520 "GET /api/v1/auth/me/ HTTP/1.1" 401 172
+INFO 2026-07-08 17:36:33,824 basehttp 7760 1520 "OPTIONS /api/v1/auth/refresh/ HTTP/1.1" 200 0
+INFO 2026-07-08 17:36:33,926 basehttp 7760 1520 "POST /api/v1/auth/refresh/ HTTP/1.1" 200 635
+WARNING 2026-07-08 17:36:33,927 basehttp 7760 9524 "POST /api/v1/auth/refresh/ HTTP/1.1" 401 58
+INFO 2026-07-08 17:36:33,979 basehttp 7760 16728 "POST /api/v1/auth/refresh/ HTTP/1.1" 200 635
+INFO 2026-07-08 17:36:33,992 basehttp 7760 16868 "POST /api/v1/auth/refresh/ HTTP/1.1" 200 635
+INFO 2026-07-08 17:36:34,392 basehttp 7760 16868 "GET /api/v1/auth/me/ HTTP/1.1" 200 1382
+WARNING 2026-07-08 17:36:34,610 basehttp 7760 16868 "POST /api/v1/auth/refresh/ HTTP/1.1" 400 43
+INFO 2026-07-08 17:36:34,775 basehttp 7760 16868 - Broken pipe from ('127.0.0.1', 60450)
+INFO 2026-07-08 17:36:37,365 basehttp 7760 16728 "GET /api/v1/stats/public/ HTTP/1.1" 200 49
+INFO 2026-07-08 17:36:37,372 basehttp 7760 16728 "GET /api/v1/stats/public/ HTTP/1.1" 200 49
+WARNING 2026-07-08 18:00:46,507 basehttp 7760 17204 "GET /api/v1/auth/me/ HTTP/1.1" 401 172
+WARNING 2026-07-08 18:00:46,552 basehttp 7760 17204 "GET /api/v1/auth/me/ HTTP/1.1" 401 172
+WARNING 2026-07-08 18:00:46,571 basehttp 7760 17204 "GET /api/v1/auth/me/ HTTP/1.1" 401 172
+WARNING 2026-07-08 18:00:46,592 basehttp 7760 17204 "GET /api/v1/auth/me/ HTTP/1.1" 401 172
+INFO 2026-07-08 18:00:46,831 basehttp 7760 17204 "POST /api/v1/auth/refresh/ HTTP/1.1" 200 582
+INFO 2026-07-08 18:00:46,850 basehttp 7760 18164 "POST /api/v1/auth/refresh/ HTTP/1.1" 200 582
+WARNING 2026-07-08 18:00:46,927 basehttp 7760 18164 "POST /api/v1/auth/refresh/ HTTP/1.1" 401 58
+WARNING 2026-07-08 18:00:46,940 basehttp 7760 18164 "POST /api/v1/auth/refresh/ HTTP/1.1" 401 58
+INFO 2026-07-08 18:00:47,007 basehttp 7760 18164 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 18:00:47,034 basehttp 7760 18164 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+WARNING 2026-07-08 18:00:47,490 basehttp 7760 18164 "POST /api/v1/auth/refresh/ HTTP/1.1" 400 43
+WARNING 2026-07-08 18:00:47,533 basehttp 7760 18164 "POST /api/v1/auth/refresh/ HTTP/1.1" 400 43
+INFO 2026-07-08 18:00:49,615 basehttp 7760 18164 "GET /api/v1/stats/public/ HTTP/1.1" 200 49
+INFO 2026-07-08 18:00:49,630 basehttp 7760 18164 "GET /api/v1/stats/public/ HTTP/1.1" 200 49
+INFO 2026-07-08 18:05:30,257 basehttp 7760 18164 "POST /api/v1/auth/login/ HTTP/1.1" 200 709
+INFO 2026-07-08 18:05:30,544 basehttp 7760 18164 "GET /api/v1/dashboard/admin/ HTTP/1.1" 200 4339
+INFO 2026-07-08 18:05:30,598 basehttp 7760 18164 "GET /api/v1/dashboard/admin/ HTTP/1.1" 200 4339
+INFO 2026-07-08 18:05:36,672 basehttp 7760 18164 "OPTIONS /api/v1/results/submissions/?status=pending HTTP/1.1" 200 0
+INFO 2026-07-08 18:05:36,673 basehttp 7760 17204 "OPTIONS /api/v1/results/submissions/?status=pending HTTP/1.1" 200 0
+WARNING 2026-07-08 18:05:36,735 basehttp 7760 17204 "GET /api/v1/results/submissions/?status=pending HTTP/1.1" 404 23
+WARNING 2026-07-08 18:05:36,750 basehttp 7760 17204 "GET /api/v1/results/submissions/?status=pending HTTP/1.1" 404 23
+INFO 2026-07-08 18:05:49,596 basehttp 7760 17204 "OPTIONS /api/v1/results/submissions/?status=approved HTTP/1.1" 200 0
+WARNING 2026-07-08 18:05:49,617 basehttp 7760 17204 "GET /api/v1/results/submissions/?status=approved HTTP/1.1" 404 23
+INFO 2026-07-08 20:29:25,629 basehttp 7760 18640 "OPTIONS /api/v1/auth/me/ HTTP/1.1" 200 0
+INFO 2026-07-08 20:29:25,641 basehttp 7760 19768 "OPTIONS /api/v1/auth/me/ HTTP/1.1" 200 0
+INFO 2026-07-08 20:29:25,688 basehttp 7760 19796 "OPTIONS /api/v1/auth/me/ HTTP/1.1" 200 0
+WARNING 2026-07-08 20:29:25,752 basehttp 7760 18640 "GET /api/v1/auth/me/ HTTP/1.1" 401 172
+INFO 2026-07-08 20:29:25,752 basehttp 7760 19856 "OPTIONS /api/v1/auth/me/ HTTP/1.1" 200 0
+WARNING 2026-07-08 20:29:25,772 basehttp 7760 19796 "GET /api/v1/auth/me/ HTTP/1.1" 401 172
+INFO 2026-07-08 20:29:25,775 basehttp 7760 18640 "OPTIONS /api/v1/auth/refresh/ HTTP/1.1" 200 0
+WARNING 2026-07-08 20:29:25,787 basehttp 7760 19856 "GET /api/v1/auth/me/ HTTP/1.1" 401 172
+WARNING 2026-07-08 20:29:25,794 basehttp 7760 19768 "GET /api/v1/auth/me/ HTTP/1.1" 401 172
+INFO 2026-07-08 20:29:25,795 basehttp 7760 19796 "OPTIONS /api/v1/auth/refresh/ HTTP/1.1" 200 0
+WARNING 2026-07-08 20:29:25,931 basehttp 7760 19768 "POST /api/v1/auth/refresh/ HTTP/1.1" 401 58
+WARNING 2026-07-08 20:29:25,931 basehttp 7760 19856 "POST /api/v1/auth/refresh/ HTTP/1.1" 401 58
+WARNING 2026-07-08 20:29:25,934 basehttp 7760 19796 "POST /api/v1/auth/refresh/ HTTP/1.1" 401 58
+WARNING 2026-07-08 20:29:25,937 basehttp 7760 18640 "POST /api/v1/auth/refresh/ HTTP/1.1" 401 58
+WARNING 2026-07-08 20:29:26,046 basehttp 7760 19856 "POST /api/v1/auth/refresh/ HTTP/1.1" 400 43
+WARNING 2026-07-08 20:29:26,047 basehttp 7760 19768 "POST /api/v1/auth/refresh/ HTTP/1.1" 400 43
+WARNING 2026-07-08 20:29:26,053 basehttp 7760 19796 "POST /api/v1/auth/refresh/ HTTP/1.1" 400 43
+INFO 2026-07-08 20:29:26,079 basehttp 7760 18640 - Broken pipe from ('127.0.0.1', 54656)
+INFO 2026-07-08 20:29:26,080 basehttp 7760 20152 - Broken pipe from ('127.0.0.1', 54663)
+INFO 2026-07-08 20:29:26,680 basehttp 7760 19796 "GET /api/v1/stats/public/ HTTP/1.1" 200 49
+INFO 2026-07-08 20:29:26,688 basehttp 7760 19768 "GET /api/v1/stats/public/ HTTP/1.1" 200 49
+INFO 2026-07-08 21:02:14,311 autoreload 8812 80 Watching for file changes with StatReloader
+INFO 2026-07-08 21:14:15,408 basehttp 8812 12036 "OPTIONS /api/v1/auth/me/ HTTP/1.1" 200 0
+INFO 2026-07-08 21:14:15,412 basehttp 8812 12520 "OPTIONS /api/v1/auth/me/ HTTP/1.1" 200 0
+INFO 2026-07-08 21:14:15,421 basehttp 8812 11208 "OPTIONS /api/v1/stats/public/ HTTP/1.1" 200 0
+INFO 2026-07-08 21:14:15,421 basehttp 8812 9852 "OPTIONS /api/v1/auth/me/ HTTP/1.1" 200 0
+INFO 2026-07-08 21:14:15,421 basehttp 8812 6832 "OPTIONS /api/v1/auth/me/ HTTP/1.1" 200 0
+INFO 2026-07-08 21:14:15,431 basehttp 8812 16168 "OPTIONS /api/v1/stats/public/ HTTP/1.1" 200 0
+WARNING 2026-07-08 21:14:15,681 basehttp 8812 12036 "GET /api/v1/auth/me/ HTTP/1.1" 401 172
+WARNING 2026-07-08 21:14:15,682 basehttp 8812 11208 "GET /api/v1/stats/public/ HTTP/1.1" 401 172
+WARNING 2026-07-08 21:14:15,694 basehttp 8812 12036 "GET /api/v1/auth/me/ HTTP/1.1" 401 172
+INFO 2026-07-08 21:14:15,694 basehttp 8812 9852 "OPTIONS /api/v1/auth/refresh/ HTTP/1.1" 200 0
+INFO 2026-07-08 21:14:15,695 basehttp 8812 16168 "OPTIONS /api/v1/auth/refresh/ HTTP/1.1" 200 0
+WARNING 2026-07-08 21:14:15,695 basehttp 8812 6832 "GET /api/v1/auth/me/ HTTP/1.1" 401 172
+WARNING 2026-07-08 21:14:15,698 basehttp 8812 11208 "GET /api/v1/stats/public/ HTTP/1.1" 401 172
+INFO 2026-07-08 21:14:15,711 basehttp 8812 12036 "OPTIONS /api/v1/auth/refresh/ HTTP/1.1" 200 0
+WARNING 2026-07-08 21:14:15,711 basehttp 8812 12520 "GET /api/v1/auth/me/ HTTP/1.1" 401 172
+INFO 2026-07-08 21:14:15,802 basehttp 8812 9852 "POST /api/v1/auth/refresh/ HTTP/1.1" 200 582
+INFO 2026-07-08 21:14:15,813 basehttp 8812 9852 "GET /api/v1/stats/public/ HTTP/1.1" 200 49
+WARNING 2026-07-08 21:14:15,828 basehttp 8812 6832 "POST /api/v1/auth/refresh/ HTTP/1.1" 401 58
+WARNING 2026-07-08 21:14:15,854 basehttp 8812 6832 "POST /api/v1/auth/refresh/ HTTP/1.1" 400 43
+INFO 2026-07-08 21:14:15,866 basehttp 8812 16168 "POST /api/v1/auth/refresh/ HTTP/1.1" 200 582
+WARNING 2026-07-08 21:14:15,868 basehttp 8812 11208 "POST /api/v1/auth/refresh/ HTTP/1.1" 401 58
+WARNING 2026-07-08 21:14:15,873 basehttp 8812 12520 "POST /api/v1/auth/refresh/ HTTP/1.1" 401 58
+WARNING 2026-07-08 21:14:15,880 basehttp 8812 12036 "POST /api/v1/auth/refresh/ HTTP/1.1" 401 58
+INFO 2026-07-08 21:14:15,920 basehttp 8812 16168 "GET /api/v1/stats/public/ HTTP/1.1" 200 49
+INFO 2026-07-08 21:14:15,940 basehttp 8812 11208 - Broken pipe from ('127.0.0.1', 62950)
+INFO 2026-07-08 21:14:15,999 basehttp 8812 12520 - Broken pipe from ('127.0.0.1', 62949)
+INFO 2026-07-08 21:14:16,053 basehttp 8812 12036 - Broken pipe from ('127.0.0.1', 62948)
+INFO 2026-07-08 21:14:16,328 basehttp 8812 16168 "GET /api/v1/stats/public/ HTTP/1.1" 200 49
+INFO 2026-07-08 21:14:16,336 basehttp 8812 16168 "GET /api/v1/stats/public/ HTTP/1.1" 200 49
+INFO 2026-07-08 21:14:22,420 basehttp 8812 16168 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 0
+INFO 2026-07-08 21:14:23,290 basehttp 8812 16168 "POST /api/v1/auth/login/ HTTP/1.1" 200 709
+INFO 2026-07-08 21:14:23,368 basehttp 8812 6832 "OPTIONS /api/v1/dashboard/admin/ HTTP/1.1" 200 0
+INFO 2026-07-08 21:14:23,372 basehttp 8812 16168 "OPTIONS /api/v1/dashboard/admin/ HTTP/1.1" 200 0
+INFO 2026-07-08 21:14:23,428 basehttp 8812 16168 "GET /api/v1/dashboard/admin/ HTTP/1.1" 200 4339
+INFO 2026-07-08 21:14:23,478 basehttp 8812 16168 "GET /api/v1/dashboard/admin/ HTTP/1.1" 200 4339
+INFO 2026-07-08 21:14:27,318 basehttp 8812 16168 "OPTIONS /api/v1/results/submissions/?status=pending HTTP/1.1" 200 0
+INFO 2026-07-08 21:14:27,319 basehttp 8812 6832 "OPTIONS /api/v1/results/submissions/?status=pending HTTP/1.1" 200 0
+WARNING 2026-07-08 21:14:27,348 basehttp 8812 6832 "GET /api/v1/results/submissions/?status=pending HTTP/1.1" 404 23
+WARNING 2026-07-08 21:14:27,375 basehttp 8812 6832 "GET /api/v1/results/submissions/?status=pending HTTP/1.1" 404 23
+WARNING 2026-07-08 21:17:42,229 basehttp 8812 6832 "GET /api/v1/results/submissions/?status=pending HTTP/1.1" 404 23
+WARNING 2026-07-08 21:18:58,214 basehttp 8812 12180 "GET /api/v1/results/submissions/?status=pending HTTP/1.1" 404 23
+WARNING 2026-07-08 21:20:11,203 basehttp 8812 12180 "GET /api/v1/results/submissions/?status=pending HTTP/1.1" 404 23
+WARNING 2026-07-08 21:20:56,209 basehttp 8812 12180 "GET /api/v1/results/submissions/?status=pending HTTP/1.1" 404 23
+INFO 2026-07-08 21:23:48,535 basehttp 8812 1952 "GET /api/v1/stats/public/ HTTP/1.1" 200 49
+INFO 2026-07-08 21:23:48,541 basehttp 8812 1952 "GET /api/v1/stats/public/ HTTP/1.1" 200 49
+INFO 2026-07-08 21:24:16,577 basehttp 8812 1952 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 0
+INFO 2026-07-08 21:24:17,494 basehttp 8812 1952 "POST /api/v1/auth/login/ HTTP/1.1" 200 771
+INFO 2026-07-08 21:24:17,539 basehttp 8812 1952 "OPTIONS /api/v1/auth/me/ HTTP/1.1" 200 0
+INFO 2026-07-08 21:24:17,569 basehttp 8812 1952 "GET /api/v1/auth/me/ HTTP/1.1" 200 1382
+INFO 2026-07-08 21:24:17,575 basehttp 8812 1952 "OPTIONS /api/v1/registrations/?course=36 HTTP/1.1" 200 0
+INFO 2026-07-08 21:24:17,615 basehttp 8812 4860 "GET /api/v1/auth/me/ HTTP/1.1" 200 1382
+INFO 2026-07-08 21:24:17,642 basehttp 8812 1952 "GET /api/v1/registrations/?course=36 HTTP/1.1" 200 9413
+INFO 2026-07-08 21:24:17,648 basehttp 8812 1952 "OPTIONS /api/v1/registrations/?course=41 HTTP/1.1" 200 0
+INFO 2026-07-08 21:24:17,675 basehttp 8812 1952 "GET /api/v1/registrations/?course=41 HTTP/1.1" 200 52
+INFO 2026-07-08 21:24:17,680 basehttp 8812 1952 "OPTIONS /api/v1/results/?status=pending HTTP/1.1" 200 0
+INFO 2026-07-08 21:24:17,741 basehttp 8812 4860 "GET /api/v1/registrations/?course=36 HTTP/1.1" 200 9413
+INFO 2026-07-08 21:24:17,757 basehttp 8812 4860 "GET /api/v1/registrations/?course=41 HTTP/1.1" 200 52
+INFO 2026-07-08 21:24:17,783 basehttp 8812 1952 "GET /api/v1/results/?status=pending HTTP/1.1" 200 8247
+INFO 2026-07-08 21:24:17,799 basehttp 8812 1952 "OPTIONS /api/v1/announcements/ HTTP/1.1" 200 0
+INFO 2026-07-08 21:24:17,828 basehttp 8812 1952 "GET /api/v1/announcements/ HTTP/1.1" 200 52
+INFO 2026-07-08 21:24:17,839 basehttp 8812 1952 "OPTIONS /api/v1/activity-logs/ HTTP/1.1" 200 0
+INFO 2026-07-08 21:24:17,877 basehttp 8812 1952 "GET /api/v1/activity-logs/ HTTP/1.1" 200 6715
+INFO 2026-07-08 21:24:17,914 basehttp 8812 4860 "GET /api/v1/results/?status=pending HTTP/1.1" 200 8247
+INFO 2026-07-08 21:24:17,935 basehttp 8812 4860 "GET /api/v1/announcements/ HTTP/1.1" 200 52
+INFO 2026-07-08 21:24:17,960 basehttp 8812 4860 "GET /api/v1/activity-logs/ HTTP/1.1" 200 6715
+INFO 2026-07-08 21:24:35,631 basehttp 8812 4860 "GET /api/v1/auth/me/ HTTP/1.1" 200 1382
+INFO 2026-07-08 21:24:35,692 basehttp 8812 11508 "GET /api/v1/registrations/?course=41 HTTP/1.1" 200 52
+INFO 2026-07-08 21:24:35,692 basehttp 8812 1952 "GET /api/v1/auth/me/ HTTP/1.1" 200 1382
+INFO 2026-07-08 21:24:35,718 basehttp 8812 11508 "OPTIONS /api/v1/attendance/?course=41&date=2026-07-08 HTTP/1.1" 200 0
+INFO 2026-07-08 21:24:35,740 basehttp 8812 1952 "GET /api/v1/registrations/?course=41 HTTP/1.1" 200 52
+INFO 2026-07-08 21:24:35,781 basehttp 8812 4860 "GET /api/v1/registrations/?course=36 HTTP/1.1" 200 9413
+INFO 2026-07-08 21:24:35,799 basehttp 8812 4860 "OPTIONS /api/v1/attendance/?course=36&date=2026-07-08 HTTP/1.1" 200 0
+INFO 2026-07-08 21:24:35,808 basehttp 8812 11508 "GET /api/v1/attendance/?course=41&date=2026-07-08 HTTP/1.1" 200 52
+INFO 2026-07-08 21:24:35,840 basehttp 8812 11508 "GET /api/v1/attendance/?course=41&date=2026-07-08 HTTP/1.1" 200 52
+INFO 2026-07-08 21:24:35,891 basehttp 8812 1952 "GET /api/v1/registrations/?course=36 HTTP/1.1" 200 9413
+ERROR 2026-07-08 21:24:36,006 log 8812 4860 Internal Server Error: /api/v1/attendance/
+Traceback (most recent call last):
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\mixins.py", line 43, in list
+    return self.get_paginated_response(serializer.data)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\serializers.py", line 809, in data
+    ret = super().data
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\serializers.py", line 251, in data
+    self._data = self.to_representation(self.instance)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\serializers.py", line 727, in to_representation
+    return [
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\serializers.py", line 728, in <listcomp>
+    self.child.to_representation(item) for item in iterable
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\serializers.py", line 552, in to_representation
+    ret[field.field_name] = field.to_representation(attribute)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\fields.py", line 1929, in to_representation
+    return method(value)
+  File "C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\academics\serializers.py", line 546, in get_student
+    student_profile = StudentProfile.objects.get(user=obj.student)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\query.py", line 621, in get
+    clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\query.py", line 1495, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\query.py", line 1513, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\query.py", line 1523, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\sql\query.py", line 1648, in add_q
+    clause, _ = self._add_q(q_object, can_reuse)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\sql\query.py", line 1680, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\sql\query.py", line 1565, in build_filter
+    self.check_related_objects(join_info.final_field, value, join_info.opts)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\sql\query.py", line 1374, in check_related_objects
+    self.check_query_object_type(value, opts, field)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\sql\query.py", line 1351, in check_query_object_type
+    raise ValueError(
+ValueError: Cannot query "student1 - STU/2024/001": Must be "User" instance.
+ERROR 2026-07-08 21:24:36,049 basehttp 8812 4860 "GET /api/v1/attendance/?course=36&date=2026-07-08 HTTP/1.1" 500 221437
+ERROR 2026-07-08 21:24:36,205 log 8812 1952 Internal Server Error: /api/v1/attendance/
+Traceback (most recent call last):
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\mixins.py", line 43, in list
+    return self.get_paginated_response(serializer.data)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\serializers.py", line 809, in data
+    ret = super().data
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\serializers.py", line 251, in data
+    self._data = self.to_representation(self.instance)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\serializers.py", line 727, in to_representation
+    return [
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\serializers.py", line 728, in <listcomp>
+    self.child.to_representation(item) for item in iterable
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\serializers.py", line 552, in to_representation
+    ret[field.field_name] = field.to_representation(attribute)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\fields.py", line 1929, in to_representation
+    return method(value)
+  File "C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\academics\serializers.py", line 546, in get_student
+    student_profile = StudentProfile.objects.get(user=obj.student)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\query.py", line 621, in get
+    clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\query.py", line 1495, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\query.py", line 1513, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\query.py", line 1523, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\sql\query.py", line 1648, in add_q
+    clause, _ = self._add_q(q_object, can_reuse)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\sql\query.py", line 1680, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\sql\query.py", line 1565, in build_filter
+    self.check_related_objects(join_info.final_field, value, join_info.opts)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\sql\query.py", line 1374, in check_related_objects
+    self.check_query_object_type(value, opts, field)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\sql\query.py", line 1351, in check_query_object_type
+    raise ValueError(
+ValueError: Cannot query "student1 - STU/2024/001": Must be "User" instance.
+ERROR 2026-07-08 21:24:36,231 basehttp 8812 1952 "GET /api/v1/attendance/?course=36&date=2026-07-08 HTTP/1.1" 500 221437
+INFO 2026-07-08 21:24:38,196 basehttp 8812 1952 "GET /api/v1/auth/me/ HTTP/1.1" 200 1382
+INFO 2026-07-08 21:24:38,209 basehttp 8812 14136 "OPTIONS /api/v1/results/?course=41 HTTP/1.1" 200 0
+INFO 2026-07-08 21:24:38,218 basehttp 8812 11508 "OPTIONS /api/v1/results/?course=36 HTTP/1.1" 200 0
+INFO 2026-07-08 21:24:38,264 basehttp 8812 14136 "GET /api/v1/results/?course=41 HTTP/1.1" 200 52
+INFO 2026-07-08 21:24:38,275 basehttp 8812 4860 "GET /api/v1/auth/me/ HTTP/1.1" 200 1382
+INFO 2026-07-08 21:24:38,275 basehttp 8812 7684 "GET /api/v1/registrations/?course=41 HTTP/1.1" 200 52
+INFO 2026-07-08 21:24:38,331 basehttp 8812 4860 "GET /api/v1/results/?course=41 HTTP/1.1" 200 52
+INFO 2026-07-08 21:24:38,343 basehttp 8812 7684 "GET /api/v1/registrations/?course=41 HTTP/1.1" 200 52
+INFO 2026-07-08 21:24:38,441 basehttp 8812 1952 "GET /api/v1/registrations/?course=36 HTTP/1.1" 200 9413
+INFO 2026-07-08 21:24:38,484 basehttp 8812 11508 "GET /api/v1/results/?course=36 HTTP/1.1" 200 10635
+INFO 2026-07-08 21:24:38,552 basehttp 8812 7684 "GET /api/v1/registrations/?course=36 HTTP/1.1" 200 9413
+INFO 2026-07-08 21:24:38,584 basehttp 8812 1952 "GET /api/v1/results/?course=36 HTTP/1.1" 200 10635
+INFO 2026-07-08 21:24:50,143 basehttp 8812 1952 "GET /api/v1/auth/me/ HTTP/1.1" 200 1382
+INFO 2026-07-08 21:24:50,243 basehttp 8812 7684 "GET /api/v1/auth/me/ HTTP/1.1" 200 1382
+INFO 2026-07-08 21:24:50,270 basehttp 8812 1952 "GET /api/v1/registrations/?course=36 HTTP/1.1" 200 9413
+INFO 2026-07-08 21:24:50,294 basehttp 8812 1952 "GET /api/v1/registrations/?course=41 HTTP/1.1" 200 52
+INFO 2026-07-08 21:24:50,369 basehttp 8812 7684 "GET /api/v1/registrations/?course=36 HTTP/1.1" 200 9413
+INFO 2026-07-08 21:24:50,384 basehttp 8812 7684 "GET /api/v1/registrations/?course=41 HTTP/1.1" 200 52
+INFO 2026-07-08 21:24:50,399 basehttp 8812 1952 "GET /api/v1/results/?status=pending HTTP/1.1" 200 8247
+INFO 2026-07-08 21:24:50,416 basehttp 8812 1952 "GET /api/v1/announcements/ HTTP/1.1" 200 52
+INFO 2026-07-08 21:24:50,442 basehttp 8812 1952 "GET /api/v1/activity-logs/ HTTP/1.1" 200 6715
+INFO 2026-07-08 21:24:50,492 basehttp 8812 7684 "GET /api/v1/results/?status=pending HTTP/1.1" 200 8247
+INFO 2026-07-08 21:24:50,499 basehttp 8812 7684 "GET /api/v1/announcements/ HTTP/1.1" 200 52
+INFO 2026-07-08 21:24:50,513 basehttp 8812 7684 "GET /api/v1/activity-logs/ HTTP/1.1" 200 6715
+INFO 2026-07-08 21:30:25,969 basehttp 8812 2452 "OPTIONS /api/v1/results/?status=pending HTTP/1.1" 200 0
+INFO 2026-07-08 21:30:26,134 basehttp 8812 2452 "GET /api/v1/results/?status=pending HTTP/1.1" 200 8247
+ERROR 2026-07-08 21:31:57,702 log 6912 228 Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\utils\deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\middleware\common.py", line 48, in process_request
+    host = request.get_host()
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\http\request.py", line 203, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+INFO 2026-07-08 21:32:54,891 basehttp 8812 2452 "GET /api/v1/results/?status=pending HTTP/1.1" 200 8247
+INFO 2026-07-08 21:33:25,460 basehttp 8812 2452 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 21:33:25,470 basehttp 8812 2452 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 21:33:25,484 basehttp 8812 2452 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 21:33:25,503 basehttp 8812 2452 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 21:33:25,664 basehttp 8812 7080 "GET /api/v1/results/?status=pending HTTP/1.1" 200 8247
+INFO 2026-07-08 21:33:25,861 basehttp 8812 2452 "GET /api/v1/results/?status=pending HTTP/1.1" 200 8247
+INFO 2026-07-08 21:47:44,035 autoreload 3772 2448 Watching for file changes with StatReloader
+INFO 2026-07-08 21:48:34,217 autoreload 8812 80 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\academics\serializers.py changed, reloading.
+INFO 2026-07-08 21:48:35,529 autoreload 14924 6724 Watching for file changes with StatReloader
+INFO 2026-07-08 21:48:52,657 autoreload 14924 6724 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\academics\serializers.py changed, reloading.
+INFO 2026-07-08 21:48:53,822 autoreload 13876 12736 Watching for file changes with StatReloader
+ERROR 2026-07-08 21:50:29,194 log 3876 15288 Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\utils\deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\middleware\common.py", line 48, in process_request
+    host = request.get_host()
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\http\request.py", line 203, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+ERROR 2026-07-08 21:50:41,812 log 10360 13828 Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\utils\deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\middleware\common.py", line 48, in process_request
+    host = request.get_host()
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\http\request.py", line 203, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'testserver'. You may need to add 'testserver' to ALLOWED_HOSTS.
+INFO 2026-07-08 21:51:50,953 autoreload 13876 12736 C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\academics\serializers.py changed, reloading.
+INFO 2026-07-08 21:51:52,205 autoreload 16216 14272 Watching for file changes with StatReloader
+INFO 2026-07-08 21:52:33,838 basehttp 16216 5316 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 21:52:33,898 basehttp 16216 5316 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 21:52:33,969 basehttp 16216 5316 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 21:52:34,032 basehttp 16216 5316 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 21:52:34,287 basehttp 16216 2036 "GET /api/v1/results/?status=pending HTTP/1.1" 200 8247
+INFO 2026-07-08 21:52:34,540 basehttp 16216 5316 "GET /api/v1/results/?status=pending HTTP/1.1" 200 8247
+INFO 2026-07-08 21:52:56,684 basehttp 16216 5316 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 21:52:56,729 basehttp 16216 5316 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 21:52:56,783 basehttp 16216 5316 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 21:52:56,822 basehttp 16216 2036 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 21:52:56,978 basehttp 16216 5316 "GET /api/v1/results/?status=pending HTTP/1.1" 200 8247
+INFO 2026-07-08 21:52:57,088 basehttp 16216 2036 "GET /api/v1/results/?status=pending HTTP/1.1" 200 8247
+INFO 2026-07-08 21:54:27,182 basehttp 16216 2036 "GET /api/v1/results/?status=pending HTTP/1.1" 200 8247
+INFO 2026-07-08 21:54:34,510 basehttp 16216 2036 "GET /api/v1/results/?status=pending HTTP/1.1" 200 8247
+INFO 2026-07-08 21:54:40,016 basehttp 16216 2036 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 21:54:40,026 basehttp 16216 2036 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 21:54:40,069 basehttp 16216 2036 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 21:54:40,081 basehttp 16216 2036 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 21:54:48,596 basehttp 16216 2036 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 21:54:48,607 basehttp 16216 2036 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 21:54:48,619 basehttp 16216 5316 "OPTIONS /api/v1/results/ HTTP/1.1" 200 0
+INFO 2026-07-08 21:54:48,634 basehttp 16216 2036 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 21:54:48,645 basehttp 16216 5052 "OPTIONS /api/v1/results/ HTTP/1.1" 200 0
+INFO 2026-07-08 21:54:48,657 basehttp 16216 2036 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 21:54:48,895 basehttp 16216 5316 "GET /api/v1/results/ HTTP/1.1" 200 10635
+INFO 2026-07-08 21:54:49,056 basehttp 16216 2036 "GET /api/v1/results/ HTTP/1.1" 200 10635
+INFO 2026-07-08 21:54:57,136 basehttp 16216 2036 "GET /api/v1/results/ HTTP/1.1" 200 10635
+INFO 2026-07-08 21:55:17,823 basehttp 16216 2036 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 21:55:17,843 basehttp 16216 2036 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 21:55:17,856 basehttp 16216 2036 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 21:55:17,867 basehttp 16216 2036 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 21:55:18,111 basehttp 16216 2036 "GET /api/v1/results/ HTTP/1.1" 200 10635
+INFO 2026-07-08 21:55:18,243 basehttp 16216 5316 "GET /api/v1/results/ HTTP/1.1" 200 10635
+INFO 2026-07-08 21:55:37,036 basehttp 16216 5316 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 21:55:37,077 basehttp 16216 5316 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 21:55:37,158 basehttp 16216 5316 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 21:55:37,271 basehttp 16216 5316 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 21:55:37,281 basehttp 16216 2036 "GET /api/v1/results/ HTTP/1.1" 200 10635
+INFO 2026-07-08 21:55:37,454 basehttp 16216 5316 "GET /api/v1/results/ HTTP/1.1" 200 10635
+INFO 2026-07-08 21:57:10,537 basehttp 16216 5316 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 21:57:10,587 basehttp 16216 5316 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 21:57:10,603 basehttp 16216 5316 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 21:57:10,612 basehttp 16216 5316 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 21:57:10,954 basehttp 16216 5316 "GET /api/v1/results/ HTTP/1.1" 200 10635
+INFO 2026-07-08 21:57:11,109 basehttp 16216 2036 "GET /api/v1/results/ HTTP/1.1" 200 10635
+INFO 2026-07-08 22:07:47,953 basehttp 16216 6096 "GET /api/v1/results/ HTTP/1.1" 200 10635
+INFO 2026-07-08 22:08:37,346 basehttp 16216 6096 "GET /api/v1/results/ HTTP/1.1" 200 10635
+INFO 2026-07-08 22:28:08,141 autoreload 16112 15368 Watching for file changes with StatReloader
+INFO 2026-07-08 22:28:14,119 basehttp 16112 1772 "OPTIONS /api/v1/auth/me/ HTTP/1.1" 200 0
+INFO 2026-07-08 22:28:14,119 basehttp 16112 9080 "OPTIONS /api/v1/auth/me/ HTTP/1.1" 200 0
+INFO 2026-07-08 22:28:14,120 basehttp 16112 15576 "OPTIONS /api/v1/auth/me/ HTTP/1.1" 200 0
+INFO 2026-07-08 22:28:14,124 basehttp 16112 1144 "OPTIONS /api/v1/auth/me/ HTTP/1.1" 200 0
+WARNING 2026-07-08 22:28:14,203 basehttp 16112 1144 "GET /api/v1/auth/me/ HTTP/1.1" 401 172
+WARNING 2026-07-08 22:28:14,210 basehttp 16112 1144 "GET /api/v1/auth/me/ HTTP/1.1" 401 172
+INFO 2026-07-08 22:28:14,211 basehttp 16112 9080 "OPTIONS /api/v1/auth/refresh/ HTTP/1.1" 200 0
+WARNING 2026-07-08 22:28:14,229 basehttp 16112 1144 "GET /api/v1/auth/me/ HTTP/1.1" 401 172
+WARNING 2026-07-08 22:28:14,249 basehttp 16112 1772 "GET /api/v1/auth/me/ HTTP/1.1" 401 172
+INFO 2026-07-08 22:28:14,287 basehttp 16112 9080 "POST /api/v1/auth/refresh/ HTTP/1.1" 200 582
+WARNING 2026-07-08 22:28:14,289 basehttp 16112 1144 "POST /api/v1/auth/refresh/ HTTP/1.1" 401 58
+WARNING 2026-07-08 22:28:14,292 basehttp 16112 1772 "POST /api/v1/auth/refresh/ HTTP/1.1" 401 58
+INFO 2026-07-08 22:28:14,308 basehttp 16112 15576 "POST /api/v1/auth/refresh/ HTTP/1.1" 200 582
+WARNING 2026-07-08 22:28:14,431 basehttp 16112 15576 "POST /api/v1/auth/refresh/ HTTP/1.1" 400 43
+INFO 2026-07-08 22:28:14,584 basehttp 16112 1772 - Broken pipe from ('127.0.0.1', 60112)
+INFO 2026-07-08 22:28:14,926 basehttp 16112 15576 "GET /api/v1/stats/public/ HTTP/1.1" 200 49
+INFO 2026-07-08 22:28:14,953 basehttp 16112 15576 "GET /api/v1/stats/public/ HTTP/1.1" 200 49
+INFO 2026-07-08 22:28:18,716 basehttp 16112 15576 "OPTIONS /api/v1/auth/login/ HTTP/1.1" 200 0
+INFO 2026-07-08 22:28:19,603 basehttp 16112 15576 "POST /api/v1/auth/login/ HTTP/1.1" 200 709
+INFO 2026-07-08 22:28:19,703 basehttp 16112 1144 "OPTIONS /api/v1/dashboard/admin/ HTTP/1.1" 200 0
+INFO 2026-07-08 22:28:19,704 basehttp 16112 15576 "OPTIONS /api/v1/dashboard/admin/ HTTP/1.1" 200 0
+INFO 2026-07-08 22:28:19,753 basehttp 16112 15576 "GET /api/v1/dashboard/admin/ HTTP/1.1" 200 4339
+INFO 2026-07-08 22:28:19,801 basehttp 16112 1144 "GET /api/v1/dashboard/admin/ HTTP/1.1" 200 4339
+INFO 2026-07-08 22:28:24,017 basehttp 16112 1144 "OPTIONS /api/v1/courses/ HTTP/1.1" 200 0
+INFO 2026-07-08 22:28:24,017 basehttp 16112 15576 "OPTIONS /api/v1/courses/ HTTP/1.1" 200 0
+INFO 2026-07-08 22:28:24,064 basehttp 16112 15576 "GET /api/v1/courses/ HTTP/1.1" 200 7382
+INFO 2026-07-08 22:28:24,095 basehttp 16112 1144 "GET /api/v1/courses/ HTTP/1.1" 200 7382
+INFO 2026-07-08 22:28:27,257 basehttp 16112 1144 "OPTIONS /api/v1/results/ HTTP/1.1" 200 0
+INFO 2026-07-08 22:28:27,258 basehttp 16112 15576 "OPTIONS /api/v1/results/ HTTP/1.1" 200 0
+INFO 2026-07-08 22:28:27,408 basehttp 16112 15576 "GET /api/v1/results/ HTTP/1.1" 200 11508
+INFO 2026-07-08 22:28:27,515 basehttp 16112 1144 "GET /api/v1/results/ HTTP/1.1" 200 11508
+INFO 2026-07-08 22:30:44,347 basehttp 16112 1144 "GET /api/v1/results/ HTTP/1.1" 200 11508
+INFO 2026-07-08 22:30:49,453 basehttp 16112 1144 "GET /api/v1/results/ HTTP/1.1" 200 11508
+INFO 2026-07-08 22:32:12,395 basehttp 16112 1144 "GET /api/v1/results/ HTTP/1.1" 200 11508
+INFO 2026-07-08 22:32:18,017 basehttp 16112 1144 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:32:18,030 basehttp 16112 1144 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:32:18,084 basehttp 16112 1144 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:32:18,219 basehttp 16112 1144 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:32:18,271 basehttp 16112 15576 "GET /api/v1/results/ HTTP/1.1" 200 11508
+INFO 2026-07-08 22:32:18,537 basehttp 16112 1144 "GET /api/v1/results/ HTTP/1.1" 200 11508
+INFO 2026-07-08 22:33:12,657 basehttp 16112 1144 "GET /api/v1/results/ HTTP/1.1" 200 11508
+INFO 2026-07-08 22:35:19,134 basehttp 16112 1144 "GET /api/v1/results/ HTTP/1.1" 200 11508
+INFO 2026-07-08 22:35:23,943 basehttp 16112 1144 "GET /api/v1/results/ HTTP/1.1" 200 11508
+INFO 2026-07-08 22:35:29,145 basehttp 16112 1144 "GET /api/v1/results/ HTTP/1.1" 200 11508
+INFO 2026-07-08 22:35:36,968 basehttp 16112 1144 "GET /api/v1/results/ HTTP/1.1" 200 11508
+INFO 2026-07-08 22:35:45,528 basehttp 16112 1144 "GET /api/v1/results/ HTTP/1.1" 200 11508
+INFO 2026-07-08 22:35:56,649 basehttp 16112 1144 "GET /api/v1/results/ HTTP/1.1" 200 11508
+INFO 2026-07-08 22:36:19,342 basehttp 16112 1144 "OPTIONS /api/v1/stats/public/ HTTP/1.1" 200 0
+INFO 2026-07-08 22:36:19,344 basehttp 16112 15576 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:36:19,344 basehttp 16112 14312 "OPTIONS /api/v1/stats/public/ HTTP/1.1" 200 0
+INFO 2026-07-08 22:36:19,358 basehttp 16112 15576 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:36:19,359 basehttp 16112 1144 "GET /api/v1/stats/public/ HTTP/1.1" 200 49
+INFO 2026-07-08 22:36:19,373 basehttp 16112 15576 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:36:19,377 basehttp 16112 1144 "GET /api/v1/stats/public/ HTTP/1.1" 200 49
+INFO 2026-07-08 22:36:19,388 basehttp 16112 15576 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:40:19,706 basehttp 16112 15576 "GET /api/v1/stats/public/ HTTP/1.1" 200 49
+INFO 2026-07-08 22:40:19,710 basehttp 16112 1144 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:40:19,723 basehttp 16112 1144 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:40:19,724 basehttp 16112 15576 "GET /api/v1/stats/public/ HTTP/1.1" 200 49
+INFO 2026-07-08 22:40:19,745 basehttp 16112 1144 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:40:19,758 basehttp 16112 1144 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:40:43,499 basehttp 16112 1144 "POST /api/v1/auth/login/ HTTP/1.1" 200 771
+INFO 2026-07-08 22:40:43,586 basehttp 16112 1144 "GET /api/v1/auth/me/ HTTP/1.1" 200 1382
+INFO 2026-07-08 22:40:43,594 basehttp 16112 15576 "OPTIONS /api/v1/registrations/?course=36 HTTP/1.1" 200 0
+INFO 2026-07-08 22:40:43,628 basehttp 16112 1144 "GET /api/v1/auth/me/ HTTP/1.1" 200 1382
+INFO 2026-07-08 22:40:43,667 basehttp 16112 15576 "GET /api/v1/registrations/?course=36 HTTP/1.1" 200 9413
+INFO 2026-07-08 22:40:43,675 basehttp 16112 15576 "OPTIONS /api/v1/registrations/?course=41 HTTP/1.1" 200 0
+INFO 2026-07-08 22:40:43,695 basehttp 16112 15576 "GET /api/v1/registrations/?course=41 HTTP/1.1" 200 52
+INFO 2026-07-08 22:40:43,704 basehttp 16112 15576 "OPTIONS /api/v1/results/?status=pending HTTP/1.1" 200 0
+INFO 2026-07-08 22:40:43,764 basehttp 16112 1144 "GET /api/v1/registrations/?course=36 HTTP/1.1" 200 9413
+INFO 2026-07-08 22:40:43,779 basehttp 16112 1144 "GET /api/v1/registrations/?course=41 HTTP/1.1" 200 52
+INFO 2026-07-08 22:40:43,799 basehttp 16112 15576 "GET /api/v1/results/?status=pending HTTP/1.1" 200 8926
+INFO 2026-07-08 22:40:43,808 basehttp 16112 15576 "OPTIONS /api/v1/announcements/ HTTP/1.1" 200 0
+INFO 2026-07-08 22:40:43,824 basehttp 16112 15576 "GET /api/v1/announcements/ HTTP/1.1" 200 52
+INFO 2026-07-08 22:40:43,833 basehttp 16112 15576 "OPTIONS /api/v1/activity-logs/ HTTP/1.1" 200 0
+INFO 2026-07-08 22:40:43,853 basehttp 16112 15576 "GET /api/v1/activity-logs/ HTTP/1.1" 200 6715
+INFO 2026-07-08 22:40:43,909 basehttp 16112 1144 "GET /api/v1/results/?status=pending HTTP/1.1" 200 8926
+INFO 2026-07-08 22:40:43,918 basehttp 16112 1144 "GET /api/v1/announcements/ HTTP/1.1" 200 52
+INFO 2026-07-08 22:40:43,930 basehttp 16112 1144 "GET /api/v1/activity-logs/ HTTP/1.1" 200 6715
+INFO 2026-07-08 22:40:46,216 basehttp 16112 1144 "GET /api/v1/auth/me/ HTTP/1.1" 200 1382
+INFO 2026-07-08 22:40:46,269 basehttp 16112 14312 "GET /api/v1/registrations/?course=41 HTTP/1.1" 200 52
+INFO 2026-07-08 22:40:46,288 basehttp 16112 14312 "OPTIONS /api/v1/attendance/?course=41&date=2026-07-08 HTTP/1.1" 200 0
+INFO 2026-07-08 22:40:46,321 basehttp 16112 1144 "GET /api/v1/auth/me/ HTTP/1.1" 200 1382
+INFO 2026-07-08 22:40:46,340 basehttp 16112 1144 "GET /api/v1/registrations/?course=41 HTTP/1.1" 200 52
+INFO 2026-07-08 22:40:46,362 basehttp 16112 14312 "GET /api/v1/attendance/?course=41&date=2026-07-08 HTTP/1.1" 200 52
+INFO 2026-07-08 22:40:46,374 basehttp 16112 1144 "GET /api/v1/attendance/?course=41&date=2026-07-08 HTTP/1.1" 200 52
+INFO 2026-07-08 22:40:46,386 basehttp 16112 15576 "GET /api/v1/registrations/?course=36 HTTP/1.1" 200 9413
+INFO 2026-07-08 22:40:46,393 basehttp 16112 15576 "OPTIONS /api/v1/attendance/?course=36&date=2026-07-08 HTTP/1.1" 200 0
+INFO 2026-07-08 22:40:46,480 basehttp 16112 1144 "GET /api/v1/registrations/?course=36 HTTP/1.1" 200 9413
+ERROR 2026-07-08 22:40:46,574 log 16112 15576 Internal Server Error: /api/v1/attendance/
+Traceback (most recent call last):
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\mixins.py", line 43, in list
+    return self.get_paginated_response(serializer.data)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\serializers.py", line 809, in data
+    ret = super().data
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\serializers.py", line 251, in data
+    self._data = self.to_representation(self.instance)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\serializers.py", line 727, in to_representation
+    return [
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\serializers.py", line 728, in <listcomp>
+    self.child.to_representation(item) for item in iterable
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\serializers.py", line 552, in to_representation
+    ret[field.field_name] = field.to_representation(attribute)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\fields.py", line 1929, in to_representation
+    return method(value)
+  File "C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\academics\serializers.py", line 546, in get_student
+    student_profile = StudentProfile.objects.get(user=obj.student)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\query.py", line 621, in get
+    clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\query.py", line 1495, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\query.py", line 1513, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\query.py", line 1523, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\sql\query.py", line 1648, in add_q
+    clause, _ = self._add_q(q_object, can_reuse)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\sql\query.py", line 1680, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\sql\query.py", line 1565, in build_filter
+    self.check_related_objects(join_info.final_field, value, join_info.opts)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\sql\query.py", line 1374, in check_related_objects
+    self.check_query_object_type(value, opts, field)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\sql\query.py", line 1351, in check_query_object_type
+    raise ValueError(
+ValueError: Cannot query "student1 - STU/2024/001": Must be "User" instance.
+ERROR 2026-07-08 22:40:46,606 basehttp 16112 15576 "GET /api/v1/attendance/?course=36&date=2026-07-08 HTTP/1.1" 500 221438
+ERROR 2026-07-08 22:40:46,817 log 16112 1144 Internal Server Error: /api/v1/attendance/
+Traceback (most recent call last):
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\mixins.py", line 43, in list
+    return self.get_paginated_response(serializer.data)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\serializers.py", line 809, in data
+    ret = super().data
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\serializers.py", line 251, in data
+    self._data = self.to_representation(self.instance)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\serializers.py", line 727, in to_representation
+    return [
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\serializers.py", line 728, in <listcomp>
+    self.child.to_representation(item) for item in iterable
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\serializers.py", line 552, in to_representation
+    ret[field.field_name] = field.to_representation(attribute)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\rest_framework\fields.py", line 1929, in to_representation
+    return method(value)
+  File "C:\Users\ORACLE\CascadeProjects\windsurf-project\school-monitoring-system\backend\academics\serializers.py", line 546, in get_student
+    student_profile = StudentProfile.objects.get(user=obj.student)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\query.py", line 621, in get
+    clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\query.py", line 1495, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\query.py", line 1513, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\query.py", line 1523, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\sql\query.py", line 1648, in add_q
+    clause, _ = self._add_q(q_object, can_reuse)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\sql\query.py", line 1680, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\sql\query.py", line 1565, in build_filter
+    self.check_related_objects(join_info.final_field, value, join_info.opts)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\sql\query.py", line 1374, in check_related_objects
+    self.check_query_object_type(value, opts, field)
+  File "C:\Users\ORACLE\AppData\Roaming\Python\Python310\site-packages\django\db\models\sql\query.py", line 1351, in check_query_object_type
+    raise ValueError(
+ValueError: Cannot query "student1 - STU/2024/001": Must be "User" instance.
+ERROR 2026-07-08 22:40:46,839 basehttp 16112 1144 "GET /api/v1/attendance/?course=36&date=2026-07-08 HTTP/1.1" 500 221438
+INFO 2026-07-08 22:40:49,583 basehttp 16112 1144 "GET /api/v1/auth/me/ HTTP/1.1" 200 1382
+INFO 2026-07-08 22:40:49,595 basehttp 16112 15576 "OPTIONS /api/v1/results/?course=36 HTTP/1.1" 200 0
+INFO 2026-07-08 22:40:49,607 basehttp 16112 1716 "OPTIONS /api/v1/results/?course=41 HTTP/1.1" 200 0
+INFO 2026-07-08 22:40:49,646 basehttp 16112 5248 "GET /api/v1/registrations/?course=41 HTTP/1.1" 200 52
+INFO 2026-07-08 22:40:49,699 basehttp 16112 1716 "GET /api/v1/results/?course=41 HTTP/1.1" 200 52
+INFO 2026-07-08 22:40:49,709 basehttp 16112 1144 "GET /api/v1/auth/me/ HTTP/1.1" 200 1382
+INFO 2026-07-08 22:40:49,756 basehttp 16112 1716 "GET /api/v1/results/?course=41 HTTP/1.1" 200 52
+INFO 2026-07-08 22:40:49,769 basehttp 16112 1144 "GET /api/v1/registrations/?course=41 HTTP/1.1" 200 52
+INFO 2026-07-08 22:40:49,825 basehttp 16112 14312 "GET /api/v1/registrations/?course=36 HTTP/1.1" 200 9413
+INFO 2026-07-08 22:40:49,873 basehttp 16112 15576 "GET /api/v1/results/?course=36 HTTP/1.1" 200 11508
+INFO 2026-07-08 22:40:49,912 basehttp 16112 1144 "GET /api/v1/registrations/?course=36 HTTP/1.1" 200 9413
+INFO 2026-07-08 22:40:49,994 basehttp 16112 14312 "GET /api/v1/results/?course=36 HTTP/1.1" 200 11508
+INFO 2026-07-08 22:41:15,967 basehttp 16112 14312 "OPTIONS /api/v1/auth/logout/ HTTP/1.1" 200 0
+INFO 2026-07-08 22:41:15,982 basehttp 16112 14312 "POST /api/v1/auth/logout/ HTTP/1.1" 200 53
+INFO 2026-07-08 22:41:16,017 basehttp 16112 14312 "GET /api/v1/stats/public/ HTTP/1.1" 200 49
+INFO 2026-07-08 22:41:16,035 basehttp 16112 14312 "GET /api/v1/stats/public/ HTTP/1.1" 200 49
+INFO 2026-07-08 22:46:38,654 basehttp 16112 5148 "GET /api/v1/stats/public/ HTTP/1.1" 200 49
+INFO 2026-07-08 22:46:38,719 basehttp 16112 5148 "GET /api/v1/stats/public/ HTTP/1.1" 200 49
+INFO 2026-07-08 22:48:26,972 basehttp 16112 4192 "POST /api/v1/auth/login/ HTTP/1.1" 200 709
+INFO 2026-07-08 22:48:27,103 basehttp 16112 4192 "GET /api/v1/dashboard/admin/ HTTP/1.1" 200 4339
+INFO 2026-07-08 22:48:27,155 basehttp 16112 4192 "GET /api/v1/dashboard/admin/ HTTP/1.1" 200 4339
+INFO 2026-07-08 22:48:55,145 basehttp 16112 4192 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:48:55,290 basehttp 16112 4192 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:48:55,300 basehttp 16112 4192 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:48:55,310 basehttp 16112 4192 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:49:06,713 basehttp 16112 4192 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:49:06,752 basehttp 16112 4192 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:49:06,767 basehttp 16112 4192 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:49:06,778 basehttp 16112 4192 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:49:11,219 basehttp 16112 4192 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:49:11,230 basehttp 16112 4192 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:49:11,236 basehttp 16112 4192 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:49:11,244 basehttp 16112 4192 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:49:18,933 basehttp 16112 4192 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:49:18,942 basehttp 16112 4192 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:49:18,953 basehttp 16112 4192 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:49:18,960 basehttp 16112 4192 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:54:22,208 basehttp 16112 10824 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:54:22,220 basehttp 16112 10824 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:54:22,231 basehttp 16112 10824 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:54:22,268 basehttp 16112 10824 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:54:31,157 basehttp 16112 10824 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:54:31,167 basehttp 16112 10824 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:54:31,178 basehttp 16112 10824 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:54:31,186 basehttp 16112 10824 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:54:40,136 basehttp 16112 10824 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:54:40,145 basehttp 16112 10824 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:54:40,155 basehttp 16112 10824 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:54:40,162 basehttp 16112 10824 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:54:56,135 basehttp 16112 10824 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:54:56,146 basehttp 16112 10824 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:54:56,162 basehttp 16112 10824 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:54:56,172 basehttp 16112 10824 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:55:45,317 basehttp 16112 10824 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:55:45,337 basehttp 16112 10824 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:55:45,350 basehttp 16112 10824 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:55:45,362 basehttp 16112 10824 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:55:55,357 basehttp 16112 10824 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:55:55,368 basehttp 16112 10824 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:55:55,380 basehttp 16112 10824 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:55:55,391 basehttp 16112 10824 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:56:06,536 basehttp 16112 10824 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:56:06,554 basehttp 16112 10824 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:56:06,574 basehttp 16112 10824 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:56:06,711 basehttp 16112 16332 "GET /api/v1/auth/me/ HTTP/1.1" 200 262
+INFO 2026-07-08 22:56:07,033 basehttp 16112 10824 "GET /api/v1/results/ HTTP/1.1" 200 11508
+INFO 2026-07-08 22:56:07,258 basehttp 16112 16332 "GET /api/v1/results/ HTTP/1.1" 200 11508

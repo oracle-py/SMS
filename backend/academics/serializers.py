@@ -1043,6 +1043,7 @@ class ResultSerializer(serializers.ModelSerializer):
     session_id = serializers.IntegerField(write_only=True)
     semester = SemesterSerializer(read_only=True)
     semester_id = serializers.IntegerField(write_only=True)
+    lecturer = serializers.SerializerMethodField()
     
     class Meta:
         model = Result
@@ -1056,6 +1057,7 @@ class ResultSerializer(serializers.ModelSerializer):
             'session_id',
             'semester',
             'semester_id',
+            'lecturer',
             'ca_score',
             'exam_score',
             'total_score',
@@ -1113,6 +1115,21 @@ class ResultSerializer(serializers.ModelSerializer):
                     'first_name': '',
                     'last_name': ''
                 }
+    
+    def get_lecturer(self, obj):
+        """Get lecturer information."""
+        try:
+            if obj.lecturer:
+                return {
+                    'id': obj.lecturer.id,
+                    'username': obj.lecturer.username,
+                    'first_name': obj.lecturer.first_name,
+                    'last_name': obj.lecturer.last_name
+                }
+            return None
+        except Exception as e:
+            logger.error(f"Error getting lecturer: {e}", exc_info=True)
+            return None
     
     def create(self, validated_data):
         """Create result record with proper student ID conversion."""
