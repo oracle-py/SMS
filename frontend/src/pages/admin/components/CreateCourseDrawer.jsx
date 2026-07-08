@@ -92,18 +92,35 @@ export default function CreateCourseDrawer({ open, onClose }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         
+        // Validate required fields
+        if (!formData.course_code || !formData.course_title || !formData.credit_units || 
+            !formData.level || !formData.semester) {
+            alert('Please fill in all required fields');
+            return;
+        }
+        
         try {
-            const response = await api.post('/courses/', {
+            const payload = {
                 course_code: formData.course_code,
                 course_title: formData.course_title,
                 credit_unit: parseInt(formData.credit_units),
-                level_id: formData.level,
-                semester_id: formData.semester,
-                department: formData.department,
+                level_id: parseInt(formData.level),
+                semester_id: parseInt(formData.semester),
                 is_active: formData.status === 'Active'
-            });
+            };
+            
+            // Only include department_id if a department is selected
+            if (formData.department) {
+                payload.department_id = parseInt(formData.department);
+            }
+            
+            const response = await api.post('/courses/', payload);
             
             alert('Course created successfully!');
+            
+            // Reset form to initial state
+            setFormData(initialData);
+            
             onClose();
         } catch (error) {
             console.error('Error creating course:', error);

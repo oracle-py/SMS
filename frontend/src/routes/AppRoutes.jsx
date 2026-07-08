@@ -15,6 +15,7 @@ import LecturerResults from '../pages/lecturer/Results';
 import LecturerAnnouncements from '../pages/lecturer/Announcements';
 import LecturerProfile from '../pages/lecturer/Profile';
 import AdminDashboard from '../pages/admin/AdminDashboard';
+import AdminResults from '../pages/admin/Results';
 import Students from '../pages/admin/Students';
 import Teachers from '../pages/admin/Teachers';
 import Parents from '../pages/admin/Parents';
@@ -201,7 +202,7 @@ function AppRoutes() {
           path="/admin/results" 
           element={
             <ProtectedRoute allowedRoles={['admin']}>
-              <UnderDevelopment feature="Results Management" />
+              <AdminResults />
             </ProtectedRoute>
           } 
         />

@@ -3378,3 +3378,458 @@ grid-template-columns:1fr;
     }
 
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap');
+
+/* =========================================================
+   STUDENT COURSES — premium page
+   Signature: hero styled like an academic credential/ID
+   panel (deep navy + gold), course cards styled like
+   enrollment cards with a units "ribbon" corner.
+========================================================= */
+
+/* =====================================================
+   STUDENT COURSES
+===================================================== */
+
+.sc-page{
+    display:flex;
+    flex-direction:column;
+    gap:24px;
+    padding:28px;
+}
+
+.sc-page .students-header-box{
+    margin-bottom:0;
+}
+
+.sc-page .ad-stat-strip{
+    margin-top:-6px;
+}
+
+.sc-page .lecturer-card{
+    padding:0;
+    overflow:hidden;
+}
+
+.sc-page .lecturer-table{
+    margin:0;
+    background-color: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.sc-page .lecturer-table th{
+    white-space:nowrap;
+    background-color: #f1f5f9;
+    color: #1e293b;
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 16px 12px;
+    text-align: left;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.sc-page .lecturer-table td{
+    vertical-align:middle;
+    padding: 16px 12px;
+    color: #1e293b;
+    font-size: 0.9rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+/* Student Courses Table Specific Styling */
+.lecturer-page .lecturer-table {
+    background-color: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.lecturer-page .lecturer-table th {
+    background-color: #f1f5f9;
+    color: #1e293b;
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 16px 12px;
+    text-align: left;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.lecturer-page .lecturer-table td {
+    padding: 16px 12px;
+    color: #1e293b;
+    font-size: 0.9rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.lecturer-page .lecturer-table tbody tr {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.lecturer-page .lecturer-table tbody tr:hover {
+    background-color: #e2e8f0;
+}
+
+.sc-page .ad-avatar{
+    width:42px;
+    height:42px;
+    border-radius:12px;
+    background:linear-gradient(135deg,#4f46e5,#6366f1);
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:1.1rem;
+}
+
+.sc-page .ad-student h4{
+    margin:0;
+    font-size:.95rem;
+    font-weight:600;
+    color:#1e293b;
+}
+
+.sc-page .ad-student span{
+    color:#475569;
+    font-size:.78rem;
+}
+
+.sc-page .course-code{
+
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:8px 14px;
+
+    border-radius:999px;
+
+    background:#eef2ff;
+
+    color:#4338ca;
+
+    font-weight:700;
+
+    letter-spacing:.04em;
+
+    font-size:.8rem;
+}
+
+.sc-page .course-title{
+
+    font-weight:600;
+
+    color:#111827;
+
+    line-height:1.45;
+}
+
+.sc-page .course-unit{
+
+    width:44px;
+    height:44px;
+
+    border-radius:12px;
+
+    background:#f8fafc;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-weight:700;
+
+    color:#0f172a;
+
+    border:1px solid #e2e8f0;
+}
+
+.sc-page .semester-badge{
+
+    display:inline-flex;
+
+    padding:7px 14px;
+
+    border-radius:999px;
+
+    background:#eff6ff;
+
+    color:#2563eb;
+
+    font-weight:600;
+
+    font-size:.8rem;
+}
+
+.sc-page .ad-status{
+
+    min-width:110px;
+
+    justify-content:center;
+}
+
+.sc-page .lecturer-table tbody tr{
+
+    transition:.2s;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.sc-page .lecturer-table tbody tr:hover{
+
+    background:#e2e8f0;
+}
+
+.sc-page .ad-loading{
+
+    padding:60px;
+
+    text-align:center;
+}
+
+.sc-page .ad-empty-state{
+
+    padding:70px 30px;
+
+    text-align:center;
+
+    color:#64748b;
+}
+
+.sc-page .ad-empty-state h3{
+
+    margin-top:18px;
+
+    margin-bottom:8px;
+
+    color:#111827;
+}
+
+/* ===========================
+   Responsive
+=========================== */
+
+@media (max-width: 720px) {
+
+    .sc-page {
+        padding: 18px;
+    }
+
+    .sc-hero {
+        padding: 32px 24px;
+    }
+
+    .sc-hero h1 {
+        font-size: 2.1rem;
+    }
+
+    .sc-hero-stats {
+        gap: 18px;
+        flex-wrap: wrap;
+    }
+
+    .sc-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+/* =====================================================
+   STUDENT → MY LECTURERS
+===================================================== */
+
+.student-course-tags{
+
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+
+}
+
+.student-course-tag{
+
+    display:inline-flex;
+    align-items:center;
+
+    padding:8px 12px;
+
+    border-radius:999px;
+
+    background:#eef4ff;
+
+    color:#1d4ed8;
+
+    border:1px solid #dbeafe;
+
+    font-size:.78rem;
+
+    font-weight:500;
+
+    transition:.2s;
+
+}
+
+.student-course-tag:hover{
+
+    background:#dbeafe;
+
+    transform:translateY(-2px);
+
+}
+
+.student-course-tag strong{
+
+    font-weight:700;
+
+    margin-right:4px;
+
+}
+
+.student-email{
+
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    color:#475569;
+
+    font-size:.88rem;
+
+}
+
+.student-email svg{
+
+    color:#6366f1;
+
+    font-size:1rem;
+
+    flex-shrink:0;
+
+}
+
+.student-email span{
+
+    white-space:nowrap;
+
+}
+
+.lecturer-table .ad-avatar{
+
+    width:46px;
+    height:46px;
+
+    border-radius:14px;
+
+    background:linear-gradient(135deg,#4f46e5,#2563eb);
+
+    color:white;
+
+    font-weight:700;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    box-shadow:0 8px 20px rgba(79,70,229,.25);
+
+}
+
+.lecturer-table .ad-student h4{
+
+    margin:0;
+
+    font-size:.95rem;
+
+    color:#1e293b;
+
+}
+
+.lecturer-table .ad-student span{
+
+    font-size:.8rem;
+
+    color:#475569;
+
+}
+
+.lecturer-table tbody tr{
+
+    transition:.2s ease;
+    background-color: #ffffff;
+}
+
+.lecturer-table tbody tr:hover{
+
+    background:#e2e8f0;
+
+}
+
+.ad-loading{
+
+    text-align:center;
+
+    padding:60px;
+
+    color:#64748b;
+
+}
+
+.ad-empty-state{
+
+    text-align:center;
+
+    padding:70px 40px;
+
+}
+
+.ad-empty-state h3{
+
+    margin-top:16px;
+    margin-bottom:10px;
+
+    color:#0f172a;
+
+}
+
+.ad-empty-state p{
+
+    color:#64748b;
+
+    max-width:500px;
+
+    margin:auto;
+
+}
+
+@media(max-width:900px){
+
+    .student-course-tags{
+
+        gap:6px;
+
+    }
+
+    .student-course-tag{
+
+        font-size:.74rem;
+
+        padding:7px 10px;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .student-email span{
+
+        display:none;
+
+    }
+
+}

@@ -42,6 +42,8 @@ from api.views.student_dashboard import (
     StudentDashboardView,
     StudentResultsView,
     StudentAttendanceView,
+    StudentLecturersView,
+    StudentCoursesView,
 )
 from api.views.parent_dashboard import (
     ParentDashboardView,
@@ -105,6 +107,8 @@ urlpatterns = [
     path('student/dashboard/', StudentDashboardView.as_view(), name='student-dashboard'),
     path('student/results/', StudentResultsView.as_view(), name='student-results'),
     path('student/attendance/', StudentAttendanceView.as_view(), name='student-attendance'),
+    path('student/lecturers/', StudentLecturersView.as_view(), name='student-lecturers'),
+    path('student/courses/', StudentCoursesView.as_view(), name='student-courses'),
     
     # Parent dashboard endpoints
     path('parent/dashboard/', ParentDashboardView.as_view(), name='parent-dashboard'),

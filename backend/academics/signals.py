@@ -39,7 +39,7 @@ def assign_course_to_existing_students(sender, instance, created, **kwargs):
     
     try:
         # Get current academic session
-        current_session = AcademicSession.objects.filter(is_current=True).first()
+        current_session = AcademicSession.objects.filter(is_active=True).first()
         if not current_session:
             logger.warning("No current academic session found, using first available session")
             current_session = AcademicSession.objects.first()

@@ -23,15 +23,16 @@ export const AuthProvider = ({ children }) => {
       setAuthenticated(true);
       // Verify token is still valid by fetching current user
       getCurrentUser();
+    } else {
+      setLoading(false);
     }
-    
-    setLoading(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const login = async (email, password) => {
+  const login = async (username, password) => {
     try {
       const response = await api.post('/auth/login/', {
-        username: email,
+        username: username,
         password: password,
       });
       
@@ -60,9 +61,11 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     try {
       const refresh = localStorage.getItem('refresh_token');
-      await api.post('/auth/logout/', {
-        refresh_token: refresh,
-      });
+      if (refresh) {
+        await api.post('/auth/logout/', {
+          refresh_token: refresh,
+        });
+      }
     } catch (error) {
       console.error('Logout error:', error);
     } finally {
@@ -70,6 +73,7 @@ export const AuthProvider = ({ children }) => {
       setAccessToken(null);
       setRefreshToken(null);
       setAuthenticated(false);
+      setLoading(false);
       localStorage.removeItem('access_token');
       localStorage.removeItem('refresh_token');
       localStorage.removeItem('user_data');
@@ -86,10 +90,12 @@ export const AuthProvider = ({ children }) => {
       setUser(userData);
       setAuthenticated(true);
       localStorage.setItem('user_data', JSON.stringify(userData));
+      setLoading(false);
       
       return userData;
     } catch (error) {
       console.error('Get current user error:', error);
+      setLoading(false);
       // If token is invalid, try to refresh it
       if (error.response?.status === 401) {
         const newToken = await refreshAccessToken();

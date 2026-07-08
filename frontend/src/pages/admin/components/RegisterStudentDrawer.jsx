@@ -49,13 +49,15 @@ export default function RegisterStudentDrawer({
 
         matric_number:"",
 
-        parent_name:"",
+        parent_first_name:"",
+
+        parent_last_name:"",
 
         parent_email:"",
 
         parent_phone:"",
 
-        relationship:"Parent"
+        parent_relationship:"guardian"
 
     };
 
@@ -126,7 +128,7 @@ export default function RegisterStudentDrawer({
         setLoading(true);
         
         try {
-            const response = await api.post('/students/', {
+            const payload = {
                 user_data: {
                     first_name: formData.first_name,
                     last_name: formData.last_name,
@@ -139,7 +141,18 @@ export default function RegisterStudentDrawer({
                 student_id: formData.auto_generate_matric ? null : formData.matric_number,
                 grade_level: parseInt(formData.entry_level),
                 programme: formData.programme
-            });
+            };
+            
+            // Only include parent data if parent first name, last name, and email are provided
+            if (formData.parent_first_name && formData.parent_last_name && formData.parent_email) {
+                payload.parent_first_name = formData.parent_first_name;
+                payload.parent_last_name = formData.parent_last_name;
+                payload.parent_email = formData.parent_email;
+                payload.parent_phone = formData.parent_phone || null;
+                payload.parent_relationship = formData.parent_relationship || 'guardian';
+            }
+            
+            const response = await api.post('/students/', payload);
             
             // Only close drawer and reset form on success
             alert('Student registered successfully!');
@@ -722,24 +735,49 @@ export default function RegisterStudentDrawer({
 
                         <div className="drawer-input">
 
-                            <label htmlFor="parent_name">
+                            <label htmlFor="parent_first_name">
 
-                                Parent Name
+                                Parent First Name
 
                             </label>
 
                             <input
 
                                 type="text"
-                                id="parent_name"
-                                name="parent_name"
+                                id="parent_first_name"
+                                name="parent_first_name"
 
-                                value={formData.parent_name}
+                                value={formData.parent_first_name}
 
                                 onChange={handleChange}
 
-                                placeholder="Parent Full Name"
-                                autoComplete="name"
+                                placeholder="First Name"
+                                autoComplete="given-name"
+
+                            />
+
+                        </div>
+
+                        <div className="drawer-input">
+
+                            <label htmlFor="parent_last_name">
+
+                                Parent Last Name
+
+                            </label>
+
+                            <input
+
+                                type="text"
+                                id="parent_last_name"
+                                name="parent_last_name"
+
+                                value={formData.parent_last_name}
+
+                                onChange={handleChange}
+
+                                placeholder="Last Name"
+                                autoComplete="family-name"
 
                             />
 
@@ -797,7 +835,7 @@ export default function RegisterStudentDrawer({
 
                         <div className="drawer-input">
 
-                            <label htmlFor="relationship">
+                            <label htmlFor="parent_relationship">
 
                                 Relationship
 
@@ -805,34 +843,28 @@ export default function RegisterStudentDrawer({
 
                             <select
 
-                                id="relationship"
-                                name="relationship"
+                                id="parent_relationship"
+                                name="parent_relationship"
 
-                                value={formData.relationship}
+                                value={formData.parent_relationship}
 
                                 onChange={handleChange}
 
                             >
 
-                                <option>
-
-                                    Parent
-
-                                </option>
-
-                                <option>
+                                <option value="father">
 
                                     Father
 
                                 </option>
 
-                                <option>
+                                <option value="mother">
 
                                     Mother
 
                                 </option>
 
-                                <option>
+                                <option value="guardian">
 
                                     Guardian
 
@@ -1021,7 +1053,11 @@ export default function RegisterStudentDrawer({
 
             <span>Parent</span>
 
-            <strong>{formData.parent_name || "--"}</strong>
+            <strong>
+                {formData.parent_first_name && formData.parent_last_name 
+                    ? `${formData.parent_first_name} ${formData.parent_last_name}` 
+                    : "--"}
+            </strong>
 
         </div>
 

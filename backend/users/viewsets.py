@@ -7,6 +7,7 @@ and ParentStudentRelation models with proper permissions and filtering.
 
 import logging
 from django.conf import settings
+from django.db.models import Count
 from rest_framework import viewsets, filters, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import action
@@ -39,6 +40,26 @@ from users.utils.email_utils import (
     send_lecturer_registration_email,
     send_parent_registration_email
 )
+from academics.utils import log_activity
+
+
+def get_client_ip(request):
+    """
+    Get the client IP address from the request.
+    
+    Args:
+        request: The HTTP request object
+        
+    Returns:
+        The client IP address or None
+    """
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
+
 
 logger = logging.getLogger(__name__)
 
@@ -96,6 +117,19 @@ class StudentProfileViewSet(viewsets.ModelViewSet):
         student = serializer.save()
         logger.info(f"Student created: {student.user.email}, ID: {student.id}")
         
+        # Log activity
+        try:
+            log_activity(
+                user=self.request.user,
+                action='CREATE_STUDENT',
+                entity_type='Student',
+                entity_id=student.id,
+                description=f"Registered student {student.student_id}: {student.user.get_full_name()}",
+                ip_address=get_client_ip(self.request)
+            )
+        except Exception as e:
+            logger.error(f"Failed to log activity: {e}", exc_info=True)
+        
         # Send registration email to personal email (real address)
         # Wrapped in try/except to prevent 500 errors if email fails
         try:
@@ -134,6 +168,20 @@ class StudentProfileViewSet(viewsets.ModelViewSet):
             instance: StudentProfile instance to delete
         """
         logger.info(f"StudentProfileViewSet.perform_destroy called for ID: {instance.id}")
+        
+        # Log activity before deletion
+        try:
+            log_activity(
+                user=self.request.user,
+                action='DELETE_STUDENT',
+                entity_type='Student',
+                entity_id=instance.id,
+                description=f"Deleted student {instance.student_id}: {instance.user.get_full_name()}",
+                ip_address=get_client_ip(self.request)
+            )
+        except Exception as e:
+            logger.error(f"Failed to log activity: {e}", exc_info=True)
+        
         # Delete the associated user first, which will cascade to the profile
         if instance.user:
             user_id = instance.user.id
@@ -213,12 +261,14 @@ class ParentProfileViewSet(viewsets.ModelViewSet):
     - Students: No access
     """
     
-    queryset = ParentProfile.objects.select_related('user').all()
+    queryset = ParentProfile.objects.select_related('user').annotate(
+        children_count=Count('student_relations', distinct=True)
+    )
     permission_classes = [IsAuthenticated]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['user__username', 'user__first_name', 'user__last_name', 'occupation']
-    ordering_fields = ['user__last_name']
-    ordering = ['user__last_name']
+    ordering_fields = ['user__last_name', 'user__date_joined']
+    ordering = ['-user__date_joined']
     
     def get_serializer_class(self):
         """
@@ -251,6 +301,19 @@ class ParentProfileViewSet(viewsets.ModelViewSet):
         """
         parent = serializer.save()
         logger.info(f"Parent created: {parent.user.email}, ID: {parent.id}")
+        
+        # Log activity
+        try:
+            log_activity(
+                user=self.request.user,
+                action='CREATE_PARENT',
+                entity_type='Parent',
+                entity_id=parent.id,
+                description=f"Registered parent: {parent.user.get_full_name()}",
+                ip_address=get_client_ip(self.request)
+            )
+        except Exception as e:
+            logger.error(f"Failed to log activity: {e}", exc_info=True)
         
         # Send registration email to personal email (real address)
         try:
@@ -287,6 +350,20 @@ class ParentProfileViewSet(viewsets.ModelViewSet):
             instance: ParentProfile instance to delete
         """
         logger.info(f"ParentProfileViewSet.perform_destroy called for ID: {instance.id}")
+        
+        # Log activity before deletion
+        try:
+            log_activity(
+                user=self.request.user,
+                action='DELETE_PARENT',
+                entity_type='Parent',
+                entity_id=instance.id,
+                description=f"Deleted parent: {instance.user.get_full_name()}",
+                ip_address=get_client_ip(self.request)
+            )
+        except Exception as e:
+            logger.error(f"Failed to log activity: {e}", exc_info=True)
+        
         # Delete the associated user first, which will cascade to the profile
         if instance.user:
             user_id = instance.user.id
@@ -297,11 +374,127 @@ class ParentProfileViewSet(viewsets.ModelViewSet):
         logger.info(f"Parent deleted successfully: {instance.id}")
 
 
+class LecturerProfileViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet for LecturerProfile model.
+    
+    Provides CRUD operations for lecturer profiles with role-based permissions.
+    - Admins: Full access
+    - Lecturers: Read-only access to their own profile
+    - Students: No access
+    """
+    
+    queryset = LecturerProfile.objects.select_related('user', 'department', 'department__faculty').all()
+    serializer_class = LecturerProfileSerializer
+    permission_classes = [IsAuthenticated]
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    filterset_fields = ['rank', 'employment_type', 'department']
+    search_fields = ['staff_id', 'user__username', 'user__first_name', 'user__last_name']
+    ordering_fields = ['staff_id', 'date_of_employment']
+    ordering = ['staff_id']
+    
+    def get_serializer_class(self):
+        """
+        Return appropriate serializer based on action.
+        
+        Returns:
+            Detail serializer for retrieve action, list serializer otherwise
+        """
+        if self.action == 'retrieve':
+            return LecturerProfileDetailSerializer
+        return LecturerProfileSerializer
+    
+    def get_permissions(self):
+        """
+        Return appropriate permissions based on action.
+        
+        Returns:
+            Admin or lecturer owner permissions for object access
+        """
+        if self.action in ['create', 'update', 'partial_update', 'destroy']:
+            return [IsAuthenticated(), IsAdminRole()]
+        return [IsAuthenticated()]
+    
+    def perform_create(self, serializer):
+        """
+        Create lecturer profile with proper validation and send registration email.
+        
+        Args:
+            serializer: Validated serializer instance
+        """
+        lecturer = serializer.save()
+        logger.info(f"Lecturer created: {lecturer.user.email}, ID: {lecturer.id}")
+        
+        # Log activity
+        try:
+            log_activity(
+                user=self.request.user,
+                action='CREATE_LECTURER',
+                entity_type='Lecturer',
+                entity_id=lecturer.id,
+                description=f"Registered lecturer {lecturer.staff_id}: {lecturer.user.get_full_name()}",
+                ip_address=get_client_ip(self.request)
+            )
+        except Exception as e:
+            logger.error(f"Failed to log activity: {e}", exc_info=True)
+        
+        # Send registration email to personal email (real address)
+        try:
+            logger.info(f"Attempting to send registration email to personal email: {lecturer.user.email}")
+            # Use the default password that should be set in the serializer
+            default_password = 'school1234'
+            send_lecturer_registration_email(
+                email=lecturer.user.email,  # Send to personal email (real address)
+                first_name=lecturer.user.first_name,
+                last_name=lecturer.user.last_name,
+                staff_id=lecturer.staff_id,
+                department=lecturer.department.name if lecturer.department else 'Not Assigned',
+                rank=lecturer.rank if lecturer.rank else 'Not Assigned',
+                password=default_password,
+                school_email=lecturer.user.username  # School email for login
+            )
+            logger.info("Registration email sent successfully")
+        except Exception as e:
+            # Log error but don't fail the registration
+            logger.error(f"Failed to send registration email: {e}", exc_info=True)
+    
+    def perform_destroy(self, instance):
+        """
+        Delete lecturer profile and associated user from database.
+        
+        Args:
+            instance: LecturerProfile instance to delete
+        """
+        logger.info(f"LecturerProfileViewSet.perform_destroy called for ID: {instance.id}")
+        
+        # Log activity before deletion
+        try:
+            log_activity(
+                user=self.request.user,
+                action='DELETE_LECTURER',
+                entity_type='Lecturer',
+                entity_id=instance.id,
+                description=f"Deleted lecturer {instance.staff_id}: {instance.user.get_full_name()}",
+                ip_address=get_client_ip(self.request)
+            )
+        except Exception as e:
+            logger.error(f"Failed to log activity: {e}", exc_info=True)
+        
+        # Delete the associated user first, which will cascade to the profile
+        if instance.user:
+            user_id = instance.user.id
+            instance.user.delete()
+            logger.info(f"User deleted successfully: {user_id}")
+        else:
+            instance.delete()
+        logger.info(f"Lecturer deleted successfully: {instance.id}")
+
+
 class ParentStudentRelationViewSet(viewsets.ModelViewSet):
     """
     ViewSet for ParentStudentRelation model.
     
-    Provides CRUD operations for parent-student relationships with role-based permissions.
+    Provides CRUD operations for parent-student relationships with proper validation.
     - Admins: Full access
     - Parents: Full access to their own relationships
     - Students: Read-only access to their own relationships
@@ -309,7 +502,10 @@ class ParentStudentRelationViewSet(viewsets.ModelViewSet):
     
     queryset = ParentStudentRelation.objects.select_related(
         'parent__user', 'student__user'
-    ).all()
+    ).annotate(
+        parent_children_count=Count('parent__student_relations', distinct=True)
+    )
+    serializer_class = ParentStudentRelationSerializer
     permission_classes = [IsAuthenticated]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     filterset_fields = ['relationship_type']
@@ -357,92 +553,3 @@ class ParentStudentRelationViewSet(viewsets.ModelViewSet):
             serializer: Validated serializer instance
         """
         serializer.save()
-
-
-class LecturerProfileViewSet(viewsets.ModelViewSet):
-    """
-    ViewSet for LecturerProfile model.
-    
-    Provides CRUD operations for lecturer profiles with role-based permissions.
-    - Admins: Full access
-    - Lecturers: Read-only access to their own profile
-    - Others: Read-only access
-    """
-    
-    queryset = LecturerProfile.objects.select_related('user', 'department', 'department__faculty').all()
-    serializer_class = LecturerProfileSerializer
-    permission_classes = [IsAuthenticated]
-    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
-    filterset_fields = ['rank', 'employment_type', 'department']
-    search_fields = ['staff_id', 'user__username', 'user__first_name', 'user__last_name']
-    ordering_fields = ['staff_id', 'date_of_employment']
-    ordering = ['staff_id']
-    
-    def get_serializer_class(self):
-        """
-        Return appropriate serializer based on action.
-        
-        Returns:
-            Detail serializer for retrieve action, list serializer otherwise
-        """
-        if self.action == 'retrieve':
-            return LecturerProfileDetailSerializer
-        return LecturerProfileSerializer
-    
-    def get_permissions(self):
-        """
-        Return appropriate permissions based on action.
-        
-        Returns:
-            Admin or lecturer owner permissions for object access
-        """
-        if self.action in ['create', 'update', 'partial_update', 'destroy']:
-            return [IsAuthenticated(), IsAdminRole()]
-        return [IsAuthenticated()]
-    
-    def perform_create(self, serializer):
-        """
-        Create lecturer profile with proper validation and send registration email.
-        
-        Args:
-            serializer: Validated serializer instance
-        """
-        lecturer = serializer.save()
-        logger.info(f"Lecturer created: {lecturer.user.email}, ID: {lecturer.id}")
-        
-        # Send registration email to personal email (real address)
-        try:
-            logger.info(f"Attempting to send registration email to personal email: {lecturer.user.email}")
-            # Use the default password that was set in the serializer
-            default_password = 'school1234'
-            send_lecturer_registration_email(
-                email=lecturer.user.email,  # Send to personal email (real address)
-                first_name=lecturer.user.first_name,
-                last_name=lecturer.user.last_name,
-                staff_id=lecturer.staff_id,
-                department=lecturer.department.name if lecturer.department else 'Not Assigned',
-                rank=lecturer.rank if lecturer.rank else 'Not Assigned',
-                password=default_password,
-                school_email=lecturer.user.username  # School email for login
-            )
-            logger.info("Registration email sent successfully")
-        except Exception as e:
-            # Log error but don't fail the registration
-            logger.error(f"Failed to send registration email: {e}", exc_info=True)
-    
-    def perform_destroy(self, instance):
-        """
-        Delete lecturer profile and associated user from database.
-        
-        Args:
-            instance: LecturerProfile instance to delete
-        """
-        logger.info(f"LecturerProfileViewSet.perform_destroy called for ID: {instance.id}")
-        # Delete the associated user first, which will cascade to the profile
-        if instance.user:
-            user_id = instance.user.id
-            instance.user.delete()
-            logger.info(f"User deleted successfully: {user_id}")
-        else:
-            instance.delete()
-        logger.info(f"Lecturer deleted successfully: {instance.id}")

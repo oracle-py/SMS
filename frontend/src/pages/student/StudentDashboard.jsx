@@ -239,7 +239,7 @@ function StudentDashboard() {
             </div>
             <div className="hero-mini-card">
               <span>Credits</span>
-              <h2>{data?.student_info?.credits || 0}</h2>
+              <h2>{totalCreditsEarned}</h2>
             </div>
             <div className="hero-mini-card">
               <span>Session</span>

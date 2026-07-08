@@ -6,12 +6,53 @@ sessions, semesters, levels, courses, enrollments, registrations,
 grades, and attendance with proper permissions and filtering.
 """
 
+import logging
 from rest_framework import viewsets, filters, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 from django.utils import timezone
+
+from academics.utils import log_activity
+
+logger = logging.getLogger(__name__)
+
+
+def get_client_ip(request):
+    """
+    Get the client IP address from the request.
+    
+    Args:
+        request: The HTTP request object
+        
+    Returns:
+        The client IP address or None
+    """
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
+
+
+def get_client_ip(request):
+    """
+    Get the client IP address from the request.
+    
+    Args:
+        request: The HTTP request object
+        
+    Returns:
+        The client IP address or None
+    """
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
 
 from academics.models import (
     AcademicSession,
@@ -182,6 +223,50 @@ class CourseViewSet(viewsets.ModelViewSet):
         if self.action in ['create', 'update', 'partial_update', 'destroy']:
             return [IsAuthenticated(), IsAdminRole()]
         return [IsAuthenticated()]
+    
+    def perform_create(self, serializer):
+        """
+        Create course and log activity.
+        
+        Args:
+            serializer: Validated serializer instance
+        """
+        course = serializer.save()
+        
+        # Log activity
+        try:
+            log_activity(
+                user=self.request.user,
+                action='CREATE_COURSE',
+                entity_type='Course',
+                entity_id=course.id,
+                description=f"Created course {course.course_code}: {course.course_title}",
+                ip_address=get_client_ip(self.request)
+            )
+        except Exception as e:
+            logger.error(f"Failed to log activity: {e}", exc_info=True)
+    
+    def perform_destroy(self, instance):
+        """
+        Delete course and log activity.
+        
+        Args:
+            instance: Course instance to delete
+        """
+        # Log activity before deletion
+        try:
+            log_activity(
+                user=self.request.user,
+                action='DELETE_COURSE',
+                entity_type='Course',
+                entity_id=instance.id,
+                description=f"Deleted course {instance.course_code}: {instance.course_title}",
+                ip_address=get_client_ip(self.request)
+            )
+        except Exception as e:
+            logger.error(f"Failed to log activity: {e}", exc_info=True)
+        
+        instance.delete()
 
 
 class StudentEnrollmentViewSet(viewsets.ModelViewSet):
@@ -240,7 +325,7 @@ class CourseRegistrationViewSet(viewsets.ModelViewSet):
     ).all()
     permission_classes = [IsAuthenticated]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
-    filterset_fields = ['session', 'semester', 'is_carryover']
+    filterset_fields = ['session', 'semester', 'course', 'is_carryover']
     search_fields = [
         'student__student_id',
         'student__user__username',
@@ -345,7 +430,7 @@ class AttendanceViewSet(viewsets.ModelViewSet):
     ).all()
     permission_classes = [IsAuthenticated]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
-    filterset_fields = ['status', 'date']
+    filterset_fields = ['status', 'date', 'course']
     search_fields = [
         'student__student_id',
         'student__user__username',
@@ -375,9 +460,152 @@ class AttendanceViewSet(viewsets.ModelViewSet):
         """
         if self.action in ['create', 'update', 'partial_update', 'destroy']:
             return [IsAuthenticated(), IsAdminRole()]
-        elif self.action in ['retrieve']:
+        elif self.action == 'batch':
+            return [IsAuthenticated()]  # Allow all authenticated users for batch operations
+        elif self.action == 'retrieve':
             return [IsAuthenticated(), IsAdminOrParentLinkedToStudent()]
-        return [IsAuthenticated(), IsAdminOrParentLinkedToStudent()]
+        return [IsAuthenticated()]  # Allow all authenticated users for list
+
+    @action(detail=False, methods=['post'], url_path='batch')
+    def batch(self, request):
+        """
+        Batch create or update attendance records.
+
+        Accepts data with date, course_id, and attendance array.
+        For each attendance record in the array, creates or updates Attendance records.
+
+        Request body:
+        {
+            "date": "2025-01-15",
+            "course_id": 1,
+            "attendance": [
+                {"student_id": 1, "present": true},
+                {"student_id": 2, "present": false}
+            ]
+        }
+
+        Returns:
+            Response with success message and number of records processed
+        """
+        from users.models import StudentProfile
+
+        data = request.data
+        date_str = data.get('date')
+        course_id = data.get('course_id')
+        attendance_data = data.get('attendance', [])
+
+        # Validate required fields
+        if not date_str:
+            return Response(
+                {'error': 'Date is required'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        if not course_id:
+            return Response(
+                {'error': 'Course ID is required'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        if not attendance_data:
+            return Response(
+                {'error': 'Attendance array is required'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # Parse date
+        try:
+            from datetime import datetime
+            attendance_date = datetime.strptime(date_str, '%Y-%m-%d').date()
+        except ValueError:
+            return Response(
+                {'error': 'Invalid date format. Use YYYY-MM-DD'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # Get course
+        try:
+            course = Course.objects.get(id=course_id)
+        except Course.DoesNotExist:
+            return Response(
+                {'error': 'Course not found'},
+                status=status.HTTP_404_NOT_FOUND
+            )
+        
+        # Check if user is lecturer assigned to this course
+        if request.user.role == 'lecturer':
+            from academics.models import CourseAssignment
+            has_assignment = CourseAssignment.objects.filter(
+                lecturer=request.user,
+                course=course
+            ).exists()
+            if not has_assignment:
+                return Response(
+                    {'error': 'You are not assigned to teach this course'},
+                    status=status.HTTP_403_FORBIDDEN
+                )
+
+        # Process attendance records
+        records_processed = 0
+        errors = []
+
+        for record in attendance_data:
+            student_id = record.get('student_id')
+            present = record.get('present')
+
+            if not student_id or present is None:
+                errors.append(f"Invalid record: student_id and present are required")
+                continue
+
+            try:
+                student_profile = StudentProfile.objects.get(id=student_id)
+                student_user = student_profile.user
+            except StudentProfile.DoesNotExist:
+                errors.append(f"Student with ID {student_id} not found")
+                continue
+
+            # Convert boolean to status
+            status_value = 'present' if present else 'absent'
+
+            # Create or update attendance record
+            try:
+                attendance, created = Attendance.objects.update_or_create(
+                    student=student_profile,
+                    course=course,
+                    date=attendance_date,
+                    defaults={
+                        'status': status_value,
+                        'recorded_by': request.user,
+                        'recorded_at': timezone.now()
+                    }
+                )
+                records_processed += 1
+            except Exception as e:
+                errors.append(f"Failed to process attendance for student {student_id}: {str(e)}")
+
+        # Log activity
+        try:
+            log_activity(
+                user=request.user,
+                action='BATCH_ATTENDANCE',
+                entity_type='Attendance',
+                entity_id=course_id,
+                description=f"Batch processed {records_processed} attendance records for course {course.course_code} on {attendance_date}",
+                ip_address=get_client_ip(request)
+            )
+        except Exception as e:
+            logger.error(f"Failed to log activity: {e}", exc_info=True)
+
+        # Return response
+        response_data = {
+            'message': f'Successfully processed {records_processed} attendance records',
+            'records_processed': records_processed,
+            'date': date_str,
+            'course_id': course_id
+        }
+
+        if errors:
+            response_data['errors'] = errors
+
+        return Response(response_data, status=status.HTTP_200_OK)
 
 
 class FacultyViewSet(viewsets.ModelViewSet):
@@ -583,7 +811,7 @@ class ResultViewSet(viewsets.ModelViewSet):
         if user.is_admin_user:
             return queryset
         elif user.is_lecturer:
-            # Lecturers can see results they submitted
+            # Lecturers can see results they submitted (including drafts)
             return queryset.filter(lecturer=user)
         elif user.is_student:
             # Students can only see their own approved results
@@ -603,9 +831,29 @@ class ResultViewSet(viewsets.ModelViewSet):
         Batch create results for multiple students.
         Used by lecturers to submit results for a course.
         """
-        serializer = BatchResultSerializer(data=request.data)
+        serializer = BatchResultSerializer(data=request.data, context={'request': request})
         if serializer.is_valid():
-            serializer.save()
+            result_data = serializer.save()
+            
+            # Log activity
+            try:
+                from academics.models import Course
+                course_id = request.data.get('course_id')
+                course = Course.objects.get(id=course_id)
+                action = result_data.get('action', 'submit')
+                
+                action_text = 'Saved draft' if action == 'save' else 'Submitted'
+                log_activity(
+                    user=request.user,
+                    action='BATCH_RESULTS',
+                    entity_type='Result',
+                    entity_id=course.id,
+                    description=f"{action_text} results for {len(result_data['results'])} students in {course.course_code}",
+                    ip_address=get_client_ip(request)
+                )
+            except Exception as e:
+                logger.error(f"Failed to log activity: {e}", exc_info=True)
+            
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
@@ -626,6 +874,19 @@ class ResultViewSet(viewsets.ModelViewSet):
         result.approved_at = timezone.now()
         result.save()
         
+        # Log activity
+        try:
+            log_activity(
+                user=request.user,
+                action='APPROVE_RESULT',
+                entity_type='Result',
+                entity_id=result.id,
+                description=f"Approved result for {result.student.username} in {result.course.course_code}",
+                ip_address=get_client_ip(request)
+            )
+        except Exception as e:
+            logger.error(f"Failed to log activity: {e}", exc_info=True)
+        
         return Response({'detail': 'Result approved successfully'})
     
     @action(detail=True, methods=['post'])
@@ -641,7 +902,21 @@ class ResultViewSet(viewsets.ModelViewSet):
             )
         
         result.status = 'rejected'
+        result.remarks = request.data.get('remarks', '')
         result.save()
+        
+        # Log activity
+        try:
+            log_activity(
+                user=request.user,
+                action='REJECT_RESULT',
+                entity_type='Result',
+                entity_id=result.id,
+                description=f"Rejected result for {result.student.username} in {result.course.course_code}",
+                ip_address=get_client_ip(request)
+            )
+        except Exception as e:
+            logger.error(f"Failed to log activity: {e}", exc_info=True)
         
         return Response({'detail': 'Result rejected successfully'})
 

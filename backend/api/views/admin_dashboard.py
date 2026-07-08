@@ -80,24 +80,34 @@ class AdminDashboardView(GenericAPIView):
                     'enrollment_date': student.enrollment_date.isoformat()
                 })
             
-            # Get pending results (grades with pending status)
-            pending_grades = Grade.objects.filter(status='pending').select_related(
-                'registration__course', 'submitted_by'
-            )[:5]
+            # Get pending results (Result model with pending status)
+            from academics.models import Result
+            pending_results_data = Result.objects.filter(status='pending').select_related(
+                'course', 'lecturer', 'session', 'semester'
+            ).order_by('-submitted_at')[:5]
             
             pending_results = []
-            for grade in pending_grades:
+            for result in pending_results_data:
+                # Format: "CS101 submitted for review"
+                course_code = result.course.course_code
+                lecturer_name = f"{result.lecturer.first_name} {result.lecturer.last_name}" if result.lecturer else 'Unknown'
+                
+                # Count students registered for this course
+                student_count = CourseRegistration.objects.filter(
+                    course=result.course,
+                    session=result.session,
+                    semester=result.semester
+                ).count()
+                
                 pending_results.append({
-                    'course_code': grade.registration.course.course_code,
-                    'course_title': grade.registration.course.course_title,
-                    'lecturer': f"{grade.submitted_by.first_name} {grade.submitted_by.last_name}" if grade.submitted_by else 'Unknown',
-                    'session': grade.registration.session.name,
-                    'semester': grade.registration.semester.get_name_display(),
-                    'student_count': CourseRegistration.objects.filter(
-                        course=grade.registration.course,
-                        session=grade.registration.session,
-                        semester=grade.registration.semester
-                    ).count()
+                    'course_code': course_code,
+                    'course_title': result.course.course_title,
+                    'lecturer': lecturer_name,
+                    'session': result.session.name,
+                    'semester': result.semester.get_name_display(),
+                    'submitted_at': result.submitted_at.isoformat() if result.submitted_at else None,
+                    'display_message': f"{course_code} submitted for review",
+                    'students': student_count
                 })
             
             # Get recent activity logs (last 10)
@@ -141,7 +151,7 @@ class AdminDashboardView(GenericAPIView):
                 'recent_registrations': recent_registrations,
                 'pending_results': pending_results,
                 'recent_activities': activities,
-                'pending_results_count': Grade.objects.filter(status='pending').count()
+                'pending_results_count': Result.objects.filter(status='pending').count()
             }
             
             return Response(

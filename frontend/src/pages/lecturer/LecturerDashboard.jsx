@@ -27,57 +27,60 @@ function LecturerDashboard() {
         try {
             // Get current lecturer's profile
             const userResponse = await api.get('/auth/me/');
-            const lecturerId = userResponse.data.profile?.id;
             
-            // Fetch lecturer's courses
-            let courses = [];
-            if (lecturerId) {
-                const lecturerResponse = await api.get(`/lecturers/${lecturerId}/`);
-                courses = lecturerResponse.data.courses || [];
-            }
+            // Use courses directly from profile data
+            const courses = userResponse.data.data?.profile?.courses || [];
             
             // Fetch lecturer's students (total students across all assigned courses)
             let totalStudents = 0;
             for (const course of courses) {
                 try {
-                    const studentsResponse = await api.get('/students/', {
+                    const studentsResponse = await api.get('/registrations/', {
                         params: {
-                            grade_level: course.level
+                            course: course.id
                         }
                     });
-                    totalStudents += studentsResponse.data?.results?.length || 0;
+                    // Handle both paginated and non-paginated responses
+                    const count = studentsResponse.data?.count || studentsResponse.data?.results?.length || 0;
+                    totalStudents += count;
                 } catch (error) {
                     console.error(`Error fetching students for course ${course.id}:`, error);
                 }
             }
 
-            // Fetch pending results (results not yet approved by this lecturer)
+            // Fetch pending results (results submitted by this lecturer that are pending approval)
             let pendingResults = 0;
-            if (lecturerId) {
+            try {
                 const pendingResponse = await api.get('/results/', {
                     params: {
-                        status: 'pending',
-                        lecturer: userResponse.data.id
+                        status: 'pending'
                     }
                 });
+                // The ResultViewSet automatically filters by lecturer for lecturer users
                 pendingResults = pendingResponse.data?.count || pendingResponse.data?.results?.length || 0;
+            } catch (error) {
+                console.error('Error fetching pending results:', error);
             }
 
             // Fetch lecturer's announcements
-            const announcementsResponse = await api.get('/announcements/', {
-                params: {
-                    target_audience: 'lecturer'
-                }
-            });
-            const announcements = announcementsResponse.data?.count || announcementsResponse.data?.results?.length || 0;
+            // The AnnouncementViewSet automatically filters by target_audience for lecturer users
+            let announcements = 0;
+            try {
+                const announcementsResponse = await api.get('/announcements/');
+                announcements = announcementsResponse.data?.count || announcementsResponse.data?.results?.length || 0;
+            } catch (error) {
+                console.error('Error fetching announcements:', error);
+            }
 
             // Fetch recent activities
-            const activitiesResponse = await api.get('/activity-logs/', {
-                params: {
-                    user: userResponse.data.id
-                }
-            });
-            const activities = activitiesResponse.data?.results || activitiesResponse.data || [];
+            // The ActivityLogViewSet automatically filters by user for non-admin users
+            let activities = [];
+            try {
+                const activitiesResponse = await api.get('/activity-logs/');
+                activities = activitiesResponse.data?.results || activitiesResponse.data || [];
+            } catch (error) {
+                console.error('Error fetching activities:', error);
+            }
 
             setStats({
                 courses: courses.length,

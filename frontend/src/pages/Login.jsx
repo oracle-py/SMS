@@ -35,7 +35,7 @@ function Login() {
 
     const [stats, setStats] = useState({
         students: "Loading...",
-        lecturers: "Loading...",
+        faculties: "Loading...",
         trustScore: "Loading..."
     });
 
@@ -55,14 +55,14 @@ function Login() {
             const response = await api.get('/stats/public/');
             setStats({
                 students: response.data.students || "0",
-                lecturers: response.data.lecturers || "0",
+                faculties: response.data.faculties || "0",
                 trustScore: response.data.trust_score || "95%"
             });
         } catch (error) {
             console.error('Error fetching login stats:', error);
             setStats({
                 students: "2,400+",
-                lecturers: "160+",
+                faculties: "8+",
                 trustScore: "95%"
             });
         }
@@ -335,11 +335,11 @@ function Login() {
 
                         <div className="stat-card">
 
-                            <FaChalkboardTeacher />
+                            <FaUniversity />
 
-                            <h2>{stats.lecturers}</h2>
+                            <h2>{stats.faculties}</h2>
 
-                            <p>Lecturers</p>
+                            <p>Faculties</p>
 
                         </div>
 

@@ -8,6 +8,7 @@ grades, and attendance with proper validation and nested relationships.
 
 from datetime import date
 from typing import Dict, Any, Optional
+from django.utils import timezone
 
 from rest_framework import serializers
 
@@ -154,6 +155,12 @@ class CourseSerializer(serializers.ModelSerializer):
     level_id = serializers.IntegerField(write_only=True)
     semester = SemesterSerializer(read_only=True)
     semester_id = serializers.IntegerField(write_only=True)
+    department = serializers.SerializerMethodField(read_only=True)
+    department_id = serializers.IntegerField(write_only=True, required=False, allow_null=True)
+    
+    # Add backward compatibility fields
+    code = serializers.CharField(source='course_code', read_only=True)
+    title = serializers.CharField(source='course_title', read_only=True)
     
     class Meta:
         model = Course
@@ -166,9 +173,22 @@ class CourseSerializer(serializers.ModelSerializer):
             'level_id',
             'semester',
             'semester_id',
-            'is_active'
+            'department',
+            'department_id',
+            'is_active',
+            'code',
+            'title'
         ]
         read_only_fields = ['id']
+    
+    def get_department(self, obj):
+        if obj.department:
+            return {
+                'id': obj.department.id,
+                'name': obj.department.name,
+                'code': obj.department.code
+            }
+        return None
     
     def validate_course_code(self, value: str) -> str:
         """
@@ -191,6 +211,26 @@ class CourseSerializer(serializers.ModelSerializer):
         if queryset.exists():
             raise serializers.ValidationError('A course with this code already exists.')
         
+        return value
+    
+    def validate_department_id(self, value):
+        """
+        Validate department exists if provided.
+        
+        Args:
+            value: Department ID to validate
+            
+        Returns:
+            Validated department ID
+            
+        Raises:
+            ValidationError: If department not found
+        """
+        if value is not None:
+            try:
+                Department.objects.get(pk=value)
+            except Department.DoesNotExist:
+                raise serializers.ValidationError('Department not found.')
         return value
 
 
@@ -290,7 +330,7 @@ class CourseRegistrationSerializer(serializers.ModelSerializer):
             'is_carryover',
             'is_carryover_display'
         ]
-        read_only_fields = ['id', 'registration_date', 'is_carryover_display']
+        read_only_fields = ['id', 'registration_date']
     
     def validate(self, attrs: Dict[str, Any]) -> Dict[str, Any]:
         """
@@ -330,61 +370,65 @@ class CourseRegistrationSerializer(serializers.ModelSerializer):
 
 class CourseRegistrationDetailSerializer(CourseRegistrationSerializer):
     """
-    Detailed serializer for CourseRegistration with full nested information.
+    Detailed serializer for CourseRegistration with additional course information.
     """
     
-    student = StudentProfileDetailSerializer(read_only=True)
+    course_code = serializers.CharField(source='course.course_code', read_only=True)
+    course_title = serializers.CharField(source='course.course_title', read_only=True)
+    credit_unit = serializers.IntegerField(source='course.credit_unit', read_only=True)
+    student_name = serializers.CharField(source='student.get_full_name', read_only=True)
+    student_matric = serializers.CharField(source='student.student_id', read_only=True)
     
     class Meta(CourseRegistrationSerializer.Meta):
-        fields = CourseRegistrationSerializer.Meta.fields
+        fields = CourseRegistrationSerializer.Meta.fields + [
+            'course_code',
+            'course_title',
+            'credit_unit',
+            'student_name',
+            'student_matric'
+        ]
 
 
 class GradeSerializer(serializers.ModelSerializer):
     """
     Serializer for Grade model.
     
-    Handles grade recording with automatic calculation.
+    Handles grade assignments with validation.
     """
     
-    registration = CourseRegistrationSerializer(read_only=True)
-    registration_id = serializers.IntegerField(write_only=True)
-    letter_grade = serializers.CharField(read_only=True)
-    grade_point = serializers.IntegerField(read_only=True)
+    student = StudentProfileSerializer(read_only=True)
+    student_id = serializers.IntegerField(write_only=True)
+    course = CourseSerializer(read_only=True)
+    course_id = serializers.IntegerField(write_only=True)
+    session = AcademicSessionSerializer(read_only=True)
+    session_id = serializers.IntegerField(write_only=True)
+    semester = SemesterSerializer(read_only=True)
+    semester_id = serializers.IntegerField(write_only=True)
+    grade_display = serializers.CharField(source='get_grade_display', read_only=True)
     
     class Meta:
         model = Grade
         fields = [
             'id',
-            'registration',
-            'registration_id',
-            'score',
-            'letter_grade',
+            'student',
+            'student_id',
+            'course',
+            'course_id',
+            'session',
+            'session_id',
+            'semester',
+            'semester_id',
+            'grade',
+            'grade_display',
             'grade_point',
-            'created_at',
-            'updated_at'
+            'score',
+            'graded_at'
         ]
-        read_only_fields = ['id', 'created_at', 'updated_at', 'letter_grade', 'grade_point']
-    
-    def validate_score(self, value: float) -> float:
-        """
-        Validate that score is between 0 and 100.
-        
-        Args:
-            value: Score to validate
-            
-        Returns:
-            Validated score
-            
-        Raises:
-            ValidationError: If score is out of range
-        """
-        if value < 0 or value > 100:
-            raise serializers.ValidationError('Score must be between 0 and 100.')
-        return value
+        read_only_fields = ['id', 'graded_at']
     
     def validate(self, attrs: Dict[str, Any]) -> Dict[str, Any]:
         """
-        Validate that grade doesn't already exist for this registration.
+        Validate that grade doesn't already exist.
         
         Args:
             attrs: Validated attributes
@@ -395,16 +439,24 @@ class GradeSerializer(serializers.ModelSerializer):
         Raises:
             ValidationError: If grade already exists
         """
-        registration_id = attrs.get('registration_id')
+        student_id = attrs.get('student_id')
+        course_id = attrs.get('course_id')
+        session_id = attrs.get('session_id')
+        semester_id = attrs.get('semester_id')
         
-        queryset = Grade.objects.filter(registration_id=registration_id)
+        queryset = Grade.objects.filter(
+            student_id=student_id,
+            course_id=course_id,
+            session_id=session_id,
+            semester_id=semester_id
+        )
         
         if self.instance:
             queryset = queryset.exclude(pk=self.instance.pk)
         
         if queryset.exists():
             raise serializers.ValidationError(
-                'A grade already exists for this course registration.'
+                'Grade already exists for this student/course in this session/semester.'
             )
         
         return attrs
@@ -412,23 +464,35 @@ class GradeSerializer(serializers.ModelSerializer):
 
 class GradeDetailSerializer(GradeSerializer):
     """
-    Detailed serializer for Grade with full nested information.
+    Detailed serializer for Grade with additional information.
     """
     
-    registration = CourseRegistrationDetailSerializer(read_only=True)
+    course_code = serializers.CharField(source='course.course_code', read_only=True)
+    course_title = serializers.CharField(source='course.course_title', read_only=True)
+    credit_unit = serializers.IntegerField(source='course.credit_unit', read_only=True)
+    student_name = serializers.CharField(source='student.get_full_name', read_only=True)
+    student_matric = serializers.CharField(source='student.student_id', read_only=True)
+    quality_point = serializers.IntegerField(read_only=True)
     
     class Meta(GradeSerializer.Meta):
-        fields = GradeSerializer.Meta.fields
+        fields = GradeSerializer.Meta.fields + [
+            'course_code',
+            'course_title',
+            'credit_unit',
+            'student_name',
+            'student_matric',
+            'quality_point'
+        ]
 
 
 class AttendanceSerializer(serializers.ModelSerializer):
     """
     Serializer for Attendance model.
     
-    Handles attendance tracking with nested relationships.
+    Handles attendance tracking with validation.
     """
     
-    student = StudentProfileSerializer(read_only=True)
+    student = serializers.SerializerMethodField()
     student_id = serializers.IntegerField(write_only=True)
     course = CourseSerializer(read_only=True)
     course_id = serializers.IntegerField(write_only=True)
@@ -445,13 +509,62 @@ class AttendanceSerializer(serializers.ModelSerializer):
             'date',
             'status',
             'status_display',
+            'remarks',
+            'recorded_by',
+            'recorded_at',
             'created_at'
         ]
-        read_only_fields = ['id', 'created_at', 'status_display']
+        read_only_fields = ['id', 'recorded_by', 'recorded_at', 'created_at']
+    
+    def get_student(self, obj):
+        """Get student profile from user."""
+        try:
+            from users.models import StudentProfile
+            # Handle case where obj.student might be a string (corrupted data)
+            if isinstance(obj.student, str):
+                # Try to find student by ID or username
+                try:
+                    # If it's a string representation, try to extract the username
+                    import re
+                    match = re.match(r'(\w+)', obj.student)
+                    if match:
+                        username = match.group(1)
+                        student_profile = StudentProfile.objects.filter(user__username=username).first()
+                        if student_profile:
+                            return StudentProfileSerializer(student_profile).data
+                except:
+                    pass
+                # Fallback for corrupted data
+                return {
+                    'id': None,
+                    'username': obj.student,
+                    'first_name': '',
+                    'last_name': ''
+                }
+            
+            # Normal case: obj.student is a User instance
+            student_profile = StudentProfile.objects.get(user=obj.student)
+            return StudentProfileSerializer(student_profile).data
+        except StudentProfile.DoesNotExist:
+            # Fallback to user data if no profile exists
+            if hasattr(obj.student, 'id'):
+                return {
+                    'id': obj.student.id,
+                    'username': obj.student.username,
+                    'first_name': obj.student.first_name,
+                    'last_name': obj.student.last_name
+                }
+            else:
+                return {
+                    'id': None,
+                    'username': str(obj.student),
+                    'first_name': '',
+                    'last_name': ''
+                }
     
     def validate(self, attrs: Dict[str, Any]) -> Dict[str, Any]:
         """
-        Validate that attendance doesn't already exist for this date.
+        Validate that attendance doesn't already exist for the same date.
         
         Args:
             attrs: Validated attributes
@@ -462,14 +575,22 @@ class AttendanceSerializer(serializers.ModelSerializer):
         Raises:
             ValidationError: If attendance already exists
         """
-        student_id = attrs.get('student_id')
+        student_profile_id = attrs.get('student_id')
         course_id = attrs.get('course_id')
-        attendance_date = attrs.get('date')
+        date = attrs.get('date')
+        
+        # Convert student_profile_id to user_id for the query
+        try:
+            from users.models import StudentProfile
+            student_profile = StudentProfile.objects.get(id=student_profile_id)
+            user_id = student_profile.user_id
+        except StudentProfile.DoesNotExist:
+            raise serializers.ValidationError('Student profile not found')
         
         queryset = Attendance.objects.filter(
-            student_id=student_id,
+            student_id=user_id,
             course_id=course_id,
-            date=attendance_date
+            date=date
         )
         
         if self.instance:
@@ -477,37 +598,117 @@ class AttendanceSerializer(serializers.ModelSerializer):
         
         if queryset.exists():
             raise serializers.ValidationError(
-                'Attendance record already exists for this student, course, and date.'
+                'Attendance already marked for this student/course on this date.'
             )
         
         return attrs
+    
+    def create(self, validated_data):
+        """Create attendance record with proper student ID conversion."""
+        student_profile_id = validated_data.pop('student_id')
+        
+        # Convert student_profile_id to user_id
+        try:
+            from users.models import StudentProfile
+            student_profile = StudentProfile.objects.get(id=student_profile_id)
+            validated_data['student'] = student_profile.user
+        except StudentProfile.DoesNotExist:
+            raise serializers.ValidationError('Student profile not found')
+        
+        return super().create(validated_data)
+    
+    def create(self, validated_data):
+        """Create attendance record with proper student ID conversion."""
+        student_profile_id = validated_data.pop('student_id')
+        
+        # Convert student_profile_id to user_id
+        try:
+            from users.models import StudentProfile
+            student_profile = StudentProfile.objects.get(id=student_profile_id)
+            validated_data['student'] = student_profile.user
+        except StudentProfile.DoesNotExist:
+            raise serializers.ValidationError('Student profile not found')
+        
+        return super().create(validated_data)
 
 
 class AttendanceDetailSerializer(AttendanceSerializer):
     """
-    Detailed serializer for Attendance with full nested information.
+    Detailed serializer for Attendance with additional information.
     """
     
-    student = StudentProfileDetailSerializer(read_only=True)
+    course_code = serializers.CharField(source='course.course_code', read_only=True)
+    course_title = serializers.CharField(source='course.course_title', read_only=True)
+    student_name = serializers.SerializerMethodField()
+    student_matric = serializers.SerializerMethodField()
     
     class Meta(AttendanceSerializer.Meta):
-        fields = AttendanceSerializer.Meta.fields
+        fields = AttendanceSerializer.Meta.fields + [
+            'course_code',
+            'course_title',
+            'student_name',
+            'student_matric'
+        ]
+    
+    def get_student_name(self, obj):
+        """Get student full name."""
+        return f"{obj.student.first_name} {obj.student.last_name}".strip()
+    
+    def get_student_matric(self, obj):
+        """Get student matric number."""
+        try:
+            from users.models import StudentProfile
+            student_profile = StudentProfile.objects.get(user=obj.student)
+            return student_profile.student_id
+        except StudentProfile.DoesNotExist:
+            return None
 
 
 class FacultySerializer(serializers.ModelSerializer):
     """
     Serializer for Faculty model.
+    
+    Handles faculty management with validation.
     """
     
     class Meta:
         model = Faculty
-        fields = ['id', 'name', 'code']
+        fields = [
+            'id',
+            'name',
+            'code'
+        ]
         read_only_fields = ['id']
+    
+    def validate_code(self, value: str) -> str:
+        """
+        Validate faculty code uniqueness.
+        
+        Args:
+            value: Faculty code to validate
+            
+        Returns:
+            Validated faculty code
+            
+        Raises:
+            ValidationError: If faculty code already exists
+        """
+        queryset = Faculty.objects.filter(code=value)
+        
+        if self.instance:
+            queryset = queryset.exclude(pk=self.instance.pk)
+        
+        if queryset.exists():
+            raise serializers.ValidationError('A faculty with this code already exists.')
+        
+        return value
 
 
 class DepartmentSerializer(serializers.ModelSerializer):
     """
     Serializer for Department model.
+    
+    Handles department management with nested faculty information.
     """
     
     faculty = FacultySerializer(read_only=True)
@@ -516,165 +717,529 @@ class DepartmentSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Department
-        fields = ['id', 'name', 'code', 'faculty', 'faculty_id', 'faculty_name']
-        read_only_fields = ['id']
+        fields = [
+            'id',
+            'name',
+            'code',
+            'faculty',
+            'faculty_id',
+            'faculty_name'
+        ]
+        read_only_fields = ['id', 'faculty_name']
+    
+    def validate(self, attrs: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Validate department uniqueness within faculty.
+        
+        Args:
+            attrs: Validated attributes
+            
+        Returns:
+            Validated attributes
+            
+        Raises:
+            ValidationError: If department name already exists in faculty
+        """
+        name = attrs.get('name')
+        faculty_id = attrs.get('faculty_id')
+        
+        if name and faculty_id:
+            queryset = Department.objects.filter(
+                name=name,
+                faculty_id=faculty_id
+            )
+            
+            if self.instance:
+                queryset = queryset.exclude(pk=self.instance.pk)
+            
+            if queryset.exists():
+                raise serializers.ValidationError(
+                    'A department with this name already exists in this faculty.'
+                )
+        
+        return attrs
+    
+    def validate_code(self, value: str) -> str:
+        """
+        Validate department code uniqueness.
+        
+        Args:
+            value: Department code to validate
+            
+        Returns:
+            Validated department code
+            
+        Raises:
+            ValidationError: If department code already exists
+        """
+        queryset = Department.objects.filter(code=value)
+        
+        if self.instance:
+            queryset = queryset.exclude(pk=self.instance.pk)
+        
+        if queryset.exists():
+            raise serializers.ValidationError('A department with this code already exists.')
+        
+        return value
 
 
 class ProgrammeSerializer(serializers.ModelSerializer):
     """
     Serializer for Programme model.
+    
+    Handles programme management with nested department information.
     """
     
     department = DepartmentSerializer(read_only=True)
     department_id = serializers.IntegerField(write_only=True)
-    department_name = serializers.CharField(source='department.name', read_only=True)
     faculty_name = serializers.CharField(source='department.faculty.name', read_only=True)
+    department_name = serializers.CharField(source='department.name', read_only=True)
     
     class Meta:
         model = Programme
-        fields = ['id', 'name', 'code', 'department', 'department_id', 'department_name', 'faculty_name', 
-                  'duration_years', 'total_credit_units']
-        read_only_fields = ['id']
+        fields = [
+            'id',
+            'name',
+            'code',
+            'department',
+            'department_id',
+            'faculty_name',
+            'department_name',
+            'duration_years',
+            'total_credit_units'
+        ]
+        read_only_fields = ['id', 'faculty_name', 'department_name']
+    
+    def validate_code(self, value: str) -> str:
+        """
+        Validate programme code uniqueness.
+        
+        Args:
+            value: Programme code to validate
+            
+        Returns:
+            Validated programme code
+            
+        Raises:
+            ValidationError: If programme code already exists
+        """
+        queryset = Programme.objects.filter(code=value)
+        
+        if self.instance:
+            queryset = queryset.exclude(pk=self.instance.pk)
+        
+        if queryset.exists():
+            raise serializers.ValidationError('A programme with this code already exists.')
+        
+        return value
 
 
 class CourseAssignmentSerializer(serializers.ModelSerializer):
     """
     Serializer for CourseAssignment model.
+    
+    Handles lecturer-course assignments with nested relationships.
     """
     
-    course_code = serializers.CharField(source='course.course_code', read_only=True)
-    course_title = serializers.CharField(source='course.course_title', read_only=True)
-    lecturer_name = serializers.CharField(source='lecturer.get_full_name', read_only=True)
-    session_name = serializers.CharField(source='session.name', read_only=True)
-    semester_name = serializers.CharField(source='semester.get_name_display', read_only=True)
+    lecturer = serializers.SerializerMethodField(read_only=True)
+    lecturer_id = serializers.IntegerField(write_only=True)
+    course = CourseSerializer(read_only=True)
+    course_id = serializers.IntegerField(write_only=True)
+    session = AcademicSessionSerializer(read_only=True)
+    session_id = serializers.IntegerField(write_only=True)
+    semester = SemesterSerializer(read_only=True)
+    semester_id = serializers.IntegerField(write_only=True)
     
     class Meta:
         model = CourseAssignment
-        fields = ['id', 'course', 'course_code', 'course_title', 'lecturer', 'lecturer_name',
-                  'session', 'session_name', 'semester', 'semester_name', 'role', 'assigned_at']
+        fields = [
+            'id',
+            'lecturer',
+            'lecturer_id',
+            'course',
+            'course_id',
+            'session',
+            'session_id',
+            'semester',
+            'semester_id',
+            'assigned_at'
+        ]
         read_only_fields = ['id', 'assigned_at']
+    
+    def get_lecturer(self, obj):
+        from users.serializers import LecturerProfileSerializer
+        return LecturerProfileSerializer(obj.lecturer).data
+    
+    def validate(self, attrs: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Validate that assignment doesn't already exist.
+        
+        Args:
+            attrs: Validated attributes
+            
+        Returns:
+            Validated attributes
+            
+        Raises:
+            ValidationError: If assignment already exists
+        """
+        lecturer_id = attrs.get('lecturer_id')
+        course_id = attrs.get('course_id')
+        session_id = attrs.get('session_id')
+        semester_id = attrs.get('semester_id')
+        
+        queryset = CourseAssignment.objects.filter(
+            lecturer_id=lecturer_id,
+            course_id=course_id,
+            session_id=session_id,
+            semester_id=semester_id
+        )
+        
+        if self.instance:
+            queryset = queryset.exclude(pk=self.instance.pk)
+        
+        if queryset.exists():
+            raise serializers.ValidationError(
+                'This lecturer is already assigned to this course in this session/semester.'
+            )
+        
+        return attrs
 
 
 class TimetableSerializer(serializers.ModelSerializer):
     """
     Serializer for Timetable model.
+    
+    Handles timetable management with nested relationships.
     """
     
-    course_code = serializers.CharField(source='course_assignment.course.course_code', read_only=True)
-    course_title = serializers.CharField(source='course_assignment.course.course_title', read_only=True)
-    lecturer_name = serializers.CharField(source='course_assignment.lecturer.get_full_name', read_only=True)
-    day_of_week_display = serializers.CharField(source='get_day_of_week_display', read_only=True)
+    course = CourseSerializer(read_only=True)
+    course_id = serializers.IntegerField(write_only=True)
+    lecturer = serializers.SerializerMethodField(read_only=True)
+    lecturer_id = serializers.IntegerField(write_only=True)
+    session = AcademicSessionSerializer(read_only=True)
+    session_id = serializers.IntegerField(write_only=True)
+    semester = SemesterSerializer(read_only=True)
+    semester_id = serializers.IntegerField(write_only=True)
+    day_display = serializers.CharField(source='get_day_display', read_only=True)
     
     class Meta:
         model = Timetable
-        fields = ['id', 'course_assignment', 'course_code', 'course_title', 'lecturer_name',
-                  'day_of_week', 'day_of_week_display', 'start_time', 'end_time', 'venue',
-                  'session', 'semester']
-        read_only_fields = ['id']
+        fields = [
+            'id',
+            'course',
+            'course_id',
+            'lecturer',
+            'lecturer_id',
+            'session',
+            'session_id',
+            'semester',
+            'semester_id',
+            'day',
+            'day_display',
+            'start_time',
+            'end_time',
+            'venue',
+            'created_at'
+        ]
+        read_only_fields = ['id', 'created_at']
+    
+    def get_lecturer(self, obj):
+        from users.serializers import LecturerProfileSerializer
+        return LecturerProfileSerializer(obj.lecturer).data
+    
+    def validate(self, attrs: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Validate that there are no scheduling conflicts.
+        
+        Args:
+            attrs: Validated attributes
+            
+        Returns:
+            Validated attributes
+            
+        Raises:
+            ValidationError: If there's a scheduling conflict
+        """
+        day = attrs.get('day')
+        start_time = attrs.get('start_time')
+        end_time = attrs.get('end_time')
+        venue = attrs.get('venue')
+        session_id = attrs.get('session_id')
+        semester_id = attrs.get('semester_id')
+        
+        # Check for venue conflicts
+        if day and start_time and end_time and venue:
+            queryset = Timetable.objects.filter(
+                day=day,
+                venue=venue,
+                session_id=session_id,
+                semester_id=semester_id
+            ).filter(
+                models.Q(start_time__lt=end_time, end_time__gt=start_time)
+            )
+            
+            if self.instance:
+                queryset = queryset.exclude(pk=self.instance.pk)
+            
+            if queryset.exists():
+                raise serializers.ValidationError(
+                    'There is a scheduling conflict for this venue at this time.'
+                )
+        
+        return attrs
 
 
 class AnnouncementSerializer(serializers.ModelSerializer):
     """
     Serializer for Announcement model.
+    
+    Handles announcement management with nested relationships.
     """
     
-    created_by_name = serializers.CharField(source='created_by.get_full_name', read_only=True)
-    target_audience_display = serializers.CharField(source='get_target_audience_display', read_only=True)
+    author = serializers.SerializerMethodField(read_only=True)
+    target_audience_display = serializers.CharField(
+        source='get_target_audience_display',
+        read_only=True
+    )
     
     class Meta:
         model = Announcement
-        fields = ['id', 'title', 'content', 'target_audience', 'target_audience_display', 
-                  'is_active', 'created_by', 'created_by_name', 'created_at', 'updated_at']
-        read_only_fields = ['id', 'created_at', 'updated_at']
+        fields = [
+            'id',
+            'title',
+            'content',
+            'author',
+            'target_audience',
+            'target_audience_display',
+            'priority',
+            'is_active',
+            'published_at',
+            'expires_at'
+        ]
+        read_only_fields = ['id', 'published_at']
+    
+    def get_author(self, obj):
+        return {
+            'id': obj.author.id,
+            'username': obj.author.username,
+            'first_name': obj.author.first_name,
+            'last_name': obj.author.last_name
+        }
 
 
 class ResultSerializer(serializers.ModelSerializer):
     """
     Serializer for Result model.
+    
+    Handles student results with nested relationships.
     """
     
-    student_name = serializers.CharField(source='student.get_full_name', read_only=True)
-    student_matric = serializers.CharField(source='student.username', read_only=True)
-    course_code = serializers.CharField(source='course.course_code', read_only=True)
-    course_title = serializers.CharField(source='course.course_title', read_only=True)
-    course_credit_unit = serializers.IntegerField(source='course.credit_unit', read_only=True)
-    lecturer_name = serializers.CharField(source='lecturer.get_full_name', read_only=True)
-    session_name = serializers.CharField(source='session.name', read_only=True)
-    semester_name = serializers.CharField(source='semester.get_name_display', read_only=True)
-    status_display = serializers.CharField(source='get_status_display', read_only=True)
-    grade_point = serializers.DecimalField(max_digits=3, decimal_places=2, read_only=True)
-    quality_point = serializers.DecimalField(max_digits=10, decimal_places=2, read_only=True)
+    student = serializers.SerializerMethodField()
+    student_id = serializers.IntegerField(write_only=True)
+    course = CourseSerializer(read_only=True)
+    course_id = serializers.IntegerField(write_only=True)
+    session = AcademicSessionSerializer(read_only=True)
+    session_id = serializers.IntegerField(write_only=True)
+    semester = SemesterSerializer(read_only=True)
+    semester_id = serializers.IntegerField(write_only=True)
     
     class Meta:
         model = Result
-        fields = ['id', 'student', 'student_name', 'student_matric', 'course', 'course_code', 
-                  'course_title', 'course_credit_unit', 'lecturer', 'lecturer_name', 'session', 'session_name', 
-                  'semester', 'semester_name', 'ca_score', 'exam_score', 'total_score', 
-                  'grade', 'grade_point', 'quality_point', 'status', 'status_display', 'remarks', 'submitted_at', 
-                  'approved_at', 'approved_by']
-        read_only_fields = ['id', 'total_score', 'grade', 'grade_point', 'quality_point', 'submitted_at', 'approved_at', 'approved_by']
+        fields = [
+            'id',
+            'student',
+            'student_id',
+            'course',
+            'course_id',
+            'session',
+            'session_id',
+            'semester',
+            'semester_id',
+            'ca_score',
+            'exam_score',
+            'total_score',
+            'grade',
+            'status',
+            'remarks',
+            'submitted_at',
+            'approved_at',
+            'approved_by'
+        ]
+        read_only_fields = ['id', 'submitted_at', 'approved_at', 'approved_by']
+    
+    def get_student(self, obj):
+        """Get student profile from user."""
+        try:
+            from users.models import StudentProfile
+            # Handle case where obj.student might be a string (corrupted data)
+            if isinstance(obj.student, str):
+                # Try to find student by ID or username
+                try:
+                    # If it's a string representation, try to extract the username
+                    import re
+                    match = re.match(r'(\w+)', obj.student)
+                    if match:
+                        username = match.group(1)
+                        student_profile = StudentProfile.objects.filter(user__username=username).first()
+                        if student_profile:
+                            return StudentProfileSerializer(student_profile).data
+                except:
+                    pass
+                # Fallback for corrupted data
+                return {
+                    'id': None,
+                    'username': obj.student,
+                    'first_name': '',
+                    'last_name': ''
+                }
+            
+            # Normal case: obj.student is a User instance
+            student_profile = StudentProfile.objects.get(user=obj.student)
+            return StudentProfileSerializer(student_profile).data
+        except StudentProfile.DoesNotExist:
+            # Fallback to user data if no profile exists
+            if hasattr(obj.student, 'id'):
+                return {
+                    'id': obj.student.id,
+                    'username': obj.student.username,
+                    'first_name': obj.student.first_name,
+                    'last_name': obj.student.last_name
+                }
+            else:
+                return {
+                    'id': None,
+                    'username': str(obj.student),
+                    'first_name': '',
+                    'last_name': ''
+                }
+    
+    def create(self, validated_data):
+        """Create result record with proper student ID conversion."""
+        student_profile_id = validated_data.pop('student_id')
+        
+        # Convert student_profile_id to user_id
+        try:
+            from users.models import StudentProfile
+            student_profile = StudentProfile.objects.get(id=student_profile_id)
+            validated_data['student'] = student_profile.user
+        except StudentProfile.DoesNotExist:
+            raise serializers.ValidationError('Student profile not found')
+        
+        return super().create(validated_data)
 
 
 class BatchResultSerializer(serializers.Serializer):
     """
-    Serializer for batch result submission.
+    Serializer for batch result processing.
+    
+    Handles multiple result submissions in a single request.
     """
-    results = ResultSerializer(many=True)
+    
+    course_id = serializers.IntegerField()
+    action = serializers.CharField(required=False, default='submit')
+    results = serializers.ListField(
+        child=serializers.DictField()
+    )
+    
+    def validate_course_id(self, value):
+        """Validate that the course exists."""
+        try:
+            Course.objects.get(id=value)
+        except Course.DoesNotExist:
+            raise serializers.ValidationError('Course not found')
+        return value
+    
+    def validate(self, data):
+        """Validate the entire payload."""
+        if not data.get('results'):
+            raise serializers.ValidationError('Results list is required')
+        return data
     
     def create(self, validated_data):
-        """Create multiple results in a single transaction."""
-        from django.db import transaction
-        from academics.models import Result, AcademicSession, Semester, ActivityLog
+        """
+        Create or update multiple results in a single transaction.
         
-        results_data = validated_data['results']
-        created_results = []
+        Args:
+            validated_data: Validated data containing course_id, action, and results list
+            
+        Returns:
+            Created/updated results
+        """
+        from django.db import transaction
+        
+        course_id = validated_data.pop('course_id')
+        action = validated_data.pop('action', 'submit')
+        results_data = validated_data.pop('results')
+        
+        try:
+            course = Course.objects.get(id=course_id)
+        except Course.DoesNotExist:
+            raise serializers.ValidationError('Course not found')
         
         # Get current active session and semester
         try:
-            current_session = AcademicSession.objects.filter(is_active=True).first()
-            current_semester = Semester.objects.filter(is_active=True).first()
-        except:
-            current_session = None
-            current_semester = None
+            session = AcademicSession.objects.get(is_active=True)
+            # Get the first semester (Semester model doesn't have is_active field)
+            semester = Semester.objects.filter(session=session).first()
+        except AcademicSession.DoesNotExist:
+            raise serializers.ValidationError('No active session found')
         
-        # Get the lecturer from the first result (all should be from same lecturer)
-        lecturer = None
-        if results_data and results_data[0].get('lecturer'):
-            from users.models import User
-            lecturer = User.objects.get(id=results_data[0]['lecturer'])
+        if not semester:
+            raise serializers.ValidationError('No semester found for the active session')
+        
+        processed_results = []
         
         with transaction.atomic():
             for result_data in results_data:
-                result = Result.objects.create(
-                    student=result_data['student'],
-                    course=result_data['course'],
-                    lecturer=result_data.get('lecturer'),
-                    session=current_session,
-                    semester=current_semester,
-                    ca_score=result_data.get('ca_score', 0),
-                    exam_score=result_data.get('exam_score', 0),
-                    status='pending'
+                student_profile_id = result_data.get('student_id')
+                ca_score = result_data.get('ca_score')
+                exam_score = result_data.get('exam_score')
+                
+                if not student_profile_id:
+                    continue
+                
+                # Get the StudentProfile and then the User
+                try:
+                    from users.models import StudentProfile
+                    student_profile = StudentProfile.objects.get(id=student_profile_id)
+                    student_user = student_profile.user
+                except StudentProfile.DoesNotExist:
+                    continue
+                
+                # For Result model, status is always 'pending' until approved
+                # The distinction between draft and submitted is based on submitted_at
+                status = 'pending'
+                
+                # Update or create result
+                result, created = Result.objects.update_or_create(
+                    student=student_user,
+                    course=course,
+                    session=session,
+                    semester=semester,
+                    defaults={
+                        'ca_score': ca_score,
+                        'exam_score': exam_score,
+                        'status': status,
+                        'lecturer': self.context['request'].user,
+                        'submitted_at': timezone.now() if action == 'submit' else None,
+                        'remarks': ''  # Clear remarks when re-submitting
+                    }
                 )
-                created_results.append(result)
-            
-            # Log activity for the lecturer
-            if lecturer and created_results:
-                ActivityLog.objects.create(
-                    user=lecturer,
-                    action='SUBMIT_RESULTS',
-                    entity_type='Result',
-                    entity_id=created_results[0].id,
-                    description=f'Submitted {len(created_results)} results for {created_results[0].course.course_code}'
-                )
+                
+                processed_results.append(result)
         
-        return {'results': created_results}
+        return {'results': processed_results, 'action': action}
 
 
 class ActivityLogSerializer(serializers.ModelSerializer):
     """
     Serializer for ActivityLog model.
+    
+    Handles activity logging with user information.
     """
     
+    user = serializers.SerializerMethodField(read_only=True)
     user_name = serializers.CharField(source='user.get_full_name', read_only=True)
     user_role = serializers.CharField(source='user.role', read_only=True)
     
@@ -683,6 +1248,14 @@ class ActivityLogSerializer(serializers.ModelSerializer):
         fields = ['id', 'user', 'user_name', 'user_role', 'action', 'entity_type', 
                   'entity_id', 'description', 'ip_address', 'created_at']
         read_only_fields = ['id', 'created_at']
+    
+    def get_user(self, obj):
+        return {
+            'id': obj.user.id,
+            'username': obj.user.username,
+            'first_name': obj.user.first_name,
+            'last_name': obj.user.last_name
+        }
 
 
 class CGPARecordSerializer(serializers.ModelSerializer):

@@ -22,6 +22,7 @@ from users.serializers import (
     UserSerializer,
     StudentProfileSerializer,
     ParentProfileSerializer,
+    LecturerProfileSerializer,
 )
 from api.serializers import (
     LogoutRequestSerializer,
@@ -163,6 +164,8 @@ class CurrentUserView(GenericAPIView):
                 user_data['profile'] = StudentProfileSerializer(user.student_profile).data
             elif user.role == 'parent' and hasattr(user, 'parent_profile'):
                 user_data['profile'] = ParentProfileSerializer(user.parent_profile).data
+            elif user.role == 'lecturer' and hasattr(user, 'lecturer_profile'):
+                user_data['profile'] = LecturerProfileSerializer(user.lecturer_profile).data
             else:
                 user_data['profile'] = None
             

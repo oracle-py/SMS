@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { useDashboardRefresh } from "../../context/DashboardContext";
+import { useNavigate } from "react-router-dom";
 import DashboardLayout from "../../layouts/DashboardLayout";
 import "./admin.css";
 import api from "../../api/axios";
@@ -9,6 +10,7 @@ import RegisterStudentDrawer from "./components/RegisterStudentDrawer";
 import RegisterLecturerDrawer from "./components/RegisterLecturerDrawer";
 import CreateCourseDrawer from "./components/CreateCourseDrawer";
 import ResultsReviewDrawer from "./components/ReviewResultsDrawer";
+import AssignCoursesDrawer from "./components/AssignCoursesDrawer";
 
 import {
     HiOutlineAcademicCap,
@@ -22,13 +24,15 @@ import {
     HiOutlineArrowTrendingUp,
     HiOutlineBuildingLibrary,
     HiOutlineBellAlert,
-    HiOutlineChartBar
+    HiOutlineChartBar,
+    HiOutlineCheckCircle
 } from "react-icons/hi2";
 
 function AdminDashboard() {
 
     const { user } = useAuth();
     const { refreshKey, refreshDashboard } = useDashboardRefresh();
+    const navigate = useNavigate();
 
     const [drawer, setDrawer] = useState(null);
     const [dashboardData, setDashboardData] = useState(null);
@@ -184,7 +188,21 @@ function AdminDashboard() {
 
             color:"purple",
 
-            action:()=>openDrawer("results")
+            action:()=>navigate("/admin/results")
+
+        },
+
+        {
+
+            title:"Assign Courses",
+
+            description:"Assign courses to students.",
+
+            icon:<HiOutlineCheckCircle/>,
+
+            color:"indigo",
+
+            action:()=>openDrawer("assign-courses")
 
         }
 
@@ -254,9 +272,9 @@ function AdminDashboard() {
 
                             <div>
 
-                                <h2>{dashboardData?.statistics?.departments?.total || 0}</h2>
+                                <h2>{dashboardData?.statistics?.faculties?.total || 0}</h2>
 
-                                <span>Departments</span>
+                                <span>Faculties</span>
 
                             </div>
 
@@ -524,6 +542,13 @@ function AdminDashboard() {
 
                             </div>
 
+                            <button 
+                                className="ad-view-all-btn"
+                                onClick={() => navigate("/admin/results")}
+                            >
+                                View All
+                            </button>
+
                         </div>
 
                         <div className="ad-results-list">
@@ -550,7 +575,7 @@ function AdminDashboard() {
 
                                             <h4>
 
-                                                {result.course}
+                                                {result.display_message || result.course_code}
 
                                             </h4>
 
@@ -559,22 +584,6 @@ function AdminDashboard() {
                                                 {result.lecturer}
 
                                             </p>
-
-                                        </div>
-
-                                        <div className="ad-result-meta">
-
-                                            <span>
-
-                                                {result.students} Students
-
-                                            </span>
-
-                                            <button>
-
-                                                Review
-
-                                            </button>
 
                                         </div>
 
@@ -665,6 +674,11 @@ function AdminDashboard() {
 
                 <ResultsReviewDrawer
                     open={drawer === "results"}
+                    onClose={closeDrawer}
+/>
+
+                <AssignCoursesDrawer
+                    open={drawer === "assign-courses"}
                     onClose={closeDrawer}
 />
 

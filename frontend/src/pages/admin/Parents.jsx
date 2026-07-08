@@ -122,7 +122,6 @@ function Parents() {
                                         <th>Parent</th>
                                         <th>Email</th>
                                         <th>Phone</th>
-                                        <th>Occupation</th>
                                         <th>Children</th>
                                         <th></th>
 
@@ -197,12 +196,6 @@ function Parents() {
 
                                                         <td>
 
-                                                            {parent.occupation || "—"}
-
-                                                        </td>
-
-                                                        <td>
-
                                                             {parent.children_count || 0}
 
                                                         </td>
@@ -232,7 +225,7 @@ function Parents() {
                                             <tr>
 
                                                 <td
-                                                    colSpan="6"
+                                                    colSpan="5"
                                                     className="ad-empty-state"
                                                 >
 

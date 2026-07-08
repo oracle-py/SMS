@@ -127,7 +127,7 @@ export default function RegisterLecturerDrawer({ open, onClose }) {
                 rank: formData.rank,
                 employment_type: formData.employment_type,
                 date_of_birth: formData.date_of_birth,
-                courses: formData.courses
+                courses_ids: formData.courses
             });
             
             alert('Lecturer registered successfully!');

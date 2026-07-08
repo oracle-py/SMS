@@ -252,3 +252,1288 @@
     }
 
 }
+
+/* =========================================================
+   MY COURSES PAGE
+========================================================= */
+
+.courses-hero{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:24px;
+    margin-bottom:28px;
+    padding:28px 34px;
+    border-radius:22px;
+    background:linear-gradient(135deg,#2563eb,#4f46e5);
+    color:#fff;
+    box-shadow:0 20px 50px rgba(37,99,235,.18);
+}
+
+.courses-hero-left{
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
+
+.courses-hero-icon{
+    width:72px;
+    height:72px;
+    border-radius:18px;
+    background:rgba(255,255,255,.15);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:34px;
+    backdrop-filter:blur(12px);
+}
+
+.courses-hero h1{
+    margin:0;
+    font-size:30px;
+    font-weight:700;
+}
+
+.courses-hero p{
+    margin-top:6px;
+    opacity:.92;
+}
+
+.courses-count{
+    text-align:right;
+}
+
+.courses-count span{
+    font-size:14px;
+    opacity:.85;
+}
+
+.courses-count h2{
+    margin-top:6px;
+    font-size:42px;
+    font-weight:700;
+}
+
+/* ========================= */
+
+.courses-stats{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:20px;
+    margin-bottom:28px;
+}
+
+.course-stat-card{
+    background:#fff;
+    border-radius:18px;
+    padding:22px;
+    display:flex;
+    align-items:center;
+    gap:18px;
+    box-shadow:0 10px 30px rgba(0,0,0,.06);
+}
+
+.course-stat-icon{
+    width:56px;
+    height:56px;
+    border-radius:14px;
+    background:#eef4ff;
+    color:#2563eb;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:28px;
+}
+
+.course-stat-card span{
+    color:#6b7280;
+    font-size:14px;
+}
+
+.course-stat-card h2{
+    margin-top:4px;
+    font-size:30px;
+}
+
+/* ========================= */
+
+.courses-card-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:12px;
+}
+
+.courses-card-header h2{
+    margin:0;
+    font-size:23px;
+}
+
+.courses-card-header p{
+    color:#6b7280;
+    margin-top:4px;
+}
+
+/* ========================= */
+
+.table-wrapper{
+    overflow:visible;
+}
+
+.premium-table{
+    border-collapse:collapse;
+}
+
+.premium-table thead th{
+    background:#e2e8f0;
+    border-bottom:2px solid #cbd5e1;
+    padding:18px;
+    font-weight:700;
+    color:#1e293b;
+}
+
+.premium-table tbody td{
+    padding:18px;
+    border-bottom:1px solid #f1f5f9;
+}
+
+.premium-table tbody tr{
+    transition:.25s;
+}
+
+.premium-table tbody tr:hover{
+    background:#f8fbff;
+}
+
+/* ========================= */
+
+.course-info{
+    display:flex;
+    align-items:center;
+    gap:16px;
+}
+
+.course-code{
+    width:68px;
+    height:68px;
+    border-radius:16px;
+    background:#eef4ff;
+    color:#2563eb;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:700;
+    font-size:13px;
+    text-align:center;
+    line-height:1.3;
+    padding:6px;
+}
+
+.course-info h4{
+    margin:0;
+    font-size:16px;
+}
+
+/* ========================= */
+
+.level-pill{
+    display:inline-flex;
+    align-items:center;
+    padding:8px 16px;
+    border-radius:999px;
+    background:#eff6ff;
+    color:#2563eb;
+    font-weight:600;
+}
+
+.student-pill{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:#ecfdf5;
+    color:#059669;
+    padding:8px 14px;
+    border-radius:999px;
+    font-weight:600;
+}
+
+/* ========================= */
+
+.view-students-btn{
+    border:none;
+    background:#2563eb;
+    color:#fff;
+    border-radius:12px;
+    padding:11px 18px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    cursor:pointer;
+    transition:.25s;
+    font-weight:600;
+}
+
+.view-students-btn:hover{
+    background:#1d4ed8;
+    transform:translateY(-2px);
+}
+
+/* ========================= */
+
+.courses-loading,
+.courses-empty{
+    padding:70px 20px;
+    text-align:center;
+}
+
+.loading-spinner{
+    width:46px;
+    height:46px;
+    border-radius:50%;
+    border:4px solid #e5e7eb;
+    border-top:4px solid #2563eb;
+    margin:auto;
+    animation:spin .8s linear infinite;
+}
+
+@keyframes spin{
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}
+
+.empty-icon{
+    font-size:72px;
+    color:#94a3b8;
+    margin-bottom:20px;
+}
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.modal-overlay{
+    padding:24px;
+}
+
+.students-modal{
+    width:100%;
+    background:#fff;
+    border-radius:22px;
+    box-shadow:0 30px 80px rgba(0,0,0,.2);
+}
+
+.students-modal-header{
+    padding:28px;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    border-bottom:1px solid #ececec;
+}
+
+.students-modal-header h2{
+    margin:10px 0 6px;
+}
+
+.students-modal-header p{
+    color:#64748b;
+}
+
+.modal-badge{
+    display:inline-block;
+    background:#dbeafe;
+    color:#2563eb;
+    padding:8px 14px;
+    border-radius:999px;
+    font-weight:600;
+    font-size:13px;
+}
+
+.modal-close-btn{
+    width:42px;
+    height:42px;
+    border:none;
+    border-radius:12px;
+    background:#f1f5f9;
+    cursor:pointer;
+    font-size:22px;
+}
+
+.modal-close-btn:hover{
+    background:#e2e8f0;
+}
+
+.students-modal-body{
+    padding:16px;
+}
+
+/* ========================= */
+
+.student-row{
+    display:flex;
+    align-items:center;
+    gap:16px;
+}
+
+.student-avatar{
+    width:48px;
+    height:48px;
+    border-radius:50%;
+    background:#2563eb;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:700;
+}
+
+.student-row h4{
+    margin:0;
+}
+
+.student-row span{
+    color:#64748b;
+    font-size:13px;
+}
+
+.matric-pill{
+    display:inline-block;
+    background:#f8fafc;
+    border:1px solid #e2e8f0;
+    padding:8px 14px;
+    border-radius:999px;
+    font-family:monospace;
+    font-weight:600;
+}
+
+/* ========================= */
+
+@media(max-width:900px){
+
+    .courses-hero{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .courses-count{
+        text-align:left;
+    }
+
+    .courses-stats{
+        grid-template-columns:1fr;
+    }
+
+}
+
+/* ===========================
+   STUDENT ATTENDANCE PAGE
+=========================== */
+
+.lecturer-page-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:2rem;
+}
+
+.lecturer-page-header h1{
+    margin:0;
+    font-size:2rem;
+    font-weight:700;
+    color:#172554;
+}
+
+.lecturer-page-header p{
+    margin-top:.5rem;
+    color:#64748b;
+    font-size:.95rem;
+}
+
+.loading-card,
+.empty-card{
+    padding:3rem;
+    text-align:center;
+}
+
+.course-card{
+    background:#fff;
+    border-radius:18px;
+    padding:1.5rem;
+    margin-bottom:2rem;
+    box-shadow:0 10px 30px rgba(15,23,42,.08);
+    border:1px solid #eef2f7;
+}
+
+.course-card-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:1.5rem;
+    padding-bottom:1rem;
+    border-bottom:1px solid #edf2f7;
+}
+
+.course-card-header h2{
+    margin:0;
+    font-size:1.4rem;
+    color:#0f172a;
+}
+
+.course-card-header p{
+    margin:.35rem 0 0;
+    color:#64748b;
+}
+
+.course-pill{
+    background:#eff6ff;
+    color:#2563eb;
+    padding:.55rem 1rem;
+    border-radius:999px;
+    font-weight:600;
+    font-size:.9rem;
+}
+
+.attendance-toolbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:end;
+    margin-bottom:1.5rem;
+    gap:1rem;
+    flex-wrap:wrap;
+}
+
+.attendance-date{
+    display:flex;
+    flex-direction:column;
+    gap:.45rem;
+}
+
+.attendance-date label{
+    font-size:.8rem;
+    font-weight:600;
+    color:#64748b;
+}
+
+.attendance-date input{
+    border:1px solid #dbe4ee;
+    border-radius:10px;
+    padding:.7rem .9rem;
+    font-size:.9rem;
+    background:#fff;
+}
+
+.publish-btn{
+    border:none;
+    background:#2563eb;
+    color:#fff;
+    padding:.8rem 1.5rem;
+    border-radius:10px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.publish-btn:hover{
+    background:#1d4ed8;
+    transform:translateY(-2px);
+}
+
+.table-wrapper{
+    overflow-x:auto;
+}
+
+.attendance-table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.attendance-table thead{
+    background:#f8fafc;
+}
+
+.attendance-table th{
+    padding:1rem;
+    text-align:left;
+    color:#475569;
+    font-size:.85rem;
+    font-weight:700;
+}
+
+.attendance-table td{
+    padding:1rem;
+    border-top:1px solid #eef2f7;
+}
+
+.student-info{
+    display:flex;
+    align-items:center;
+    gap:.85rem;
+}
+
+.student-avatar{
+    width:44px;
+    height:44px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#2563eb,#3b82f6);
+    color:#fff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-weight:700;
+    font-size:.95rem;
+}
+
+.attendance-actions{
+    display:flex;
+    gap:.75rem;
+}
+
+.status-btn{
+    border:none;
+    border-radius:10px;
+    padding:.55rem 1rem;
+    font-size:.85rem;
+    cursor:pointer;
+    transition:.25s;
+    font-weight:600;
+}
+
+.status-btn.present{
+    background:#ecfdf5;
+    color:#16a34a;
+}
+
+.status-btn.absent{
+    background:#fef2f2;
+    color:#dc2626;
+}
+
+.status-btn.active.present{
+    background:#16a34a;
+    color:#fff;
+}
+
+.status-btn.active.absent{
+    background:#dc2626;
+    color:#fff;
+}
+
+.status-btn:hover{
+    transform:translateY(-2px);
+}
+
+.empty-row{
+    text-align:center;
+    color:#94a3b8;
+    padding:2rem;
+}
+
+@media(max-width:768px){
+
+    .course-card-header{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:1rem;
+    }
+
+    .attendance-toolbar{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .attendance-actions{
+        flex-direction:column;
+    }
+
+    .publish-btn{
+        width:100%;
+    }
+
+}
+
+/* =========================================================
+   STUDENT ATTENDANCE — collapsible course cards
+========================================================= */
+
+.att-page {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 24px;
+}
+
+.att-page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 14px;
+}
+
+.att-page-header h1 {
+    margin: 0;
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: #172554;
+}
+
+.att-page-header p {
+    margin: .4rem 0 0;
+    color: #64748b;
+    font-size: .95rem;
+}
+
+.att-summary-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #eff6ff;
+    color: #2563eb;
+    padding: .6rem 1rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: .85rem;
+    white-space: nowrap;
+}
+
+/* ===========================
+   Loading / empty states
+=========================== */
+
+.att-state-card {
+    background: #fff;
+    border-radius: 18px;
+    padding: 3.5rem 2rem;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, .06);
+    color: #64748b;
+}
+
+.att-state-card h3 {
+    margin: .5rem 0 .25rem;
+    color: #1f2937;
+}
+
+.att-empty-icon {
+    font-size: 2.5rem;
+    color: #94a3b8;
+    margin-bottom: .5rem;
+}
+
+.att-spinner {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 4px solid #e5e7eb;
+    border-top: 4px solid #2563eb;
+    margin: 0 auto 1rem;
+    animation: att-spin .8s linear infinite;
+}
+
+@keyframes att-spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ===========================
+   Course card list
+=========================== */
+
+.att-card-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.att-card {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 6px 20px rgba(15, 23, 42, .06);
+    border: 1px solid #eef2f7;
+    border-left: 4px solid transparent;
+    overflow: hidden;
+    transition: border-left-color .25s ease, box-shadow .25s ease;
+}
+
+.att-card.is-open {
+    border-left-color: #2563eb;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, .1);
+}
+
+/* ---- header (always visible, clickable) ---- */
+
+.att-card-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 1.25rem 1.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    font: inherit;
+    color: inherit;
+}
+
+.att-card-header:hover {
+    background: #fafbfe;
+}
+
+.att-card-title {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-width: 0;
+}
+
+.att-course-code {
+    flex-shrink: 0;
+    width: 60px;
+    height: 60px;
+    border-radius: 14px;
+    background: #eef4ff;
+    color: #2563eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: .78rem;
+    text-align: center;
+    line-height: 1.25;
+    padding: 4px;
+}
+
+.att-card-title-text h2 {
+    margin: 0;
+    font-size: 1.15rem;
+    color: #0f172a;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.att-card-title-text p {
+    margin: .25rem 0 0;
+    color: #64748b;
+    font-size: .85rem;
+}
+
+.att-card-header-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-shrink: 0;
+}
+
+.att-status-pill {
+    background: #ecfdf5;
+    color: #16a34a;
+    padding: .45rem .9rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: .78rem;
+    white-space: nowrap;
+}
+
+.att-status-pill.unmarked {
+    background: #f1f5f9;
+    color: #94a3b8;
+}
+
+.att-chevron {
+    font-size: 1.2rem;
+    color: #94a3b8;
+    transition: transform .3s ease;
+}
+
+.att-card.is-open .att-chevron {
+    transform: rotate(180deg);
+    color: #2563eb;
+}
+
+/* ---- collapsible body (grid-rows trick, no JS height calc) ---- */
+
+.att-card-body-wrapper {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows .35s ease;
+}
+
+.att-card.is-open .att-card-body-wrapper {
+    grid-template-rows: 1fr;
+}
+
+.att-card-body {
+    overflow: hidden;
+}
+
+.att-card-body > * {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+.att-card-body .att-toolbar {
+    padding-top: .25rem;
+}
+
+.att-card-body .att-split,
+.att-card-body .att-empty-row {
+    padding-bottom: 1.5rem;
+}
+
+.att-card-body .att-published-note {
+    margin-bottom: 1rem;
+}
+
+/* ===========================
+   Toolbar: date + publish
+=========================== */
+
+.att-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid #edf2f7;
+    margin-bottom: 1.25rem;
+}
+
+.att-date-field {
+    display: flex;
+    flex-direction: column;
+    gap: .45rem;
+}
+
+.att-date-field span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: .8rem;
+    font-weight: 600;
+    color: #64748b;
+}
+
+.att-date-field input {
+    border: 1px solid #dbe4ee;
+    border-radius: 10px;
+    padding: .65rem .9rem;
+    font-size: .9rem;
+    background: #fff;
+}
+
+.att-publish-btn {
+    border: none;
+    background: #2563eb;
+    color: #fff;
+    padding: .8rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .2s;
+    white-space: nowrap;
+}
+
+.att-publish-btn:hover:not(:disabled) {
+    background: #1d4ed8;
+    transform: translateY(-2px);
+}
+
+.att-publish-btn:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.att-published-note {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #ecfdf5;
+    color: #15803d;
+    padding: .7rem 1rem;
+    border-radius: 10px;
+    font-size: .85rem;
+    font-weight: 600;
+}
+
+.att-empty-row {
+    text-align: center;
+    color: #94a3b8;
+    padding: 2rem 0;
+}
+
+/* ===========================
+   Single list with combined info
+=========================== */
+
+.att-single-list {
+    width: 100%;
+}
+
+.att-single-list h3 {
+    margin: 0 0 .9rem;
+    font-size: .8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: #94a3b8;
+}
+
+.att-single-list ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.att-single-list li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .85rem;
+    padding: .6rem .75rem;
+    border-radius: 12px;
+    background: #f8fafc;
+}
+
+.att-student-info {
+    display: flex;
+    align-items: center;
+    gap: .85rem;
+    min-width: 0;
+    flex: 1;
+}
+
+.att-avatar {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #2563eb, #3b82f6);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: .85rem;
+}
+
+.att-roster-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.att-roster-text strong {
+    font-size: .9rem;
+    color: #1e293b;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.att-roster-text span {
+    font-size: .78rem;
+    color: #94a3b8;
+    font-family: monospace;
+}
+
+.att-marking li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: .75rem;
+    padding: .6rem .75rem;
+    border-radius: 12px;
+}
+
+.att-marking li:hover {
+    background: #f8fafc;
+}
+
+.att-marking-name {
+    font-size: .9rem;
+    color: #1e293b;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.att-toggle {
+    display: flex;
+    gap: .5rem;
+    flex-shrink: 0;
+}
+
+.att-status-btn {
+    border: 1px solid transparent;
+    border-radius: 8px;
+    padding: .45rem .9rem;
+    font-size: .8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .2s ease;
+}
+
+.att-status-btn.present {
+    background: #f0fdf4;
+    color: #16a34a;
+    border-color: #bbf7d0;
+}
+
+.att-status-btn.absent {
+    background: #fef2f2;
+    color: #dc2626;
+    border-color: #fecaca;
+}
+
+.att-status-btn.active.present {
+    background: #16a34a;
+    color: #fff;
+    border-color: #16a34a;
+    box-shadow: 0 2px 8px rgba(22, 163, 74, 0.4);
+}
+
+.att-status-btn.active.absent {
+    background: #dc2626;
+    color: #fff;
+    border-color: #dc2626;
+    box-shadow: 0 2px 8px rgba(220, 38, 38, 0.4);
+}
+
+.att-status-btn:hover:not(:disabled) {
+    transform: translateY(-1px);
+}
+
+.att-status-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ===========================
+   Responsive
+=========================== */
+
+@media (max-width: 900px) {
+
+    .att-single-list {
+        /* Single list layout is already responsive */
+    }
+
+}
+
+@media (max-width: 640px) {
+
+    .att-page {
+        padding: 16px;
+    }
+
+    .att-card-header {
+        padding: 1rem;
+    }
+
+    .att-card-body > * {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .att-card-header-right {
+        flex-direction: column-reverse;
+        align-items: flex-end;
+        gap: 8px;
+    }
+
+    .att-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .att-publish-btn {
+        width: 100%;
+    }
+
+    .att-toggle {
+        flex-direction: column;
+        gap: .35rem;
+    }
+
+    .att-single-list li {
+        flex-direction: column;
+        align-items: stretch;
+        gap: .75rem;
+    }
+
+    .att-student-info {
+        width: 100%;
+    }
+
+}
+
+/* =========================================================
+   STUDENT RESULTS PAGE — reuses .att-* layout, adds res-*
+========================================================= */
+
+/* ---- status pill in the card header ---- */
+
+.res-status-pill {
+    padding: .45rem .9rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: .78rem;
+    white-space: nowrap;
+}
+
+.res-status-draft {
+    background: #f1f5f9;
+    color: #64748b;
+}
+
+.res-status-submitted {
+    background: #fffbeb;
+    color: #b45309;
+}
+
+.res-status-published {
+    background: #ecfdf5;
+    color: #16a34a;
+}
+
+.res-status-returned {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+/* ---- toolbar: status note (left) + save/submit (right) ---- */
+
+.att-toolbar:has(.res-status-note-wrap) {
+    align-items: center;
+}
+
+.res-status-note-wrap {
+    flex: 1;
+    min-width: 220px;
+}
+
+.res-status-note {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: .6rem .9rem;
+    border-radius: 10px;
+    font-size: .85rem;
+    font-weight: 600;
+}
+
+.res-note-pending {
+    background: #fffbeb;
+    color: #b45309;
+}
+
+.res-note-published {
+    background: #ecfdf5;
+    color: #15803d;
+}
+
+.res-note-returned {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+.res-toolbar-actions {
+    display: flex;
+    gap: .75rem;
+    flex-shrink: 0;
+}
+
+.res-save-btn {
+    background: #f3f4f6;
+    color: #111827;
+}
+
+.res-save-btn:hover:not(:disabled) {
+    background: #e5e7eb;
+}
+
+.res-submit-icon {
+    margin-right: 6px;
+    vertical-align: middle;
+}
+
+/* ---- score inputs per student row ---- */
+
+.res-score-fields {
+    display: flex;
+    gap: .75rem;
+    flex-shrink: 0;
+}
+
+.res-score-field {
+    display: flex;
+    flex-direction: column;
+    gap: .3rem;
+}
+
+.res-score-field span {
+    font-size: .7rem;
+    font-weight: 600;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+}
+
+.res-score-input {
+    width: 80px;
+    border: 1px solid #dbe4ee;
+    border-radius: 8px;
+    padding: .5rem .6rem;
+    font-size: .88rem;
+    background: #fff;
+    text-align: center;
+}
+
+.res-score-input:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, .15);
+}
+
+.res-score-input:disabled {
+    background: #f8fafc;
+    color: #94a3b8;
+    cursor: not-allowed;
+}
+
+/* ---- responsive ---- */
+
+@media (max-width: 640px) {
+
+    .res-toolbar-actions {
+        width: 100%;
+    }
+
+    .res-toolbar-actions button {
+        flex: 1;
+    }
+
+    .att-single-list li {
+        align-items: stretch;
+    }
+
+    .res-score-fields {
+        justify-content: space-between;
+    }
+
+    .res-score-input {
+        width: 100%;
+    }
+
+}

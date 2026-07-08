@@ -388,55 +388,82 @@ class StudentProfileSerializer(serializers.ModelSerializer):
                 logger.info(f"Registering parent: {parent_first_name} {parent_last_name}")
                 
                 try:
-                    # Create parent username based on student's matric number
-                    parent_username = f"{student_profile.student_id}_parent@school.edu"
+                    # Check if parent with this email already exists
+                    from users.models import ParentProfile, ParentStudentRelation
+                    existing_parent_user = User.objects.filter(email=parent_email, role='parent').first()
                     
-                    # Create parent user
-                    parent_user = User.objects.create(
-                        username=parent_username,
-                        email=parent_email,
-                        first_name=parent_first_name,
-                        last_name=parent_last_name,
-                        phone=parent_phone or '',
-                        role='parent'
-                    )
-                    parent_user.set_password('school1234')
-                    parent_user.save()
-                    
-                    # Create parent profile
-                    from users.models import ParentProfile
-                    parent_profile = ParentProfile.objects.create(
-                        user=parent_user,
-                        phone_number=parent_phone or ''
-                    )
-                    
-                    # Link parent to student
-                    from users.models import ParentStudentRelation
-                    ParentStudentRelation.objects.create(
-                        parent=parent_profile,
-                        student=student_profile,
-                        relationship_type=parent_relationship or 'guardian'
-                    )
-                    
-                    logger.info(f"Parent registered and linked to student: {student_profile.student_id}")
-                    
-                    # Send registration email to parent
-                    from users.utils.email_utils import send_parent_registration_email
-                    try:
-                        send_parent_registration_email(
+                    if existing_parent_user:
+                        # Link to existing parent
+                        logger.info(f"Found existing parent with email {parent_email}, linking to existing parent")
+                        parent_profile = existing_parent_user.parent_profile
+                        # Update parent info if needed
+                        existing_parent_user.first_name = parent_first_name
+                        existing_parent_user.last_name = parent_last_name
+                        if parent_phone:
+                            existing_parent_user.phone = parent_phone
+                        existing_parent_user.save()
+                        if parent_phone:
+                            parent_profile.phone_number = parent_phone
+                            parent_profile.save()
+                    else:
+                        # Create new parent
+                        logger.info(f"Creating new parent account for {parent_email}")
+                        # Create parent username based on student's matric number
+                        parent_username = f"{student_profile.student_id}_parent@school.edu"
+                        
+                        # Create parent user
+                        parent_user = User.objects.create(
+                            username=parent_username,
                             email=parent_email,
                             first_name=parent_first_name,
                             last_name=parent_last_name,
-                            password='school1234',
-                            child_name=f"{user.first_name} {user.last_name}" if user else '',
-                            child_matric=student_profile.student_id,
-                            school_email=parent_username
+                            phone=parent_phone or '',
+                            role='parent'
                         )
-                        logger.info(f"Parent registration email sent to: {parent_email}")
-                    except Exception as e:
-                        logger.error(f"Failed to send parent registration email: {e}", exc_info=True)
+                        parent_user.set_password('school1234')
+                        parent_user.save()
+                        
+                        # Create parent profile
+                        parent_profile = ParentProfile.objects.create(
+                            user=parent_user,
+                            phone_number=parent_phone or ''
+                        )
+                        
+                        # Send registration email to parent (only for new parents)
+                        from users.utils.email_utils import send_parent_registration_email
+                        try:
+                            send_parent_registration_email(
+                                email=parent_email,
+                                first_name=parent_first_name,
+                                last_name=parent_last_name,
+                                password='school1234',
+                                child_name=f"{user.first_name} {user.last_name}" if user else '',
+                                child_matric=student_profile.student_id,
+                                school_email=parent_username
+                            )
+                            logger.info(f"Parent registration email sent to: {parent_email}")
+                        except Exception as e:
+                            logger.error(f"Failed to send parent registration email: {e}", exc_info=True)
+                    
+                    # Check if this parent-student relationship already exists
+                    existing_relation = ParentStudentRelation.objects.filter(
+                        parent=parent_profile,
+                        student=student_profile
+                    ).first()
+                    
+                    if not existing_relation:
+                        # Link parent to student
+                        ParentStudentRelation.objects.create(
+                            parent=parent_profile,
+                            student=student_profile,
+                            relationship_type=parent_relationship or 'guardian'
+                        )
+                        logger.info(f"Parent linked to student: {student_profile.student_id}")
+                    else:
+                        logger.info(f"Parent already linked to student: {student_profile.student_id}")
+                    
                 except Exception as e:
-                    logger.error(f"Failed to create parent account: {e}", exc_info=True)
+                    logger.error(f"Failed to create/link parent account: {e}", exc_info=True)
                     # Don't fail student creation if parent creation fails
             else:
                 logger.info("No parent data provided or incomplete - skipping parent registration")
@@ -509,6 +536,7 @@ class ParentProfileSerializer(serializers.ModelSerializer):
     user = UserPublicSerializer(read_only=True)
     user_id = serializers.IntegerField(write_only=True, required=False)
     user_data = UserNestedSerializer(write_only=True, required=False)
+    children_count = serializers.IntegerField(read_only=True)
     
     class Meta:
         model = ParentProfile
@@ -518,7 +546,8 @@ class ParentProfileSerializer(serializers.ModelSerializer):
             'user_id',
             'user_data',
             'occupation',
-            'phone_number'
+            'phone_number',
+            'children_count'
         ]
         read_only_fields = ['id']
     
@@ -588,6 +617,7 @@ class ParentStudentRelationSerializer(serializers.ModelSerializer):
     
     parent = ParentProfileSerializer(read_only=True)
     parent_id = serializers.IntegerField(write_only=True)
+    parent_children_count = serializers.IntegerField(read_only=True)
     student = StudentProfileSerializer(read_only=True)
     student_id = serializers.IntegerField(write_only=True)
     
@@ -597,6 +627,7 @@ class ParentStudentRelationSerializer(serializers.ModelSerializer):
             'id',
             'parent',
             'parent_id',
+            'parent_children_count',
             'student',
             'student_id',
             'relationship_type'
@@ -641,6 +672,7 @@ class ParentStudentRelationDetailSerializer(ParentStudentRelationSerializer):
     """
     
     parent = ParentProfileDetailSerializer(read_only=True)
+    parent_children_count = serializers.IntegerField(read_only=True)
     student = StudentProfileDetailSerializer(read_only=True)
     
     class Meta(ParentStudentRelationSerializer.Meta):
@@ -652,15 +684,13 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     Custom JWT token serializer with additional user information.
     
     Adds user role and profile information to the token response.
-    Supports both username and email for login.
+    Uses username as the USERNAME_FIELD (school email).
     """
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Make email field optional (will be set from username if provided)
-        self.fields['email'].required = False
-        # Add username field as an alternative to email (since USERNAME_FIELD = 'email')
-        self.fields['username'] = serializers.CharField(required=False, write_only=True)
+        # Since USERNAME_FIELD is 'username', the default field is already correct
+        # No need to modify fields
     
     @classmethod
     def get_token(cls, user: User) -> Any:
@@ -685,48 +715,63 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         """
         Validate and return token data with user information.
         
-        Supports both username and email for login.
-        
         Args:
             attrs: Attributes to validate
             
         Returns:
             Dictionary with token and user information
         """
-        # If username is provided, use it to find the user and set email
-        if 'username' in attrs and attrs['username']:
-            username = attrs.pop('username')
-            try:
-                user = User.objects.get(username=username)
-                attrs['email'] = user.email
-            except User.DoesNotExist:
-                raise serializers.ValidationError({
-                    'detail': 'No active account found with the given username'
-                })
-        elif 'email' not in attrs or not attrs['email']:
-            raise serializers.ValidationError({
-                'detail': 'Either username or email is required'
-            })
-        
+        # Use default validation since USERNAME_FIELD is 'username'
         data = super().validate(attrs)
         
         # Add user information to response
-        data['user'] = {
-            'id': self.user.id,
-            'username': self.user.username,
-            'email': self.user.email,
-            'first_name': self.user.first_name,
-            'last_name': self.user.last_name,
-            'role': self.user.role
-        }
+        user = self.user
         
-        # Add profile information based on role
-        if self.user.role == 'student' and hasattr(self.user, 'student_profile'):
-            data['profile'] = StudentProfileSerializer(self.user.student_profile).data
-        elif self.user.role == 'parent' and hasattr(self.user, 'parent_profile'):
-            data['profile'] = ParentProfileSerializer(self.user.parent_profile).data
-        elif self.user.role == 'lecturer' and hasattr(self.user, 'lecturer_profile'):
-            data['profile'] = LecturerProfileSerializer(self.user.lecturer_profile).data
+        # Get profile information based on role
+        profile_data = {}
+        if user.role == 'student':
+            try:
+                if hasattr(user, 'studentprofile'):
+                    profile = user.studentprofile
+                    profile_data = {
+                        'student_id': profile.student_id,
+                        'grade_level': profile.grade_level,
+                        'programme': profile.programme.name if profile.programme else None,
+                    }
+            except (StudentProfile.DoesNotExist, AttributeError):
+                pass
+        elif user.role == 'lecturer':
+            try:
+                if hasattr(user, 'lecturerprofile'):
+                    profile = user.lecturerprofile
+                    profile_data = {
+                        'staff_id': profile.staff_id,
+                        'rank': profile.rank,
+                        'department': profile.department.name if profile.department else None,
+                    }
+            except (LecturerProfile.DoesNotExist, AttributeError):
+                pass
+        elif user.role == 'parent':
+            try:
+                if hasattr(user, 'parentprofile'):
+                    profile = user.parentprofile
+                    profile_data = {
+                        'phone': profile.phone,
+                        'address': profile.address,
+                    }
+            except (ParentProfile.DoesNotExist, AttributeError):
+                pass
+        
+        # Add user and profile data to response
+        data['user'] = {
+            'id': user.id,
+            'username': user.username,
+            'email': user.email,
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'role': user.role,
+            **profile_data
+        }
         
         return data
 
@@ -747,6 +792,13 @@ class LecturerProfileSerializer(serializers.ModelSerializer):
     faculty_name = serializers.CharField(source='department.faculty.name', read_only=True)
     rank_display = serializers.CharField(source='get_rank_display', read_only=True)
     employment_type_display = serializers.CharField(source='get_employment_type_display', read_only=True)
+    courses = serializers.SerializerMethodField()
+    courses_ids = serializers.ListField(
+        child=serializers.IntegerField(),
+        write_only=True,
+        required=False,
+        allow_null=True
+    )
     
     class Meta:
         model = LecturerProfile
@@ -754,17 +806,52 @@ class LecturerProfileSerializer(serializers.ModelSerializer):
             'id', 'user', 'user_id', 'user_data', 'staff_id', 'rank', 'rank_display', 
             'employment_type', 'employment_type_display', 'department', 'department_name', 
             'faculty_name', 'date_of_birth', 'date_of_employment', 'username', 'email', 
-            'first_name', 'last_name'
+            'first_name', 'last_name', 'courses', 'courses_ids'
         ]
-        read_only_fields = ['id', 'date_of_employment']
+        read_only_fields = ['id', 'date_of_employment', 'courses']
         extra_kwargs = {
             'user': {'required': False}
         }
     
+    def get_courses(self, obj):
+        """
+        Get courses assigned to this lecturer.
+        
+        Args:
+            obj: LecturerProfile instance
+            
+        Returns:
+            List of courses assigned to this lecturer
+        """
+        from academics.models import CourseAssignment
+        from academics.serializers import CourseSerializer
+        
+        try:
+            # Get course assignments for this lecturer's user
+            assignments = CourseAssignment.objects.filter(
+                lecturer=obj.user
+            ).select_related('course', 'session', 'semester')
+            
+            # Return course details from assignments
+            courses = []
+            for assignment in assignments:
+                course_data = CourseSerializer(assignment.course).data
+                course_data['session'] = assignment.session.name if assignment.session else None
+                course_data['semester'] = assignment.semester.get_name_display() if assignment.semester else None
+                course_data['role'] = assignment.role
+                courses.append(course_data)
+            
+            return courses
+        except Exception as e:
+            import logging
+            logger = logging.getLogger(__name__)
+            logger.error(f"Error fetching courses for lecturer {obj.id}: {e}", exc_info=True)
+            return []
+    
     @transaction.atomic
     def create(self, validated_data):
         """
-        Create lecturer profile with associated user.
+        Create lecturer profile with associated user and course assignments.
         
         Args:
             validated_data: Validated data from serializer
@@ -777,6 +864,7 @@ class LecturerProfileSerializer(serializers.ModelSerializer):
         
         user_data = validated_data.pop('user_data', None)
         user_id = validated_data.pop('user_id', None)
+        courses_data = validated_data.pop('courses_ids', None)
         
         user = None
         if user_data:
@@ -838,7 +926,52 @@ class LecturerProfileSerializer(serializers.ModelSerializer):
         # Create lecturer profile with user
         if user:
             validated_data['user'] = user
-        return super().create(validated_data)
+        lecturer = super().create(validated_data)
+        
+        # Create course assignments if courses were provided
+        if courses_data and user:
+            from academics.models import CourseAssignment, AcademicSession, Semester
+            from academics.models import Course
+            
+            # Get current active session and semester (or default)
+            try:
+                current_session = AcademicSession.objects.filter(is_active=True).first()
+                if not current_session:
+                    current_session = AcademicSession.objects.first()
+                
+                # Get first semester from the current session
+                current_semester = None
+                if current_session:
+                    current_semester = current_session.semesters.first()
+                
+                logger.info(f"Creating course assignments for lecturer {lecturer.id} with {len(courses_data)} courses")
+                logger.info(f"Using session: {current_session.name if current_session else 'None'}")
+                logger.info(f"Using semester: {current_semester.get_name_display() if current_semester else 'None'}")
+                
+                for course_id in courses_data:
+                    try:
+                        course = Course.objects.get(id=course_id)
+                        assignment_data = {
+                            'course': course,
+                            'lecturer': user,
+                            'role': 'primary'
+                        }
+                        if current_session:
+                            assignment_data['session'] = current_session
+                        if current_semester:
+                            assignment_data['semester'] = current_semester
+                            
+                        CourseAssignment.objects.create(**assignment_data)
+                        logger.info(f"Created course assignment for course {course.course_code}")
+                    except Course.DoesNotExist:
+                        logger.warning(f"Course with ID {course_id} not found, skipping assignment")
+                    except Exception as e:
+                        logger.error(f"Error creating course assignment for course {course_id}: {e}", exc_info=True)
+                        
+            except Exception as e:
+                logger.error(f"Error setting up course assignments: {e}", exc_info=True)
+        
+        return lecturer
 
 
 class LecturerProfileDetailSerializer(LecturerProfileSerializer):

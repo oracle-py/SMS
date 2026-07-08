@@ -12,6 +12,26 @@ from rest_framework.response import Response
 from django.db import transaction
 import logging
 
+from academics.utils import log_activity
+
+
+def get_client_ip(request):
+    """
+    Get the client IP address from the request.
+    
+    Args:
+        request: The HTTP request object
+        
+    Returns:
+        The client IP address or None
+    """
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
+
 from academics.models import Course, CourseRegistration, AcademicSession, Level
 from users.models import StudentProfile
 from users.permissions import IsAdminRole
@@ -27,7 +47,7 @@ def assign_course_to_student(request):
     
     Request body:
     {
-        "student_id": int,
+        "student_id": str (matric number),
         "course_id": int,
         "session_id": int (optional)
     }
@@ -43,8 +63,8 @@ def assign_course_to_student(request):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        # Get student
-        student = StudentProfile.objects.get(id=student_id)
+        # Get student by matric number
+        student = StudentProfile.objects.get(student_id=student_id)
         
         # Get course
         course = Course.objects.get(id=course_id)
@@ -53,7 +73,7 @@ def assign_course_to_student(request):
         if session_id:
             session = AcademicSession.objects.get(id=session_id)
         else:
-            session = AcademicSession.objects.filter(is_current=True).first()
+            session = AcademicSession.objects.filter(is_active=True).first()
             if not session:
                 session = AcademicSession.objects.first()
         
@@ -88,7 +108,7 @@ def assign_course_to_student(request):
 
         return Response({
             'success': True,
-            'message': f'Course {course.course_code} assigned to {student.student_id}'
+            'message': f'Successfully assigned course {course.course_code} to {student.student_id}'
         })
 
     except StudentProfile.DoesNotExist:
@@ -117,7 +137,7 @@ def assign_level_courses_to_student(request):
     
     Request body:
     {
-        "student_id": int,
+        "student_id": str (matric number),
         "grade_level": int (optional, will use student's grade_level if not provided)
     }
     """
@@ -131,8 +151,8 @@ def assign_level_courses_to_student(request):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        # Get student
-        student = StudentProfile.objects.get(id=student_id)
+        # Get student by matric number
+        student = StudentProfile.objects.get(student_id=student_id)
         
         # Use provided grade_level or student's grade_level
         target_grade_level = grade_level if grade_level else student.grade_level
@@ -161,7 +181,7 @@ def assign_level_courses_to_student(request):
             )
 
         # Get current session
-        session = AcademicSession.objects.filter(is_current=True).first()
+        session = AcademicSession.objects.filter(is_active=True).first()
         if not session:
             session = AcademicSession.objects.first()
         
@@ -207,9 +227,24 @@ def assign_level_courses_to_student(request):
                 else:
                     skipped_count += 1
 
+        course_word = 'course' if assigned_count == 1 else 'courses'
+        registered_word = 'course' if skipped_count == 1 else 'courses'
+        # Log activity
+        try:
+            log_activity(
+                user=request.user,
+                action='ASSIGN_COURSES',
+                entity_type='Student',
+                entity_id=student.id,
+                description=f"Assigned {assigned_count} {course_word} to student {student.student_id}",
+                ip_address=get_client_ip(request)
+            )
+        except Exception as e:
+            logger.error(f"Failed to log activity: {e}", exc_info=True)
+        
         return Response({
             'success': True,
-            'message': f'Assigned {assigned_count} courses to {student.student_id}, {skipped_count} already registered'
+            'message': f'Successfully assigned {assigned_count} {course_word} to {student.student_id}. {skipped_count} {registered_word} now registered.'
         })
 
     except StudentProfile.DoesNotExist:
@@ -278,7 +313,7 @@ def assign_courses_to_level_students(request):
             )
 
         # Get current session
-        session = AcademicSession.objects.filter(is_current=True).first()
+        session = AcademicSession.objects.filter(is_active=True).first()
         if not session:
             session = AcademicSession.objects.first()
         
@@ -325,9 +360,26 @@ def assign_courses_to_level_students(request):
                     else:
                         total_skipped += 1
 
+        assigned_word = 'course' if total_assigned == 1 else 'courses'
+        registered_word = 'course' if total_skipped == 1 else 'courses'
+        student_word = 'student' if students.count() == 1 else 'students'
+        
+        # Log activity
+        try:
+            log_activity(
+                user=request.user,
+                action='ASSIGN_COURSES_LEVEL',
+                entity_type='Level',
+                entity_id=level.id,
+                description=f"Assigned {total_assigned} {assigned_word} to {students.count()} {student_word} in {level.name}",
+                ip_address=get_client_ip(request)
+            )
+        except Exception as e:
+            logger.error(f"Failed to log activity: {e}", exc_info=True)
+        
         return Response({
             'success': True,
-            'message': f'Assigned {total_assigned} courses to {students.count()} students, {total_skipped} already registered'
+            'message': f'Successfully assigned {total_assigned} {assigned_word} to {students.count()} {student_word}. {total_skipped} {registered_word} now registered.'
         })
 
     except Exception as e:
@@ -347,7 +399,7 @@ def assign_courses_to_all_students(request):
     """
     try:
         # Get current session
-        session = AcademicSession.objects.filter(is_current=True).first()
+        session = AcademicSession.objects.filter(is_active=True).first()
         if not session:
             session = AcademicSession.objects.first()
         
@@ -421,9 +473,25 @@ def assign_courses_to_all_students(request):
                 'skipped': level_skipped
             })
 
+        assigned_word = 'course' if total_assigned == 1 else 'courses'
+        registered_word = 'course' if total_skipped == 1 else 'courses'
+        
+        # Log activity
+        try:
+            log_activity(
+                user=request.user,
+                action='ASSIGN_COURSES_ALL',
+                entity_type='System',
+                entity_id=0,
+                description=f"Assigned {total_assigned} {assigned_word} to all students",
+                ip_address=get_client_ip(request)
+            )
+        except Exception as e:
+            logger.error(f"Failed to log activity: {e}", exc_info=True)
+        
         return Response({
             'success': True,
-            'message': f'Assigned {total_assigned} courses to all students, {total_skipped} already registered',
+            'message': f'Successfully assigned {total_assigned} {assigned_word} to all students. {total_skipped} {registered_word} now registered.',
             'summary': level_summary
         })
 
