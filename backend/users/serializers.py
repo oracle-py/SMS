@@ -1052,15 +1052,18 @@ class LecturerProfileDetailSerializer(LecturerProfileSerializer):
         from academics.serializers import CourseSerializer
         
         # Get all course assignments for this lecturer
-        assignments = CourseAssignment.objects.filter(lecturer=obj.user).select_related('course')
+        assignments = CourseAssignment.objects.filter(lecturer=obj.user).select_related('course', 'session', 'semester')
         
-        # Extract unique courses
+        # Extract unique courses with session and semester info
         courses = []
         seen_courses = set()
         for assignment in assignments:
             if assignment.course.id not in seen_courses:
                 seen_courses.add(assignment.course.id)
                 course_data = CourseSerializer(assignment.course).data
+                # Add session_id and semester_id from the assignment
+                course_data['session_id'] = assignment.session.id if assignment.session else None
+                course_data['semester_id'] = assignment.semester.id if assignment.semester else None
                 courses.append(course_data)
         
         return courses

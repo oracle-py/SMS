@@ -54,12 +54,6 @@ export const navigation = {
                     label: "Lecturers",
                     path: "/student/lecturers",
                     icon: FaChalkboardUser
-                },
-
-                {
-                    label: "Timetable",
-                    path: "/student/timetable",
-                    icon: LuCalendar
                 }
 
             ]
@@ -83,36 +77,6 @@ export const navigation = {
                     path: "/parent/dashboard",
 
                     icon: LuLayoutDashboard
-
-                },
-
-                {
-
-                    label: "Children",
-
-                    path: "/parent/wards",
-
-                    icon: PiStudentBold
-
-                },
-
-                {
-
-                    label: "Results",
-
-                    path: "/parent/results",
-
-                    icon: LuClipboardList
-
-                },
-
-                {
-
-                    label: "Attendance",
-
-                    path: "/parent/attendance",
-
-                    icon: LuCalendarCheck
 
                 }
 
@@ -198,16 +162,6 @@ export const navigation = {
 
                     icon: LuClipboardList
 
-                },
-
-                {
-
-                    label: "Attendance",
-
-                    path: "/admin/attendance",
-
-                    icon: LuCalendarCheck
-
                 }
 
             ]
@@ -219,16 +173,6 @@ export const navigation = {
             section: "SYSTEM",
 
             items: [
-
-                {
-
-                    label: "Analytics",
-
-                    path: "/admin/analytics",
-
-                    icon: LuTrendingUp
-
-                },
 
                 {
 
@@ -327,25 +271,6 @@ export const navigation = {
 
         },
 
-        {
-
-            section: "ACCOUNT",
-
-            items: [
-
-                {
-
-                    label: "Profile",
-
-                    path: "/lecturer/profile",
-
-                    icon: LuSettings
-
-                }
-
-            ]
-
-        }
 
     ]
 

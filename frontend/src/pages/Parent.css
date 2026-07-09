@@ -94,3 +94,272 @@ padding:16px;
 }
 
 }
+
+/* =========================================================
+   PARENT DASHBOARD
+========================================================= */
+
+.parent-page{
+
+    --primary:#1e3a8a;
+    --primary-light:#3b82f6;
+    --gold:#f59e0b;
+    --green:#16a34a;
+    --purple:#7c3aed;
+    --red:#dc2626;
+
+    --bg:#f8fafc;
+    --card:#ffffff;
+    --line:#e5e7eb;
+    --text:#0f172a;
+    --muted:#64748b;
+
+    display:flex;
+    flex-direction:column;
+    gap:28px;
+    padding:30px;
+
+}
+
+/* =====================================
+   HERO
+===================================== */
+
+.parent-hero{
+
+    position:relative;
+    overflow:hidden;
+
+    border-radius:28px;
+
+    padding:46px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #0f172a 0%,
+        #172554 55%,
+        #2563eb 130%
+    );
+
+    color:#fff;
+
+}
+
+.parent-hero-pattern{
+
+    position:absolute;
+    inset:0;
+
+    opacity:.12;
+
+    background-image:
+        radial-gradient(#fff 1px,transparent 1px);
+
+    background-size:24px 24px;
+
+}
+
+.parent-hero-content{
+
+    position:relative;
+    z-index:2;
+
+    max-width:700px;
+
+}
+
+.parent-badge{
+
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+
+    padding:.55rem 1rem;
+
+    border-radius:999px;
+
+    background:rgba(255,255,255,.12);
+
+    border:1px solid rgba(255,255,255,.18);
+
+    font-size:.82rem;
+
+    font-weight:600;
+
+}
+
+.parent-hero h1{
+
+    margin-top:22px;
+
+    font-size:2.7rem;
+
+    font-weight:700;
+
+    line-height:1.2;
+
+}
+
+.parent-hero p{
+
+    margin-top:14px;
+
+    color:rgba(255,255,255,.82);
+
+    font-size:1rem;
+
+    max-width:560px;
+
+}
+
+.parent-hero-stats{
+
+    display:flex;
+
+    gap:40px;
+
+    margin-top:36px;
+
+    padding-top:26px;
+
+    border-top:1px solid rgba(255,255,255,.15);
+
+}
+
+.parent-hero-stats div{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.parent-hero-stats span{
+
+    font-size:.75rem;
+
+    color:rgba(255,255,255,.65);
+
+    text-transform:uppercase;
+
+    letter-spacing:.08em;
+
+}
+
+.parent-hero-stats strong{
+
+    margin-top:6px;
+
+    font-size:1.1rem;
+
+}
+
+/* =====================================
+   SUMMARY CARDS
+===================================== */
+
+.parent-summary-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(240px,1fr));
+
+    gap:22px;
+
+}
+
+.parent-summary-card{
+
+    background:#fff;
+
+    border-radius:20px;
+
+    padding:24px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+    border:1px solid var(--line);
+
+    box-shadow:
+    0 8px 28px rgba(15,23,42,.05);
+
+    transition:.25s;
+
+}
+
+.parent-summary-card:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:
+    0 18px 40px rgba(15,23,42,.12);
+
+}
+
+.summary-icon{
+
+    width:60px;
+
+    height:60px;
+
+    border-radius:18px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:1.6rem;
+
+    color:#fff;
+
+}
+
+.summary-icon.blue{
+
+    background:#2563eb;
+
+}
+
+.summary-icon.green{
+
+    background:#16a34a;
+
+}
+
+.summary-icon.gold{
+
+    background:#f59e0b;
+
+}
+
+.summary-icon.purple{
+
+    background:#7c3aed;
+
+}
+
+.parent-summary-card span{
+
+    color:var(--muted);
+
+    font-size:.82rem;
+
+}
+
+.parent-summary-card h2{
+
+    margin-top:6px;
+
+    color:var(--text);
+
+    font-size:1.8rem;
+
+}

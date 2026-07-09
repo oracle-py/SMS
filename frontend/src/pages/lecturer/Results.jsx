@@ -63,7 +63,13 @@ export default function Results() {
                     try {
 
                         const [registrationsRes, resultsRes] = await Promise.all([
-                            api.get("/registrations/", { params: { course: course.id } }),
+                            api.get("/registrations/", { 
+                                params: { 
+                                    course: course.id,
+                                    session: course.session_id,
+                                    semester: course.semester_id
+                                } 
+                            }),
                             api.get("/results/", { params: { course: course.id } }).catch(() => null)
                         ]);
 
@@ -288,7 +294,13 @@ export default function Results() {
         }
     }
 
-    const totalStudents = courses.reduce((sum, course) => sum + course.students.length, 0);
+    const totalStudents = new Set();
+    courses.forEach(course => {
+        course.students.forEach(student => {
+            totalStudents.add(student.id);
+        });
+    });
+    const uniqueStudentCount = totalStudents.size;
 
     return (
         <DashboardLayout userRole="lecturer">
@@ -304,7 +316,7 @@ export default function Results() {
                     {!loading && courses.length > 0 && (
                         <div className="att-summary-pill">
                             <HiOutlineUsers />
-                            {totalStudents} students · {courses.length} course{courses.length === 1 ? "" : "s"}
+                            {uniqueStudentCount} students · {courses.length} course{courses.length === 1 ? "" : "s"}
                         </div>
                     )}
                 </div>
