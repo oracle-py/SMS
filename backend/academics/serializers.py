@@ -350,6 +350,25 @@ class CourseRegistrationSerializer(serializers.ModelSerializer):
         session_id = attrs.get('session_id')
         semester_id = attrs.get('semester_id')
         
+        # If session_id not provided, use active session
+        if not session_id:
+            try:
+                active_session = AcademicSession.objects.get(is_active=True)
+                attrs['session_id'] = active_session.id
+                session_id = active_session.id
+            except AcademicSession.DoesNotExist:
+                raise serializers.ValidationError('No active session found')
+        
+        # If semester_id not provided, use first semester of the active session
+        if not semester_id and session_id:
+            try:
+                semester = Semester.objects.filter(session_id=session_id).first()
+                if semester:
+                    attrs['semester_id'] = semester.id
+                    semester_id = semester.id
+            except Exception as e:
+                logger.error(f"Error getting semester: {e}")
+        
         queryset = CourseRegistration.objects.filter(
             student_id=student_id,
             course_id=course_id,
@@ -443,6 +462,25 @@ class GradeSerializer(serializers.ModelSerializer):
         course_id = attrs.get('course_id')
         session_id = attrs.get('session_id')
         semester_id = attrs.get('semester_id')
+        
+        # If session_id not provided, use active session
+        if not session_id:
+            try:
+                active_session = AcademicSession.objects.get(is_active=True)
+                attrs['session_id'] = active_session.id
+                session_id = active_session.id
+            except AcademicSession.DoesNotExist:
+                raise serializers.ValidationError('No active session found')
+        
+        # If semester_id not provided, use first semester of the active session
+        if not semester_id and session_id:
+            try:
+                semester = Semester.objects.filter(session_id=session_id).first()
+                if semester:
+                    attrs['semester_id'] = semester.id
+                    semester_id = semester.id
+            except Exception as e:
+                logger.error(f"Error getting semester: {e}")
         
         queryset = Grade.objects.filter(
             student_id=student_id,
@@ -1142,6 +1180,23 @@ class ResultSerializer(serializers.ModelSerializer):
             validated_data['student'] = student_profile.user
         except StudentProfile.DoesNotExist:
             raise serializers.ValidationError('Student profile not found')
+        
+        # If session_id not provided, use active session
+        if not validated_data.get('session_id'):
+            try:
+                active_session = AcademicSession.objects.get(is_active=True)
+                validated_data['session_id'] = active_session.id
+            except AcademicSession.DoesNotExist:
+                raise serializers.ValidationError('No active session found')
+        
+        # If semester_id not provided, use first semester of the active session
+        if not validated_data.get('semester_id') and validated_data.get('session_id'):
+            try:
+                semester = Semester.objects.filter(session_id=validated_data['session_id']).first()
+                if semester:
+                    validated_data['semester_id'] = semester.id
+            except Exception as e:
+                logger.error(f"Error getting semester: {e}")
         
         return super().create(validated_data)
 

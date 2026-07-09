@@ -37,7 +37,7 @@ export default function CreateCourseDrawer({ open, onClose }) {
         if (open) {
             fetchDepartments();
             fetchLevels();
-            fetchSemesters();
+            fetchActiveSemesters();
         }
     }, [open]);
 
@@ -62,12 +62,30 @@ export default function CreateCourseDrawer({ open, onClose }) {
         }
     };
 
-    const fetchSemesters = async () => {
+    const fetchActiveSemesters = async () => {
         try {
-            const response = await api.get('/semesters/');
-            setSemesters(response.data.results || response.data);
+            // First get the active session
+            const sessionResponse = await api.get('/sessions/?is_active=true');
+            const activeSession = (sessionResponse.data.results || sessionResponse.data)[0];
+            
+            if (activeSession) {
+                // Then fetch semesters for the active session only
+                const semesterResponse = await api.get(`/semesters/?session_id=${activeSession.id}`);
+                setSemesters(semesterResponse.data.results || semesterResponse.data);
+            } else {
+                // Fallback to all semesters if no active session
+                const response = await api.get('/semesters/');
+                setSemesters(response.data.results || response.data);
+            }
         } catch (error) {
-            console.error('Error fetching semesters:', error);
+            console.error('Error fetching active semesters:', error);
+            // Fallback to all semesters on error
+            try {
+                const response = await api.get('/semesters/');
+                setSemesters(response.data.results || response.data);
+            } catch (fallbackError) {
+                console.error('Error fetching semesters:', fallbackError);
+            }
         }
     };
 
