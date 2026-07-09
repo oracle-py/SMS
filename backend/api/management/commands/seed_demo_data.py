@@ -51,9 +51,9 @@ class Command(BaseCommand):
         """Execute the seed command."""
         flush = options.get('flush', False)
 
-        # Always flush on production to ensure clean state
-        if not flush:
-            self.stdout.write(self.style.WARNING('Auto-flushing existing demo data for clean deployment...'))
+        # Only flush if explicitly requested
+        if flush:
+            self.stdout.write(self.style.WARNING('Flushing existing demo data...'))
             self.flush_demo_data()
         
         self.stdout.write(self.style.SUCCESS('Starting demo data seeding...'))

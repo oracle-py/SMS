@@ -443,8 +443,8 @@ class StudentProfileSerializer(serializers.ModelSerializer):
                     else:
                         # Create new parent
                         logger.info(f"Creating new parent account for {parent_email}")
-                        # Create parent username based on student's matric number
-                        parent_username = f"{student_profile.student_id}_parent@school.edu"
+                        # Create parent username by adding plasu. prefix to their email
+                        parent_username = f"plasu.{parent_email}"
                         
                         # Create parent user
                         parent_user = User.objects.create(
@@ -607,8 +607,10 @@ class ParentProfileSerializer(serializers.ModelSerializer):
         user = None
         if user_data:
             # Create user from nested data
-            username = f"{user_data['last_name'].lower()}{user_data['first_name'].lower()}@school.edu"
-            logger.info(f"Creating user with username: {username}, email: {user_data.get('email')}")
+            # Create parent username by adding plasu. prefix to their email
+            parent_email = user_data.get('email', '')
+            username = f"plasu.{parent_email}"
+            logger.info(f"Creating user with username: {username}, email: {parent_email}")
             user = User.objects.create(
                 username=username,
                 email=user_data.get('email', ''),
