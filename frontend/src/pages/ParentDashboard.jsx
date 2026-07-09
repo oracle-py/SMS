@@ -19,7 +19,6 @@ import "./Parent.css";
 
 function ParentDashboard() {
     const { user } = useAuth();
-    const { refreshKey } = useDashboardRefresh();
 
     // Temporary data until API integration
    const student = {
