@@ -49,17 +49,25 @@ def assign_course_to_student(request):
     {
         "student_id": str (matric number),
         "course_id": int,
+        "lecturer_id": int (required),
         "session_id": int (optional)
     }
     """
     try:
         student_id = request.data.get('student_id')
         course_id = request.data.get('course_id')
+        lecturer_id = request.data.get('lecturer_id')
         session_id = request.data.get('session_id')
 
         if not student_id or not course_id:
             return Response(
                 {'success': False, 'error': 'student_id and course_id are required'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        if not lecturer_id:
+            return Response(
+                {'success': False, 'error': 'lecturer_id is required - courses must be assigned to a lecturer'},
                 status=status.HTTP_400_BAD_REQUEST
             )
 
@@ -95,6 +103,35 @@ def assign_course_to_student(request):
             return Response(
                 {'success': False, 'error': 'Student already registered for this course'},
                 status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # Create course assignment (required)
+        from academics.models import CourseAssignment
+        from users.models import User
+        
+        try:
+            lecturer = User.objects.get(id=lecturer_id, role='lecturer')
+            
+            # Check if assignment already exists
+            assignment_exists = CourseAssignment.objects.filter(
+                course=course,
+                lecturer=lecturer,
+                session=session,
+                semester=course.semester
+            ).exists()
+            
+            if not assignment_exists:
+                CourseAssignment.objects.create(
+                    course=course,
+                    lecturer=lecturer,
+                    session=session,
+                    semester=course.semester,
+                    role='primary'
+                )
+        except User.DoesNotExist:
+            return Response(
+                {'success': False, 'error': 'Lecturer not found'},
+                status=status.HTTP_404_NOT_FOUND
             )
 
         # Create registration
@@ -138,12 +175,14 @@ def assign_level_courses_to_student(request):
     Request body:
     {
         "student_id": str (matric number),
-        "grade_level": int (optional, will use student's grade_level if not provided)
+        "grade_level": int (optional, will use student's grade_level if not provided),
+        "lecturer_id": int (optional - will assign all courses to this lecturer)
     }
     """
     try:
         student_id = request.data.get('student_id')
         grade_level = request.data.get('grade_level')
+        lecturer_id = request.data.get('lecturer_id')
 
         if not student_id:
             return Response(
@@ -179,6 +218,18 @@ def assign_level_courses_to_student(request):
                 {'success': False, 'error': f'Level for grade {target_grade_level} not found'},
                 status=status.HTTP_404_NOT_FOUND
             )
+
+        # Get lecturer if provided
+        lecturer = None
+        if lecturer_id:
+            from users.models import User
+            try:
+                lecturer = User.objects.get(id=lecturer_id, role='lecturer')
+            except User.DoesNotExist:
+                return Response(
+                    {'success': False, 'error': 'Lecturer not found'},
+                    status=status.HTTP_404_NOT_FOUND
+                )
 
         # Get current session
         session = AcademicSession.objects.filter(is_active=True).first()
@@ -226,6 +277,25 @@ def assign_level_courses_to_student(request):
                     assigned_count += 1
                 else:
                     skipped_count += 1
+                
+                # Create course assignment if lecturer is provided
+                if lecturer:
+                    from academics.models import CourseAssignment
+                    assignment_exists = CourseAssignment.objects.filter(
+                        course=course,
+                        lecturer=lecturer,
+                        session=session,
+                        semester=course.semester
+                    ).exists()
+                    
+                    if not assignment_exists:
+                        CourseAssignment.objects.create(
+                            course=course,
+                            lecturer=lecturer,
+                            session=session,
+                            semester=course.semester,
+                            role='primary'
+                        )
 
         course_word = 'course' if assigned_count == 1 else 'courses'
         registered_word = 'course' if skipped_count == 1 else 'courses'

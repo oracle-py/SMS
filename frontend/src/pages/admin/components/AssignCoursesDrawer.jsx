@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./drawer.css";
 import api from "../../../api/axios";
 
@@ -15,11 +15,28 @@ export default function AssignCoursesDrawer({ open, onClose }) {
     const initialData = {
         assignment_type: "student",
         student_id: "",
-        grade_level: ""
+        grade_level: "",
+        lecturer_id: ""
     };
 
     const [formData, setFormData] = useState(initialData);
     const [loading, setLoading] = useState(false);
+    const [lecturers, setLecturers] = useState([]);
+
+    useEffect(() => {
+        if (open) {
+            fetchLecturers();
+        }
+    }, [open]);
+
+    const fetchLecturers = async () => {
+        try {
+            const response = await api.get('/lecturers/');
+            setLecturers(response.data.results || response.data);
+        } catch (error) {
+            console.error('Error fetching lecturers:', error);
+        }
+    };
 
     function handleChange(e) {
         const { name, value } = e.target;
@@ -43,11 +60,17 @@ export default function AssignCoursesDrawer({ open, onClose }) {
                     setLoading(false);
                     return;
                 }
+                if (!formData.lecturer_id) {
+                    alert("Please select a lecturer to assign the course to.");
+                    setLoading(false);
+                    return;
+                }
 
                 endpoint = "courses/assign-level-to-student/";
                 data = {
                     student_id: formData.student_id,
-                    grade_level: parseInt(formData.grade_level)
+                    grade_level: parseInt(formData.grade_level),
+                    lecturer_id: parseInt(formData.lecturer_id)
                 };
             } else if (formData.assignment_type === "level") {
                 if (!formData.grade_level) {
@@ -55,10 +78,16 @@ export default function AssignCoursesDrawer({ open, onClose }) {
                     setLoading(false);
                     return;
                 }
+                if (!formData.lecturer_id) {
+                    alert("Please select a lecturer to assign the course to.");
+                    setLoading(false);
+                    return;
+                }
 
                 endpoint = "courses/assign-to-level/";
                 data = {
-                    grade_level: parseInt(formData.grade_level)
+                    grade_level: parseInt(formData.grade_level),
+                    lecturer_id: parseInt(formData.lecturer_id)
                 };
             } else {
                 endpoint = "courses/assign-to-all/";
@@ -128,6 +157,22 @@ export default function AssignCoursesDrawer({ open, onClose }) {
                                     <option value="student">Individual Student</option>
                                     <option value="level">Specific Level</option>
                                     <option value="all">All Students</option>
+                                </select>
+                            </div>
+                            <div className="drawer-input">
+                                <label>Assign to Lecturer *</label>
+                                <select
+                                    name="lecturer_id"
+                                    value={formData.lecturer_id}
+                                    onChange={handleChange}
+                                    required
+                                >
+                                    <option value="">Select Lecturer (Required)</option>
+                                    {lecturers.map(lecturer => (
+                                        <option key={lecturer.id} value={lecturer.id}>
+                                            {lecturer.user?.first_name} {lecturer.user?.last_name} ({lecturer.staff_id || 'No Staff ID'})
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
                         </div>
