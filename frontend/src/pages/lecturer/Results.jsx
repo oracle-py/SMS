@@ -296,9 +296,13 @@ export default function Results() {
 
     const totalStudents = new Set();
     courses.forEach(course => {
-        course.students.forEach(student => {
-            totalStudents.add(student.id);
-        });
+        if (course.students && Array.isArray(course.students)) {
+            course.students.forEach(student => {
+                if (student && student.id) {
+                    totalStudents.add(student.id);
+                }
+            });
+        }
     });
     const uniqueStudentCount = totalStudents.size;
 

@@ -183,11 +183,14 @@ class CourseSerializer(serializers.ModelSerializer):
     
     def get_department(self, obj):
         if obj.department:
-            return {
-                'id': obj.department.id,
-                'name': obj.department.name,
-                'code': obj.department.code
-            }
+            try:
+                return {
+                    'id': obj.department.id,
+                    'name': obj.department.name,
+                    'code': obj.department.code
+                }
+            except Exception:
+                return None
         return None
     
     def validate_course_code(self, value: str) -> str:
@@ -640,20 +643,6 @@ class AttendanceSerializer(serializers.ModelSerializer):
             )
         
         return attrs
-    
-    def create(self, validated_data):
-        """Create attendance record with proper student ID conversion."""
-        student_profile_id = validated_data.pop('student_id')
-        
-        # Convert student_profile_id to user_id
-        try:
-            from users.models import StudentProfile
-            student_profile = StudentProfile.objects.get(id=student_profile_id)
-            validated_data['student'] = student_profile.user
-        except StudentProfile.DoesNotExist:
-            raise serializers.ValidationError('Student profile not found')
-        
-        return super().create(validated_data)
     
     def create(self, validated_data):
         """Create attendance record with proper student ID conversion."""
