@@ -244,6 +244,26 @@ class StudentProfileSerializer(serializers.ModelSerializer):
             else:
                 # Fallback to name-based username if no student_id
                 username = f"{user_data['last_name'].lower()}{user_data['first_name'].lower()}@school.edu"
+            
+            # Check if username already exists and generate a new one if needed
+            from users.models import User
+            original_username = username
+            counter = 1
+            while User.objects.filter(username=username).exists():
+                if student_id:
+                    # Increment serial number if using student_id
+                    parts = student_id.split('/')
+                    if len(parts) == 3:
+                        year, faculty, serial = parts
+                        new_serial = str(int(serial) + counter).zfill(3)
+                        new_student_id = f"{year}/{faculty}/{new_serial}"
+                        username = new_student_id.replace('/', '').lower() + '@school.edu'
+                else:
+                    # Add number if using name-based username
+                    username = f"{original_username.split('@')[0]}{counter}@school.edu"
+                counter += 1
+                logger.warning(f"Username {username} already exists, generating new one")
+            
             logger.info(f"Creating user with username: {username}, email: {user_data.get('email')}")
             
             try:
@@ -878,11 +898,29 @@ class LecturerProfileSerializer(serializers.ModelSerializer):
                 logger.warning("No department provided, using default faculty code 'ns'")
             
             # Generate serial number for lecturers
-            from users.models import LecturerProfile
+            from users.models import LecturerProfile, User
             try:
-                count = LecturerProfile.objects.count()
-                serial = str(count + 1).zfill(4)
-                logger.info(f"Generated lecturer serial: {serial}")
+                # Get the highest existing serial for this faculty to avoid duplicates
+                existing_serials = LecturerProfile.objects.filter(
+                    user__username__contains=faculty_code
+                ).values_list('user__username', flat=True)
+                
+                max_serial = 0
+                for existing_username in existing_serials:
+                    # Extract serial number from username like "plasu0001ns@school.edu"
+                    if f"plasu" in existing_username and faculty_code in existing_username:
+                        try:
+                            # Extract the serial part between "plasu" and faculty code
+                            serial_part = existing_username.replace('plasu', '').replace(faculty_code, '').replace('@school.edu', '')
+                            if serial_part.isdigit():
+                                serial_num = int(serial_part)
+                                if serial_num > max_serial:
+                                    max_serial = serial_num
+                        except:
+                            pass
+                
+                serial = str(max_serial + 1).zfill(4)
+                logger.info(f"Generated lecturer serial: {serial} (max existing: {max_serial})")
             except Exception as e:
                 logger.error(f"Error generating lecturer serial: {e}", exc_info=True)
                 serial = '0001'
@@ -891,10 +929,11 @@ class LecturerProfileSerializer(serializers.ModelSerializer):
             username = f"plasu{serial}{faculty_code}@school.edu"
             
             # Check if username already exists and generate a new one if needed
+            counter = 1
             while User.objects.filter(username=username).exists():
-                count = LecturerProfile.objects.count()
-                serial = str(count + 1).zfill(4)
+                serial = str(int(serial) + counter).zfill(4)
                 username = f"plasu{serial}{faculty_code}@school.edu"
+                counter += 1
                 logger.warning(f"Username {username} already exists, generating new one")
             
             logger.info(f"Creating lecturer user with username: {username}, email: {user_data.get('email')}")
