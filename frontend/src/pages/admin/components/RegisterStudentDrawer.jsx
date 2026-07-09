@@ -64,11 +64,13 @@ export default function RegisterStudentDrawer({
     const [formData,setFormData]=useState(initialData);
 
     const [programmes, setProgrammes] = useState([]);
+    const [sessions, setSessions] = useState([]);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         if (open) {
             fetchProgrammes();
+            fetchSessions();
         }
     }, [open]);
 
@@ -81,6 +83,27 @@ export default function RegisterStudentDrawer({
             // Silently handle error
         } finally {
             setLoading(false);
+        }
+    };
+
+    const fetchSessions = async () => {
+        try {
+            const response = await api.get('/sessions/');
+            // Filter to show only active sessions
+            const allSessions = response.data.results || response.data;
+            const activeSessions = allSessions.filter(session => session.is_active);
+            setSessions(activeSessions);
+            
+            // Auto-select the active session if there's exactly one
+            if (activeSessions.length === 1) {
+                setFormData(prev => ({
+                    ...prev,
+                    academic_session: activeSessions[0].id
+                }));
+            }
+        } catch (error) {
+            console.error('Error fetching sessions:', error);
+            setSessions([]);
         }
     };
 
@@ -512,17 +535,11 @@ export default function RegisterStudentDrawer({
 
                 </option>
 
-                <option>
-
-                    2025/2026
-
-                </option>
-
-                <option>
-
-                    2026/2027
-
-                </option>
+                {sessions.map(session => (
+                    <option key={session.id} value={session.id}>
+                        {session.name}
+                    </option>
+                ))}
 
             </select>
 

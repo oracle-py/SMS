@@ -217,3 +217,42 @@ class LecturerProfile(models.Model):
     @property
     def faculty(self):
         return self.department.faculty
+
+
+class SerialNumber(models.Model):
+    """
+    Track allocated serial numbers to prevent reuse.
+    
+    Once a serial number is allocated for a year/faculty combination,
+    it should never be reused even if the associated record is deleted.
+    """
+    SERIAL_TYPE_CHOICES = [
+        ('student', 'Student'),
+        ('lecturer', 'Lecturer'),
+    ]
+    
+    serial_type = models.CharField(
+        max_length=20,
+        choices=SERIAL_TYPE_CHOICES,
+        verbose_name='Serial Type'
+    )
+    year = models.IntegerField(verbose_name='Year')
+    faculty_code = models.CharField(
+        max_length=10,
+        verbose_name='Faculty Code'
+    )
+    serial_number = models.IntegerField(verbose_name='Serial Number')
+    allocated_at = models.DateTimeField(auto_now_add=True, verbose_name='Allocated At')
+    
+    class Meta:
+        db_table = 'serial_numbers'
+        unique_together = ['serial_type', 'year', 'faculty_code', 'serial_number']
+        ordering = ['-year', 'faculty_code', 'serial_number']
+        verbose_name = 'Serial Number'
+        verbose_name_plural = 'Serial Numbers'
+        indexes = [
+            models.Index(fields=['serial_type', 'year', 'faculty_code']),
+        ]
+    
+    def __str__(self):
+        return f"{self.serial_type} - {self.year}/{self.faculty_code}/{self.serial_number}"

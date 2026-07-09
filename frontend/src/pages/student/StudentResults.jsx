@@ -52,21 +52,12 @@ function StudentResults() {
       setTotalQualityPoints(totalQualityPoints);
       setCgpa(totalCreditUnits > 0 ? (totalQualityPoints / totalCreditUnits).toFixed(2) : 0);
       
-      // Get unique sessions (by years)
+      // Get unique sessions (by years) that the student has results for
       const uniqueSessions = [...new Set(resultsData.map(r => r.session).filter(Boolean))];
       setSessions(uniqueSessions);
       
       // Semesters = 2x sessions (2 semesters per academic year)
       setSemesters(uniqueSessions.length * 2);
-      
-      // Fetch available sessions from backend
-      try {
-        const sessionsRes = await api.get('/sessions/');
-        const allSessions = sessionsRes.data?.results || sessionsRes.data || [];
-        setSessions(allSessions);
-      } catch (err) {
-        console.error('Error fetching sessions:', err);
-      }
     } catch (err) {
       setError(err.response?.data?.error || 'Failed to load results');
     } finally {

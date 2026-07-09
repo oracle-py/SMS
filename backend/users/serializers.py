@@ -11,7 +11,7 @@ import uuid
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
-from django.db import transaction
+from django.db import models, transaction
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
@@ -222,14 +222,29 @@ class StudentProfileSerializer(serializers.ModelSerializer):
                 else:
                     logger.warning("No programme provided, using default faculty code 'NS'")
                 
-                # Get serial number for this faculty/year
-                from users.models import StudentProfile
+                # Get serial number for this faculty/year using SerialNumber model
+                from users.models import StudentProfile, SerialNumber
                 year = datetime.now().year
                 try:
-                    count = StudentProfile.objects.filter(
-                        student_id__startswith=f"{year}/{faculty_code}"
-                    ).count()
-                    serial = str(count + 1).zfill(3)
+                    # Get the highest allocated serial for this year/faculty/type
+                    max_serial = SerialNumber.objects.filter(
+                        serial_type='student',
+                        year=year,
+                        faculty_code=faculty_code
+                    ).aggregate(models.Max('serial_number'))['serial_number__max'] or 0
+                    
+                    # Allocate the next serial number
+                    next_serial = max_serial + 1
+                    
+                    # Record this serial allocation
+                    SerialNumber.objects.create(
+                        serial_type='student',
+                        year=year,
+                        faculty_code=faculty_code,
+                        serial_number=next_serial
+                    )
+                    
+                    serial = str(next_serial).zfill(3)
                     validated_data['student_id'] = f"{year}/{faculty_code}/{serial}"
                     logger.info(f"Generated student_id: {validated_data['student_id']}")
                 except Exception as e:
@@ -897,29 +912,29 @@ class LecturerProfileSerializer(serializers.ModelSerializer):
             else:
                 logger.warning("No department provided, using default faculty code 'ns'")
             
-            # Generate serial number for lecturers
-            from users.models import LecturerProfile, User
+            # Generate serial number for lecturers using SerialNumber model
+            from users.models import LecturerProfile, User, SerialNumber
             try:
-                # Get the highest existing serial for this faculty to avoid duplicates
-                existing_serials = LecturerProfile.objects.filter(
-                    user__username__contains=faculty_code
-                ).values_list('user__username', flat=True)
+                # Get the highest allocated serial for this faculty/type
+                year = datetime.now().year
+                max_serial = SerialNumber.objects.filter(
+                    serial_type='lecturer',
+                    year=year,
+                    faculty_code=faculty_code
+                ).aggregate(models.Max('serial_number'))['serial_number__max'] or 0
                 
-                max_serial = 0
-                for existing_username in existing_serials:
-                    # Extract serial number from username like "plasu0001ns@school.edu"
-                    if f"plasu" in existing_username and faculty_code in existing_username:
-                        try:
-                            # Extract the serial part between "plasu" and faculty code
-                            serial_part = existing_username.replace('plasu', '').replace(faculty_code, '').replace('@school.edu', '')
-                            if serial_part.isdigit():
-                                serial_num = int(serial_part)
-                                if serial_num > max_serial:
-                                    max_serial = serial_num
-                        except:
-                            pass
+                # Allocate the next serial number
+                next_serial = max_serial + 1
                 
-                serial = str(max_serial + 1).zfill(4)
+                # Record this serial allocation
+                SerialNumber.objects.create(
+                    serial_type='lecturer',
+                    year=year,
+                    faculty_code=faculty_code,
+                    serial_number=next_serial
+                )
+                
+                serial = str(next_serial).zfill(4)
                 logger.info(f"Generated lecturer serial: {serial} (max existing: {max_serial})")
             except Exception as e:
                 logger.error(f"Error generating lecturer serial: {e}", exc_info=True)

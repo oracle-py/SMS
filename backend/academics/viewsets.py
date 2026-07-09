@@ -835,7 +835,7 @@ class ResultViewSet(viewsets.ModelViewSet):
         if serializer.is_valid():
             result_data = serializer.save()
             
-            # Log activity
+            # Log activity (don't fail if logging fails)
             try:
                 from academics.models import Course
                 course_id = request.data.get('course_id')
@@ -852,6 +852,7 @@ class ResultViewSet(viewsets.ModelViewSet):
                     ip_address=get_client_ip(request)
                 )
             except Exception as e:
+                # Log the error but don't fail the request
                 logger.error(f"Failed to log activity: {e}", exc_info=True)
             
             return Response(serializer.data, status=status.HTTP_201_CREATED)
